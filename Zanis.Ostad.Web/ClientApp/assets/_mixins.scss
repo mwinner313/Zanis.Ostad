@@ -1,0 +1,7 @@
+$breakpoint-tablet-min: 768px;
+$breakpoint-tablet-max: 1024px;
+@mixin tablet (){
+  @media screen and (min-device-width: $breakpoint-tablet-min) and (max-device-width: $breakpoint-tablet-max) {
+
+  }
+}

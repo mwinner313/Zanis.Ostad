@@ -1,0 +1,69 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\netcoreapp2.2\Zanis.Ostad.Web.xml</DocumentationFile>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DocumentationFile>bin\Debug\netcoreapp2.2\Zanis.Ostad.Web.xml</DocumentationFile>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection">
+          <Version>6.0.0</Version>
+        </PackageReference>
+        <PackageReference Include="FluentValidation.AspNetCore">
+          <Version>8.1.1</Version>
+        </PackageReference>
+        <PackageReference Include="jQuery" Version="3.3.1" />
+        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection">
+          <Version>6.0.0</Version>
+        </PackageReference>
+        <PackageReference Include="Microsoft.AspNetCore.App" />
+        <PackageReference Include="Swashbuckle.AspNetCore">
+          <Version>4.0.1</Version>
+        </PackageReference>
+    </ItemGroup>
+    <ItemGroup>
+        <!-- Files not to show in IDE -->
+        <None Remove="yarn.lock" />
+
+        <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
+        <Content Remove="ClientApp\**" />
+        <None Remove="Files\**" />
+        <Content Remove="Files\**" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Zains.Ostad.Application\Zains.Ostad.Application.csproj" />
+      <ProjectReference Include="..\Zanis.Ostad.Payment\Zanis.Ostad.Payment.csproj" />
+      <ProjectReference Include="..\Zanis.Ostad.Repository\Zanis.Ostad.Repository.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Remove="Files\**" />
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Remove="Files\**" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="ClientApp\css" />
+      <Folder Include="Pages" />
+      <Folder Include="wwwroot\Courses" />
+    </ItemGroup>
+
+    <Target Name="RunWebpack" AfterTargets="ComputeFilesToPublish">
+         <!--As part of publishing, ensure the JS resources are freshly built in production mode -->
+        <Exec Command="node -e &quot;console.log('NPM Installing dependencies...')&quot;" />
+        <Exec Command="npm install --ignore-scripts" />
+        <Exec Command="npm run build" />
+
+        <!-- Include the newly-built files in the publish output -->
+        <ItemGroup>
+            <DistFiles Include="wwwroot\dist\**; ClientApp\dist\**" />
+            <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+                <RelativePath>%(DistFiles.Identity)</RelativePath>
+                <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            </ResolvedFileToPublish>
+        </ItemGroup>
+    </Target>
+</Project>

@@ -1,0 +1,28 @@
+@model Zanis.Ostad.Payment.Refah.RefahPaymentRequestResult
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <title></title>
+</head>
+<body>
+
+<form action="https://sep.shaparak.ir/payment.aspx" method="post">
+    <input type="hidden" id="Amount" name="Amount" value="@Model.Amount">
+    <input type="hidden" id="MID" name="MID" value="@Model.MID">
+    <input type="hidden" id="ResNum" name="ResNum" value="@Model.ResNumOrOrderId">
+    <input type="hidden" id="RedirectURL" name="RedirectURL" value="@Model.ReturnRedirectUrl">
+    <input type="submit" id="btnSubPay" value="Redirect" style="opacity: 0">
+</form>
+</body>
+</html>
+<script src="/jquery.min.js"></script>
+<script type="text/javascript">
+    $("#btnSubPay").click();
+</script>
+

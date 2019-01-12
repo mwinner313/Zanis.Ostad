@@ -1,0 +1,11 @@
+bin
+obj
+build
+packages
+/.vs
+/Files
+/Graphic
+/Ui
+/.idea
+/packages
+

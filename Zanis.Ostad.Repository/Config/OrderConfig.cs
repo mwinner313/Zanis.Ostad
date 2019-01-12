@@ -1,0 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Swashbuckle.AspNetCore.Swagger;
+using Zanis.Ostad.Core.Entities.Orders;
+
+namespace Zanis.Ostad.Repository.Config
+{
+    public class OrderConfig:IEntityTypeConfiguration<Order>
+    {
+        public void Configure(EntityTypeBuilder<Order> builder)
+        {
+            builder.HasMany(x => x.OrderItems).WithOne().OnDelete(DeleteBehavior.Restrict);
+        }
+    }
+}
