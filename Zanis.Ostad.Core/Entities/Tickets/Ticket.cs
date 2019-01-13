@@ -17,5 +17,7 @@ namespace Zanis.Ostad.Core.Entities.Tickets
         public TicketState State { get; set; }
         public Course Course { get; set; }
         public long? CourseId { get; set; }
+        public string LastMessageText { get; set; }
+        public int UnReadedMessagesCount { get; set; }
     }
 }

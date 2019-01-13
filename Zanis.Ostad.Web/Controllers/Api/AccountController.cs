@@ -13,6 +13,7 @@ using Zains.Ostad.Application.Users.Queries.GetBoughtCourses;
 using Zains.Ostad.Application.Users.Queries.GetBoughtLessonExamSamples;
 using Zains.Ostad.Application.Users.Queries.GetTicketDetails;
 using Zains.Ostad.Application.Users.Queries.GetTicketes;
+using Zains.Ostad.Application.Users.Queries.GetUserTicketsInfo;
 using Zanis.Ostad.Core.Dtos;
 
 namespace Zanis.Ostad.Web.Controllers.Api
@@ -53,9 +54,13 @@ namespace Zanis.Ostad.Web.Controllers.Api
         }
 
         [HttpGet("Tickets")]
-        public async Task<ActionResult<List<TicketListViewModel>>> GetTickets(GetTicketsQuery query)
+        public async Task<ActionResult<List<TicketDto>>> GetTickets(GetTicketsQuery query)
         {
-            return Ok(await _mediator.Send(query));
+            return Ok(new TicketDto()
+            {
+                Items = await _mediator.Send(query),
+                MetaData =  await _mediator.Send(new GetUserTicketsInfoQuery()),
+            });
         }
 
         [HttpPost("Tickets")]

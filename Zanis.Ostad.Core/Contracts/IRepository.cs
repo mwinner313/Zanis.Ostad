@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Zanis.Ostad.Core.Entities.Tickets;
 using Zanis.Ostad.Core.Infrastucture;
 
 namespace Zanis.Ostad.Core.Contracts
@@ -10,5 +11,6 @@ namespace Zanis.Ostad.Core.Contracts
         Task EditAsync(T model);
         Task Delete(TKey model);
         IQueryable<T> GetQueriable();
+        Task<T> GetById(TKey id);
     }
 }

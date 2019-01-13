@@ -38,5 +38,10 @@ namespace Zanis.Ostad.Repository
         {
             return _db.Set<T>();
         }
+
+        public Task<T> GetById(TKey id)
+        {
+            return _db.Set<T>().FirstAsync(x => x.Id.ToString() == id.ToString());
+        }
     }
 }

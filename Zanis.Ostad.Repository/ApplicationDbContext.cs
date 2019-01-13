@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Zanis.Ostad.Core.Entities;
@@ -26,6 +27,7 @@ namespace Zanis.Ostad.Repository
 
         private static DbContextOptions GetOptions()
         {
+            
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
             builder.UseSqlServer("Server=212.86.67.131 ;User Id=mqanbari; Password=13Magh75; Database=ostad_zanis;");
             // builder.UseSqlServer("Server=. ;Integrated Security=true; Database=ostad_zanis;");

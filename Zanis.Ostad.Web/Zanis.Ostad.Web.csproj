@@ -47,15 +47,14 @@
     </ItemGroup>
     <ItemGroup>
       <Folder Include="ClientApp\css" />
-      <Folder Include="Pages" />
       <Folder Include="wwwroot\Courses" />
     </ItemGroup>
 
     <Target Name="RunWebpack" AfterTargets="ComputeFilesToPublish">
          <!--As part of publishing, ensure the JS resources are freshly built in production mode -->
-        <Exec Command="node -e &quot;console.log('NPM Installing dependencies...')&quot;" />
-        <Exec Command="npm install --ignore-scripts" />
-        <Exec Command="npm run build" />
+        <!--<Exec Command="node -e &quot;console.log('NPM Installing dependencies...')&quot;" />-->
+        <!--<Exec Command="npm install &#45;&#45;ignore-scripts" />-->
+        <!--<Exec Command="npm run build" />-->
 
         <!-- Include the newly-built files in the publish output -->
         <ItemGroup>

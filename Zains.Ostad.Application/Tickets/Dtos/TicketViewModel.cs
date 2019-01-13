@@ -18,6 +18,8 @@ namespace Zains.Ostad.Application.Tickets.Dtos
         public string CourseTitle { get; set; }
         public string CategoryTitle { get; set; }
         public int CategoryId { get; set; }
+        public string LastMessageText { get; set; }
+        public int UnReadedMessagesCount { get; set; }
         public List<TicketItemViewModel> TicketItems { get; set; }
     }
 }

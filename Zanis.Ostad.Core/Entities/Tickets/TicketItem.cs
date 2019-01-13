@@ -11,5 +11,6 @@ namespace Zanis.Ostad.Core.Entities.Tickets
         public long TicketId { get; set; }
         public string Message { get; set; }
         public DateTime CreatedOn { get; set; }=DateTime.Now;
+        public bool IsSeen { get; set; }
     }
 }

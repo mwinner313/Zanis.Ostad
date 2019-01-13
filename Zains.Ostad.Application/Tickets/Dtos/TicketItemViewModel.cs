@@ -12,5 +12,6 @@ namespace Zains.Ostad.Application.Tickets.Dtos
         public long TicketId { get; set; }
         public string Message { get; set; }
         public DateTime CreatedOn { get; set; }
+        public bool IsSeen { get; set; }
     }
 }

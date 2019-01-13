@@ -15,7 +15,7 @@ namespace Zanis.Ostad.Repository.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
+                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -499,9 +499,13 @@ namespace Zanis.Ostad.Repository.Migrations
 
                     b.Property<DateTime>("CreatedOn");
 
+                    b.Property<string>("LastMessageText");
+
                     b.Property<int>("State");
 
                     b.Property<string>("TicketReason");
+
+                    b.Property<int>("UnReadedMessagesCount");
 
                     b.Property<long>("UserId");
 
@@ -540,6 +544,8 @@ namespace Zanis.Ostad.Repository.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedOn");
+
+                    b.Property<bool>("IsSeen");
 
                     b.Property<string>("Message");
 
