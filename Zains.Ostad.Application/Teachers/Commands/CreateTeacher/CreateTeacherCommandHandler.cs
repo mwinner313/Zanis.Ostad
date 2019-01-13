@@ -5,7 +5,7 @@ using Zains.Ostad.Application.Users;
 using Zanis.Ostad.Core.Dtos;
 using Zanis.Ostad.Core.Entities;
 
-namespace Zains.Ostad.Application.Teachers.Commands
+namespace Zains.Ostad.Application.Teachers.Commands.CreateTeacher
 {
     public class CreateTeacherCommandHandler : IRequestHandler<CreateTeacherCommand, Response>
     {

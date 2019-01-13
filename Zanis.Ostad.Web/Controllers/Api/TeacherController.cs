@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Swagger;
 using Zains.Ostad.Application.Teachers.Commands;
+using Zains.Ostad.Application.Teachers.Commands.CreateTeacher;
 
 namespace Zanis.Ostad.Web.Controllers.Api
 {

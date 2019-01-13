@@ -16,24 +16,19 @@ namespace Zains.Ostad.Application.Users.Queries.GetTicketDetails
     {
         private readonly IRepository<Ticket, long> _ticketRepo;
         private readonly IWorkContext _workContext;
-        private readonly IMediator _mediator;
         private readonly IMapper _mapper;
 
         public GetTicketDetailsQueryHandler(IRepository<Ticket, long> ticketRepo, IWorkContext workContext,
-            IMapper mapper, IMediator mediator)
+            IMapper mapper)
         {
             _ticketRepo = ticketRepo;
             _workContext = workContext;
             _mapper = mapper;
-            _mediator = mediator;
         }
 
         public async Task<TicketViewModel> Handle(GetTicketDetailsQuery request, CancellationToken cancellationToken)
         {
-            await _mediator.Send(new MarkTicketAsSeenCommand()
-            {
-                TicketId = request.TicketId
-            }, cancellationToken);
+          
             return await _ticketRepo.GetQueriable()
                 .Where(x => x.UserId == _workContext.CurrentUserId)
                 .ProjectTo<TicketViewModel>(_mapper.ConfigurationProvider)

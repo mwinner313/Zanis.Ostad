@@ -20,7 +20,8 @@ namespace Zains.Ostad.Application.Users.Commands.AddTicket
         private readonly IMapper _mapper;
 
         public AddTicketCommandHandler(IWorkContext workContext,
-            IRepository<TicketCategory, int> ticktCategoryRepository, IRepository<Ticket, long> ticketRepo, IMapper mapper)
+            IRepository<TicketCategory, int> ticktCategoryRepository, IRepository<Ticket, long> ticketRepo,
+            IMapper mapper)
         {
             _workContext = workContext;
             _ticktCategoryRepository = ticktCategoryRepository;
@@ -28,11 +29,13 @@ namespace Zains.Ostad.Application.Users.Commands.AddTicket
             _mapper = mapper;
         }
 
-        public async Task<Response<TicketViewModel>> Handle(AddTicketCommand request, CancellationToken cancellationToken)
+        public async Task<Response<TicketViewModel>> Handle(AddTicketCommand request,
+            CancellationToken cancellationToken)
         {
             var ticket = CreateTicket(request);
             await _ticketRepo.AddAsync(ticket);
-            return Response<TicketViewModel>.Success(_mapper.Map<TicketViewModel>(_ticketRepo.GetQueriable().Include(x=>x.User).Single(x=>x.Id==ticket.Id)));
+            return Response<TicketViewModel>.Success(_mapper.Map<TicketViewModel>(_ticketRepo.GetQueriable()
+                .Include(x => x.User).Single(x => x.Id == ticket.Id)));
         }
 
         private Ticket CreateTicket(AddTicketCommand request)
@@ -52,17 +55,15 @@ namespace Zains.Ostad.Application.Users.Commands.AddTicket
                     }
                 }
             };
-            if (request.CourseId.HasValue)
+            if (request.CourseId.HasValue && request.CategoryId != 0)
             {
                 ticket.CategoryId = _ticktCategoryRepository.GetQueriable()
                     .First(x => x.CatetgoryType == CatetgoryType.RelatedToTeacher).Id;
             }
             else
             {
-                ticket.CategoryId = request.CategoryId.HasValue
-                    ? request.CategoryId.Value
-                    : _ticktCategoryRepository.GetQueriable()
-                        .First(x => x.CatetgoryType == CatetgoryType.RelatedToSupport).Id;
+                ticket.CategoryId = request.CategoryId ?? _ticktCategoryRepository.GetQueriable()
+                                        .First(x => x.CatetgoryType == CatetgoryType.RelatedToSupport).Id;
             }
 
             return ticket;

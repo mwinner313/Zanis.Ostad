@@ -4,30 +4,20 @@
     <div class="course-header">
       <div class="container">
         <div class="row p-2">
-          <div class="col-sm-2 ">
+          <div class="col-sm-2">
             <div class="teacher-avatar"
                  :style="imageUrl">
             </div>
-            <div>
-              <p> مدرس : {{course.teacher}} </p>
-              <p>
-                قیمت : <span class="text-orange">{{course.priceAsTomans | currency}}  تومان</span>
-              </p>
-            </div>
+
           </div>
-          <div class="col-sm-10 ">
-            <div class="container">
-              <div class="row">
-                <div class="col-sm-6 d-flex flex-column align-items-center">
-
-                </div>
-                <div class="col-sm-5 d-flex flex-column align-items-center">
+          <div class="col-sm-6 teacher-name">
+            <p> مدرس : {{course.teacher}} </p>
+            <p>
+              قیمت : <span class="text-orange">{{course.priceAsTomans | currency}}  تومان</span>
+            </p>
+          </div>
+          <div class="col-sm-4">
                   <button @click.prevent="addToCart" class="add-cart float-right">افزودن به سبد خرید</button>
-                </div>
-              </div>
-            </div>
-
-
           </div>
         </div>
       </div>

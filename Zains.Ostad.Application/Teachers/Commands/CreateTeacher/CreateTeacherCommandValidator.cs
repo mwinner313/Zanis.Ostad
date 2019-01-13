@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Zains.Ostad.Application.Teachers.Commands
+namespace Zains.Ostad.Application.Teachers.Commands.CreateTeacher
 {
     public class CreateTeacherCommandValidator:AbstractValidator<CreateTeacherCommand>
     {
