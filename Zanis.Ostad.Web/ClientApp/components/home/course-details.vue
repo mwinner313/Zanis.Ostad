@@ -8,7 +8,6 @@
             <div class="teacher-avatar"
                  :style="imageUrl">
             </div>
-
           </div>
           <div class="col-sm-6 teacher-name">
             <p> مدرس : {{course.teacher}} </p>
@@ -26,10 +25,10 @@
       <div class="container">
         <div class="row no-gutters">
           <div class="col-sm-12 " ref="videoContainer">
-            <!--<video-player v-if="playingItem" class="video-player-box"-->
-            <!--:options="playerOptions"-->
-            <!--:playsinline="true">-->
-            <!--</video-player>-->
+            <video-player v-if="playingItem" class="video-player-box"
+            :options="playerOptions"
+            :playsinline="true">
+            </video-player>
           </div>
         </div>
       </div>

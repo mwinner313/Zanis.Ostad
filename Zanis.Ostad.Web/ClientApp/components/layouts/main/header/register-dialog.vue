@@ -122,7 +122,8 @@
         storage.setItem('user',JSON.stringify(res.data.user));
         EventBus.$emit('user-comes-in',res.data.user);
         axios.defaults.headers.common['Authorization']=res.data.bearerToken;
-        this.$root.$emit('bv::hide::modal', 'register-dialog')
+        this.$root.$emit('bv::hide::modal', 'register-dialog');
+        this.$toaster.success('خوش آمدید!');
       }
     },
     mounted() {

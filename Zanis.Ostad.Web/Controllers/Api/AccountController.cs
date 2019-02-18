@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Zains.Ostad.Application.Tickets.Dtos;
 using Zains.Ostad.Application.Users.Commands.AddTicket;
 using Zains.Ostad.Application.Users.Commands.AddTicketItem;
+using Zains.Ostad.Application.Users.Commands.ConfirmChangePassword;
 using Zains.Ostad.Application.Users.Commands.Login;
 using Zains.Ostad.Application.Users.Commands.MarkTicketAsSeen;
 using Zains.Ostad.Application.Users.Commands.Register;
+using Zains.Ostad.Application.Users.Commands.RequestChangePassword;
 using Zains.Ostad.Application.Users.Dto;
 using Zains.Ostad.Application.Users.Queries.GetBoughtCourses;
 using Zains.Ostad.Application.Users.Queries.GetBoughtLessonExamSamples;
@@ -43,6 +45,19 @@ namespace Zanis.Ostad.Web.Controllers.Api
         {
             return Ok(await _mediator.Send(cmd));
         }
+        [HttpPost("RequestChangePassword")]
+        [AllowAnonymous]
+        public async Task<ActionResult<Response>> RequestChangePassword([FromBody] RequestChangePasswordCommand cmd)
+        {
+            return Ok(await _mediator.Send(cmd));
+        }
+        [HttpPost("ConfirmChangePassword")]
+        [AllowAnonymous]
+        public async Task<ActionResult<LoginRegisterResponse>> ConfirmChangePassword([FromBody] ConfirmChangePasswordCommand cmd)
+        {
+            return Ok(await _mediator.Send(cmd));
+        }
+
 
         [HttpGet("LessonExams")]
         public async Task<ActionResult<List<LessonExamDto>>> LessonExams(GetBoughtLessonExamSamplesQuery cmd)

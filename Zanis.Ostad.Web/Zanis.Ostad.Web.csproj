@@ -36,6 +36,7 @@
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Zains.Ostad.Application\Zains.Ostad.Application.csproj" />
+      <ProjectReference Include="..\Zanis.Ostad.Common\Zanis.Ostad.Common.csproj" />
       <ProjectReference Include="..\Zanis.Ostad.Payment\Zanis.Ostad.Payment.csproj" />
       <ProjectReference Include="..\Zanis.Ostad.Repository\Zanis.Ostad.Repository.csproj" />
     </ItemGroup>
@@ -46,15 +47,14 @@
       <EmbeddedResource Remove="Files\**" />
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="ClientApp\css" />
       <Folder Include="wwwroot\Courses" />
     </ItemGroup>
 
     <Target Name="RunWebpack" AfterTargets="ComputeFilesToPublish">
          <!--As part of publishing, ensure the JS resources are freshly built in production mode -->
-        <!--<Exec Command="node -e &quot;console.log('NPM Installing dependencies...')&quot;" />-->
-        <!--<Exec Command="npm install &#45;&#45;ignore-scripts" />-->
-        <!--<Exec Command="npm run build" />-->
+        <Exec Command="node -e &quot;console.log('NPM Installing dependencies...')&quot;" />
+        <Exec Command="npm install --ignore-scripts" />
+        <Exec Command="npm run build" />
 
         <!-- Include the newly-built files in the publish output -->
         <ItemGroup>

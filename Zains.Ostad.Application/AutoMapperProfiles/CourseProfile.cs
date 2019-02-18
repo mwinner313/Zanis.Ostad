@@ -41,6 +41,7 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
             Id = x.Id,
             LessonName = x.TeacherLessonMapping.LessonFieldMapping.Lesson.LessonName,
             Teacher = x.TeacherLessonMapping.Teacher.FullName,
+            Description = x.Description,
             Title = x.CourseTitle.Name,
             Contents = x.Contents.Select(c => new CourseItemDto
             {

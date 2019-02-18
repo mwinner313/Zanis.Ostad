@@ -55,16 +55,18 @@ namespace Zains.Ostad.Application.Users.Commands.AddTicket
                     }
                 }
             };
-            if (request.CourseId.HasValue && request.CategoryId != 0)
+            if (request.CourseId.HasValue && request.CourseId != 0)
             {
                 ticket.CategoryId = _ticktCategoryRepository.GetQueriable()
-                    .First(x => x.CatetgoryType == CatetgoryType.RelatedToTeacher).Id;
+                    .First(x => x.CategoryType == TicketCategoryType.RelatedToTeacher).Id;
             }
-            else
+             if (request.CategoryId.HasValue && request.CategoryId.Value != 0)
             {
-                ticket.CategoryId = request.CategoryId ?? _ticktCategoryRepository.GetQueriable()
-                                        .First(x => x.CatetgoryType == CatetgoryType.RelatedToSupport).Id;
+                ticket.CategoryId = request.CategoryId.Value;
             }
+            else 
+                ticket.CategoryId=_ticktCategoryRepository.GetQueriable()
+                    .First(x => x.CategoryType == TicketCategoryType.RelatedToSupport).Id;
 
             return ticket;
         }

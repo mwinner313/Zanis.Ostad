@@ -13,11 +13,13 @@ namespace Zanis.Ostad.Core.Entities.Tickets
         public int CategoryId { get; set; }
         public long UserId { get; set; }
         public DateTime CreatedOn { get; set; } = DateTime.Now;
+        public DateTime UpdatedOn { get; set; } = DateTime.Now;
         public string TicketReason { get; set; }
         public TicketState State { get; set; }
         public Course Course { get; set; }
         public long? CourseId { get; set; }
         public string LastMessageText { get; set; }
-        public int UnReadedMessagesCount { get; set; }
+        public int TicketOwnerUnReadedMessagesCount { get; set; }
+        public int OperatorUnReadedMessagesCount { get; set; }
     }
 }

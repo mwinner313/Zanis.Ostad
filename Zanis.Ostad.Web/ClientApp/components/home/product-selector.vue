@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="d-none d-sm-block">
     <section class="row">
       <div class="col-md-12 product-types p-0">
         <product-type :is-active="selectedProductCategory===1" @select="changeProductType(productTypes.lessonExam,1)"

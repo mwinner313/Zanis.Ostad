@@ -17,11 +17,11 @@
          </div>
        </div>
        <button v-show="cartItems.length" @click="order" class="btn btn-block btn-primary">نهایی کردن خرید</button>
-       <form method="post" id="bank-submit" :action="orderRes.paymentRedirectUrl" ref="bankform">
-         <input type="hidden"  id="MID" name="MID" :value="orderRes.mid">
-         <input type="hidden" id="Amount" name="Amount" :value="orderRes.amount">
-         <input type="hidden" id="ResNum" name="ResNum" :value="orderRes.resNumOrOrderId">
-         <input type="hidden" id="RedirectURL" name="RedirectURL" :value="orderRes.returnRedirectUrl">
+       <form method="post"  :action="orderRes.paymentRedirectUrl" ref="bankform">
+         <input type="hidden"   name="MID" :value="orderRes.mid">
+         <input type="hidden"  name="Amount" :value="orderRes.amount">
+         <input type="hidden"  name="ResNum" :value="orderRes.resNumOrOrderId">
+         <input type="hidden"  name="RedirectURL" :value="orderRes.returnRedirectUrl">
        </form>
      </div>
 
@@ -83,7 +83,7 @@
 </script>
 
 <style scoped>
-  #bank-submit {
+  form {
     display: none;
   }
 </style>

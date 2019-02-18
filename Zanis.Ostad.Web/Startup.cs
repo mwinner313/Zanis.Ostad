@@ -21,6 +21,7 @@ using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 using Zains.Ostad.Application.Colleges.Queries.GetCollegeList;
 using Zains.Ostad.Application.Users;
+using Zanis.Ostad.Common;
 using Zanis.Ostad.Core.Contracts;
 using Zanis.Ostad.Core.Entities;
 using Zanis.Ostad.Payment;
@@ -52,6 +53,16 @@ namespace Zanis.Ostad.Web
             services.AddScoped<IWorkContext,WebWorkContext>();
             services.AddScoped<IOrderPaymentProviderFactory,OrderPaymentProviderFactory>();
             services.AddScoped<RefahPaymentProvider,RefahPaymentProvider>();
+            services.AddScoped<IEmailService,EmailService>();
+            services.AddScoped(sp=> new EmailSenderInfo
+            {
+                UserName = Configuration["EmailSender:UserName"],
+                From = Configuration["EmailSender:From"],
+                Host = Configuration["EmailSender:Host"],
+                Password = Configuration["EmailSender:Password"],
+                Port = int.Parse(Configuration["EmailSender:Port"]),
+                IsSSlEnabled = bool.Parse(Configuration["EmailSender:IsSSlEnabled"])
+            });
             services.AddCors();
             ConfigureIdentitySystem(services);
             ConfigureBearerTokenAuthentication(services);

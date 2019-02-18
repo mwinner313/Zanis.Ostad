@@ -1,26 +1,14 @@
 using System;
-using System.Collections.Generic;
 using Zanis.Ostad.Core.Entities.Tickets;
 
 namespace Zains.Ostad.Application.Tickets.Dtos
 {
-    public class TicketDto
-    {
-        public List<TicketListViewModel> Items { get; set; }
-        public TicketMetaData MetaData { get; set; }
-    }
-
-    public class TicketMetaData
-    {
-        public int AllCount { get; set; }
-        public int UnReadTicketItemCount { get; set; }
-    }
-
     public class TicketListViewModel
     {
         public long Id { get; set; }
         public string TicketReason { get; set; }
-        public DateTime CreatedOn { get; set; } = DateTime.Now;
+        public DateTime CreatedOn { get; set; } 
+        public DateTime UpdatedOn { get; set; } 
         public TicketState State { get; set; }
         public long UserId { get; set; }
         public string UserUserName { get; set; }
@@ -31,6 +19,7 @@ namespace Zains.Ostad.Application.Tickets.Dtos
         public string CategoryTitle { get; set; }
         public int CategoryId { get; set; }
         public string LastMessageText { get; set; }
-        public int UnReadedMessagesCount { get; set; }
+        public int TicketOwnerUnReadedMessagesCount { get; set; }
+        public int OperatorUnReadedMessagesCount { get; set; }
     }
 }

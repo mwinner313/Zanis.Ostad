@@ -21,25 +21,28 @@
             </b-nav-item>
           </b-navbar-nav>
 
-          <!-- Right aligned nav items -->
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item profile-item-container" v-if="user">
-              <a href="#" class="nav-link"> <i class="fas fa-user"></i> &nbsp; {{user.fullName}}</a>
-              <div class="profile-items">
-                <ul>
-                  <li>
-                    <router-link to="/my-lessons"> دروس من</router-link>
-                  </li>
-                </ul>
-              </div>
-            </li>
+            <!--<li class="nav-item profile-item-container d-none d-sm-block"  v-if="user">-->
+            <!--<a href="#" class="nav-link"> <i class="fas fa-user"></i> {{user.fullName}} </a>-->
+            <!--<div class="profile-items">-->
+            <!--<ul>-->
+            <!--<li>-->
+            <!--<router-link to="/my-lessons"> دروس من</router-link>-->
+            <!--</li>-->
+            <!--</ul>-->
+            <!--</div>-->
+            <!--</li>-->
 
             <li  class="nav-item  cart-container d-none d-sm-block">
-              <a href="#" class="nav-link"> <i class="fas fa-shopping-cart "></i> &nbsp; سبد خرید <i
-                class="fas fa-caret-down "></i> </a>
+              <a href="#" class="nav-link"> <i class="fas fa-shopping-cart "></i> &nbsp; سبد خرید
+                <i class="fas fa-caret-down "></i> </a>
               <div class="cart">
                 <cart></cart>
               </div>
+            </li>
+
+            <li v-if="user" class="navbar-nav">
+              <router-link to="/my-lessons" class="nav-link">  <i class="fas fa-user"></i> {{user.fullName}} </router-link>
             </li>
 
             <li v-b-modal.modal1 class="navbar-nav d-block d-sm-none">

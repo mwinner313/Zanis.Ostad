@@ -9,6 +9,5 @@ namespace Zanis.Ostad.Core.Entities
         public long StudentId { get; set; }
         public Course Course { get; set; }
         public long CourseId { get; set; }
-        
     }
 }

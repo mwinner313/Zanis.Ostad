@@ -8,8 +8,7 @@
      <div class="list container">
        <h5 class="text-center" v-show="!lesson.courses.length">هنوز هیچ دوره آموزشی برای این درس وجود ندارد .</h5>
        <div class="row no-gutters">
-
-         <div v-for="course in lesson.courses" class=" col-md-6 ">
+         <div v-for="course in lesson.courses" class=" col-md-12 ">
            <div class="course">
              <router-link :to="'/course/'+course.id">
                <h6 class="text-black">{{course.title}}</h6>

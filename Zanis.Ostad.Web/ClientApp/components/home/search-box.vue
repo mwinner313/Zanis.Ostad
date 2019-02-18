@@ -1,11 +1,11 @@
 <template>
-  <section id="search" class="row">
-    <div class="col-sm-3 p2 ">
+  <section id="search" class="row ">
+    <div class="col-sm-3 p2 d-none d-sm-block">
       <div class="purple-wrapper " id="search-title">
         <p class=" no-margin">یکی از موارد زیر را انتخاب کنید</p>
       </div>
     </div>
-    <div class="col-sm-9 p2">
+    <div class="col-sm-9 p2 d-none d-sm-block">
       <div  v-click-outside="close" class="purple-wrapper">
         <img
           src="../../assets/images/search.png"

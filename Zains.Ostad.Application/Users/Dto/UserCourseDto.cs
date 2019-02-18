@@ -9,6 +9,7 @@ namespace Zains.Ostad.Application.Users.Dto
     {
         public long Id { get; set; }
         public string LessonName { get; set; }
+        public string Description { get; set; }
         public string Teacher { get; set; }
         public string Title { get; set; }
         public List<CourseItemDto> Contents { get; set; }

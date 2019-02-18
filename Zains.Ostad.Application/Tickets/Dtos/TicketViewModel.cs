@@ -19,7 +19,8 @@ namespace Zains.Ostad.Application.Tickets.Dtos
         public string CategoryTitle { get; set; }
         public int CategoryId { get; set; }
         public string LastMessageText { get; set; }
-        public int UnReadedMessagesCount { get; set; }
+        public int TicketOwnerUnReadedMessagesCount { get; set; }
+        public int OperatorUnReadedMessagesCount { get; set; }
         public List<TicketItemViewModel> TicketItems { get; set; }
     }
 }

@@ -14,23 +14,24 @@ namespace Zains.Ostad.Application.Users.Queries.GetUserTicketsSummery
         private readonly IWorkContext _workContext;
         private readonly IRepository<TicketItem, long> _ticketItemRepo;
         private readonly IRepository<Ticket, long> _ticketRepo;
-        
 
-        public GetUserTicketsSummeryQueryHandler(IWorkContext workContext, IRepository<TicketItem, long> ticketItemRepo, IRepository<Ticket, long> ticketRepo)
+
+        public GetUserTicketsSummeryQueryHandler(IWorkContext workContext, IRepository<TicketItem, long> ticketItemRepo,
+            IRepository<Ticket, long> ticketRepo)
         {
             _workContext = workContext;
             _ticketItemRepo = ticketItemRepo;
             _ticketRepo = ticketRepo;
         }
 
-        public async Task<TicketMetaData> Handle(GetUserTicketsSummeryQuery request, CancellationToken cancellationToken)
+        public async Task<TicketMetaData> Handle(GetUserTicketsSummeryQuery request,
+            CancellationToken cancellationToken)
         {
             return new TicketMetaData
             {
-                UnReadTicketItemCount = await _ticketItemRepo.GetQueriable()
-                    .CountAsync(x => !x.IsSeen && x.Ticket.UserId == _workContext.CurrentUserId &&x.UserId!=_workContext.CurrentUserId,
-                        cancellationToken),
-                AllCount = _ticketRepo.GetQueriable().Count(x=>x.UserId==_workContext.CurrentUserId)
+                UnReadTicketItemCount = _ticketRepo.GetQueriable().Where(x => x.UserId == _workContext.CurrentUserId)
+                    .Sum(x => x.TicketOwnerUnReadedMessagesCount),
+                AllCount = _ticketRepo.GetQueriable().Count(x => x.UserId == _workContext.CurrentUserId)
             };
         }
     }

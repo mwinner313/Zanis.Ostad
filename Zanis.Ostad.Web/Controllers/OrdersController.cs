@@ -1,12 +1,8 @@
-using System.Linq;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing.Template;
 using Zains.Ostad.Application.Orders.Commands;
-using Zanis.Ostad.Core.Contracts;
 using Zanis.Ostad.Core.Dtos;
 using Zanis.Ostad.Core.Dtos.Orders;
 using Zanis.Ostad.Payment;

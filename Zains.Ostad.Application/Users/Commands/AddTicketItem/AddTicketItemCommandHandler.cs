@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -41,8 +42,10 @@ namespace Zains.Ostad.Application.Users.Commands.AddTicketItem
         {
             var ticket = await GetTicket(ticketItem.TicketId);
             ticket.LastMessageText = ticketItem.Message;
-            ticket.UnReadedMessagesCount =
-                _repository.GetQueriable().Count(x => x.TicketId == ticketItem.TicketId && !x.IsSeen);
+            ticket.UpdatedOn = ticketItem.CreatedOn;
+            ticket.OperatorUnReadedMessagesCount++;
+            if (ticket.State == TicketState.Closed)
+                ticket.State = TicketState.Open;
             await _ticketRepository.EditAsync(ticket);
         }
 
@@ -51,7 +54,6 @@ namespace Zains.Ostad.Application.Users.Commands.AddTicketItem
             return await _ticketRepository.GetById(ticketId);
         }
 
-       
 
         private TicketItem GetTicketItem(TicketItem ticketItem)
         {

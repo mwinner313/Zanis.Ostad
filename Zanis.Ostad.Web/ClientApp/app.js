@@ -13,6 +13,16 @@ import 'v-toaster/dist/v-toaster.css'
 import VueCurrencyFilter from 'vue-currency-filter'
 import VueVideoPlayer from 'vue-video-player'
 import 'video.js/dist/video-js.css'
+import 'element-ui/lib/theme-chalk/index.css';
+import locale from 'element-ui/lib/locale/lang/fa'
+import Element from 'element-ui'
+import MomentJalali from 'vue-moment-jalaali'
+import registerPersianDateFilter from './persianDateFilter'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'swiper/dist/css/swiper.css'
+Vue.use(VueAwesomeSwiper, /* { default global options } */)
+Vue.use(Element,{locale});
+Vue.use(MomentJalali);
 Vue.use(VueVideoPlayer, /* {
   options: global default options,
   events: global videojs events
@@ -32,7 +42,7 @@ Vue.use(BootstrapVue);
 Vue.component('icon', FontAwesomeIcon);
 Vue.prototype.$http = axios;
 sync(store, router);
-
+registerPersianDateFilter();
 const app = new Vue({
   store,
   router,

@@ -36,6 +36,7 @@
             </b-form-group>
             <!--Password-->
             <button @click.prevent="onSubmit" type="submit">ورود</button>
+            <button @click.prevent="showResetPassDialog" >بازیابی رمز عبور</button>
             <button @click.prevent="showRegisterDialog">ایجاد حساب کاربری</button>
           </b-form>
 
@@ -81,6 +82,10 @@
       }
     },
     methods: {
+      showResetPassDialog() {
+        this.$root.$emit('bv::hide::modal', 'login-dialog');
+        this.$root.$emit('bv::show::modal', 'reset-pass-dialog');
+      } ,
       showRegisterDialog() {
         this.$root.$emit('bv::hide::modal', 'login-dialog');
         this.$root.$emit('bv::show::modal', 'register-dialog');
@@ -99,7 +104,8 @@
         storage.setItem('user',JSON.stringify(res.data.user));
         EventBus.$emit('user-comes-in',res.data.user);
         axios.defaults.headers.common['Authorization']=res.data.bearerToken;
-        this.$root.$emit('bv::hide::modal', 'login-dialog')
+        this.$root.$emit('bv::hide::modal', 'login-dialog');
+        this.$toaster.success('خوش آمدید!');
       }
     },
     mounted() {

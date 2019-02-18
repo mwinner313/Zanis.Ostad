@@ -463,6 +463,8 @@ namespace Zanis.Ostad.Repository.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CourseId");
+
                     b.HasIndex("StudentId");
 
                     b.ToTable("StudentCourseMappings");
@@ -501,11 +503,15 @@ namespace Zanis.Ostad.Repository.Migrations
 
                     b.Property<string>("LastMessageText");
 
+                    b.Property<int>("OperatorUnReadedMessagesCount");
+
                     b.Property<int>("State");
+
+                    b.Property<int>("TicketOwnerUnReadedMessagesCount");
 
                     b.Property<string>("TicketReason");
 
-                    b.Property<int>("UnReadedMessagesCount");
+                    b.Property<DateTime>("UpdatedOn");
 
                     b.Property<long>("UserId");
 
@@ -526,7 +532,7 @@ namespace Zanis.Ostad.Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CatetgoryType");
+                    b.Property<int>("CategoryType");
 
                     b.Property<bool>("IsDeletible");
 
@@ -544,6 +550,8 @@ namespace Zanis.Ostad.Repository.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedOn");
+
+                    b.Property<bool>("IsEdited");
 
                     b.Property<bool>("IsSeen");
 
@@ -797,7 +805,7 @@ namespace Zanis.Ostad.Repository.Migrations
                 {
                     b.HasOne("Zanis.Ostad.Core.Entities.Contents.Course", "Course")
                         .WithMany("Students")
-                        .HasForeignKey("StudentId")
+                        .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Zanis.Ostad.Core.Entities.User", "Student")
