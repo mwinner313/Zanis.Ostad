@@ -13,7 +13,7 @@ namespace Zains.Ostad.Application.Courses.Dtos
         public string PreviewFilePath { get; set; }
         public string GradeTitle { get; set; }
         public List<string> RelatedFields { get; set; }
-        public List<CourseItemDto> Contents { get; set; }
+        public List<CourseItemVeiwModel> Contents { get; set; }
         public bool IsOwnedByCurrentUser { get; set; }
         public long Id { get; set; }
         public string LessonCode { get; set; }

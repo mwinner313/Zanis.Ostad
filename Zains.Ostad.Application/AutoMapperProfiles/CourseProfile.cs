@@ -26,7 +26,7 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
             Title = x.CourseTitle.Name + " - " + x.TeacherLessonMapping.LessonFieldMapping.Lesson.LessonName,
             GradeTitle = x.TeacherLessonMapping.LessonFieldMapping.Grade.Name,
             LessonCode = x.TeacherLessonMapping.LessonFieldMapping.Lesson.LessonCode,
-            Contents = x.Contents.Select(c => new CourseItemDto
+            Contents = x.Contents.Select(c => new CourseItemVeiwModel
             {
                 Id = c.Id,
                 Title = c.Title,
@@ -44,7 +44,7 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
             Teacher = x.TeacherLessonMapping.Teacher.FullName,
             Description = x.Description,
             Title = x.CourseTitle.Name,
-            Contents = x.Contents.Select(c => new CourseItemDto
+            Contents = x.Contents.Select(c => new CourseItemVeiwModel
             {
                 FilePath = c.FilePath,
                 Title = c.Title,

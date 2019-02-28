@@ -1,15 +1,12 @@
-using Zanis.Ostad.Core.Entities.Contents;
+using Microsoft.AspNetCore.Http;
 
 namespace Zains.Ostad.Application.Courses.Dtos
 {
     public class CourseItemDto
     {
-        
+        public IFormFile File { get; set; }
         public string Title { get; set; }
-        public string FilePath { get; set; }
-        public ContentType ContentType { get; set; }
-        public long CourseId { get; set; }
         public bool IsPreview { get; set; }
-        public long Id { get; set; }
+        public int Order { get; set; }
     }
 }

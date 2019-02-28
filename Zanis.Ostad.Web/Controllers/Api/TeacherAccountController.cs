@@ -38,18 +38,25 @@ namespace Zanis.Ostad.Web.Controllers.Api
         }
 
         [HttpPost("courses")]
-        public async Task<ActionResult<PagenatedList<CourseDto>>> AddCourse(AddCourseCommand cmd)
+        public async Task<ActionResult<PagenatedList<CourseDto>>> AddCourse([FromBody]AddCourseCommand cmd)
         {
             return Ok(await _mediator.Send(cmd));
         }
 
         [HttpPut("courses")]
-        public async Task<ActionResult<PagenatedList<CourseDto>>> AddCourse(EditCourseCommand cmd)
+        public async Task<ActionResult<PagenatedList<CourseDto>>> EditCourse([FromBody]EditCourseCommand cmd)
         {
             return Ok(await _mediator.Send(cmd));
         }
-        [HttpPut("courses/deactive")]
+
+        [HttpPatch("courses/deactive")]
         public async Task<ActionResult<PagenatedList<CourseDto>>> DeactiveCourse(DeactiveCourseCommand cmd)
+        {
+            return Ok(await _mediator.Send(cmd));
+        }
+
+        [HttpPatch("courses/active")]
+        public async Task<ActionResult<PagenatedList<CourseDto>>> ActiveCourse(DeactiveCourseCommand cmd)
         {
             return Ok(await _mediator.Send(cmd));
         }
