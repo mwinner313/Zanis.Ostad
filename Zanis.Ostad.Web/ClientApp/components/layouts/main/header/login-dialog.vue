@@ -24,7 +24,7 @@
             <!--Password-->
             <b-form-group>
               <b-form-input
-                type="text"
+                type="password"
                 v-model="form.password"
                 :state="!$v.form.password.$invalid || !doesFormSubmitted"
                 aria-describedby="input1LiveFeedback"
