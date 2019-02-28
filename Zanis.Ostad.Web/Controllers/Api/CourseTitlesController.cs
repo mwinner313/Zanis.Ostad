@@ -19,7 +19,7 @@ namespace Zanis.Ostad.Web.Controllers.Api
         [HttpGet]
         public async Task<ActionResult<List<CourseTitleViewModel>>> Get(GetCourseTitlesQuery query)
         {
-            return Ok(_mediator.Send(query));
+            return Ok(await     _mediator.Send(query));
         }
     }
 }
