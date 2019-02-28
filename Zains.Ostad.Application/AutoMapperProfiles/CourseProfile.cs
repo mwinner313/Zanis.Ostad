@@ -18,6 +18,7 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
         public static Expression<Func<Course, CourseDto>> Projection => x => new CourseDto()
         {
             Id = x.Id,
+            TeacherId = x.TeacherLessonMapping.Teacher.Id,
             Description = x.Description,
             Price = x.Price,
             Teacher = x.TeacherLessonMapping.Teacher.FullName,

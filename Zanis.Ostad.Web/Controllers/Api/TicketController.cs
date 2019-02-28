@@ -25,7 +25,7 @@ namespace Zanis.Ostad.Web.Controllers.Api
         }
 
         [HttpGet]
-        public async Task<ActionResult<TicketMetaData>> Get([FromQuery] GetUsersSendedTicketsQuery query) =>
+        public async Task<ActionResult<TicketDto>> Get([FromQuery] GetUsersSendedTicketsQuery query) =>
             Ok(await _mediator.Send(query));
 
         [HttpGet("{id}")]

@@ -3,17 +3,18 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Zains.Ostad.Application.Users.Dto;
 using Zanis.Ostad.Core.Dtos;
 using Zanis.Ostad.Core.Entities;
 
 namespace Zains.Ostad.Application.Users.Commands.Register
 {
-    public class RegisterCommandHandler:IRequestHandler<RegisterCommand,LoginRegisterResponse>
+    public class RegisterCommandHandler : IRequestHandler<RegisterCommand, LoginRegisterResponse>,
+        IRequestHandler<RegisterAsTeacherCommand, LoginRegisterResponse>
     {
         private readonly IAppUserManager _userManager;
         private readonly IMapper _mapper;
+        
         public RegisterCommandHandler(IAppUserManager userManager, IMapper mapper)
         {
             _userManager = userManager;
@@ -22,12 +23,12 @@ namespace Zains.Ostad.Application.Users.Commands.Register
 
         public async Task<LoginRegisterResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
-            if(_userManager.Users.Any(x=>x.UserName==request.StudentNo))
+            if (_userManager.Users.Any(x => x.UserName == request.StudentNo))
                 return UserAlreadyExists();
-            if(_userManager.Users.Any(x=>x.Email==request.EmailAddress))
+            if (_userManager.Users.Any(x => x.Email == request.EmailAddress))
                 return EmailAlreadyExists();
             var user = CreateUserModel(request);
-            await _userManager.CreateAsync(user,request.Password);
+            await _userManager.CreateAsync(user, request.Password);
             return await SuccessWithJwtToken(user);
         }
 
@@ -45,7 +46,7 @@ namespace Zains.Ostad.Application.Users.Commands.Register
             return new LoginRegisterResponse()
             {
                 User = _mapper.Map<UserDto>(user),
-                BearerToken ="Bearer "+ await _userManager.GenerateJwtToken(user.UserName,user),
+                BearerToken = "Bearer " + await _userManager.GenerateJwtToken(user.UserName, user),
                 Status = ResponseStatus.Success,
                 Message = "ثبت نام شما با موفقیت انجام شد"
             };
@@ -53,7 +54,7 @@ namespace Zains.Ostad.Application.Users.Commands.Register
 
         private static User CreateUserModel(RegisterCommand request)
         {
-            return new User()
+            return new User
             {
                 UserName = request.StudentNo,
                 Email = request.EmailAddress,
@@ -63,10 +64,34 @@ namespace Zains.Ostad.Application.Users.Commands.Register
 
         private static LoginRegisterResponse UserAlreadyExists()
         {
-            return new LoginRegisterResponse()
+            return new LoginRegisterResponse
             {
                 Status = ResponseStatus.Fail,
                 Message = "شماره دانشجویی وارد شده در سیستم موجود میباشد"
+            };
+        }
+
+        public async Task<LoginRegisterResponse> Handle(RegisterAsTeacherCommand request,
+            CancellationToken cancellationToken)
+        {
+            if (_userManager.Users.Any(x => x.UserName == request.TeacherOrStudentNo))
+                return UserAlreadyExists();
+            if (_userManager.Users.Any(x => x.Email == request.EmailAddress))
+                return EmailAlreadyExists();
+            var user = CreateUserModel(request);
+            await _userManager.CreateAsync(user, request.Password);
+            await _userManager.AddToRoleAsync(user, "Teacher");
+            return await SuccessWithJwtToken(user);
+        }
+
+        private User CreateUserModel(RegisterAsTeacherCommand request)
+        {
+            return new User
+            {
+                UserName = request.TeacherOrStudentNo,
+                Email = request.EmailAddress,
+                FullName = request.FullName,
+                TeacherCode = request.TeacherOrStudentNo
             };
         }
     }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -45,7 +46,10 @@ namespace Zains.Ostad.Application.Users.Commands.AddTicket
                 LastMessageText = request.Description,
                 UserId = _workContext.CurrentUserId,
                 State = TicketState.Open,
+                UpdatedOn = DateTime.Now,
+                CreatedOn = DateTime.Now,
                 TicketReason = request.Title,
+                OperatorUnReadedMessagesCount = 1,
                 TicketItems = new List<TicketItem>
                 {
                     new TicketItem

@@ -14,7 +14,7 @@
                 v-model="form.userName"
                 :state="!$v.form.userName.$invalid || !doesFormSubmitted"
                 aria-describedby="input1LiveFeedback"
-                placeholder="نام کاربری"/>
+                placeholder="نام کاربری (شماره دانشجویی یا کد پرسنلی)"/>
               <b-form-invalid-feedback>
                 نام کاربری یک فیلد اجباریست
               </b-form-invalid-feedback>

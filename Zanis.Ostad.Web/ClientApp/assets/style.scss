@@ -720,7 +720,7 @@ footer {
   }
 }
 
-#login-dialog, #register-dialog,#reset-pass-dialog {
+#login-dialog, #register-dialog,#reset-pass-dialog,#register-as-teacher-dialog {
   .modal-content {
     border-radius: 23px;
   }
@@ -788,7 +788,8 @@ footer {
       }
       button {
         background-color: #9475cd;
-        margin-top: 15px;
+        margin-top: 10px;
+        margin-bottom: 10px;
         color: white;
       }
     }
@@ -878,6 +879,9 @@ footer {
   }
   .teacher-name{
     padding-top: 15px;
+    p{
+      color:white;
+    }
   }
   .add-cart {
     margin-top: 6px;

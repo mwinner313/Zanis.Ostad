@@ -14,8 +14,7 @@ using Zanis.Ostad.Core.Entities.Tickets;
 
 namespace Zains.Ostad.Application.Tickets.Queries.GetUsersSendedTickets
 {
-    public class
-        GetUsersSendedTicketsQueryHandler : IRequestHandler<GetUsersSendedTicketsQuery, TicketDto>
+    public class GetUsersSendedTicketsQueryHandler : IRequestHandler<GetUsersSendedTicketsQuery, TicketDto>
     {
         private readonly IRepository<Ticket, long> _ticketRepository;
         private readonly IMapper _mapper;
@@ -43,9 +42,9 @@ namespace Zains.Ostad.Application.Tickets.Queries.GetUsersSendedTickets
                     x.TicketItems.Any(i=>i.Message.Contains(request.Search))||
                     x.TicketReason.Contains(request.Search)
                 );
-            return new TicketDto()
+            return new TicketDto
             {
-                Items =await dbQuery.OrderByDescending(x => x.CreatedOn)
+                Items = await dbQuery.OrderByDescending(x => x.CreatedOn)
                     .ProjectTo<TicketListViewModel>(_mapper.ConfigurationProvider)
                     .Pagenate(request).ToListAsync(cancellationToken),
                 MetaData = new TicketMetaData

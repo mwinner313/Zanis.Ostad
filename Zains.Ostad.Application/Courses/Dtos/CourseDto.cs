@@ -19,5 +19,6 @@ namespace Zains.Ostad.Application.Courses.Dtos
         public string LessonCode { get; set; }
         public string Description { get; set; }
         public string TeacherAvatar { get; set; }
+        public long TeacherId { get; set; }
     }
 }

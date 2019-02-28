@@ -6,7 +6,7 @@ using Zains.Ostad.Application.Users.Dto;
 
 namespace Zains.Ostad.Application.Users.Queries.GetBoughtCourses
 {
-    public class GetBoughtCoursesQuery:Pagenation,IRequest<List<UserCourseDto>>
+    public class GetBoughtCoursesQuery:Pagenation,IRequest<PagenatedList<UserCourseDto>>
     {
     }
 }

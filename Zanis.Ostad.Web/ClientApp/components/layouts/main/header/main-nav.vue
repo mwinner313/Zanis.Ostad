@@ -42,7 +42,7 @@
             </li>
 
             <li v-if="user" class="navbar-nav">
-              <router-link to="/my-lessons" class="nav-link">  <i class="fas fa-user"></i> {{user.fullName}} </router-link>
+              <router-link to="/user" class="nav-link">  <i class="fas fa-user"></i> {{user.fullName}} </router-link>
             </li>
 
             <li v-b-modal.modal1 class="navbar-nav d-block d-sm-none">

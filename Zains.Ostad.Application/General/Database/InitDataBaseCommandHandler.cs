@@ -37,7 +37,8 @@ namespace Zains.Ostad.Application.General.Database
             var list = new List<string>
             {
                 "Admin",
-                "Operator"
+                "Operator",
+                "Teacher"
             };
             foreach (var role in list)
             {

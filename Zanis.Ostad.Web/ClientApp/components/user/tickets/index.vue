@@ -2,44 +2,7 @@
   <el-card>
     <h3 style="display:inline;">تیکت ها</h3>
     <div class="float-right">
-      <el-form :inline="true">
-        <el-form-item  label="جستجو">
-          <el-input @change="loadData" placeholder="جستجو" v-model="query.search"></el-input>
-        </el-form-item>
-        <el-form-item label="بخش">
-          <el-select v-model="query.categoryId" @change="loadData" placeholder="بخش">
-            <el-option
-              label="همه"
-              value="">
-            </el-option>
-            <el-option  v-for="cat in ticketCategories"
-               :key="cat.id"
-              :label="cat.title"
-              :value="cat.id">
-            </el-option>
-
-          </el-select>
-        </el-form-item>
-        <el-form-item label="وضعیت">
-          <el-select v-model="query.state" @change="loadData" placeholder="وضعیت">
-            <el-option
-              label="همه"
-              value="">
-            </el-option>
-            <el-option
-              label="باز"
-              value="0">
-            </el-option>
-            <el-option
-              label="بسته"
-              value="1">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-checkbox label="خوانده نشده ها" v-model="query.notSeen" @change="loadData"></el-checkbox>
-        </el-form-item>
-      </el-form>
+      <el-button @click="isNewTicketDialogOpen=true" type="primary" plain>جدید +</el-button>
     </div>
     <el-table
       height="654"
@@ -49,23 +12,11 @@
       size="medium"
       style="width: 100%">
 
-      <el-table-column
-        label="عنوان"
-      >
+      <el-table-column label="عنوان">
         <template slot-scope="scope">
-          {{  scope.row.ticketReason}}
-          <el-badge style="margin-top: 14px;" v-if="scope.row.operatorUnReadedMessagesCount" :value="scope.row.operatorUnReadedMessagesCount"/>
+          {{scope.row.ticketReason}}
+          <el-badge style="margin-top: 14px;" v-if="scope.row.ticketOwnerUnReadedMessagesCount" :value="scope.row.ticketOwnerUnReadedMessagesCount"/>
         </template>
-      </el-table-column>
-
-      <el-table-column
-        label="شناسه کاربری"
-        prop="userUserName">
-      </el-table-column>
-
-      <el-table-column
-        label="نام کاربری"
-        prop="userFullName">
       </el-table-column>
 
       <el-table-column label="وضعیت">
@@ -80,15 +31,17 @@
         label="بخش"
         prop="categoryTitle">
       </el-table-column>
+
       <el-table-column
         label="تاریخ ثبت">
         <template slot-scope="scope">
-          {{ scope.row.createdOn | moment("jYYYY/jM/jD HH:mm") }}
+          <i class="el-icon-time"></i>
+          <span>{{scope.row.createdOn | moment("jYYYY/jM/jD HH:mm")}}</span>
         </template>
       </el-table-column>
       <el-table-column align="right">
-        <template slot="header" slot-scope="scope">
-         عملیات
+        <template slot="header">
+          عملیات
         </template>
         <template slot-scope="scope">
           <el-button @click="showTicketItems(scope.row)" type="success" plain>مشاهده</el-button>
@@ -107,24 +60,30 @@
     </el-pagination>
     <messenger @ticketstatechange="changeState" v-if="!!selectedTicket" @close="selectedTicket=undefined"
                :isOpen="!!selectedTicket" :ticket="selectedTicket"></messenger>
+    <AddTicketDialog @close="reloadDataAfterAddingTicket" :isOpen="isNewTicketDialogOpen"></AddTicketDialog>
   </el-card>
 </template>
 
 <script>
   import axios from 'axios';
   import Messenger from './messenger';
-  import EventBus from '../../../event-bus';
+  import AddTicketDialog from './addTicketDialog'
+  import EventBus from '../../../event-bus'
 
   export default {
-    components: {Messenger},
+    components: {
+      Messenger,
+      AddTicketDialog
+    },
     data() {
       return {
         selectedTicket: null,
         tableData: [],
-        meta:{},
+        meta: {},
         isLoading: false,
-        ticketCategories:[],
-        query:{state:'0',notSeen:false,pageSize:10}
+        ticketCategories: [],
+        query: {state: '0', notSeen: false, pageSize: 10},
+        isNewTicketDialogOpen: false
       }
     },
     methods: {
@@ -133,38 +92,44 @@
         this.loadData();
       },
       handleCurrentChange(val) {
-        this.query.pageOffset = (val-1) * this.query.pageSize;
+        this.query.pageOffset = (val - 1) * this.query.pageSize;
         this.query.currentPage = val;
         this.loadData();
       },
+
       changeState(data) {
         this.tableData.find(x => x.id === this.selectedTicket.id).state = data;
       },
       tableRowClassName({row}) {
-        if (row.operatorUnReadedMessagesCount > 0)
+        if (row.ticketOwnerUnReadedMessagesCount > 0)
           return 'warning-row';
         return '';
       },
-      loadData(){
+      loadData() {
         this.isLoading = true;
-        axios.get('/api/tickets',{params:this.query}).then(res => {
+        axios.get('/api/account/tickets', {params: this.query}).then(res => {
           this.tableData = res.data.items;
-          this.meta=res.data.metaData
+          this.meta = res.data.metaData;
           this.isLoading = false;
-        })
+        });
+      },
+      reloadDataAfterAddingTicket() {
+        this.isNewTicketDialogOpen = false;
+        this.loadData();
       },
       showTicketItems(ticket) {
         this.isLoading = true;
-        axios.get('/api/tickets/' + ticket.id).then(res => {
-          EventBus.$emit('adminOpenedUnReadTicketItem');
-          ticket.operatorUnReadedMessagesCount = 0;
+        axios.get('/api/account/tickets/' + ticket.id).then(res => {
+          if (ticket.ticketOwnerUnReadedMessagesCount)
+            EventBus.$emit('userOpenedUnReadTicketItem');
+          ticket.ticketOwnerUnReadedMessagesCount = 0;
           this.selectedTicket = res.data;
           this.isLoading = false;
-        })
+        });
       },
-      loadTicketCategories(){
-        axios.get('/api/ticketCategory/' ).then(res => {
-          this.ticketCategories=res.data;
+      loadTicketCategories() {
+        axios.get('/api/ticketCategory/').then(res => {
+          this.ticketCategories = res.data;
         })
       }
     },

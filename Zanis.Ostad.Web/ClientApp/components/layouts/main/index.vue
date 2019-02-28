@@ -6,6 +6,7 @@
       <login-dialog></login-dialog>
       <register-dialog></register-dialog>
       <ResetPassDialog></ResetPassDialog>
+      <RegisterAsTeacherDialog></RegisterAsTeacherDialog>
     </div>
   </div>
 </template>
@@ -14,6 +15,7 @@
   import Footer from "./footer/index"
   import LoginDialog from './header/login-dialog'
   import RegisterDialog from './header/register-dialog'
+  import RegisterAsTeacherDialog from './header/register-as-teacher-dialog'
   import ResetPassDialog from './header/reset-password-dialog'
 
   export default {
@@ -21,6 +23,7 @@
     components: {
       'main-layout-footer': Footer,
       LoginDialog,
+      RegisterAsTeacherDialog,
       RegisterDialog,
       ResetPassDialog
     }

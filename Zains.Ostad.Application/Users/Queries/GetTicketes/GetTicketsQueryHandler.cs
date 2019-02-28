@@ -29,9 +29,9 @@ namespace Zains.Ostad.Application.Users.Queries.GetTicketes
         public Task<List<TicketListViewModel>> Handle(GetTicketsQuery request, CancellationToken cancellationToken)
         {
             return _ticketRepo.GetQueriable()
-                .Where(x => x.UserId == _workContext.CurrentUserId)
+                .Where(x => x.UserId == _workContext.CurrentUserId).OrderByDescending(x => x.UpdatedOn)
                 .Pagenate(request).ProjectTo<TicketListViewModel>(_mapper.ConfigurationProvider) 
-                .OrderByDescending(x => x.UpdatedOn).ToListAsync(cancellationToken);
+             .ToListAsync(cancellationToken);
         }
     }
 }

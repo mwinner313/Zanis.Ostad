@@ -16,7 +16,8 @@ namespace Zanis.Ostad.Web.Controllers.Api
         {
             _mediator = mediator;
         }
-    [HttpGet("{id}")]
+
+        [HttpGet("{id}")]
         public async Task<ActionResult<CourseDto>> Get(long id)
         {
             return Ok(await _mediator.Send(new GetCourseDetailsQuery

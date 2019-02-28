@@ -7,7 +7,7 @@ using Zains.Ostad.Application.Users.Dto;
 
 namespace Zains.Ostad.Application.Users.Queries.GetBoughtLessonExamSamples
 {
-    public class GetBoughtLessonExamSamplesQuery:Pagenation,IRequest<List<LessonExamDto>>
+    public class GetBoughtLessonExamSamplesQuery:Pagenation,IRequest<PagenatedList<LessonExamDto>>
     {
     
     }

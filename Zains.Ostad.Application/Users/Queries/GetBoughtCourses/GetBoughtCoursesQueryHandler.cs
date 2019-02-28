@@ -16,7 +16,7 @@ using Zanis.Ostad.Core.Entities.Contents;
 
 namespace Zains.Ostad.Application.Users.Queries.GetBoughtCourses
 {
-    public class GetBoughtCoursesQueryHandler : IRequestHandler<GetBoughtCoursesQuery, List<UserCourseDto>>
+    public class GetBoughtCoursesQueryHandler : IRequestHandler<GetBoughtCoursesQuery, PagenatedList<UserCourseDto>>
     {
         private readonly IRepository<StudentCourseMapping, long> _studentCourseRepo;
         private readonly IWorkContext _workContext;
@@ -27,11 +27,16 @@ namespace Zains.Ostad.Application.Users.Queries.GetBoughtCourses
             _workContext = workContext;
         }
 
-        public Task<List<UserCourseDto>> Handle(GetBoughtCoursesQuery request, CancellationToken cancellationToken)
+        public async Task<PagenatedList<UserCourseDto>> Handle(GetBoughtCoursesQuery request, CancellationToken cancellationToken)
         {
-            return _studentCourseRepo.GetQueriable().Where(x => x.StudentId == _workContext.CurrentUserId)
-                .OrderByDescending(x=>x.Id)
-                .Pagenate(request).Select(x=>x.Course).Select(CourseProfile.ProjectionForUser).ToListAsync(cancellationToken);
+            var querable = _studentCourseRepo.GetQueriable().Where(x => x.StudentId == _workContext.CurrentUserId);
+            return new PagenatedList<UserCourseDto>
+            {
+                Items = await querable
+                    .OrderByDescending(x=>x.Id)
+                    .Pagenate(request).Select(x=>x.Course).Select(CourseProfile.ProjectionForUser).ToListAsync(cancellationToken),
+                AllCount =  querable.Count()
+            };
         }
     }
 }

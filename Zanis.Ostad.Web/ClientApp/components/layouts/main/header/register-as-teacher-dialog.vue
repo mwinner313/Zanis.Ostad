@@ -1,11 +1,11 @@
 <template>
-  <b-modal body-class="login" modal-class="no-padding" id="register-dialog" hide-footer hide-header size="lg">
+  <b-modal body-class="login" modal-class="no-padding" id="register-as-teacher-dialog" hide-footer hide-header size="lg">
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12 col-md-6 login-form">
-          <span @click="$root.$emit('bv::hide::modal', 'register-dialog')" class="modal-close"><i class="fas fa-times"></i></span>
+          <span @click="$root.$emit('bv::hide::modal', 'register-as-teacher-dialog')" class="modal-close"><i class="fas fa-times"></i></span>
           <p class="hint">به بزرگی و کوچکی حروف توجه فرمایید .</p>
-          <button @click.prevent="showTeacherRegisterDialog" >ثبت نام به عنوان استاد</button>
+          <h4>ثبت نام به عنوان استاد</h4>
           <b-form>
             <b-form-group>
               <b-form-input
@@ -23,9 +23,9 @@
             <b-form-group>
               <b-form-input
                 type="text"
-                v-model="form.studentNo"
-                :state="!$v.form.studentNo.$invalid || !doesFormSubmitted"
-                placeholder="شماره دانشجویی "/>
+                v-model="form.teacherOrStudentNo"
+                :state="!$v.form.teacherOrStudentNo.$invalid || !doesFormSubmitted"
+                placeholder="شماره دانشجویی یا کد پرسنلی "/>
               <b-form-invalid-feedback>
                 شماره دانشجویی یک فیلد اجباریست
               </b-form-invalid-feedback>
@@ -109,26 +109,22 @@
       }
     },
     methods: {
-      async showTeacherRegisterDialog() {
-        this.$root.$emit('bv::hide::modal', 'register-dialog');
-        this.$root.$emit('bv::show::modal', 'register-as-teacher-dialog');
-      },
       async onSubmit() {
         this.doesFormSubmitted = true;
         if (this.$v.form.$invalid)
           return;
-        let res = await this.$http.post('/api/account/register', this.form);
-        if(res.data.status==2){
-          this.$toaster.error(res.data.message);
-          this.error=true;
+        let res = await this.$http.post('/api/account/RegisterAsTeacher', this.form);
+        if ( res.data.status == 2 ) {
+          this.$toaster.error(res.data.message,{timeout:2000});
+          this.error = true;
           return;
         }
         this.error=false;
-        storage.setItem('Authorization',res.data.bearerToken);
+        storage.setItem('Authorization' , res.data.bearerToken);
         storage.setItem('user',JSON.stringify(res.data.user));
         EventBus.$emit('user-comes-in',res.data.user);
-        axios.defaults.headers.common['Authorization']=res.data.bearerToken;
-        this.$root.$emit('bv::hide::modal', 'register-dialog');
+        axios.defaults.headers.common['Authorization'] = res.data.bearerToken;
+        this.$root.$emit('bv::hide::modal', 'register-as-teacher-dialog');
         this.$toaster.success('خوش آمدید!');
       }
     },
@@ -139,7 +135,7 @@
     ],
     validations: {
       form: {
-        studentNo: {
+        teacherOrStudentNo: {
           required,
           minLength: minLength(3)
         },

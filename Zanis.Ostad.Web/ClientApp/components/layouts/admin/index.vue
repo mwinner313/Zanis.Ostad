@@ -1,53 +1,33 @@
 <template>
   <el-container class="admin-wrapper">
-    <el-header class="header" style="padding:0px;background-color:#409eff; position:relative">
-      <span class="menu-toggle" @click="toggleSideMenu"><i class="el-icon-menu"></i> </span>
-      <span>استاد زانیس</span>
+    <el-header class="header" style="padding:0px;    background-color: #1fc8db;
+            background-image: linear-gradient(141deg, rgb(93, 122, 226) 0%, rgb(31, 200, 219) 51%, rgb(44, 181, 232) 75%); position:relative">
+      <span class="menu-toggle" @click="toggleSideMenu"><i class="fas fa-bars"></i></span>
+      <router-link to="/">
+        <img :src="logo" height="48" alt=""></router-link>
       <div style="position: absolute;
      left: 23px;
      top: 22px;">
       <span style="cursor:pointer;">
-        <el-badge :value="3" class="item">
-          user   <i class="fas fa-user"></i>
-        </el-badge>
       </span>
       </div>
     </el-header>
     <el-container>
       <el-aside :width="asideWidth">
-        <el-menu default-active="2" ref="sideMenu"  class="el-menu-vertical-demo"
+        <el-menu default-active="2" ref="sideMenu" class="el-menu-vertical-demo"
                  :collapse="isCollapse">
-          <!--<el-submenu index="1">-->
-          <!--<template slot="title">-->
-          <!--<i class="el-icon-location"></i>-->
-          <!--<span slot="title">Navigator One</span>-->
-          <!--</template>-->
-          <!--<el-menu-item-group>-->
-          <!--<span slot="title">Group One</span>-->
-          <!--<el-menu-item index="1-1">item one</el-menu-item>-->
-          <!--<el-menu-item index="1-2">item two</el-menu-item>-->
-          <!--</el-menu-item-group>-->
-          <!--<el-menu-item-group title="Group Two">-->
-          <!--<el-menu-item index="1-3">item three</el-menu-item>-->
-          <!--</el-menu-item-group>-->
-          <!--<el-submenu index="1-4">-->
-          <!--<span slot="title">item four</span>-->
-          <!--<el-menu-item index="1-4-1">item one</el-menu-item>-->
-          <!--</el-submenu>-->
-          <!--</el-submenu>-->
           <router-link to="/admin/dashboard">
             <el-menu-item index="2">
-              <i class="el-icon-menu"></i>
+              <i class="fas fa-tachometer-alt"></i>
               <span slot="title">داشبورد</span>
             </el-menu-item>
           </router-link>
           <router-link to="/admin/tickets">
             <el-menu-item index="1">
-              <i class="el-icon-tickets"></i>
-              <span slot="title">تیکت ها</span>
+              <i class="fas fa-ticket-alt"></i>
+              <span slot="title"> تیکت ها<el-badge v-if="unReadTicketItemCount" :value="unReadTicketItemCount"/></span>
             </el-menu-item>
           </router-link>
-
         </el-menu>
       </el-aside>
       <el-main class="page-content">
@@ -80,9 +60,13 @@
     color: white;
     cursor: pointer;
   }
-.page-content{
-  margin:0px;
-}
+
+  .page-content {
+    background-image: url('/assets/images/mooning.png');
+    background-repeat: repeat;
+    margin: 0px;
+  }
+
   .admin-wrapper {
     width: 100%;
     height: 100%;
@@ -91,27 +75,27 @@
 </style>
 
 <script>
+  import EventBus from '../../../event-bus';
+  import axios from 'axios';
+  import logo from '../../../assets/images/ostad-glass-CMYK.png'
+
   export default {
 
     data() {
       return {
+        logo: logo,
         asideWidth: '200px',
         isCollapse: false,
-        form: {
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
-        }
+        unReadTicketItemCount: undefined,
       };
     },
     mounted() {
       if (window.location.pathname === "/admin")
-        this.$router.push({name: 'dashboard', params: {}})
+        this.$router.push({name: 'admin-dashboard', params: {}});
+      this.loadSideBarNotificationsCount();
+      EventBus.$on('adminOpenedUnReadTicketItem', () => {
+        this.loadUnReadTicketItemsCount()
+      })
     },
     methods: {
       toggleSideMenu() {
@@ -119,8 +103,20 @@
         window.setTimeout(() =>
           this.asideWidth = this.isCollapse ? "67px" : '203px', 100)
       },
-
+      loadSideBarNotificationsCount() {
+        this.loadUnReadTicketItemsCount()
+      },
+      loadUnReadTicketItemsCount() {
+        axios.get('/api/tickets', {params: {pageOffset: 0, pageSize: 1}}).then(res => {
+          this.unReadTicketItemCount = res.data.metaData.unReadTicketItemCount;
+        });
+      }
     },
-
   }
 </script>
+<style>
+  i {
+    font-size: 20px;
+    margin: 5px;
+  }
+</style>

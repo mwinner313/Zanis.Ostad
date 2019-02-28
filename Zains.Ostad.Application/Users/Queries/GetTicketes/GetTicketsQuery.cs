@@ -7,6 +7,6 @@ namespace Zains.Ostad.Application.Users.Queries.GetTicketes
 {
     public class GetTicketsQuery:Pagenation,IRequest<List<TicketListViewModel>>
     {
-     
+        public string Order { get; set; }
     }
 }

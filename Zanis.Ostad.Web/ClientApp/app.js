@@ -20,6 +20,7 @@ import MomentJalali from 'vue-moment-jalaali'
 import registerPersianDateFilter from './persianDateFilter'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
+import './assets/fonts/web-fonts-with-css/css/fontawesome-all.css'
 Vue.use(VueAwesomeSwiper, /* { default global options } */)
 Vue.use(Element,{locale});
 Vue.use(MomentJalali);
@@ -50,7 +51,7 @@ const app = new Vue({
 });
 axios.defaults.headers.common['Authorization'] = storageHelper.getItem('Authorization')
 //  axios.defaults.baseURL = 'http://192.168.8.74:2001';
-axios.defaults.headers.post['Content-Type']='application/json'
+axios.defaults.headers.post['Content-Type']='application/json';
 axios
   .interceptors
   .response

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Zains.Ostad.Application.Infrastucture;
 using Zains.Ostad.Application.Tickets.Dtos;
 using Zains.Ostad.Application.Users.Commands.AddTicket;
 using Zains.Ostad.Application.Users.Commands.AddTicketItem;
@@ -39,6 +40,13 @@ namespace Zanis.Ostad.Web.Controllers.Api
             return Ok(await _mediator.Send(cmd));
         }
 
+        [HttpPost("RegisterAsTeacher")]
+        [AllowAnonymous]
+        public async Task<ActionResult<LoginRegisterResponse>> RegisterAsTeacher([FromBody] RegisterAsTeacherCommand cmd)
+        {
+            return Ok(await _mediator.Send(cmd));
+        }
+
         [HttpPost("Login")]
         [AllowAnonymous]
         public async Task<ActionResult<LoginRegisterResponse>> Login([FromBody] LoginCommand cmd)
@@ -51,6 +59,7 @@ namespace Zanis.Ostad.Web.Controllers.Api
         {
             return Ok(await _mediator.Send(cmd));
         }
+
         [HttpPost("ConfirmChangePassword")]
         [AllowAnonymous]
         public async Task<ActionResult<LoginRegisterResponse>> ConfirmChangePassword([FromBody] ConfirmChangePasswordCommand cmd)
@@ -60,13 +69,13 @@ namespace Zanis.Ostad.Web.Controllers.Api
 
 
         [HttpGet("LessonExams")]
-        public async Task<ActionResult<List<LessonExamDto>>> LessonExams(GetBoughtLessonExamSamplesQuery cmd)
+        public async Task<ActionResult<PagenatedList<LessonExamDto>>> LessonExams(GetBoughtLessonExamSamplesQuery cmd)
         {
             return Ok(await _mediator.Send(cmd));
         }
 
         [HttpGet("Courses")]
-        public async Task<ActionResult<List<UserCourseDto>>> Courses(GetBoughtCoursesQuery cmd)
+        public async Task<ActionResult<PagenatedList<UserCourseDto>>> Courses(GetBoughtCoursesQuery cmd)
         {
             return Ok(await _mediator.Send(cmd));
         }
