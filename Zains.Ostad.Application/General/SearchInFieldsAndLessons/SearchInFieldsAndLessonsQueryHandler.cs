@@ -8,8 +8,7 @@ using Zanis.Ostad.Core.Entities;
 
 namespace Zains.Ostad.Application.General.SearchInFieldsAndLessons
 {
-    public class
-        SearchInFieldsAndLessonsQueryHandler : IRequestHandler<SearchInFieldsAndLessonsQuery, List<SearchResult>>
+    public class  SearchInFieldsAndLessonsQueryHandler : IRequestHandler<SearchInFieldsAndLessonsQuery, List<SearchResult>>
     {
         private readonly IRepository<LessonFieldMapping, long> _lessonFieldRepository;
         private readonly IRepository<Field, int> _fieldRepository;
@@ -24,31 +23,38 @@ namespace Zains.Ostad.Application.General.SearchInFieldsAndLessons
         public async Task<List<SearchResult>> Handle(SearchInFieldsAndLessonsQuery request,
             CancellationToken cancellationToken)
         {
-            request.SearchText = request.SearchText.Trim();
+            request.Term = request.Term.Trim();
             var list = new List<SearchResult>();
-            var grades = _fieldRepository.GetQueriable().Where(x => x.Name.Contains(request.SearchText)).Select(x =>
-                new SearchResult
-                {
-                    Id = x.Id,
-                    Type = SearchItemType.Field,
-                    Title = x.Name,
-                    Grade = x.Grade.Name
-                });
-            list.AddRange(grades);
-            var lessons = _lessonFieldRepository.GetQueriable()
-                .Where(x => x.Lesson.LessonName.Contains(request.SearchText)).GroupBy(x => new
-                {
-                    x.Grade.Name,
-                    x.Lesson.LessonCode
-                }).Select(x => new SearchResult
-                {
-                    Id = x.First().Id,
-                    Type = SearchItemType.Lesson,
-                    Title = x.First().Lesson.LessonName,
-                    Fields = x.Select(l => l.Field.Name).ToList(),
-                    Grade = x.Key.Name
-                });
-            list.AddRange(lessons);
+            if (!request.Type.HasValue || request.Type == SearchItemType.Field)
+            {
+                var fields = _fieldRepository.GetQueriable().Where(x => x.Name.Contains(request.Term)).Select(x =>
+                    new SearchResult
+                    {
+                        Id = x.Id,
+                        Type = SearchItemType.Field,
+                        Title = x.Name,
+                        Grade = x.Grade.Name
+                    });
+                list.AddRange(fields);
+            }
+
+            if (!request.Type.HasValue || request.Type == SearchItemType.Lesson)
+            {
+                var lessons = _lessonFieldRepository.GetQueriable()
+                    .Where(x => x.Lesson.LessonName.Contains(request.Term)).GroupBy(x => new
+                    {
+                        x.Grade.Name,
+                        x.Lesson.LessonCode
+                    }).Select(x => new SearchResult
+                    {
+                        Id = x.First().Id,
+                        Type = SearchItemType.Lesson,
+                        Title = x.First().Lesson.LessonName,
+                        Fields = x.Select(l => l.Field.Name).ToList(),
+                        Grade = x.Key.Name
+                    });
+                list.AddRange(lessons);
+            }
             return list;
         }
     }
