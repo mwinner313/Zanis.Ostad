@@ -9,6 +9,7 @@ using Zains.Ostad.Application.Lessons.Queries.GetLesson;
 using Zains.Ostad.Application.Lessons.Queries.GetLessonList;
 using Zains.Ostad.Application.Users.Dto;
 using Zanis.Ostad.Core.Entities;
+using Zanis.Ostad.Core.Entities.Contents;
 
 namespace Zains.Ostad.Application.AutoMapperProfiles
 {
@@ -44,7 +45,8 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
                         FilePath = e.ExamSampleFile.FilePath,
                         SemesterTitle = e.ExamSampleFile.Semester.Title,
                     }).ToList(),
-                    Courses = x.Lesson.Fields.SelectMany(f => f.TeacherLessonMappings.SelectMany(tl => tl.Courses))
+                    Courses = x.Lesson.Fields.SelectMany(f => f.TeacherLessonMappings.SelectMany(tl =>
+                            tl.Courses.Where(c => c.ApprovalStatus == CourseApprovalStatus.ApprovedByAdminOrActivatedByTeacher)))
                         .Select(c =>
                             new CourseDto
                             {

@@ -1,6 +1,5 @@
 using System.Linq;
 using System.Threading.Tasks;
-using Zanis.Ostad.Core.Entities.Tickets;
 using Zanis.Ostad.Core.Infrastucture;
 
 namespace Zanis.Ostad.Core.Contracts

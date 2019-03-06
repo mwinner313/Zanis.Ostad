@@ -8,7 +8,6 @@ using Zains.Ostad.Application.Carts.Commands;
 using Zains.Ostad.Application.Carts.Dto;
 using Zains.Ostad.Application.Carts.Queries;
 using Zanis.Ostad.Core.Dtos;
-using Zanis.Ostad.Web.Infrastracture;
 
 namespace Zanis.Ostad.Web.Controllers.Api
 {

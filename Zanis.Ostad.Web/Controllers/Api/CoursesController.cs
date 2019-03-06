@@ -1,8 +1,14 @@
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Zains.Ostad.Application.Courses.Commands.AddCourseItem;
+using Zains.Ostad.Application.Courses.Commands.ChangeApprovalStatus;
 using Zains.Ostad.Application.Courses.Dtos;
 using Zains.Ostad.Application.Courses.Queries.GetCourseDetails;
+using Zains.Ostad.Application.Courses.Queries.GetCourseList;
+using Zains.Ostad.Application.Infrastucture;
+using Zanis.Ostad.Core.Dtos;
 using Zanis.Ostad.Web.Infrastracture;
 
 namespace Zanis.Ostad.Web.Controllers.Api
@@ -25,6 +31,39 @@ namespace Zanis.Ostad.Web.Controllers.Api
                 CourseId = id,
                 CurrentUserId =  User.GetId()
             }));
+        }
+
+        [Authorize(Roles = "Operator,Admin")]
+        [HttpGet]
+        public async Task<ActionResult<PagenatedList<CourseDto>>> Get(GetCourseListQuery query)
+        {
+            return Ok(await _mediator.Send(query));
+        }
+
+        [Authorize(Roles = "Operator,Admin")]
+        [HttpPost]
+        public async Task<ActionResult> PostCourseItem([FromForm]AddCourseItemCommand cmd)
+        {
+            return Ok(await _mediator.Send(cmd));
+        }
+        [Authorize(Roles = "Operator,Admin")]
+        [HttpPut]
+        public async Task<ActionResult> PutCourseItem([FromForm] EditCourseItemCommand cmd)
+        {
+            return Ok(await _mediator.Send(cmd));
+        }
+        [Authorize(Roles = "Operator,Admin")]
+        [HttpGet("overview")]
+        public async Task<ActionResult<AllCoursesOverViewQuery>> GetOverview(GetAllCoursesOverView query)
+        {
+            return Ok(await _mediator.Send(query));
+        }
+
+        [Authorize(Roles = "Operator,Admin")]
+        [HttpPatch("change_approval_status")]
+        public async Task<ActionResult<Response>> ChangeStatus(ChangeCourseApprovalStatusCommand cmd)
+        {
+            return Ok(await _mediator.Send(cmd));
         }
     }
 }

@@ -7,8 +7,10 @@ namespace Zanis.Ostad.Core.Entities.Contents
         public string Title { get; set; }
         public string FilePath { get; set; }
         public ContentType ContentType { get; set; }
+        public CourseItemApprovalState State { get; set; }
         public bool IsPreview { get; set; }
         public Course Course { get; set; }
         public long CourseId { get; set; }
+        public int Order { get; set; }
     }
 }

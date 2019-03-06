@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Zains.Ostad.Application.Courses.Commands.AddCourseItem;
 using Zains.Ostad.Application.Courses.Dtos;
 using Zains.Ostad.Application.Infrastucture;
 using Zains.Ostad.Application.Teachers.Commands.ActiveDeactiveCourse;
@@ -38,7 +39,13 @@ namespace Zanis.Ostad.Web.Controllers.Api
         }
 
         [HttpPost("courses")]
-        public async Task<ActionResult<PagenatedList<CourseDto>>> AddCourse([FromBody]AddCourseCommand cmd)
+        public async Task<ActionResult<PagenatedList<CourseDto>>> AddCourse([FromForm]AddCourseCommand cmd)
+        {
+            return Ok(await _mediator.Send(cmd));
+        }
+
+        [HttpPost("courses/courseItems")]
+        public async Task<ActionResult<PagenatedList<CourseDto>>> AddCourseItem([FromForm]UpdateCourseItemByTeacherCommand cmd)
         {
             return Ok(await _mediator.Send(cmd));
         }
@@ -49,16 +56,16 @@ namespace Zanis.Ostad.Web.Controllers.Api
             return Ok(await _mediator.Send(cmd));
         }
 
-        [HttpPatch("courses/deactive")]
-        public async Task<ActionResult<PagenatedList<CourseDto>>> DeactiveCourse(DeactiveCourseCommand cmd)
+        [HttpPatch("courses/{id}/deactive")]
+        public async Task<ActionResult<PagenatedList<CourseDto>>> DeactiveCourse(long id)
         {
-            return Ok(await _mediator.Send(cmd));
+            return Ok(await _mediator.Send(new DeactiveCourseCommand{CourseId = id}));
         }
 
-        [HttpPatch("courses/active")]
-        public async Task<ActionResult<PagenatedList<CourseDto>>> ActiveCourse(DeactiveCourseCommand cmd)
+        [HttpPatch("courses/{id}/active")]
+        public async Task<ActionResult<PagenatedList<CourseDto>>> ActiveCourse(long id)
         {
-            return Ok(await _mediator.Send(cmd));
+            return Ok(await _mediator.Send(new ActiveCourseCommand{CourseId = id}));
         }
     }
 }

@@ -30,11 +30,14 @@ namespace Zains.Ostad.Application.Courses.Queries.GetCourseDetails
 
         public async Task<CourseDto> Handle(GetCourseDetailsQuery request, CancellationToken cancellationToken)
         {
-            var course = _courseRepository.GetQueriable().Select(CourseProfile.Projection)
+            var course = _courseRepository.GetQueriable()
+                .Select(CourseProfile.Projection)
                 .First(x => x.Id == request.CourseId);
+
             if (request.CurrentUserId.HasValue)
                 course.IsOwnedByCurrentUser = _studentCoursesRepo.GetQueriable().Any(x =>
                     x.CourseId == request.CourseId && x.StudentId == request.CurrentUserId.Value);
+            
             course.RelatedFields = _lessonFieldMappingRepo.GetQueriable().Where(x =>
                     x.Lesson.LessonCode == course.LessonCode && x.Grade.Name == course.GradeTitle)
                 .Select(x => x.Field.Name)

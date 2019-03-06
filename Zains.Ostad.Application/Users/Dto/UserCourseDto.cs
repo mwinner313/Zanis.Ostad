@@ -12,6 +12,6 @@ namespace Zains.Ostad.Application.Users.Dto
         public string Description { get; set; }
         public string Teacher { get; set; }
         public string Title { get; set; }
-        public List<CourseItemVeiwModel> Contents { get; set; }
+        public List<CourseItemViewModel> Contents { get; set; }
     }
 }

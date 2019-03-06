@@ -20,6 +20,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 using Zains.Ostad.Application.Colleges.Queries.GetCollegeList;
+using Zains.Ostad.Application.Courses;
 using Zains.Ostad.Application.Users;
 using Zanis.Ostad.Common;
 using Zanis.Ostad.Core.Contracts;
@@ -81,6 +82,7 @@ namespace Zanis.Ostad.Web
             services.AddScoped<UserManager<User>, AppUserManager>();
             services.AddScoped<IAppRoleManager, AppRoleManager>();
             services.AddScoped<IAppUserManager, AppUserManager>();
+            services.AddScoped<ICoursesFileManager, CoursesFileManager>();
             services.Configure<IdentityOptions>(options =>
             {
                 options.Tokens.ChangePhoneNumberTokenProvider = "Phone";

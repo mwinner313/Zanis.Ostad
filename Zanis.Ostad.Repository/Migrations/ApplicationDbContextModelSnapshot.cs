@@ -181,13 +181,21 @@ namespace Zanis.Ostad.Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ApprovalStatus");
+
                     b.Property<int>("CourseTitleId");
 
+                    b.Property<DateTime>("CreatedOn");
+
                     b.Property<string>("Description");
+
+                    b.Property<int>("PendingToApproveItemsCount");
 
                     b.Property<int>("Price");
 
                     b.Property<long>("TeacherLessonMappingId");
+
+                    b.Property<string>("ZipFilesPath");
 
                     b.HasKey("Id");
 
@@ -211,6 +219,10 @@ namespace Zanis.Ostad.Repository.Migrations
                     b.Property<string>("FilePath");
 
                     b.Property<bool>("IsPreview");
+
+                    b.Property<int>("Order");
+
+                    b.Property<int>("State");
 
                     b.Property<string>("Title");
 

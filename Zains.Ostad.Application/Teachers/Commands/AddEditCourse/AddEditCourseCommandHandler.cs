@@ -1,28 +1,171 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Zains.Ostad.Application.Courses.Dtos;
 using Zanis.Ostad.Core.Contracts;
 using Zanis.Ostad.Core.Dtos;
 using Zanis.Ostad.Core.Entities.Contents;
 
 namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
 {
-    public class AddEditCourseCommandHandler:IRequestHandler<EditCourseCommand,Response>,IRequestHandler<AddCourseCommand,Response>
+    public class AddEditCourseCommandHandler : IRequestHandler<EditCourseCommand, Response>,
+        IRequestHandler<AddCourseCommand, Response>,
+        IRequestHandler<UpdateCourseItemByTeacherCommand, Response<CourseItemViewModel>>
     {
         private readonly IRepository<Course, long> _courseRepository;
-        public AddEditCourseCommandHandler(IRepository<Course, long> courseRepository)
+        private readonly IRepository<TeacherLessonMapping, long> _teacherLessonMappingRepo;
+        private readonly IWorkContext _workContext;
+        private readonly IMapper _mapper;
+        private readonly IRepository<CourseItem, long> _courseItemRepository;
+        private readonly ICoursesFileManager _coursesFileManager;
+        private readonly IUnitOfWork _unitOfWork;
+        private TeacherLessonMapping _teacherLessonMapping;
+
+        public AddEditCourseCommandHandler(IRepository<Course, long> courseRepository,
+            IRepository<TeacherLessonMapping, long> teacherLessonMappingRepo, IWorkContext workContext,
+            ICoursesFileManager coursesFileManager, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _courseRepository = courseRepository;
+            _teacherLessonMappingRepo = teacherLessonMappingRepo;
+            _workContext = workContext;
+            _coursesFileManager = coursesFileManager;
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
-        public Task<Response> Handle(AddCourseCommand request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(AddCourseCommand request, CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            var teacherLessonMapping = await GetTeacherLessonMapping(request.LessonFieldId);
+            var course = CreateCourseData(request, teacherLessonMapping);
+            await _coursesFileManager.SaveFile(request.ZipFile, teacherLessonMapping);
+            await _courseRepository.AddAsync(course);
+            return Response.Success();
         }
-        
-        public Task<Response> Handle(EditCourseCommand request, CancellationToken cancellationToken)
+
+        private Course CreateCourseData(AddCourseCommand request, TeacherLessonMapping teacherLessonMapping)
         {
-            throw new System.NotImplementedException();
+            return new Course
+            {
+                Price = request.Price,
+                Description = request.Description,
+                CourseTitleId = request.CourseTitleId,
+                TeacherLessonMappingId = teacherLessonMapping.Id,
+                ZipFilesPath = _coursesFileManager.GetFilePath(request.ZipFile, teacherLessonMapping)
+            };
+        }
+
+        private async Task<TeacherLessonMapping> GetTeacherLessonMapping(long lessonFieldId)
+        {
+            if (_teacherLessonMapping != null && _teacherLessonMapping.LessonId == lessonFieldId)
+                return _teacherLessonMapping;
+            _teacherLessonMapping = _teacherLessonMappingRepo.GetQueriable()
+                                        .Include(x => x.Teacher)
+                                        .Include(x => x.LessonFieldMapping)
+                                        .Include(x => x.LessonFieldMapping.Field)
+                                        .Include(x => x.LessonFieldMapping.Lesson)
+                                        .Include(x => x.LessonFieldMapping.Grade)
+                                        .FirstOrDefault(x =>
+                                            x.TeacherId == _workContext.CurrentUserId &&
+                                            x.LessonId == lessonFieldId) ??
+                                    await CreateNewTeacherLessonMapping(lessonFieldId,
+                                        _workContext.CurrentUserId);
+            return _teacherLessonMapping;
+        }
+
+        private async Task<TeacherLessonMapping> CreateNewTeacherLessonMapping(long lessonFieldId,
+            long teacherId)
+        {
+            var mapping = new TeacherLessonMapping
+            {
+                TeacherId = teacherId,
+                LessonId = lessonFieldId
+            };
+            await _teacherLessonMappingRepo.AddAsync(mapping);
+            return _teacherLessonMappingRepo.GetQueriable()
+                .Include(x => x.Teacher)
+                .Include(x => x.LessonFieldMapping)
+                .Include(x => x.LessonFieldMapping.Field)
+                .Include(x => x.LessonFieldMapping.Lesson)
+                .Include(x => x.LessonFieldMapping.Grade)
+                .First(x => x.Id == mapping.Id);
+        }
+
+        public async Task<Response> Handle(EditCourseCommand request, CancellationToken cancellationToken)
+        {
+            var course = await _courseRepository.GetById(request.CourseId);
+            var teacherLessonMapping = await GetTeacherLessonMapping(request.LessonFieldId);
+            course.Price = request.Price;
+            course.Description = request.Description;
+            course.CourseTitleId = request.CourseTitleId;
+            course.TeacherLessonMappingId = teacherLessonMapping.Id;
+            await _courseRepository.EditAsync(course);
+            return Response.Success();
+        }
+
+        private ContentType GetContentType(string contentType)
+        {
+            switch (contentType)
+            {
+                case ".mp4": return ContentType.Video;
+                case ".pdf": return ContentType.File;
+                default: throw new ArgumentOutOfRangeException(contentType);
+            }
+        }
+
+        public async Task<Response<CourseItemViewModel>> Handle(UpdateCourseItemByTeacherCommand request,
+            CancellationToken cancellationToken)
+        {
+            var item = await _courseItemRepository.GetById(request.Id);
+            var course = await _courseRepository.GetById(item.CourseId);
+            course.PendingToApproveItemsCount  += 1;
+            MapRequestToCourseItemProperties(request, item);
+            try
+            {
+                await HandleUploadedFileAndItemFilePath(request, item);
+                await UpdateData(course, item);
+            }
+            catch (Exception e)
+            {
+                _unitOfWork.RollBack();
+               return Response<CourseItemViewModel>.Failed();
+            }
+            return Response<CourseItemViewModel>.Success(_mapper.Map<CourseItemViewModel>(item));
+        }
+
+        private async Task UpdateData(Course course, CourseItem item)
+        {
+            _unitOfWork.Begin();
+            await _courseRepository.EditAsync(course);
+            await _courseItemRepository.EditAsync(item);
+            _unitOfWork.Commit();
+        }
+
+        private void MapRequestToCourseItemProperties(UpdateCourseItemByTeacherCommand request, CourseItem item)
+        {
+            item.Order = request.Order;
+            item.Title = request.Title;
+            item.State = CourseItemApprovalState.PendingToApproveByAdmin;
+            item.IsPreview = request.IsPreview;
+            item.ContentType = GetContentType(request.File.ContentType);
+        }
+
+        private async Task HandleUploadedFileAndItemFilePath(UpdateCourseItemByTeacherCommand request, CourseItem item)
+        {
+            if (request.File != null)
+            {
+                _coursesFileManager.DeleteFile(item.FilePath);
+                await _coursesFileManager.SaveFile(request.File, item.CourseId);
+                item.FilePath = await _coursesFileManager.GetFilePath(request.File, item.CourseId);
+            }
         }
     }
 }
