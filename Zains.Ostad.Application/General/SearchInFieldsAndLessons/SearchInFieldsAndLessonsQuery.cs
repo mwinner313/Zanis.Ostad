@@ -5,6 +5,7 @@ namespace Zains.Ostad.Application.General.SearchInFieldsAndLessons
 {
     public class SearchInFieldsAndLessonsQuery:IRequest<List<SearchResult>>
     {
-        public string SearchText { get; set; }
+        public string Term { get; set; }
+        public SearchItemType? Type { get; set; }
     }
 }

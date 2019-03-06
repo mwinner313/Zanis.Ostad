@@ -22,9 +22,9 @@ namespace Zanis.Ostad.Web.Controllers.Api
             _configuration = configuration;
         }
         [HttpGet("Search")]
-        public async Task<ActionResult<List<SearchResult>>> Search([FromQuery]string term)
+        public async Task<ActionResult<List<SearchResult>>> Search([FromQuery]SearchInFieldsAndLessonsQuery query)
         {
-            return Ok(await _mediator.Send(new SearchInFieldsAndLessonsQuery {SearchText = term}));
+            return Ok(await _mediator.Send(query));
         }
         [HttpGet("AndroidAppVersion")]
         public async Task<ActionResult> AndroidAppVersion()
