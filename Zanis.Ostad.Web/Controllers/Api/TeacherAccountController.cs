@@ -44,8 +44,13 @@ namespace Zanis.Ostad.Web.Controllers.Api
             return Ok(await _mediator.Send(cmd));
         }
 
+        [HttpPut("courses/courseItems")]
+        public async Task<ActionResult<PagenatedList<CourseDto>>> UpdateCourseItem([FromForm]UpdateCourseItemByTeacherCommand cmd)
+        {
+            return Ok(await _mediator.Send(cmd));
+        }
         [HttpPost("courses/courseItems")]
-        public async Task<ActionResult<PagenatedList<CourseDto>>> AddCourseItem([FromForm]UpdateCourseItemByTeacherCommand cmd)
+        public async Task<ActionResult<PagenatedList<CourseDto>>> UpdateCourseItem([FromForm]AddCourseItemByTeacherCommand cmd)
         {
             return Ok(await _mediator.Send(cmd));
         }

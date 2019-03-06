@@ -17,9 +17,11 @@ using Zanis.Ostad.Core.Entities.Contents;
 
 namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
 {
-    public class AddEditCourseCommandHandler : IRequestHandler<EditCourseCommand, Response>,
+    public class AddEditCourseCommandHandler : 
+        IRequestHandler<EditCourseCommand, Response>,
         IRequestHandler<AddCourseCommand, Response>,
-        IRequestHandler<UpdateCourseItemByTeacherCommand, Response<CourseItemViewModel>>
+        IRequestHandler<UpdateCourseItemByTeacherCommand, Response<CourseItemViewModel>>,
+        IRequestHandler<AddCourseItemByTeacherCommand, Response<CourseItemViewModel>>
     {
         private readonly IRepository<Course, long> _courseRepository;
         private readonly IRepository<TeacherLessonMapping, long> _teacherLessonMappingRepo;
@@ -120,13 +122,37 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
                 default: throw new ArgumentOutOfRangeException(contentType);
             }
         }
+        public async Task<Response<CourseItemViewModel>> Handle(AddCourseItemByTeacherCommand request, CancellationToken cancellationToken)
+        {
+            var course = await _courseRepository.GetById(request.CourseId);
+            course.PendingToApproveItemsCount  += 1;
+            var item = new CourseItem
+            {
+                Order = request.Order,
+                CourseId = request.CourseId,
+                State = CourseItemApprovalState.PendingToApproveByAdmin,
+                Title = request.Title,
+                IsPreview = request.IsPreview,
+                
+            };
+            
+            if (request.File != null)
+            {
+                await _coursesFileManager.SaveFile(request.File, item.CourseId);
+                item.FilePath = await _coursesFileManager.GetFilePath(request.File, item.CourseId);
+                item.ContentType = GetContentType(request.File.ContentType);
+            }
 
+            await _courseItemRepository.AddAsync(item);
+            await _courseRepository.EditAsync(course);
+            return Response<CourseItemViewModel>.Success(_mapper.Map<CourseItemViewModel>(item));
+        }
         public async Task<Response<CourseItemViewModel>> Handle(UpdateCourseItemByTeacherCommand request,
             CancellationToken cancellationToken)
         {
             var item = await _courseItemRepository.GetById(request.Id);
             var course = await _courseRepository.GetById(item.CourseId);
-            course.PendingToApproveItemsCount  += 1;
+            course.PendingToApproveItemsCount += 1;
             MapRequestToCourseItemProperties(request, item);
             try
             {
@@ -155,7 +181,6 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
             item.Title = request.Title;
             item.State = CourseItemApprovalState.PendingToApproveByAdmin;
             item.IsPreview = request.IsPreview;
-            item.ContentType = GetContentType(request.File.ContentType);
         }
 
         private async Task HandleUploadedFileAndItemFilePath(UpdateCourseItemByTeacherCommand request, CourseItem item)
@@ -165,7 +190,10 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
                 _coursesFileManager.DeleteFile(item.FilePath);
                 await _coursesFileManager.SaveFile(request.File, item.CourseId);
                 item.FilePath = await _coursesFileManager.GetFilePath(request.File, item.CourseId);
+                item.ContentType = GetContentType(request.File.ContentType);
             }
         }
+
+       
     }
 }
