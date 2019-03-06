@@ -1,15 +1,6 @@
 <template>
   <el-card>
-    <el-pagination
-      class="pagenation"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page.sync="query.currentPage"
-      :page-sizes="[10,15,20,30]"
-      :page-size="query.pageSize"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="meta.allCount">
-    </el-pagination>
+   اطلاعات مورد نیاز
   </el-card>
 </template>
 
