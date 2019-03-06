@@ -15,7 +15,8 @@
       <el-table-column label="عنوان">
         <template slot-scope="scope">
           {{scope.row.ticketReason}}
-          <el-badge style="margin-top: 14px;" v-if="scope.row.ticketOwnerUnReadedMessagesCount" :value="scope.row.ticketOwnerUnReadedMessagesCount"/>
+          <el-badge style="margin-top: 14px;" v-if="scope.row.ticketOwnerUnReadedMessagesCount"
+                    :value="scope.row.ticketOwnerUnReadedMessagesCount"/>
         </template>
       </el-table-column>
 

@@ -149,7 +149,7 @@
         this.isLoading = true;
         axios.get('/api/tickets',{params:this.query}).then(res => {
           this.tableData = res.data.items;
-          this.meta=res.data.metaData
+          this.meta=res.data.metaData;
           this.isLoading = false;
         })
       },
