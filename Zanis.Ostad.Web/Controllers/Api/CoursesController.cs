@@ -41,17 +41,19 @@ namespace Zanis.Ostad.Web.Controllers.Api
         }
 
         [Authorize(Roles = "Operator,Admin")]
-        [HttpPost]
+        [HttpPost("courseItem")]
         public async Task<ActionResult> PostCourseItem([FromForm]AddCourseItemCommand cmd)
         {
             return Ok(await _mediator.Send(cmd));
         }
+
         [Authorize(Roles = "Operator,Admin")]
-        [HttpPut]
+        [HttpPut("courseItem")]
         public async Task<ActionResult> PutCourseItem([FromForm] EditCourseItemCommand cmd)
         {
             return Ok(await _mediator.Send(cmd));
         }
+
         [Authorize(Roles = "Operator,Admin")]
         [HttpGet("overview")]
         public async Task<ActionResult<AllCoursesOverViewQuery>> GetOverview(GetAllCoursesOverView query)
