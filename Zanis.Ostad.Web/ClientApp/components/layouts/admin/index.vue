@@ -31,7 +31,7 @@
           <router-link to="/admin/AdminListCourse">
             <el-menu-item index="3">
               <i class="fas fa-ticket-alt"></i>
-              <span slot="title"> لیست دورهای ثبت شده</span>
+              <span slot="title">دوره ها</span>
             </el-menu-item>
           </router-link>
         </el-menu>

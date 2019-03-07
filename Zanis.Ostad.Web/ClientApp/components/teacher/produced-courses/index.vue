@@ -65,13 +65,6 @@
       changeitem() {
 
       },
-     /* uploader setting section*/
-      handleRemove(file,fileList){
-        console.log(file);
-      },
-      handlePreview(file){
-
-      }
     },
     mounted() {
       this.GetCourceTitle();
