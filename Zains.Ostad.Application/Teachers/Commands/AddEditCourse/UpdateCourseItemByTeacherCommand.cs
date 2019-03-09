@@ -12,5 +12,6 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
         public string Title { get; set; }
         public int Order { get; set; }
         public IFormFile File { get; set; }
+        public string TeacherMessageForAdmin { get; set; }
     }
 }

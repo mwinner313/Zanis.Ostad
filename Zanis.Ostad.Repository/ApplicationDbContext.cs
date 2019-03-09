@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Zanis.Ostad.Core.Entities;
 using Zanis.Ostad.Core.Entities.AndroidApp;
 using Zanis.Ostad.Core.Entities.Contents;
+using Zanis.Ostad.Core.Entities.Notifications;
 using Zanis.Ostad.Core.Entities.Orders;
 using Zanis.Ostad.Core.Entities.Tickets;
 
@@ -53,5 +54,6 @@ namespace Zanis.Ostad.Repository
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<AppVersion> AppVersions { get; set; }
         public DbSet<AppVersionFeature> AppVersionFeatures { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
     }
 }

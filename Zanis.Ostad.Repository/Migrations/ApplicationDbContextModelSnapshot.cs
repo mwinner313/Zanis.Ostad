@@ -181,11 +181,11 @@ namespace Zanis.Ostad.Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("AdminMessageForTeacher");
+
                     b.Property<int>("ApprovalStatus");
 
                     b.Property<int>("CourseTitleId");
-
-                    b.Property<DateTime>("CreatedOn");
 
                     b.Property<string>("Description");
 
@@ -194,6 +194,8 @@ namespace Zanis.Ostad.Repository.Migrations
                     b.Property<int>("Price");
 
                     b.Property<long>("TeacherLessonMappingId");
+
+                    b.Property<string>("TeacherMessageForAdmin");
 
                     b.Property<string>("ZipFilesPath");
 
@@ -212,6 +214,8 @@ namespace Zanis.Ostad.Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("AdminMessageForTeacher");
+
                     b.Property<int>("ContentType");
 
                     b.Property<long>("CourseId");
@@ -223,6 +227,8 @@ namespace Zanis.Ostad.Repository.Migrations
                     b.Property<int>("Order");
 
                     b.Property<int>("State");
+
+                    b.Property<string>("TeacherMessageForAdmin");
 
                     b.Property<string>("Title");
 
@@ -381,6 +387,29 @@ namespace Zanis.Ostad.Repository.Migrations
                     b.HasIndex("LessonId");
 
                     b.ToTable("LessonFieldMappings");
+                });
+
+            modelBuilder.Entity("Zanis.Ostad.Core.Entities.Notifications.Notification", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("IsSeen");
+
+                    b.Property<string>("JsonExtraData");
+
+                    b.Property<long>("ReceiverId");
+
+                    b.Property<int>("RelatedItemType");
+
+                    b.Property<string>("Text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReceiverId");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("Zanis.Ostad.Core.Entities.Orders.Order", b =>
@@ -795,6 +824,14 @@ namespace Zanis.Ostad.Repository.Migrations
                         .WithMany("Fields")
                         .HasForeignKey("LessonId")
                         .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Zanis.Ostad.Core.Entities.Notifications.Notification", b =>
+                {
+                    b.HasOne("Zanis.Ostad.Core.Entities.User", "Receiver")
+                        .WithMany()
+                        .HasForeignKey("ReceiverId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Zanis.Ostad.Core.Entities.Orders.Order", b =>

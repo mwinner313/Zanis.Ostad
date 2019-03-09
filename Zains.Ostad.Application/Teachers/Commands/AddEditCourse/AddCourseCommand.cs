@@ -10,6 +10,7 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
     {
         public int Price { get; set; }
         public string Description { get; set; }
+        public string TeacherMessageForAdmin { get; set; }
         public int CourseTitleId { get; set; }
         public long LessonFieldId { get; set; }
         public IFormFile ZipFile { get; set; }

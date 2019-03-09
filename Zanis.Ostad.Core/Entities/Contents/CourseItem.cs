@@ -12,5 +12,7 @@ namespace Zanis.Ostad.Core.Entities.Contents
         public Course Course { get; set; }
         public long CourseId { get; set; }
         public int Order { get; set; }
+        public string AdminMessageForTeacher { get; set; }
+        public string TeacherMessageForAdmin { get; set; }
     }
 }

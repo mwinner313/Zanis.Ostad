@@ -34,7 +34,7 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
 
         public AddEditCourseCommandHandler(IRepository<Course, long> courseRepository,
             IRepository<TeacherLessonMapping, long> teacherLessonMappingRepo, IWorkContext workContext,
-            ICoursesFileManager coursesFileManager, IMapper mapper, IUnitOfWork unitOfWork)
+            ICoursesFileManager coursesFileManager, IMapper mapper, IUnitOfWork unitOfWork, IRepository<CourseItem, long> courseItemRepository)
         {
             _courseRepository = courseRepository;
             _teacherLessonMappingRepo = teacherLessonMappingRepo;
@@ -42,6 +42,7 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
             _coursesFileManager = coursesFileManager;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _courseItemRepository = courseItemRepository;
         }
 
         public async Task<Response> Handle(AddCourseCommand request, CancellationToken cancellationToken)
@@ -61,6 +62,7 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
                 Description = request.Description,
                 CourseTitleId = request.CourseTitleId,
                 TeacherLessonMappingId = teacherLessonMapping.Id,
+                AdminMessageForTeacher = request.TeacherMessageForAdmin,
                 ZipFilesPath = _coursesFileManager.GetFilePath(request.ZipFile, teacherLessonMapping)
             };
         }
@@ -106,6 +108,8 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
             var course = await _courseRepository.GetById(request.CourseId);
             var teacherLessonMapping = await GetTeacherLessonMapping(request.LessonFieldId);
             course.Price = request.Price;
+            course.ApprovalStatus = CourseApprovalStatus.PendingToApproveByAdmin;
+            course.TeacherMessageForAdmin = request.TeacherMessageForAdmin;
             course.Description = request.Description;
             course.CourseTitleId = request.CourseTitleId;
             course.TeacherLessonMappingId = teacherLessonMapping.Id;
@@ -130,10 +134,10 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
             {
                 Order = request.Order,
                 CourseId = request.CourseId,
+                TeacherMessageForAdmin = request.TeacherMessageForAdmin,
                 State = CourseItemApprovalState.PendingToApproveByAdmin,
                 Title = request.Title,
                 IsPreview = request.IsPreview,
-                
             };
             
             if (request.File != null)
@@ -179,6 +183,7 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
         {
             item.Order = request.Order;
             item.Title = request.Title;
+            item.TeacherMessageForAdmin = request.TeacherMessageForAdmin;
             item.State = CourseItemApprovalState.PendingToApproveByAdmin;
             item.IsPreview = request.IsPreview;
         }
