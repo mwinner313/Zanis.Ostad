@@ -10,7 +10,7 @@
           <el-select v-model="query.categoryId" @change="loadData" placeholder="بخش">
             <el-option
               label="همه"
-              value="">
+              value="">x
             </el-option>
             <el-option  v-for="cat in ticketCategories"
                :key="cat.id"

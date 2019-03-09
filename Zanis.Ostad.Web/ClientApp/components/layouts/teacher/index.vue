@@ -3,8 +3,7 @@
     <el-header
       class="header"
       style="padding:0px;    background-color: #1fc8db;
-            background-image: linear-gradient(141deg, rgb(93, 122, 226) 0%, rgb(31, 200, 219) 51%, rgb(44, 181, 232) 75%); position:relative"
-    >
+            background-image: linear-gradient(141deg, rgb(93, 122, 226) 0%, rgb(31, 200, 219) 51%, rgb(44, 181, 232) 75%); position:relative">
       <span class="menu-toggle" @click="toggleSideMenu">
         <i class="fas fa-bars"></i>
       </span>
