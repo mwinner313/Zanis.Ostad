@@ -6,14 +6,14 @@ import CourseDetails from '../components/home/course-details'
 import AdminLayout from '../components/layouts/admin'
 import AdminDashboard from '../components/admin/dashboard'
 import AdminTickets from '../components/admin/tickets'
-import AdminListCourse from '../components/admin/listCourse'
 import ChangePassword from '../components/home/change-password'
 import UserTickets from '../components/user/tickets'
 import UserExamSamples from '../components/user/exam-samples'
 import UserCourses from '../components/user/courses'
 import UserDashboard from '../components/user/dashboard'
-import ProducedCourses from '../components/teacher/produced-courses'
+
 import TeacherDashboard from '../components/teacher/dashboard'
+import teacherListCourse from '../components/teacher/listCourse'
 import UserLayout from '../components/layouts/user'
 import TeacherLayout from '../components/layouts/teacher'
 
@@ -61,11 +61,7 @@ export const routes = [
         path: "tickets",
         component: AdminTickets
       },
-      {
-        name:"AdminListCourse",
-        path:"AdminListCourse",
-        component:AdminListCourse
-      },
+      
       {path: "*", redirect: 'dashboard'}
     ]
   }, {
@@ -117,10 +113,11 @@ export const routes = [
         path: "exam-samples",
         component: UserExamSamples
       },
+     
       {
-        name: "teacher-produced-courses",
-        path: "produced-courses",
-        component: ProducedCourses
+        name:"teacherListCourse",
+        path:"teacherListCourse",
+        component:teacherListCourse
       },
       {path: "*", redirect: 'dashboard'}
     ]
