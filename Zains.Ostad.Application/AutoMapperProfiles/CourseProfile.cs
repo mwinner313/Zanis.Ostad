@@ -32,7 +32,6 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
             Contents = x.Contents.Select(c => new CourseItemViewModel
             {
                 Id = c.Id,
-                
                 Title = c.Title,
                 ContentType = c.ContentType,
                 FilePath = c.FilePath,
@@ -41,7 +40,7 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
                 IsPreview = c.IsPreview,
                 AdminMessageForTeacher = c.AdminMessageForTeacher,
                 TeacherMessageForAdmin = c.TeacherMessageForAdmin,
-                Order = c.Order,
+                Order = c.Order
             }).ToList()
         };
 
