@@ -27,7 +27,7 @@
 </template>
       </el-table-column>
 
-    
+
       <el-table-column label="مقطع">
 <template slot-scope="scope">
   {{ scope.row.gradeTitle}}
@@ -82,7 +82,7 @@
             <div class="wrapper-body-card">در این بخش توضیحات  قرار می گیرد</div>
 
             <div class="wrapper-download-link">
-             
+
 
               <a :href="''+item.filePath+''" class="download">دانلود</a>
             </div>
@@ -110,7 +110,7 @@ import AddCourse from './add-course-dialog';
         courcedialog: false,
         meta: {}
       };
-      
+
     },
      components:{
          AddCourse
@@ -134,7 +134,7 @@ import AddCourse from './add-course-dialog';
         this.query.currentPage = val;
         this.Getcourse();
       },
-  
+
       showdetails(id) {
         axios
           .get("/api/Courses/" + id)
@@ -185,7 +185,7 @@ import AddCourse from './add-course-dialog';
       }
     },
     computed: {
-      
+
     },
     mounted() {
       this.Getcourse();
@@ -197,12 +197,12 @@ import AddCourse from './add-course-dialog';
   .icon {
     float: left;
   }
-  
+
   .download {
     color: #000;
     float: left;
   }
-  
+
   .card-item{
     margin-bottom: 50px;
   }

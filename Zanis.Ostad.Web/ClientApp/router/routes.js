@@ -12,7 +12,6 @@ import UserTickets from '../components/user/tickets'
 import UserExamSamples from '../components/user/exam-samples'
 import UserCourses from '../components/user/courses'
 import UserDashboard from '../components/user/dashboard'
-import ProducedCourses from '../components/teacher/produced-courses'
 import TeacherDashboard from '../components/teacher/dashboard'
 import UserLayout from '../components/layouts/user'
 import TeacherLayout from '../components/layouts/teacher'
@@ -116,11 +115,6 @@ export const routes = [
         name: "user-exam-samples",
         path: "exam-samples",
         component: UserExamSamples
-      },
-      {
-        name: "teacher-produced-courses",
-        path: "produced-courses",
-        component: ProducedCourses
       },
       {path: "*", redirect: 'dashboard'}
     ]
