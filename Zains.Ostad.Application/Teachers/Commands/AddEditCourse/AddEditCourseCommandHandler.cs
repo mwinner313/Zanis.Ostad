@@ -63,7 +63,7 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
                 CourseTitleId = request.CourseTitleId,
                 TeacherLessonMappingId = teacherLessonMapping.Id,
                 AdminMessageForTeacher = request.TeacherMessageForAdmin,
-                ZipFilesPath = _coursesFileManager.GetFilePath(request.ZipFile, teacherLessonMapping)
+                ZipFilesPath = _coursesFileManager.GetFilePathForDownload(request.ZipFile, teacherLessonMapping)
             };
         }
 
@@ -143,7 +143,7 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
             if (request.File != null)
             {
                 await _coursesFileManager.SaveFile(request.File, item.CourseId);
-                item.FilePath = await _coursesFileManager.GetFilePath(request.File, item.CourseId);
+                item.FilePath = await _coursesFileManager.GetFilePathForDownload(request.File, item.CourseId);
                 item.ContentType = GetContentType(request.File.ContentType);
             }
 
@@ -194,7 +194,7 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
             {
                 _coursesFileManager.DeleteFile(item.FilePath);
                 await _coursesFileManager.SaveFile(request.File, item.CourseId);
-                item.FilePath = await _coursesFileManager.GetFilePath(request.File, item.CourseId);
+                item.FilePath = await _coursesFileManager.GetFilePathForDownload(request.File, item.CourseId);
                 item.ContentType = GetContentType(request.File.ContentType);
             }
         }

@@ -51,6 +51,7 @@
 
       <el-table-column
         label="عنوان"
+        width="350"
       >
         <template slot-scope="scope">
           {{  scope.row.ticketReason}}
@@ -78,9 +79,11 @@
 
       <el-table-column
         label="بخش"
+        width="200"
         prop="categoryTitle">
       </el-table-column>
       <el-table-column
+        width="150"
         label="تاریخ ثبت">
         <template slot-scope="scope">
           {{ scope.row.createdOn | moment("jYYYY/jM/jD HH:mm") }}

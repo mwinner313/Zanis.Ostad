@@ -27,30 +27,30 @@ namespace Zains.Ostad.Application.Courses
         public async Task SaveFile(IFormFile file, TeacherLessonMapping teacherLessonMapping)
         {
             var filePath = GetFilePath(file, teacherLessonMapping);
+            var dir = new FileInfo(filePath).Directory.FullName;
+            if (!Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
             using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
-                var dir = new FileInfo(filePath).Directory.FullName;
-                if (!Directory.Exists(dir))
-                    Directory.CreateDirectory(dir);
                 await file.CopyToAsync(fileStream);
             }
         }
 
-        public string GetFilePath(IFormFile file,
+        private string GetFilePath(IFormFile file,
             TeacherLessonMapping teacherLessonMapping)
         {
             var gradeCode = teacherLessonMapping.LessonFieldMapping.Grade.Code;
             var fieldCode = teacherLessonMapping.LessonFieldMapping.Field.Code;
             var lessonCode = teacherLessonMapping.LessonFieldMapping.Lesson.LessonCode;
             var userName = teacherLessonMapping.Teacher.UserName;
-            
+
             var dir =
-                $"{_hostingEnvironment.ContentRootPath}/Courses/{gradeCode}/{fieldCode}/{lessonCode}/{userName}";
-            
+                $"{_hostingEnvironment.WebRootPath}/Courses/{gradeCode}/{fieldCode}/{lessonCode}/{userName}";
+
             return $"{dir}/{file.FileName}";
         }
 
-        public async Task<string> GetFilePath(IFormFile file, long courseId)
+        private async Task<string> GetFilePath(IFormFile file, long courseId)
         {
             return GetFilePath(file, await GetTeacherLessonMapping(courseId));
         }
@@ -59,12 +59,19 @@ namespace Zains.Ostad.Application.Courses
         {
             await SaveFile(file, await GetTeacherLessonMapping(courseId));
         }
+        public async Task<string> GetFilePathForDownload(IFormFile requestFile, long courseId)
+        {
+            return  (await GetFilePath(requestFile, courseId)).Replace(_hostingEnvironment.WebRootPath,"");
+        }
 
+        public string GetFilePathForDownload(IFormFile requestZipFile, TeacherLessonMapping teacherLessonMapping)
+        {
+            return  GetFilePath(requestZipFile, teacherLessonMapping).Replace(_hostingEnvironment.WebRootPath,"");
+        }
         public void DeleteFile(string filePath)
         {
             File.Delete(filePath);
         }
-
         private async Task<TeacherLessonMapping> GetTeacherLessonMapping(long courseId)
         {
             if (courseId == 0)

@@ -32,10 +32,11 @@ namespace Zains.Ostad.Application.Courses.Commands.AddCourseItem
             {
                 CourseId = request.CourseId,
                 State = request.State,
+                AdminMessageForTeacher = request.AdminMessageForTeacher,
                 Order = request.Order,
                 Title = request.Title,
                 ContentType = GetContentType(request.File.ContentType),
-                FilePath = await _coursesFileManager.GetFilePath(request.File, request.CourseId),
+                FilePath = await _coursesFileManager.GetFilePathForDownload(request.File, request.CourseId),
                 IsPreview = request.IsPreview
             };
             await _coursesFileManager.SaveFile(request.File, request.CourseId);
@@ -69,7 +70,7 @@ namespace Zains.Ostad.Application.Courses.Commands.AddCourseItem
             {
                 _coursesFileManager.DeleteFile(item.FilePath);
                 await _coursesFileManager.SaveFile(request.File, item.CourseId);
-                item.FilePath = await _coursesFileManager.GetFilePath(request.File, item.CourseId);
+                item.FilePath = await _coursesFileManager.GetFilePathForDownload(request.File, item.CourseId);
             }
         }
 
@@ -86,12 +87,11 @@ namespace Zains.Ostad.Application.Courses.Commands.AddCourseItem
 
         private ContentType GetContentType(string contentType)
         {
-            switch (contentType)
-            {
-                case ".mp4": return ContentType.Video;
-                case ".pdf": return ContentType.File;
-                default: throw new ArgumentOutOfRangeException(contentType);
-            }
+            if (contentType.StartsWith("video"))
+                return ContentType.Video;
+            if (contentType == "application/pdf")
+                return ContentType.File;
+            throw new ArgumentOutOfRangeException(contentType);
         }
     }
 }

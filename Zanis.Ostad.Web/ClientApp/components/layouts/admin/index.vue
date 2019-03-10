@@ -28,7 +28,12 @@
               <span slot="title"> تیکت ها<el-badge v-if="unReadTicketItemCount" :value="unReadTicketItemCount"/></span>
             </el-menu-item>
           </router-link>
-         
+          <router-link to="/admin/courses">
+            <el-menu-item index="3">
+              <i class="fas fa-ticket-alt"></i>
+              <span slot="title">دوره ها</span>
+            </el-menu-item>
+          </router-link>
         </el-menu>
       </el-aside>
       <el-main class="page-content">

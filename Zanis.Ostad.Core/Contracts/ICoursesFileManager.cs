@@ -7,9 +7,9 @@ namespace Zanis.Ostad.Core.Contracts
     public interface ICoursesFileManager
     {
         Task SaveFile(IFormFile file, TeacherLessonMapping teacherLessonMapping);
-        string GetFilePath(IFormFile file, TeacherLessonMapping teacherLessonMapping);
-        Task<string> GetFilePath(IFormFile file, long courseId);
         Task SaveFile(IFormFile requestFile, long courseId);
         void DeleteFile(string filePath);
+        Task<string> GetFilePathForDownload(IFormFile requestFile, long courseId);
+        string GetFilePathForDownload(IFormFile requestZipFile, TeacherLessonMapping teacherLessonMapping);
     }
 }
