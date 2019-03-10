@@ -1,8 +1,7 @@
 <template>
   <el-card>
     <div>
-      <el-button>افزودن دوره جدید</el-button>
-      <addCourse ></addCourse>
+      <el-button @click="isAddingNewCourse=true">افزودن دوره جدید</el-button>
     </div>
     <el-table height="500" :data="courceData" size="large" style="width: 100%">
       <el-table-column label="ردیف">
@@ -29,7 +28,6 @@
       </el-table-column>
 
     
-
       <el-table-column label="مقطع">
 <template slot-scope="scope">
   {{ scope.row.gradeTitle}}
@@ -92,11 +90,12 @@
         </el-col>
       </el-row>
     </el-dialog>
+    <add-course @close="isAddingNewCourse=false" :isOpen="isAddingNewCourse" ></add-course>
   </el-card>
 </template>
 
 <script>
-import addCourse from './add-course-dialog';
+import AddCourse from './add-course-dialog';
   import axios from "axios";
   export default {
     name: "AdminListCourse",
@@ -106,14 +105,16 @@ import addCourse from './add-course-dialog';
           pageSize: 10
         },
         courceData: [],
+        isAddingNewCourse:false,
         courcedetails: [],
         courcedialog: false,
         meta: {}
       };
-       components:{
-         addCourse
-       }
+      
     },
+     components:{
+         AddCourse
+       },
     methods: {
       Getcourse() {
         axios.get("/api/Courses", {
