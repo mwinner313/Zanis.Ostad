@@ -32,12 +32,15 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
             Contents = x.Contents.Select(c => new CourseItemViewModel
             {
                 Id = c.Id,
+                
                 Title = c.Title,
                 ContentType = c.ContentType,
                 FilePath = c.FilePath,
                 CourseId = c.CourseId,
                 State = c.State,
                 IsPreview = c.IsPreview,
+                AdminMessageForTeacher = c.AdminMessageForTeacher,
+                TeacherMessageForAdmin = c.TeacherMessageForAdmin,
                 Order = c.Order,
             }).ToList()
         };

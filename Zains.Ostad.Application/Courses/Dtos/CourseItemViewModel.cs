@@ -5,6 +5,8 @@ namespace Zains.Ostad.Application.Courses.Dtos
     public class CourseItemViewModel
     {
         public string Title { get; set; }
+        public string TeacherMessageForAdmin { get; set; }
+        public string AdminMessageForTeacher { get; set; }
         public string FilePath { get; set; }
         public ContentType ContentType { get; set; }
         public CourseItemApprovalState State { get; set; }
