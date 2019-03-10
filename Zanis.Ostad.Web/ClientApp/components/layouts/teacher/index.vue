@@ -64,12 +64,17 @@
             </el-menu-item>
           </router-link>
 
-          
-
-           <router-link to="/teacher/teacherListCourse">
-            <el-menu-item index="6">
+          <router-link to="/teacher/produced-courses">
+            <el-menu-item index="5">
               <i class="fas fa-chalkboard-teacher"></i>
-              <span slot="title">دوره ها</span>
+              <span slot="title">دروس تدریس شده</span>
+            </el-menu-item>
+          </router-link>
+
+           <router-link to="/teacher/produced-courses">
+            <el-menu-item index="5">
+              <i class="fas fa-chalkboard-teacher"></i>
+              <span slot="title">دوره</span>
             </el-menu-item>
           </router-link>
 
