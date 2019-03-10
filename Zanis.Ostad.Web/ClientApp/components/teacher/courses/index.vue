@@ -4,31 +4,26 @@
       <el-button @click="isAddingNewCourse=true">افزودن دوره جدید</el-button>
     </div>
     <el-table height="500" :data="courceData" size="large" style="width: 100%">
-      <el-table-column label="ردیف">
+      <el-table-column label="ردیف" width="60">
         <template slot-scope="scope">{{scope.row.id}}
 </template>
       </el-table-column>
 
-        <el-table-column label="عنوان">
-<template slot-scope="scope">
-  {{ scope.row.title}}
-</template>
-      </el-table-column>
-
-      <el-table-column label="کددرس">
+     
+      <el-table-column label="کددرس" width="90">
 <template slot-scope="scope">
   {{ scope.row.lessonCode}}
 </template>
       </el-table-column>
 
-      <el-table-column label="قیمت">
+      <el-table-column label="قیمت" width="90">
 <template slot-scope="scope">
   {{scope.row.price}}
 </template>
       </el-table-column>
 
 
-      <el-table-column label="مقطع">
+      <el-table-column label="مقطع" width="120">
 <template slot-scope="scope">
   {{ scope.row.gradeTitle}}
 </template>
@@ -39,9 +34,16 @@
 </template>
       </el-table-column>
 
-      <el-table-column label="جزئیات">
+         <el-table-column label="عنوان" width="240">
 <template slot-scope="scope">
-  <el-button @click="showdetails(scope.row.id)">
+  {{ scope.row.title}}
+</template>
+      </el-table-column>
+
+
+      <el-table-column label="جزئیات" width="150">
+<template slot-scope="scope">
+  <el-button @click="showDetails(scope.row.id)">
     مشاهده</el-button>
 </template>
       </el-table-column>
@@ -49,10 +51,10 @@
        <el-table-column label="امکانات">
         <template slot-scope="scope">
          <el-row type="flex">
-            <el-button @click="activeSection(scope.row.id)">
+            <el-button @click="activeCourse(scope.row.id)" class="mgl-17">
             فعال</el-button>
 
-            <el-button @click="deActiveSection(scope.row.id)" class="deactive">
+            <el-button @click="deActiveCourse(scope.row.id)" class="deactive">
             غیر فعال</el-button>
          </el-row>
         </template>
@@ -77,20 +79,30 @@
             <div slot="header" class="clearfix">
               <span>{{item.title}}</span>
               <span class="icon" v-html="previewIconCourse(item.contentType)"></span>
+              
+              <el-tag v-if="item.state==5" type="success" class="icon">تایید شده</el-tag>
+              <el-tag v-else-if="item.state==0" class="icon">در انتظار تایید</el-tag>
+              <el-tag v-else-if="item.state==10" type="danger" class="icon">رد شده</el-tag>
+              <el-tag v-else-if="item.state==15" type="info" class="icon">رد شده توسط استاد</el-tag>
+
             </div>
 
-            <div class="wrapper-body-card">در این بخش توضیحات  قرار می گیرد</div>
+            <div class="wrapper-body-card">
+              {{item.adminMessageForTeacher}}
+            </div>
 
             <div class="wrapper-download-link">
 
-
-              <a :href="''+item.filePath+''" class="download">دانلود</a>
-            </div>
+                <el-button type="primary" round class="downloadBtn">
+                  <i class="fas fa-download customDownloadIcon"></i>
+                   <a :href="''+item.filePath+''" class="white">دانلود</a>
+                </el-button>
+                         </div>
           </el-card>
         </el-col>
       </el-row>
     </el-dialog>
-    <add-course @close="isAddingNewCourse=false" :isOpen="isAddingNewCourse" ></add-course>
+    <add-course @close="isAddingNewCourse=false" :isOpen="isAddingNewCourse"></add-course>
   </el-card>
 </template>
 
@@ -116,26 +128,25 @@ import AddCourse from './add-course-dialog';
          AddCourse
        },
     methods: {
-      Getcourse() {
+      getCourse() {
         axios.get("/api/Courses", {
           params: this.query
         }).then(res => {
           this.courceData = res.data.items;
           this.meta = res.data.allCount;
-          console.log(res.data);
-        });
+                });
       },
       handleSizeChange(val) {
         this.query.pageSize = val;
-        this.Getcourse();
+        this.getCourse();
       },
       handleCurrentChange(val) {
         this.query.pageOffset = (val - 1) * this.query.pageSize;
         this.query.currentPage = val;
-        this.Getcourse();
+        this.getCourse();
       },
 
-      showdetails(id) {
+      showDetails(id) {
         axios
           .get("/api/Courses/" + id)
           .then(res => {
@@ -155,7 +166,7 @@ import AddCourse from './add-course-dialog';
             return '';
         }
       },
-      activeSection(id){
+      activeCourse(id){
         axios.patch('/api/TeacherAccount/courses/'+id+'/active')
         .then(res=>{
         this.$message({
@@ -168,7 +179,7 @@ import AddCourse from './add-course-dialog';
         })
 
       },
-      deActiveSection(id){
+      deActiveCourse(id){
 
          axios.patch('/api/TeacherAccount/courses/'+id+'/deactive')
         .then(res=>{
@@ -184,11 +195,9 @@ import AddCourse from './add-course-dialog';
 
       }
     },
-    computed: {
-
-    },
+   
     mounted() {
-      this.Getcourse();
+      this.getCourse();
     }
   };
 </script>
@@ -198,9 +207,9 @@ import AddCourse from './add-course-dialog';
     float: left;
   }
 
-  .download {
-    color: #000;
-    float: left;
+  .downloadBtn {
+        float: left;
+        margin-bottom: 10px;
   }
 
   .card-item{
@@ -209,6 +218,16 @@ import AddCourse from './add-course-dialog';
 
   .deactive{
     margin-right: 0;
+  }
+  .customDownloadIcon{
+    margin: 0;
+    line-height: 8px;
+    padding-left: 5px;
+    color: #fff;
+    font-size: 14px;
+  }
+  .mgl-17{
+    margin-left: 17px;
   }
 
 </style>

@@ -75,6 +75,10 @@ body, html {
 .green {
   color: green; }
 
+.white{
+  color: white;
+}
+
 button {
   outline: none !important;
   cursor: pointer;
