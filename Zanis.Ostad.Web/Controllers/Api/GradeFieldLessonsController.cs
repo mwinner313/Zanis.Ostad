@@ -23,10 +23,10 @@ namespace Zanis.Ostad.Web.Controllers.Api
         [HttpGet("{id}")]
         public async Task<ActionResult<LessonDto>> GetById(long id)
         {
-            return Ok(await _mediator.Send(new GetLessonQuery()
+            return Ok(await _mediator.Send(new GetLessonQuery
             {
                 LessonId = id,
-                RequestingUserId = User.Identity.IsAuthenticated? User.GetId():0
+                RequestingUserId = User.GetId()
             }));
         }
         [HttpGet]

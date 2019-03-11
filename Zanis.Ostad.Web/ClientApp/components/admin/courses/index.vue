@@ -106,9 +106,7 @@
           .then(res => {
             this.courseDetails = res.data.contents;
           })
-          .catch(err => {
-
-          });
+          .catch(err => {});
       },
       previewIconCourse(contentType) {
         switch (contentType) {
