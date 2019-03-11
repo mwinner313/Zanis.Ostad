@@ -13,6 +13,7 @@ import UserExamSamples from '../components/user/exam-samples'
 import UserCourses from '../components/user/courses'
 import UserDashboard from '../components/user/dashboard'
 import TeacherDashboard from '../components/teacher/dashboard'
+import TeacherCourses from '../components/teacher/courses'
 import UserLayout from '../components/layouts/user'
 import TeacherLayout from '../components/layouts/teacher'
 
@@ -110,6 +111,11 @@ export const routes = [
         name: "user-courses",
         path: "courses",
         component: UserCourses
+      },
+      {
+        name: "produced-courses",
+        path: "produced-courses",
+        component: TeacherCourses
       },
       {
         name: "user-exam-samples",

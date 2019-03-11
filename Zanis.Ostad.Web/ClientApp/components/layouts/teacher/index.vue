@@ -71,12 +71,7 @@
             </el-menu-item>
           </router-link>
 
-           <router-link to="/teacher/produced-courses">
-            <el-menu-item index="5">
-              <i class="fas fa-chalkboard-teacher"></i>
-              <span slot="title">دوره</span>
-            </el-menu-item>
-          </router-link>
+         
 
         </el-menu>
       </el-aside>
