@@ -116,7 +116,7 @@ export const routes = [
         path: "exam-samples",
         component: UserExamSamples
       },
-      {path: "*", redirect: 'dashboard'}
+      { path: "*", redirect: 'dashboard' }
     ]
   },
 

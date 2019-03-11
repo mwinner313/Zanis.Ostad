@@ -34,5 +34,11 @@ namespace Zanis.Ostad.Web.Controllers.Api
         {
                 return Ok(await _mediator.Send(query));
         }
+
+        [HttpGet("with-details")]
+        public async Task<ActionResult<List<LessonFieldViewModel>>> GetWithDetails(GetLessonListWithDetailsQuery query)
+        {
+            return Ok(await _mediator.Send(query));
+        }
     }
 }

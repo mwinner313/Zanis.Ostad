@@ -15,7 +15,7 @@ using Zanis.Ostad.Core.Entities.Cart;
 
 namespace Zains.Ostad.Application.Lessons.Queries.GetLessonList
 {
-    public class GetLessonListQueryHandler : IRequestHandler<GetLessonListQuery, List<LessonFieldListViewModel>>
+    public class GetLessonListQueryHandler : IRequestHandler<GetLessonListQuery, List<LessonFieldListViewModel>>,IRequestHandler<GetLessonListWithDetailsQuery,List<LessonFieldViewModel>>
     {
         private readonly IMapper _mapper;
         private readonly IRepository<LessonFieldMapping, long> _lessonRepository;
@@ -45,6 +45,22 @@ namespace Zains.Ostad.Application.Lessons.Queries.GetLessonList
 
             return dbQuery.Select(LessonProfile.ProjectionList)
                 .ToListAsync();
+        }
+
+        public Task<List<LessonFieldViewModel>> Handle(GetLessonListWithDetailsQuery request, CancellationToken cancellationToken)
+        {
+            var dbQuery = _lessonRepository.GetQueriable().Where(x=>x.Lesson.LessonName.Contains(request.Term)||x.Lesson.LessonCode.Contains(request.Term))
+                .Select(x=>new LessonFieldViewModel()
+                {
+                    Id = x.Id,
+                    LessonId = x.LessonId,
+                    LessonName = x.Lesson.LessonName,
+                    FieldId = x.Field.Id,
+                    FieldName = x.Field.Name,
+                    GradeId = x.GradeId,
+                    GradeName = x.Grade.Name
+                });
+            return dbQuery.ToListAsync(cancellationToken);
         }
     }
 }

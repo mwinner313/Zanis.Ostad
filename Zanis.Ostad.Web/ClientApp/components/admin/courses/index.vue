@@ -1,12 +1,12 @@
 <template>
   <el-card>
     <el-table height="500" :data="courseData" size="large" style="width: 100%">
-      <el-table-column  width="50" label="ردیف">
+      <el-table-column width="50" label="ردیف">
         <template slot-scope="scope">{{scope.row.id}}
         </template>
       </el-table-column>
 
-      <el-table-column  width="380" label="عنوان">
+      <el-table-column width="380" label="عنوان">
         <template slot-scope="scope">
           {{ scope.row.title}}
         </template>
@@ -35,14 +35,16 @@
           {{scope.row.price}}
         </template>
       </el-table-column>
-      <el-table-column  width="280" label="عملیات">
+      <el-table-column width="280" label="عملیات">
         <template slot-scope="scope">
-        <div style>  <el-button @click="showDetails(scope.row.id)">
-          مشاهده
-        </el-button>
-          <el-button @click="changingApprovalStateItemId=scope.row.id" class="deactive">
-            تغییر وضعیت
-          </el-button></div>
+          <div style>
+            <el-button @click="showDetails(scope.row.id)">
+              مشاهده
+            </el-button>
+            <el-button @click="changingApprovalStateItemId=scope.row.id" class="deactive">
+              تغییر وضعیت
+            </el-button>
+          </div>
         </template>
       </el-table-column>
 
@@ -57,42 +59,25 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="meta.allCount"
     ></el-pagination>
-
-    <!--<el-dialog title="جزئیات دوره" :visible.sync="!!courseDetails" width="80%">-->
-      <!--<el-row :gutter="40">-->
-        <!--<el-col :xs="12" :md="12" :lg="12" v-for="(item,index) in courseDetails" :key="index">-->
-          <!--<el-card class="card-item">-->
-            <!--<div slot="header" class="clearfix">-->
-              <!--<span>{{item.title}}</span>-->
-              <!--<span class="icon" v-html="previewIconCourse(item.contentType)"></span>-->
-            <!--</div>-->
-
-            <!--<div class="wrapper-body-card">در این بخش توضیحات قرار می گیرد</div>-->
-
-            <!--<div class="wrapper-download-link">-->
-
-
-              <!--<a :href="''+item.filePath+''" class="download">دانلود</a>-->
-            <!--</div>-->
-          <!--</el-card>-->
-        <!--</el-col>-->
-      <!--</el-row>-->
-    <!--</el-dialog>-->
+ <approval-state-changer></approval-state-changer>
   </el-card>
 </template>
 
 <script>
   import axios from "axios";
-
+  import ApprovalStateChanger from './approval-state-changer'
   export default {
     name: "AdminListCourse",
+    components:{
+      ApprovalStateChanger
+    },
     data() {
       return {
         query: {
           pageSize: 10
         },
         courseData: [],
-        changingApprovalStateItemId:undefined,
+        changingApprovalStateItemId: undefined,
         courseDetails: [],
         meta: {}
       };
