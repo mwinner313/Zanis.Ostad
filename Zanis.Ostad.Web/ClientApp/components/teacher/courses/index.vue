@@ -1,7 +1,7 @@
 <template>
   <el-card>
     <div>
-      <el-button @click="isAddingNewCourse=true">افزودن دوره جدید</el-button>
+      <el-button @click="isAddingNewCourse=true" class="left">افزودن دوره جدید</el-button>
     </div>
     <el-table height="500" :data="courceData" size="large" style="width: 100%">
       <el-table-column label="ردیف" width="60">
@@ -229,5 +229,7 @@ import AddCourse from './add-course-dialog';
   .mgl-17{
     margin-left: 17px;
   }
-
+.left {
+  float: left  !important;
+}
 </style>
