@@ -35,13 +35,21 @@
           {{scope.row.price}}
         </template>
       </el-table-column>
+      <el-table-column label="وضعیت">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.approvalStatus===0">در انتظار تایید</el-tag>
+          <el-tag  v-if="scope.row.approvalStatus===5" type="success">تایید شده</el-tag>
+          <el-tag  v-if="scope.row.approvalStatus===15" type="warning">رد شده</el-tag>
+          <el-tag  v-if="scope.row.approvalStatus===10" type="danger">غیر فعال توسط مدرس</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column width="280" label="عملیات">
         <template slot-scope="scope">
           <div style>
             <el-button @click="showDetails(scope.row.id)">
               مشاهده
             </el-button>
-            <el-button @click="changingApprovalStateItemId=scope.row.id" class="deactive">
+            <el-button @click="changingApprovalStateItem=scope.row" class="deactive">
               تغییر وضعیت
             </el-button>
           </div>
@@ -59,16 +67,20 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="meta.allCount"
     ></el-pagination>
- <approval-state-changer></approval-state-changer>
+    <approval-state-changer v-if="changingApprovalStateItem"
+                            :item="changingApprovalStateItem"
+                            :isOpen="!!changingApprovalStateItem"
+                            @close="changingApprovalStateItem=undefined"></approval-state-changer>
   </el-card>
 </template>
 
 <script>
   import axios from "axios";
   import ApprovalStateChanger from './approval-state-changer'
+
   export default {
     name: "AdminListCourse",
-    components:{
+    components: {
       ApprovalStateChanger
     },
     data() {
@@ -77,7 +89,7 @@
           pageSize: 10
         },
         courseData: [],
-        changingApprovalStateItemId: undefined,
+        changingApprovalStateItem: undefined,
         courseDetails: [],
         meta: {}
       };
@@ -106,7 +118,8 @@
           .then(res => {
             this.courseDetails = res.data.contents;
           })
-          .catch(err => {});
+          .catch(err => {
+          });
       },
       previewIconCourse(contentType) {
         switch (contentType) {

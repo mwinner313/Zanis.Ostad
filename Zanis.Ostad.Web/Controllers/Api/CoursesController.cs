@@ -63,7 +63,7 @@ namespace Zanis.Ostad.Web.Controllers.Api
 
         [Authorize(Roles = "Operator,Admin")]
         [HttpPatch("change_approval_status")]
-        public async Task<ActionResult<Response>> ChangeStatus(ChangeCourseApprovalStatusCommand cmd)
+        public async Task<ActionResult<Response>> ChangeStatus([FromBody]ChangeCourseApprovalStatusCommand cmd)
         {
             return Ok(await _mediator.Send(cmd));
         }

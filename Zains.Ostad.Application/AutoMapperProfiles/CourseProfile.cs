@@ -24,6 +24,7 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
             PendingToApproveItemsCount = x.PendingToApproveItemsCount,
             Description = x.Description,
             Price = x.Price,
+            ApprovalStatus = x.ApprovalStatus,
             Teacher = x.TeacherLessonMapping.Teacher.FullName,
             TeacherAvatar = x.TeacherLessonMapping.Teacher.AvatarPath,
             Title = x.CourseTitle.Name + " - " + x.TeacherLessonMapping.LessonFieldMapping.Lesson.LessonName,

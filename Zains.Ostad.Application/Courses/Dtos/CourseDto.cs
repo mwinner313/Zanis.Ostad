@@ -10,6 +10,7 @@ namespace Zains.Ostad.Application.Courses.Dtos
         public int PriceAsTomans => Price / 10;
         public string Title { get; set; }
         public ContentType PreviewType { get; set; }
+        public CourseApprovalStatus ApprovalStatus { get; set; }
         public string PreviewFilePath { get; set; }
         public string GradeTitle { get; set; }
         public List<string> RelatedFields { get; set; }

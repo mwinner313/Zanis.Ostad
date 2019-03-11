@@ -60,6 +60,13 @@ namespace Zains.Ostad.Application.Lessons.Queries.GetLessonList
                     GradeId = x.GradeId,
                     GradeName = x.Grade.Name
                 });
+
+            if (request.FieldId.HasValue)
+                dbQuery = dbQuery.Where(x => x.FieldId == request.FieldId);
+            
+            if (request.GradeId.HasValue)
+                dbQuery = dbQuery.Where(x => x.FieldId == request.GradeId);
+            
             return dbQuery.ToListAsync(cancellationToken);
         }
     }
