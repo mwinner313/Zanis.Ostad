@@ -35,12 +35,12 @@
           {{scope.row.price}}
         </template>
       </el-table-column>
-      <el-table-column label="وضعیت">
+      <el-table-column label="وضعیت" width="200">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.approvalStatus===0">در انتظار تایید</el-tag>
-          <el-tag  v-if="scope.row.approvalStatus===5" type="success">تایید شده</el-tag>
-          <el-tag  v-if="scope.row.approvalStatus===15" type="warning">رد شده</el-tag>
-          <el-tag  v-if="scope.row.approvalStatus===10" type="danger">غیر فعال توسط مدرس</el-tag>
+          <el-tag v-if="scope.row.approvalStatus===0" >در انتظار تایید</el-tag>
+          <el-tag v-if="scope.row.approvalStatus===5" type="success" >تایید شده</el-tag>
+          <el-tag v-if="scope.row.approvalStatus===10" type="danger" >رد شده</el-tag>
+          <el-tag v-if="scope.row.approvalStatus===15" type="warning" >غیر فعال توسط مدرس</el-tag>
         </template>
       </el-table-column>
       <el-table-column width="280" label="عملیات">
@@ -55,7 +55,6 @@
           </div>
         </template>
       </el-table-column>
-
     </el-table>
     <el-pagination
       class="pagenation"
@@ -70,7 +69,7 @@
     <approval-state-changer v-if="changingApprovalStateItem"
                             :item="changingApprovalStateItem"
                             :isOpen="!!changingApprovalStateItem"
-                            @close="changingApprovalStateItem=undefined"></approval-state-changer>
+                            @close="getCourses"></approval-state-changer>
   </el-card>
 </template>
 
@@ -95,7 +94,8 @@
       };
     },
     methods: {
-      getCourse() {
+      getCourses() {
+        this.changingApprovalStateItem=undefined;
         axios.get("/api/Courses", {
           params: this.query
         }).then(res => {
@@ -105,12 +105,12 @@
       },
       handleSizeChange(val) {
         this.query.pageSize = val;
-        this.getCourse();
+        this.getCourses();
       },
       handleCurrentChange(val) {
         this.query.pageOffset = (val - 1) * this.query.pageSize;
         this.query.currentPage = val;
-        this.getCourse();
+        this.getCourses();
       },
       showDetails(id) {
         axios
@@ -134,7 +134,7 @@
     },
     computed: {},
     mounted() {
-      this.getCourse();
+      this.getCourses();
     }
   };
 </script>

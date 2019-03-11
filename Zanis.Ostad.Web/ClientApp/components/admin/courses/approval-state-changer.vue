@@ -1,8 +1,8 @@
 <template>
   <el-dialog
-
+    :title="item.title"
     :visible.sync="isOpen"
-    width="20%"
+    width="40%"
     @closed="$emit('close')"
     :before-close="isOpen">
     <el-form ref="form" :model="form">
