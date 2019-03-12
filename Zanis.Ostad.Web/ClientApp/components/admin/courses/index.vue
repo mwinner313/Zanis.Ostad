@@ -101,12 +101,12 @@
     methods: {
       getCourses() {
         this.changingApprovalStateItem = undefined;
-        this.courseDetails=undefined;
+        this.courseDetails = undefined;
         axios.get("/api/Courses", {
           params: this.query
         }).then(res => {
           this.courseData = res.data.items;
-          this.meta = {allCount:res.data.allCount};
+          this.meta = {allCount: res.data.allCount};
         });
       },
       handleSizeChange(val) {
@@ -124,9 +124,7 @@
           .then(res => {
             this.courseDetails = res.data;
           })
-          .catch(err => {
-
-          });
+          .catch(err => {});
       },
       previewIconCourse(contentType) {
         switch (contentType) {

@@ -43,6 +43,7 @@
             <el-tag v-else-if="item.state==0" class="icon">در انتظار تعیین وضعیت</el-tag>
             <el-tag v-else-if="item.state==10" type="danger" class="icon">رد شده</el-tag>
             <el-tag v-else-if="item.state==15" type="info" class="icon">رد شده توسط استاد</el-tag>
+            <small><i class="el-icon-time"></i>{{ course.createdOn | moment("jYYYY/jM/jD HH:mm") }}</small>
             <el-button  @click="editingCourseItem=item" type="primary" plain class="float-right">ویرایش</el-button>
           </div>
           <div class="body-card-container">
@@ -103,5 +104,8 @@
 <style scoped>
   .download-link-wrapper {
     margin-top: 15px;
+  }
+  .card-item{
+    margin-bottom: 10px;
   }
 </style>

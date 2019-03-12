@@ -31,7 +31,7 @@
           <router-link to="/admin/courses">
             <el-menu-item index="3">
               <i class="fas fa-ticket-alt"></i>
-              <span slot="title">دوره ها</span>
+              <span slot="title">دوره ها <el-badge v-if="!!coursesOverView" :value="coursesOverView.pendingToApproveByAdmin"/></span>
             </el-menu-item>
           </router-link>
         </el-menu>
@@ -99,6 +99,7 @@
       if (window.location.pathname === "/admin")
         this.$router.push({name: 'admin-dashboard', params: {}});
       this.loadSideBarNotificationsCount();
+      this.loadCoursesOverView();
       EventBus.$on('adminOpenedUnReadTicketItem', () => {
         this.loadUnReadTicketItemsCount()
       })
@@ -115,6 +116,12 @@
       loadUnReadTicketItemsCount() {
         axios.get('/api/tickets', {params: {pageOffset: 0, pageSize: 1}}).then(res => {
           this.unReadTicketItemCount = res.data.metaData.unReadTicketItemCount;
+        });
+      },
+      loadCoursesOverView(){
+        axios.get('/api/courses/overview').then(res => {
+          this.coursesOverView = res.data;
+
         });
       }
     },
