@@ -3,7 +3,7 @@ using Zanis.Ostad.Core.Infrastucture;
 
 namespace Zanis.Ostad.Core.Entities.Contents
 {
-    public class CourseItem:BaseEntity<long>
+    public class CourseItem : BaseEntity<long>
     {
         public string Title { get; set; }
         public string FilePath { get; set; }
@@ -17,3 +17,4 @@ namespace Zanis.Ostad.Core.Entities.Contents
         public string TeacherMessageForAdmin { get; set; }
         public DateTime CreatedOn { get; set; } = DateTime.Now;
     }
+}
