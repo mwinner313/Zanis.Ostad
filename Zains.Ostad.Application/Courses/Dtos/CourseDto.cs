@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Zanis.Ostad.Core.Entities.Contents;
 
@@ -23,5 +24,8 @@ namespace Zains.Ostad.Application.Courses.Dtos
         public string ZipFilesPath { get; set; }
         public int PendingToApproveItemsCount { get; set; }
         public long TeacherId { get; set; }
+        public string TeacherMessageForAdmin { get; set; }
+        public string AdminMessageForTeacher { get; set; }
+        public DateTime CreatedOn { get; set; }
     }
 }

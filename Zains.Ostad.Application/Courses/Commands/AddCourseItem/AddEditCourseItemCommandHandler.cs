@@ -60,6 +60,7 @@ namespace Zains.Ostad.Application.Courses.Commands.AddCourseItem
             item.State = request.State;
             item.Order = request.Order;
             item.Title = request.Title;
+            item.AdminMessageForTeacher = request.AdminMessageForTeacher;
             item.IsPreview = request.IsPreview;
             item.ContentType = GetContentType(request.File.ContentType);
         }

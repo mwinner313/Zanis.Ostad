@@ -1,3 +1,4 @@
+using System;
 using Zanis.Ostad.Core.Entities.Contents;
 
 namespace Zains.Ostad.Application.Courses.Dtos
@@ -10,6 +11,7 @@ namespace Zains.Ostad.Application.Courses.Dtos
         public string FilePath { get; set; }
         public ContentType ContentType { get; set; }
         public CourseItemApprovalState State { get; set; }
+        public DateTime CreatedOn { get; set; }
         public int Order { get; set; }
         public long CourseId { get; set; }
         public bool IsPreview { get; set; }

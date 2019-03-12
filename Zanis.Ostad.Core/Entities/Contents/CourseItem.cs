@@ -1,3 +1,4 @@
+using System;
 using Zanis.Ostad.Core.Infrastucture;
 
 namespace Zanis.Ostad.Core.Entities.Contents
@@ -14,5 +15,6 @@ namespace Zanis.Ostad.Core.Entities.Contents
         public int Order { get; set; }
         public string AdminMessageForTeacher { get; set; }
         public string TeacherMessageForAdmin { get; set; }
+        public DateTime CreatedOn { get; set; }
     }
 }

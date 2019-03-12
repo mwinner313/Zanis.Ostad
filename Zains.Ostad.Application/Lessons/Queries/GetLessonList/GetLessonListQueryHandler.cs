@@ -50,7 +50,7 @@ namespace Zains.Ostad.Application.Lessons.Queries.GetLessonList
         public Task<List<LessonFieldViewModel>> Handle(GetLessonListWithDetailsQuery request, CancellationToken cancellationToken)
         {
             var dbQuery = _lessonRepository.GetQueriable().Where(x=>x.Lesson.LessonName.Contains(request.Term)||x.Lesson.LessonCode.Contains(request.Term))
-                .Select(x=>new LessonFieldViewModel()
+                .Select(x=>new LessonFieldViewModel
                 {
                     Id = x.Id,
                     LessonId = x.LessonId,
@@ -60,7 +60,7 @@ namespace Zains.Ostad.Application.Lessons.Queries.GetLessonList
                     GradeId = x.GradeId,
                     GradeName = x.Grade.Name
                 });
-
+            
             if (request.FieldId.HasValue)
                 dbQuery = dbQuery.Where(x => x.FieldId == request.FieldId);
             

@@ -37,10 +37,10 @@
       </el-table-column>
       <el-table-column label="وضعیت" width="200">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.approvalStatus===0" >در انتظار تایید</el-tag>
-          <el-tag v-if="scope.row.approvalStatus===5" type="success" >تایید شده</el-tag>
-          <el-tag v-if="scope.row.approvalStatus===10" type="danger" >رد شده</el-tag>
-          <el-tag v-if="scope.row.approvalStatus===15" type="warning" >غیر فعال توسط مدرس</el-tag>
+          <el-tag v-if="scope.row.approvalStatus===0">در انتظار تایید</el-tag>
+          <el-tag v-if="scope.row.approvalStatus===5" type="success">تایید شده</el-tag>
+          <el-tag v-if="scope.row.approvalStatus===10" type="danger">رد شده</el-tag>
+          <el-tag v-if="scope.row.approvalStatus===15" type="warning">غیر فعال توسط مدرس</el-tag>
         </template>
       </el-table-column>
       <el-table-column width="280" label="عملیات">
@@ -70,17 +70,22 @@
                             :item="changingApprovalStateItem"
                             :isOpen="!!changingApprovalStateItem"
                             @close="getCourses"></approval-state-changer>
+
+    <course-details v-if="!!courseDetails" :isOpen="!!courseDetails" @close="courseDetails=undefined"
+                    :course="courseDetails"></course-details>
   </el-card>
 </template>
 
 <script>
   import axios from "axios";
   import ApprovalStateChanger from './approval-state-changer'
+  import CourseDetails from './course-details'
 
   export default {
     name: "AdminListCourse",
     components: {
-      ApprovalStateChanger
+      ApprovalStateChanger,
+      CourseDetails
     },
     data() {
       return {
@@ -89,18 +94,19 @@
         },
         courseData: [],
         changingApprovalStateItem: undefined,
-        courseDetails: [],
+        courseDetails: undefined,
         meta: {}
       };
     },
     methods: {
       getCourses() {
-        this.changingApprovalStateItem=undefined;
+        this.changingApprovalStateItem = undefined;
+        this.courseDetails=undefined;
         axios.get("/api/Courses", {
           params: this.query
         }).then(res => {
           this.courseData = res.data.items;
-          this.meta = res.data.allCount;
+          this.meta = {allCount:res.data.allCount};
         });
       },
       handleSizeChange(val) {
@@ -116,9 +122,10 @@
         axios
           .get("/api/Courses/" + id)
           .then(res => {
-            this.courseDetails = res.data.contents;
+            this.courseDetails = res.data;
           })
           .catch(err => {
+
           });
       },
       previewIconCourse(contentType) {

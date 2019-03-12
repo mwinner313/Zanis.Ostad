@@ -11,6 +11,7 @@ namespace Zains.Ostad.Application.Courses.Commands.AddCourseItem
         public bool IsPreview { get; set; }
         public string Title { get; set; }
         public int Order { get; set; }
+        public string AdminMessageForTeacher { get; set; }
         public IFormFile File { get; set; }
         public CourseItemApprovalState State { get; set; }
     }
