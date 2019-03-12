@@ -17,17 +17,22 @@
         <span style="cursor:pointer;"></span>
       </div>
 
-      <el-popover placement="right" width="200" trigger="click">
+      <el-popover
+        placement="bottom"
+        width="300"
+        trigger="click"
+        style="position:absolute;left: 23px;"
+      >
         <el-table :data="notifiData">
           <el-table-column width="150" property="date" label="تاریخ">
             <template slot-scope="scope">{{ scope.row.createdOn | moment("jYYYY/jM/jD HH:mm") }}</template>
           </el-table-column>
           <el-table-column width="100" property="name" label="عنوان">
-              <template slot-scope="scope">{{ scope.row.text}}</template>
+            <template slot-scope="scope">{{ scope.row.text}}</template>
           </el-table-column>
         </el-table>
-        <i class="far fa-bell" slot="reference" @click="getNotifi"></i>
-            </el-popover>
+        <i class="far fa-bell" style="color:white" slot="reference" @click="getNotifi"></i>
+      </el-popover>
     </el-header>
     <el-container>
       <el-aside :width="asideWidth">
@@ -70,9 +75,6 @@
               <span slot="title">دروس تدریس شده</span>
             </el-menu-item>
           </router-link>
-
-         
-
         </el-menu>
       </el-aside>
       <el-main class="page-content">
