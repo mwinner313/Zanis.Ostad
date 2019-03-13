@@ -45,6 +45,7 @@
         <template slot-scope="scope">
           <el-button v-bind:disabled="scope.row.contents.length==0" @click="showDetails(scope.row.id)">
             مشاهده</el-button>
+            
         </template>
       </el-table-column>
 

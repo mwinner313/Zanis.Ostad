@@ -54,7 +54,7 @@
             title="توضیحات"
             type="info"
             description="در این بخش توضیحات قرار می گیرد"
-            :closable="close"
+           :closable="false"
             show-icon
           ></el-alert>
         </el-col>
