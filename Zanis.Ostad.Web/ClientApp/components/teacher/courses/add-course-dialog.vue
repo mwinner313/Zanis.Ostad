@@ -7,13 +7,20 @@
   
         <el-col :md="12">
   
-          <el-form>
+          <el-form :model="form" ref="form">
   
             <el-progress v-show="uploadProgress" :percentage="uploadProgress"></el-progress>
   
-            <el-form-item label="قیمت">
+            <el-form-item 
+            label="قیمت"
+            prop="price"
+             :rules="[
+                { required: true, message: 'وارد کردن قیمت الزامی می باشد'},
+                { type: 'number', message: 'فیمت باید عددی باشد'}
+              ]"
+             >
   
-              <el-input placeholder="قیمت" v-model="form.price"></el-input>
+              <el-input type="text" placeholder="قیمت" v-model.number="form.price"></el-input>
   
             </el-form-item>
   
@@ -22,6 +29,12 @@
             <el-form-item label="توضیحات">
   
               <el-input placeholder="توضیحات" v-model="form.description"></el-input>
+  
+            </el-form-item>
+
+             <el-form-item label="پیام به مدیریت">
+  
+              <el-input type="textarea" v-model="form.teacherMessage"></el-input>
   
             </el-form-item>
   
@@ -45,17 +58,13 @@
   
             <el-form-item>
   
-              <el-tag type="danger" v-if="itemSelectedLesson==''">در حال حاظر درسی را انتخاب نکرده اید</el-tag>
+              <el-tag class="w100" type="danger" v-if="itemSelectedLesson==''">در حال حاظر درسی را انتخاب نکرده اید</el-tag>
   
-              <el-tag v-else>{{itemSelectedLesson}}</el-tag>
-  
-            </el-form-item>
-  
-            <el-form-item label="پیام به مدیریت">
-  
-              <el-input type="textarea" v-model="form.teacherMessage"></el-input>
+              <el-tag  class="w100" v-else>{{itemSelectedLesson}}</el-tag>
   
             </el-form-item>
+  
+           
   
   
   
@@ -77,9 +86,9 @@
   
         </el-col>
   
-        <el-col :md="12">
+        <el-col :md="12" >
   
-          <el-alert title="توضیحات" type="info" description="در این بخش توضیحات قرار می گیرد" :closable="false" show-icon></el-alert>
+          <el-alert style="margin-right:10px" title="توضیحات" type="info" description="در این بخش توضیحات قرار می گیرد" :closable="false" show-icon></el-alert>
   
         </el-col>
   
@@ -123,7 +132,8 @@
     },
   
     data() {
-  
+
+        
       return {
   
         isLessonsearchDialog: false,
@@ -154,9 +164,9 @@
   
           zipFile: ""
   
-        }
-  
-      };
+        },
+        
+      }
   
     },
   
