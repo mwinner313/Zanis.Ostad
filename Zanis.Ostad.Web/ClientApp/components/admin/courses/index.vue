@@ -1,6 +1,32 @@
 <template>
   <el-card>
-    <el-table height="720" :data="courseData" size="large" style="width: 100%">
+    <div class="float-right">
+    <el-form :inline="true">
+      <el-form-item  label="جستجو">
+        <el-input @change="loadData" placeholder="جستجو" v-model="query.search"></el-input>
+      </el-form-item>
+      <el-form-item label="وضعیت">
+        <el-select v-model="query.status" @change="getCourses" placeholder="وضعیت">
+          <el-option
+            label="همه"
+            value="">
+          </el-option>
+          <el-option  v-for="state in [{id:0,title:'در انتظار تعیین وضعیت'},
+                                       {id:5,title:'تایید شده'},
+                                       {id:10,title:'رد شده'},
+                                       {id:15,title:'غیر فعال توسط مدرس'}]"
+                      :key="state.id"
+                      :label="state.title"
+                      :value="state.id">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-checkbox label="خوانده نشده ها" v-model="query.notSeen" @change="getCourses"></el-checkbox>
+      </el-form-item>
+    </el-form>
+    </div>
+    <el-table v-loading="isLoading" height="720" :data="courseData" size="large" style="width: 100%">
       <el-table-column width="50" label="ردیف">
         <template slot-scope="scope">{{scope.row.id}}
         </template>
@@ -37,7 +63,7 @@
       </el-table-column>
       <el-table-column label="وضعیت" width="200">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.approvalStatus===0">در انتظار تایید</el-tag>
+          <el-tag v-if="scope.row.approvalStatus===0">در انتظار تعیین وضعیت</el-tag>
           <el-tag v-if="scope.row.approvalStatus===5" type="success">تایید شده</el-tag>
           <el-tag v-if="scope.row.approvalStatus===10" type="danger">رد شده</el-tag>
           <el-tag v-if="scope.row.approvalStatus===15" type="warning">غیر فعال توسط مدرس</el-tag>
@@ -100,11 +126,13 @@
     },
     methods: {
       getCourses() {
+        this.isLoading = true;
         this.changingApprovalStateItem = undefined;
         this.courseDetails = undefined;
         axios.get("/api/Courses", {
           params: this.query
         }).then(res => {
+          this.isLoading = false;
           this.courseData = res.data.items;
           this.meta = {allCount: res.data.allCount};
         });

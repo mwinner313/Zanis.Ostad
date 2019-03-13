@@ -2,12 +2,12 @@
   <el-dialog
     :title="item.title"
     :visible.sync="isOpen"
-    @beforeClose="$emit('close')"
+    @beforeClose="resetProgressState"
     append-to-body
     width="40%"
-    @closed="$emit('close')"
+    @closed="resetProgressState"
     :before-close="isOpen">
-    <el-progress :percentage="uploadProgress" ></el-progress>
+    <el-progress v-show="uploadProgress" :percentage="uploadProgress"></el-progress>
     <el-form ref="form" :model="form">
       <el-form-item prop="state" label="انتخاب وضعیت">
         <el-select v-model="form.state" placeholder="انتخاب وضعیت" width="100%">
@@ -76,7 +76,7 @@
     data() {
       return {
         form: {file: {}},
-        uploadProgress:0
+        uploadProgress: 0
       }
     },
     watch: {
@@ -89,6 +89,10 @@
         this.form.file = e.target.files[0];
         console.log(e.target.files[0])
       },
+      resetProgressState(){
+        this.$emit('close');
+          this.uploadProgress=0
+      },
       submit() {
         this.$refs.form.validate((valid) => {
           if (valid) {
@@ -97,8 +101,12 @@
               data.append(prop, this.form[prop]);
             console.log(data);
             axios.put('/api/courses/courseItem', data, {
-              onUploadProgress  (progressEvent) {
-               this.uploadProgress = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              },
+              onUploadProgress: (progressEvent) =>{
+                console.log(progressEvent);
+                this.uploadProgress = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
               }
             }).then(res => {
               this.$emit('close');

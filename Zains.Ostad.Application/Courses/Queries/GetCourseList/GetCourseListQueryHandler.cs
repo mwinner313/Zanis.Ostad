@@ -22,7 +22,11 @@ namespace Zains.Ostad.Application.Courses.Queries.GetCourseList
 
         public async Task<PagenatedList<CourseDto>> Handle(GetCourseListQuery request, CancellationToken cancellationToken)
         {
-            var queryable = _repository.GetQueriable().OrderByDescending(x => x.CreatedOn);
+            var queryable = _repository.GetQueriable().OrderByDescending(x => x.CreatedOn).AsQueryable();
+            if (request.Status.HasValue)
+            {
+                queryable = queryable.Where(x => x.ApprovalStatus == request.Status);
+            }
             return new PagenatedList<CourseDto>
             {
                 Items = await queryable.Select(CourseProfile.Projection).Pagenate(request).ToListAsync(cancellationToken),
