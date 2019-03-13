@@ -27,5 +27,7 @@ namespace Zains.Ostad.Application.Courses.Dtos
         public string TeacherMessageForAdmin { get; set; }
         public string AdminMessageForTeacher { get; set; }
         public DateTime CreatedOn { get; set; }
+        public string LessonTitle { get; set; }
+        public string FieldName { get; set; }
     }
 }
