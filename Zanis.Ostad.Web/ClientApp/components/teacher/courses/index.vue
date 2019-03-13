@@ -28,13 +28,13 @@
   {{ scope.row.gradeTitle}}
 </template>
       </el-table-column>
-      <el-table-column label="نام استاد">
+      <el-table-column label="نام استاد" width="100">
 <template slot-scope="scope">
   {{ scope.row.teacher}}
 </template>
       </el-table-column>
 
-         <el-table-column label="عنوان" width="240">
+         <el-table-column label="عنوان" width="300">
 <template slot-scope="scope">
   {{ scope.row.title}}
 </template>
@@ -42,21 +42,30 @@
 
 
       <el-table-column label="جزئیات" width="150">
-<template slot-scope="scope">
-  <el-button @click="showDetails(scope.row.id)">
-    مشاهده</el-button>
-</template>
+        <template slot-scope="scope">
+          <el-button v-bind:disabled="scope.row.contents.length==0" @click="showDetails(scope.row.id)">
+            مشاهده</el-button>
+        </template>
       </el-table-column>
 
-       <el-table-column label="امکانات">
+       <el-table-column label="وضعیت" width="150">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.approvalStatus===0">در انتظار تایید</el-tag>
+          <el-tag v-if="scope.row.approvalStatus===5" type="success">تایید شده</el-tag>
+          <el-tag v-if="scope.row.approvalStatus===10" type="danger">رد شده</el-tag>
+          <el-tag v-if="scope.row.approvalStatus===15" type="warning">غیر فعال توسط مدرس</el-tag>
+        </template>
+      </el-table-column>
+
+       <el-table-column label="عملیات">
         <template slot-scope="scope">
          <el-row type="flex">
-            <el-button @click="activeCourse(scope.row.id)" class="mgl-17">
-            فعال</el-button>
 
-            <el-button @click="deActiveCourse(scope.row.id)" class="deactive">
-            غیر فعال</el-button>
-         </el-row>
+           <el-button @click="changingApprovalStateItem=scope.row" class="deactive">
+              تغییر وضعیت
+            </el-button>
+
+            </el-row>
         </template>
       </el-table-column>
 
@@ -75,7 +84,8 @@
     <el-dialog title="جزئیات دوره" :visible.sync="courcedialog" width="80%">
       <el-row :gutter="40">
         <el-col :xs="12" :md="12" :lg="12" v-for="(item,index) in courcedetails" :key="index">
-          <el-card class="card-item">
+         
+           <el-card  class="card-item">
             <div slot="header" class="clearfix">
               <span>{{item.title}}</span>
               <span class="icon" v-html="previewIconCourse(item.contentType)"></span>
@@ -103,11 +113,17 @@
       </el-row>
     </el-dialog>
     <add-course @close="isAddingNewCourse=false" :isOpen="isAddingNewCourse"></add-course>
+    <approval-state-changer 
+                          :isOpen="changingApprovalStateItem"
+                          :item="changingApprovalStateItem"
+                          @close="changingApprovalStateItem=undefined"
+    ></approval-state-changer>
   </el-card>
 </template>
 
 <script>
-import AddCourse from './add-course-dialog';
+  import AddCourse from './add-course-dialog';
+  import ApprovalStateChanger from './approval-state-changer'
   import axios from "axios";
   export default {
     name: "AdminListCourse",
@@ -120,18 +136,21 @@ import AddCourse from './add-course-dialog';
         isAddingNewCourse:false,
         courcedetails: [],
         courcedialog: false,
+        changingApprovalStateItem:false,
         meta: {}
       };
 
     },
      components:{
+        ApprovalStateChanger,
          AddCourse
        },
     methods: {
       getCourse() {
-        axios.get("/api/Courses", {
+               axios.get("/api/Courses", {
           params: this.query
         }).then(res => {
+         console.log(res);
           this.courceData = res.data.items;
           this.meta = res.data.allCount;
                 });
@@ -187,7 +206,7 @@ import AddCourse from './add-course-dialog';
           message: 'برای تغییر وضعیت این مورد ابتدا محتوا میبایست توسط مدیر سیستم تعیین وضعیت شود',
           type: 'warning'
         });
-        console.log(res.data);
+      
         })
         .catch(err=>{
 
