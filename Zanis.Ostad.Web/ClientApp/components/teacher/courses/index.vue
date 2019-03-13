@@ -1,45 +1,57 @@
 <template>
   <el-card>
+     <h4 style="display:inline;">دروس تدریس شده</h4>
     <div>
       <el-button @click="isAddingNewCourse=true" class="left">افزودن دوره جدید</el-button>
     </div>
     <el-table height="500" :data="courceData" size="large" style="width: 100%">
-      <el-table-column label="ردیف" width="60">
-        <template slot-scope="scope">{{scope.row.id}}
-</template>
-      </el-table-column>
 
-     
-      <el-table-column label="کددرس" width="90">
-<template slot-scope="scope">
-  {{ scope.row.lessonCode}}
-</template>
-      </el-table-column>
 
-      <el-table-column label="قیمت" width="90">
-<template slot-scope="scope">
-  {{scope.row.price}}
-</template>
+       <el-table-column label="عنوان" width="300">
+            <template slot-scope="scope">
+              {{ scope.row.title}}
+            </template>
       </el-table-column>
 
 
       <el-table-column label="مقطع" width="120">
-<template slot-scope="scope">
-  {{ scope.row.gradeTitle}}
-</template>
-      </el-table-column>
-      <el-table-column label="نام استاد" width="100">
-<template slot-scope="scope">
-  {{ scope.row.teacher}}
-</template>
+        <template slot-scope="scope">
+          {{ scope.row.gradeTitle}}
+        </template>
       </el-table-column>
 
-         <el-table-column label="عنوان" width="300">
-<template slot-scope="scope">
-  {{ scope.row.title}}
-</template>
+      <el-table-column label="رشته" width="120">
+        <template slot-scope="scope">
+          {{ scope.row.fieldName}}
+        </template>
       </el-table-column>
 
+         <el-table-column label="درس" width="120">
+        <template slot-scope="scope">
+          {{ scope.row.lessonTitle}}
+        </template>
+      </el-table-column>
+
+    <el-table-column label="قیمت" width="90">
+        <template slot-scope="scope">
+          {{scope.row.price}}
+        </template>
+      </el-table-column>
+
+      <el-table-column label="کددرس" width="90">
+        <template slot-scope="scope">
+          {{ scope.row.lessonCode}}
+        </template>
+      </el-table-column>
+
+       <el-table-column label="وضعیت" width="220">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.approvalStatus===0">در انتظار تایید</el-tag>
+          <el-tag v-if="scope.row.approvalStatus===5" type="success">تایید شده</el-tag>
+          <el-tag v-if="scope.row.approvalStatus===10" type="danger">رد شده</el-tag>
+          <el-tag v-if="scope.row.approvalStatus===15" type="warning">غیر فعال توسط مدرس</el-tag>
+        </template>
+      </el-table-column>
 
       <el-table-column label="جزئیات" width="150">
         <template slot-scope="scope">
@@ -49,14 +61,7 @@
         </template>
       </el-table-column>
 
-       <el-table-column label="وضعیت" width="150">
-        <template slot-scope="scope">
-          <el-tag v-if="scope.row.approvalStatus===0">در انتظار تایید</el-tag>
-          <el-tag v-if="scope.row.approvalStatus===5" type="success">تایید شده</el-tag>
-          <el-tag v-if="scope.row.approvalStatus===10" type="danger">رد شده</el-tag>
-          <el-tag v-if="scope.row.approvalStatus===15" type="warning">غیر فعال توسط مدرس</el-tag>
-        </template>
-      </el-table-column>
+      
 
        <el-table-column label="عملیات">
         <template slot-scope="scope">

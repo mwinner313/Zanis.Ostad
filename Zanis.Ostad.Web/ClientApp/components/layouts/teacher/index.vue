@@ -23,12 +23,16 @@
         trigger="click"
         style="position:absolute;left: 23px;"
       >
-        <el-table :data="notifiData">
-          <el-table-column width="150" property="date" label="تاریخ">
-            <template slot-scope="scope">{{ scope.row.createdOn | moment("jYYYY/jM/jD HH:mm") }}</template>
-          </el-table-column>
-          <el-table-column width="100" property="name" label="عنوان">
-            <template slot-scope="scope">{{ scope.row.text}}</template>
+        <el-table :data="notifiData" style="width: 100%" height="600">
+          <el-table-column property="date">
+            <template slot-scope="scope">
+              {{ scope.row.text}}
+              <br>
+              <small>
+                <i class="el-icon-time small-icon"></i>
+                {{ scope.row.createdOn | moment("jYYYY/jM/jD HH:mm") }}
+              </small>
+            </template>
           </el-table-column>
         </el-table>
         <i class="far fa-bell" style="color:white" slot="reference" @click="getNotifi"></i>
@@ -180,3 +184,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.small-icon {
+  font-size: 16px;
+
+}
+</style>
