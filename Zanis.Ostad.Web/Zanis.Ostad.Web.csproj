@@ -49,6 +49,13 @@
     <ItemGroup>
       <Folder Include="wwwroot\Courses" />
     </ItemGroup>
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\Courses\10\111121\1111396\123456789\PersianAdminLTE-master.zip" />
+      <_ContentIncludedByDefault Remove="wwwroot\Courses\10\111122\1111206\123456789\PersianAdminLTE-master.zip" />
+      <_ContentIncludedByDefault Remove="wwwroot\Courses\10\111122\1111316\123456789\Vue-Bootstrap-with-Material-Design-master.zip" />
+      <_ContentIncludedByDefault Remove="wwwroot\Courses\10\111123\1111541\123456789\PersianAdminLTE-master.zip" />
+      <_ContentIncludedByDefault Remove="wwwroot\Courses\10\111123\1111541\123456789\Vue-Bootstrap-with-Material-Design-master.zip" />
+    </ItemGroup>
 
     <Target Name="RunWebpack" AfterTargets="ComputeFilesToPublish">
          <!--As part of publishing, ensure the JS resources are freshly built in production mode -->
