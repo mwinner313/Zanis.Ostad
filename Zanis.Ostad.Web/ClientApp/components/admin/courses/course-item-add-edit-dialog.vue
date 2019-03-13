@@ -42,7 +42,7 @@
       </el-form-item>
 
       <el-form-item prop="order" label="ترتیب">
-        <el-input-number v-model="form.order" :min="1"></el-input-number>
+        <el-input-number v-model="form.order" :min="0"></el-input-number>
       </el-form-item>
 
       <el-form-item prop="adminMessageForTeacher" label="پیام ارسالی برای مدرس در مورد این سرفصل">
@@ -85,31 +85,32 @@
       }
     },
     methods: {
+
       selectFile(e) {
         this.form.file = e.target.files[0];
-        console.log(e.target.files[0])
       },
-      resetProgressState(){
+
+      resetProgressState() {
         this.$emit('close');
-          this.uploadProgress=0;
+        this.uploadProgress = 0;
       },
+
       submit() {
         this.$refs.form.validate((valid) => {
           if (valid) {
             let data = new FormData();
             for (let prop in this.form)
               data.append(prop, this.form[prop]);
-            console.log(data);
-            axios.put('/api/courses/courseItem', data, {
+            let action = this.form.id ? axios.put : axios.post;
+            action('/api/courses/courseItem', data, {
               headers: {
                 'Content-Type': 'multipart/form-data'
               },
-              onUploadProgress: (progressEvent) =>{
-                console.log(progressEvent);
+              onUploadProgress: (progressEvent) => {
                 this.uploadProgress = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
               }
             }).then(res => {
-              this.$emit('close',true);
+              this.$emit('close', true);
               this.uploadProgress = 0;
               this.$message({
                 message: 'با موفقیت انجام شد',

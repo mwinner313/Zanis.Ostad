@@ -10,7 +10,7 @@
             دانلود محتوای آپلود شده توسط استاد
           </el-button>
         </a>
-        <el-button class="float-right" style="margin-left: 30px;" type="success" plain>افزودن سر فصل +</el-button>
+        <el-button class="float-right" @click="editingCourseItem={courseId}" style="margin-left: 30px;" type="success" plain>افزودن سر فصل +</el-button>
         <br>
         <small><i class="el-icon-time"></i>{{ course.createdOn | moment("jYYYY/jM/jD HH:mm") }}</small>
       </p>
@@ -33,12 +33,12 @@
     <br>
     <el-row :gutter="40">
 
-      <el-col :xs="12" :md="12" :lg="12" v-for="item in course.contents" :key="item.id">
-
+      <el-col  :lg="24" v-for="item in course.contents" :key="item.id">
         <el-card class="card-item">
           <div slot="header" class="clearfix">
-            <span>{{item.title}}</span>
+            {{item.order}}.
             <span class="icon" v-html="previewIconCourse(item.contentType)"></span>
+            <span>{{item.title}}</span>
             <el-tag v-if="item.state==5" type="success" class="icon">تایید شده</el-tag>
             <el-tag v-else-if="item.state==0" class="icon">در انتظار تعیین وضعیت</el-tag>
             <el-tag v-else-if="item.state==10" type="danger" class="icon">رد شده</el-tag>
@@ -46,12 +46,27 @@
             <small><i class="el-icon-time"></i>{{ course.createdOn | moment("jYYYY/jM/jD HH:mm") }}</small>
             <el-button  @click="editingCourseItem=item" type="primary" plain class="float-right">ویرایش</el-button>
           </div>
+
           <div class="body-card-container">
-            {{item.teacherMessageForAdmin}}
+            <el-alert
+              title="توضیحات برای مدیر سیستم از طرف استاد"
+              type="info"
+              :closable="false"
+              :description="item.teacherMessageForAdmin"
+              show-icon>
+            </el-alert>
+            <br>
+            <el-alert
+              title="توضیحات برای استاد از طرف مدیر سیستم"
+              type="info"
+              :closable="false"
+              :description="item.adminMessageForTeacher"
+              show-icon>
+            </el-alert>
           </div>
-          <div class="download-link-wrapper">
-            <a :href="item.filePath">
-              <el-button type="success" plain>
+          <div class="download-link-wrapper clearfix">
+            <a :href="item.filePath" class="float-right ">
+              <el-button  type="success" plain>
                 دانلود <i class="fas fa-download" style="font-size:13px;"></i>
               </el-button>
             </a>
@@ -59,17 +74,17 @@
         </el-card>
       </el-col>
     </el-row>
-    <CourseItemEditDialog @close="loadData" :is-open="!!editingCourseItem" :item="editingCourseItem"></CourseItemEditDialog>
+    <CourseItemAddEditDialog @close="loadData" :is-open="!!editingCourseItem" :item="editingCourseItem"></CourseItemAddEditDialog>
   </el-dialog>
 </template>
 
 <script>
   import axios from "axios";
-  import CourseItemEditDialog from './course-item-edit-dialog'
+  import CourseItemAddEditDialog from './course-item-add-edit-dialog'
   export default {
     name: "",
     components:{
-      CourseItemEditDialog
+      CourseItemAddEditDialog
     },
     props: {
       isOpen: {
@@ -91,7 +106,7 @@
    },
     methods: {
       loadData(){
-        this.editingCourseItem=undefined;
+        this.editingCourseItem = undefined;
         axios
           .get("/api/Courses/" + this.courseId)
           .then(res => {
@@ -99,7 +114,6 @@
           })
           .catch(err => {});
       },
-
       previewIconCourse(contentType) {
         switch (contentType) {
           case 0:

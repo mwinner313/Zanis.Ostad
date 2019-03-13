@@ -43,6 +43,7 @@ namespace Zains.Ostad.Application.Users.Commands.AddTicket
         {
             var ticket = new Ticket
             {
+                
                 LastMessageText = request.Description,
                 UserId = _workContext.CurrentUserId,
                 State = TicketState.Open,

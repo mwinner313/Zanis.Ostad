@@ -1,5 +1,6 @@
 <template>
   <el-card>
+    <h3 style="display:inline;">دوره ها</h3>
     <div class="float-right">
     <el-form :inline="true">
       <el-form-item  label="جستجو">

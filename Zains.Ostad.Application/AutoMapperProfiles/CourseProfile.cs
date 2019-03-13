@@ -48,7 +48,7 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
                 AdminMessageForTeacher = c.AdminMessageForTeacher,
                 TeacherMessageForAdmin = c.TeacherMessageForAdmin,
                 Order = c.Order
-            }).ToList()
+            }).OrderBy(o=>o.Order).ToList()
         };
 
         public static Expression<Func<Course, UserCourseDto>> ProjectionForUser => x => new UserCourseDto

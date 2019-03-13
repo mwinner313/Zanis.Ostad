@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -34,7 +35,7 @@ namespace Zains.Ostad.Application.Courses.Commands.AddCourseItem
                 CourseId = request.CourseId,
                 State = request.State,
                 AdminMessageForTeacher = request.AdminMessageForTeacher,
-                Order = request.Order,
+                Order = request.Order !=0?request.Order:_courseItemRepo.GetQueriable().Count(x=>x.CourseId==request.CourseId) + 1 ,
                 Title = request.Title,
                 ContentType = request.File !=null? GetContentType(request.File.ContentType):ContentType.File,
                 FilePath = await _coursesFileManager.GetFilePathForDownload(request.File, request.CourseId),
