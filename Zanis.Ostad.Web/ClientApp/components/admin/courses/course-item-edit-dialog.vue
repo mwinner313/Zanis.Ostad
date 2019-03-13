@@ -7,6 +7,7 @@
     width="40%"
     @closed="$emit('close')"
     :before-close="isOpen">
+    <el-progress :percentage="uploadProgress" ></el-progress>
     <el-form ref="form" :model="form">
       <el-form-item prop="state" label="انتخاب وضعیت">
         <el-select v-model="form.state" placeholder="انتخاب وضعیت" width="100%">
@@ -41,16 +42,19 @@
       </el-form-item>
 
       <el-form-item prop="order" label="ترتیب">
-        <el-input-number v-model="form.order"  :min="1" ></el-input-number>
+        <el-input-number v-model="form.order" :min="1"></el-input-number>
       </el-form-item>
 
       <el-form-item prop="adminMessageForTeacher" label="پیام ارسالی برای مدرس در مورد این سرفصل">
         <el-input type="textarea" v-model="form.adminMessageForTeacher" multiline></el-input>
       </el-form-item>
-    <input type="file" ref=""/>
+      <el-button @click="$refs.filePicker.click()">انتخاب فایل</el-button>
+      <el-tag type="warning" v-if="form.file.name">{{form.file.name}}</el-tag>
+      <input type="file" @change="selectFile" ref="filePicker" style="display: none"/>
     </el-form>
     <span slot="footer" class="dialog-footer">
     <el-button @click="$emit('close')">بستن</el-button>
+
     <el-button type="primary" @click="submit">ثبت</el-button>
   </span>
   </el-dialog>
@@ -66,24 +70,37 @@
         type: Boolean
       },
       item: {
-        type: Object,default:{}
+        type: Object, default: {}
       }
     },
     data() {
       return {
-        form: {}
+        form: {file: {}},
+        uploadProgress:0
       }
     },
     watch: {
       item(newVal) {
-        this.form = Object.assign({}, newVal);
+        this.form = Object.assign({}, newVal, {file: {}});
       }
     },
     methods: {
+      selectFile(e) {
+        this.form.file = e.target.files[0];
+        console.log(e.target.files[0])
+      },
       submit() {
         this.$refs.form.validate((valid) => {
           if (valid) {
-            axios.put('/api/courses/courseItem', this.form).then(res => {
+            let data = new FormData();
+            for (let prop in this.form)
+              data.append(prop, this.form[prop]);
+            console.log(data);
+            axios.put('/api/courses/courseItem', data, {
+              onUploadProgress  (progressEvent) {
+               this.uploadProgress = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
+              }
+            }).then(res => {
               this.$emit('close');
             });
           }

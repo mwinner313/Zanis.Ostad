@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -35,7 +36,7 @@ namespace Zains.Ostad.Application.Courses.Commands.AddCourseItem
                 AdminMessageForTeacher = request.AdminMessageForTeacher,
                 Order = request.Order,
                 Title = request.Title,
-                ContentType = GetContentType(request.File.ContentType),
+                ContentType = request.File !=null? GetContentType(request.File.ContentType):ContentType.File,
                 FilePath = await _coursesFileManager.GetFilePathForDownload(request.File, request.CourseId),
                 IsPreview = request.IsPreview
             };
@@ -62,13 +63,14 @@ namespace Zains.Ostad.Application.Courses.Commands.AddCourseItem
             item.Title = request.Title;
             item.AdminMessageForTeacher = request.AdminMessageForTeacher;
             item.IsPreview = request.IsPreview;
-            item.ContentType = GetContentType(request.File.ContentType);
+            item.ContentType = request.File != null ? GetContentType(request.File.ContentType) : ContentType.File;
         }
 
         private async Task HandleUploadedFileAndItemFilePath(EditCourseItemCommand request, CourseItem item)
         {
             if (request.File != null)
             {
+                if(File.Exists(item.FilePath))
                 _coursesFileManager.DeleteFile(item.FilePath);
                 await _coursesFileManager.SaveFile(request.File, item.CourseId);
                 item.FilePath = await _coursesFileManager.GetFilePathForDownload(request.File, item.CourseId);

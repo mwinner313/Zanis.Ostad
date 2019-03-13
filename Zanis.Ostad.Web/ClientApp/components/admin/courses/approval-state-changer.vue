@@ -29,6 +29,7 @@
 
 <script>
   import axios from  'axios'
+  import EventBus from './../../../event-bus'
   export default {
     name: "",
     props: {
@@ -51,6 +52,7 @@
         this.$refs.form.validate((valid) => {
           if (valid) {
             axios.patch('/api/courses/change_approval_status', {courseApprovalStatus:this.form.selectedStatus,courseId:this.item.id}).then(res => {
+              EventBus.$emit('course-state-change');
               this.$emit('close');
             });
           }

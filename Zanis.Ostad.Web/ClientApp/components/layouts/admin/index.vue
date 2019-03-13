@@ -1,5 +1,5 @@
 <template>
-  <el-container  class="admin-wrapper">
+  <el-container class="admin-wrapper">
     <el-header class="header" style="padding:0px;    background-color: #1fc8db;
             background-image: linear-gradient(141deg, rgb(93, 122, 226) 0%, rgb(31, 200, 219) 51%, rgb(44, 181, 232) 75%); position:relative">
       <span class="menu-toggle" @click="toggleSideMenu"><i class="fas fa-bars"></i></span>
@@ -31,7 +31,8 @@
           <router-link to="/admin/courses">
             <el-menu-item index="3">
               <i class="fas fa-ticket-alt"></i>
-              <span slot="title">دوره ها <el-badge v-if="!!coursesOverView" :value="coursesOverView.pendingToApproveByAdmin"/></span>
+              <span slot="title">دوره ها <el-badge v-if="!!coursesOverView"
+                                                   :value="coursesOverView.pendingToApproveByAdmin"/></span>
             </el-menu-item>
           </router-link>
         </el-menu>
@@ -93,6 +94,7 @@
         asideWidth: '200px',
         isCollapse: false,
         unReadTicketItemCount: undefined,
+        coursesOverView: undefined
       };
     },
     mounted() {
@@ -102,6 +104,9 @@
       this.loadCoursesOverView();
       EventBus.$on('adminOpenedUnReadTicketItem', () => {
         this.loadUnReadTicketItemsCount()
+      });
+      EventBus.$on('course-state-change', () => {
+        this.loadCoursesOverView()
       })
     },
     methods: {
@@ -118,10 +123,9 @@
           this.unReadTicketItemCount = res.data.metaData.unReadTicketItemCount;
         });
       },
-      loadCoursesOverView(){
+      loadCoursesOverView() {
         axios.get('/api/courses/overview').then(res => {
           this.coursesOverView = res.data;
-
         });
       }
     },

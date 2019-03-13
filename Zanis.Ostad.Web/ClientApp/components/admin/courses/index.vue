@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-table height="500" :data="courseData" size="large" style="width: 100%">
+    <el-table height="720" :data="courseData" size="large" style="width: 100%">
       <el-table-column width="50" label="ردیف">
         <template slot-scope="scope">{{scope.row.id}}
         </template>
@@ -68,7 +68,7 @@
     ></el-pagination>
     <approval-state-changer v-if="changingApprovalStateItem"
                             :item="changingApprovalStateItem"
-                            :isOpen="!!changingApprovalStateItem"
+                            :is-open="!!changingApprovalStateItem"
                             @close="getCourses"></approval-state-changer>
 
     <course-details v-if="!!courseDetails" :isOpen="!!courseDetails" @close="courseDetails=undefined"

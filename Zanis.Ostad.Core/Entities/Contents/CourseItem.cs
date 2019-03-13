@@ -15,6 +15,6 @@ namespace Zanis.Ostad.Core.Entities.Contents
         public int Order { get; set; }
         public string AdminMessageForTeacher { get; set; }
         public string TeacherMessageForAdmin { get; set; }
-        public DateTime CreatedOn { get; set; } = DateTime.Now;
+        public DateTime CreatedOn { get; } = DateTime.Now;
     }
 }

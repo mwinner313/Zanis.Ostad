@@ -1,5 +1,5 @@
 <template>
-  <el-dialog width="80%" :visible.sync="isOpen">
+  <el-dialog width="80%" @close="$emit('close')" :visible.sync="isOpen">
     <div slot="title">
       <p>
         {{course.title}}
