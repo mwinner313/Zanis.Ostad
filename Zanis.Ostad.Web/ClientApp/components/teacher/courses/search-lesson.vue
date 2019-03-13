@@ -120,7 +120,7 @@ export default {
     },
     selectLessonItem(id) {
       this.$emit("lessonSelected", id);
-    
+      this.$emit("close");
     },
     // changeFieldItem
     getLessonFields() {

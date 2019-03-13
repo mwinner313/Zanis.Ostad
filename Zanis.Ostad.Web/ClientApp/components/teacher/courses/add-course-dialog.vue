@@ -4,6 +4,7 @@
       <el-row>
         <el-col :md="12">
           <el-form>
+            <el-progress v-show="uploadProgress" :percentage="uploadProgress"></el-progress>
             <el-form-item label="قیمت">
               <el-input placeholder="قیمت" v-model="form.price"></el-input>
             </el-form-item>
@@ -37,15 +38,22 @@
             </el-form-item>
 
             <el-form-item>
-              <input type="file" name="myfile" @change="processFile">
+              <input
+                type="file"
+                name="myfile"
+                @change="processFile"
+                ref="filePicker"
+                style="display: none"
+              >
+              <el-button @click="$refs.filePicker.click()">انتخاب فایل</el-button>
               <br>
               <el-button
-                style="margin-left: 10px;"
-                size="small"
-                type="success"
+                style="margin-left: 10px;color:#fff !important"
+                size="medium "
+                type="primary"
                 @click="registerLesson"
               >ارسال</el-button>
-              <el-progress :percentage="fileUploadPercentCompleted"></el-progress>
+              
             </el-form-item>
           </el-form>
         </el-col>
@@ -54,7 +62,7 @@
             title="توضیحات"
             type="info"
             description="در این بخش توضیحات قرار می گیرد"
-           :closable="false"
+            :closable="false"
             show-icon
           ></el-alert>
         </el-col>
@@ -91,8 +99,7 @@ export default {
       itemSelectedLesson: "",
       selectedLesson: null,
       close: false,
-      progressCount: 0,
-      fileUploadPercentCompleted: undefined,
+      uploadProgress: 0,
       courseTitles: [],
       form: {
         price: 0,
@@ -112,8 +119,10 @@ export default {
       });
     },
     getItems(item) {
-      this.itemSelectedLesson = item.fieldName;
+      this.itemSelectedLesson =
+        item.gradeName + " - " + item.fieldName + " - " + item.lessonName;
       this.form.lessonFieldId = item.id;
+      console.log(item);
     },
     closeSearchgDialog() {
       this.isLessonsearchDialog = false;
@@ -136,15 +145,26 @@ export default {
       data.append("CourseTitleId", this.form.courseTitle);
       data.append("LessonFieldId", this.form.lessonFieldId);
       data.append("ZipFile", this.form.zipFile);
-      axios.post("/api/TeacherAccount/courses", data, config).then(res => {
-        if (res.data.status == 1) {
-          this.$message({
-            message: "دوره شما با موفقیت ثبت شد",
-            type: "success"
-          });
-          this.isLessonsearchDialog = false;
-        }
-      });
+      axios
+        .post("/api/TeacherAccount/courses", data, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          },
+          onUploadProgress: progressEvent => {
+            this.uploadProgress = Math.floor(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
+          }
+        })
+        .then(res => {
+          if (res.data.status == 1) {
+            this.$message({
+              message: "دوره شما با موفقیت ثبت شد",
+              type: "success"
+            });
+            this.$emit('close');
+          }
+        });
     }
   },
 
