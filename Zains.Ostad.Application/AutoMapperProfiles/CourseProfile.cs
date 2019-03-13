@@ -33,7 +33,7 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
             Title = x.CourseTitle.Name + " - " + x.TeacherLessonMapping.LessonFieldMapping.Lesson.LessonName,
             GradeTitle = x.TeacherLessonMapping.LessonFieldMapping.Grade.Name,
             LessonTitle=x.TeacherLessonMapping.LessonFieldMapping.Lesson.LessonName,
-            FieldName=x.TeacherLessonMapping.LessonFieldMapping.Field.Name
+            FieldName=x.TeacherLessonMapping.LessonFieldMapping.Field.Name,
             LessonCode = x.TeacherLessonMapping.LessonFieldMapping.Lesson.LessonCode,
             Contents = x.Contents.Select(c => new CourseItemViewModel
             {
