@@ -59,34 +59,47 @@
         </el-card>
       </el-col>
     </el-row>
-    <CourseItemDetailsDialog @close="editingCourseItem=undefined" :is-open="!!editingCourseItem" :item="editingCourseItem"></CourseItemDetailsDialog>
+    <CourseItemEditDialog @close="loadData" :is-open="!!editingCourseItem" :item="editingCourseItem"></CourseItemEditDialog>
   </el-dialog>
 </template>
 
 <script>
-  import CourseItemDetailsDialog from './course-item-edit-dialog'
+  import axios from "axios";
+  import CourseItemEditDialog from './course-item-edit-dialog'
   export default {
     name: "",
     components:{
-      CourseItemDetailsDialog
+      CourseItemEditDialog
     },
     props: {
       isOpen: {
         type: Boolean,
       },
-      course: {
-        type: Object,
-        default: {}
+      courseId: {
+        type: Number,
+        default: undefined
       },
     },
     data() {
       return {
         editingCourseItem : undefined,
+        course:{}
       }
     },
-    mounted() {
-    },
+   mounted(){
+     this.loadData()
+   },
     methods: {
+      loadData(){
+        this.editingCourseItem=undefined;
+        axios
+          .get("/api/Courses/" + this.courseId)
+          .then(res => {
+            this.course = res.data;
+          })
+          .catch(err => {});
+      },
+
       previewIconCourse(contentType) {
         switch (contentType) {
           case 0:

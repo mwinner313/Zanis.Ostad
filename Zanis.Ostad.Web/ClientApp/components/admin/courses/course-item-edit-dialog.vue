@@ -91,7 +91,7 @@
       },
       resetProgressState(){
         this.$emit('close');
-          this.uploadProgress=0
+          this.uploadProgress=0;
       },
       submit() {
         this.$refs.form.validate((valid) => {
@@ -109,7 +109,12 @@
                 this.uploadProgress = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
               }
             }).then(res => {
-              this.$emit('close');
+              this.$emit('close',true);
+              this.uploadProgress = 0;
+              this.$message({
+                message: 'با موفقیت انجام شد',
+                type: 'success'
+              });
             });
           }
         });

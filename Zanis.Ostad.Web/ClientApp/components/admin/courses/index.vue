@@ -97,8 +97,8 @@
                             :is-open="!!changingApprovalStateItem"
                             @close="getCourses"></approval-state-changer>
 
-    <course-details v-if="!!courseDetails" :isOpen="!!courseDetails" @close="courseDetails=undefined"
-                    :course="courseDetails"></course-details>
+    <course-details v-if="!!selectedCourseId" :isOpen="!!selectedCourseId" @close="selectedCourseId=undefined"
+                    :courseId="selectedCourseId"></course-details>
   </el-card>
 </template>
 
@@ -120,7 +120,7 @@
         },
         courseData: [],
         changingApprovalStateItem: undefined,
-        courseDetails: undefined,
+        selectedCourseId: undefined,
         meta: {}
       };
     },
@@ -128,7 +128,7 @@
       getCourses() {
         this.isLoading = true;
         this.changingApprovalStateItem = undefined;
-        this.courseDetails = undefined;
+        this.selectedCourseId = undefined;
         axios.get("/api/Courses", {
           params: this.query
         }).then(res => {
@@ -147,12 +147,7 @@
         this.getCourses();
       },
       showDetails(id) {
-        axios
-          .get("/api/Courses/" + id)
-          .then(res => {
-            this.courseDetails = res.data;
-          })
-          .catch(err => {});
+        this.selectedCourseId=id;
       },
       previewIconCourse(contentType) {
         switch (contentType) {
