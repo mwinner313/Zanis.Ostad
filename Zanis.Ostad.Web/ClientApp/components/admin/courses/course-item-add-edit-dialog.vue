@@ -9,7 +9,7 @@
     :before-close="isOpen">
     <el-progress v-show="uploadProgress" :percentage="uploadProgress"></el-progress>
     <el-form ref="form" :model="form">
-      <el-form-item prop="state" label="انتخاب وضعیت">
+      <el-form-item  :rules="[{ required: true, message: 'وضعیت الزامیست'}]" prop="state" label="انتخاب وضعیت">
         <el-select v-model="form.state" placeholder="انتخاب وضعیت" width="100%">
           <el-option
             label="تایید"
@@ -33,7 +33,7 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item prop="title" label="عنوان">
+      <el-form-item  :rules="[{ required: true, message: 'عنوان  الزامیست'}]" prop="title" label="عنوان">
         <el-input v-model="form.title"></el-input>
       </el-form-item>
 
@@ -41,14 +41,14 @@
         <el-checkbox v-model="form.isPreview">این مورد پیش نمایشی و رایگان میباشد</el-checkbox>
       </el-form-item>
 
-      <el-form-item prop="order" label="ترتیب">
+      <el-form-item  prop="order" label="ترتیب">
         <el-input-number v-model="form.order" :min="0"></el-input-number>
       </el-form-item>
 
       <el-form-item prop="adminMessageForTeacher" label="پیام ارسالی برای مدرس در مورد این سرفصل">
         <el-input type="textarea" v-model="form.adminMessageForTeacher" multiline></el-input>
       </el-form-item>
-      <el-button @click="$refs.filePicker.click()">انتخاب فایل</el-button>
+      <el-button  @click="$refs.filePicker.click()">انتخاب فایل</el-button>
       <el-tag type="warning" v-if="form.file.name">{{form.file.name}}</el-tag>
       <input type="file" @change="selectFile" ref="filePicker" style="display: none"/>
     </el-form>
@@ -98,6 +98,12 @@
       submit() {
         this.$refs.form.validate((valid) => {
           if (valid) {
+            if(!this.form.file.name){
+              this.$message({
+                message:'لطفا فایل ارسالی را انتخاب کنید',
+                type:'warning'
+              })
+            }
             let data = new FormData();
             for (let prop in this.form)
               data.append(prop, this.form[prop]);
@@ -111,6 +117,7 @@
               }
             }).then(res => {
               this.$emit('close', true);
+              this.$refs.form.resetFields();
               this.uploadProgress = 0;
               this.$message({
                 message: 'با موفقیت انجام شد',
