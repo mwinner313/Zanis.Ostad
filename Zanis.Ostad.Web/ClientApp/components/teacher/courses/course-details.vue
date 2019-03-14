@@ -7,10 +7,8 @@
         {{ courseDetail.createdOn | moment("jYYYY/jM/jD HH:mm") }}
       </small>
 
-      <el-button class="float-right" @click="editingCourseItem={CourseId}" type="success"
-                   plain>افزودن سر فصل +
+      <el-button class="float-right" @click="editingCourseItem={courseId}" type="success" plain>افزودن سر فصل +
       </el-button>
-
 
     </div>
     <el-row :gutter="40">

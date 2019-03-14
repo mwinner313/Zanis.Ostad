@@ -67,6 +67,7 @@
               <input
                 type="file"
                 name="myfile"
+                accept=".zip"
                 @change="processFile"
                 ref="filePicker"
                 style="display: none"
