@@ -1,5 +1,5 @@
 <template>
-  <el-dialog width="80%" @close="$emit('close')" :visible.sync="isOpen">
+  <el-dialog width="60%" @close="$emit('close')" :visible.sync="isOpen">
     <div slot="title">
       <p>
         {{course.title}}
@@ -10,7 +10,9 @@
             دانلود محتوای آپلود شده توسط استاد
           </el-button>
         </a>
-        <el-button class="float-right" @click="editingCourseItem={courseId}" style="margin-left: 30px;" type="success" plain>افزودن سر فصل +</el-button>
+        <el-button class="float-right" @click="editingCourseItem={courseId}" style="margin-left: 30px;" type="success"
+                   plain>افزودن سر فصل +
+        </el-button>
         <br>
         <small><i class="el-icon-time"></i>{{ course.createdOn | moment("jYYYY/jM/jD HH:mm") }}</small>
       </p>
@@ -33,40 +35,34 @@
     <br>
     <el-row :gutter="40">
 
-      <el-col  :lg="24" v-for="item in course.contents" :key="item.id">
+      <el-col :lg="24" v-for="item in course.contents" :key="item.id">
         <el-card class="card-item">
           <div slot="header" class="clearfix">
-            {{item.order}}.
-            <span class="icon" v-html="previewIconCourse(item.contentType)"></span>
-            <span>{{item.title}}</span>
+            <el-button @click="editingCourseItem=item" type="primary" plain class="float-right">ویرایش</el-button>
+            <h5>    {{item.order}}.
+              <span class="icon" v-html="previewIconCourse(item.contentType)"></span>
+              <span>{{item.title}}</span></h5>
+            <small><i class="el-icon-time"></i>{{ course.createdOn | moment("jYYYY/jM/jD HH:mm") }}</small>
             <el-tag v-if="item.state==5" type="success" class="icon">تایید شده</el-tag>
             <el-tag v-else-if="item.state==0" class="icon">در انتظار تعیین وضعیت</el-tag>
             <el-tag v-else-if="item.state==10" type="danger" class="icon">رد شده</el-tag>
             <el-tag v-else-if="item.state==15" type="info" class="icon">رد شده توسط استاد</el-tag>
-            <small><i class="el-icon-time"></i>{{ course.createdOn | moment("jYYYY/jM/jD HH:mm") }}</small>
-            <el-button  @click="editingCourseItem=item" type="primary" plain class="float-right">ویرایش</el-button>
           </div>
 
           <div class="body-card-container">
-            <el-alert
-              title="توضیحات برای مدیر سیستم از طرف استاد"
-              type="info"
-              :closable="false"
-              :description="item.teacherMessageForAdmin"
-              show-icon>
-            </el-alert>
+            <el-card  v-if="item.teacherMessageForAdmin" shadow="never">
+              <h5>توضیحات برای مدیر سیستم از طرف استاد</h5>
+              <p> {{item.teacherMessageForAdmin}}</p>
+            </el-card>
             <br>
-            <el-alert
-              title="توضیحات برای استاد از طرف مدیر سیستم"
-              type="info"
-              :closable="false"
-              :description="item.adminMessageForTeacher"
-              show-icon>
-            </el-alert>
+            <el-card v-if="item.adminMessageForTeacher" shadow="never" >
+              <h5>توضیحات برای استاد از طرف مدیر سیستم</h5>
+              <p> {{item.adminMessageForTeacher}}</p>
+            </el-card>
           </div>
           <div class="download-link-wrapper clearfix">
             <a :href="item.filePath" class="float-right ">
-              <el-button  type="success" plain>
+              <el-button type="success" plain>
                 دانلود <i class="fas fa-download" style="font-size:13px;"></i>
               </el-button>
             </a>
@@ -74,16 +70,18 @@
         </el-card>
       </el-col>
     </el-row>
-    <CourseItemAddEditDialog @close="loadData" :is-open="!!editingCourseItem" :item="editingCourseItem"></CourseItemAddEditDialog>
+    <CourseItemAddEditDialog @close="loadData" :is-open="!!editingCourseItem"
+                             :item="editingCourseItem"></CourseItemAddEditDialog>
   </el-dialog>
 </template>
 
 <script>
   import axios from "axios";
   import CourseItemAddEditDialog from './course-item-add-edit-dialog'
+
   export default {
     name: "",
-    components:{
+    components: {
       CourseItemAddEditDialog
     },
     props: {
@@ -97,22 +95,23 @@
     },
     data() {
       return {
-        editingCourseItem : undefined,
-        course:{}
+        editingCourseItem: undefined,
+        course: {}
       }
     },
-   mounted(){
-     this.loadData()
-   },
+    mounted() {
+      this.loadData()
+    },
     methods: {
-      loadData(){
+      loadData() {
         this.editingCourseItem = undefined;
         axios
           .get("/api/Courses/" + this.courseId)
           .then(res => {
             this.course = res.data;
           })
-          .catch(err => {});
+          .catch(err => {
+          });
       },
       previewIconCourse(contentType) {
         switch (contentType) {
@@ -132,7 +131,8 @@
   .download-link-wrapper {
     margin-top: 15px;
   }
-  .card-item{
+
+  .card-item {
     margin-bottom: 10px;
   }
 </style>
