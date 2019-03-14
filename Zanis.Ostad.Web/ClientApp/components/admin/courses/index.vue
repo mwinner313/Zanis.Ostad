@@ -39,8 +39,7 @@
                       :key="title.id"
                       :label="title.name"
                       :value="title.id">
-          </el-option>
-        </el-select>
+          </el-option></el-select>
       </el-form-item>
       <el-form-item label="وضعیت">
         <el-select v-model="query.status" @change="getCourses" placeholder="وضعیت">
