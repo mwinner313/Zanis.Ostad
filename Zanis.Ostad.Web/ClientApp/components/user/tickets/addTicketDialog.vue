@@ -65,6 +65,7 @@
           if (valid) {
             axios.post('/api/account/tickets', this.form).then(res => {
               this.$emit('close');
+              this.$refs.form.resetFields()
             });
           }
         });

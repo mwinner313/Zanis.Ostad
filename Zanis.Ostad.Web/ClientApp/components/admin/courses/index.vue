@@ -2,62 +2,63 @@
   <el-card>
     <h3 style="display:inline;">دوره ها</h3>
     <div class="float-right">
-    <el-form :inline="true">
+      <el-form :inline="true">
 
-      <el-form-item  label="کد یا نام استاد ">
-        <el-input @change="getCourses" placeholder="جستجو" v-model="query.teacherUserName"></el-input>
-      </el-form-item>
+        <el-form-item label="کد یا نام استاد ">
+          <el-input @change="getCourses" placeholder="جستجو" v-model="query.teacherUserName"></el-input>
+        </el-form-item>
 
-      <el-form-item  label="کد درس">
-        <el-input @change="getCourses" placeholder="جستجو" v-model="query.lessonCode"></el-input>
-      </el-form-item>
+        <el-form-item label="کد درس">
+          <el-input @change="getCourses" placeholder="جستجو" v-model="query.lessonCode"></el-input>
+        </el-form-item>
 
-      <el-form-item  label="کد رشته">
-        <el-input @change="getCourses" placeholder="جستجو" v-model="query.fieldCode"></el-input>
-      </el-form-item>
+        <el-form-item label="کد رشته">
+          <el-input @change="getCourses" placeholder="جستجو" v-model="query.fieldCode"></el-input>
+        </el-form-item>
 
-      <el-form-item label="مقطع">
-        <el-select v-model="query.gradeId" @change="getCourses" placeholder="مقطع">
-          <el-option
-            label="همه"
-            value="">
-          </el-option>
-          <el-option  v-for="grade in grades"
-                      :key="grade.id"
-                      :label="grade.name"
-                      :value="grade.id">
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="عنوان دوره">
-        <el-select v-model="query.courseTitleId" @change="getCourses" placeholder="عنوان دوره">
-          <el-option
-            label="همه"
-            value="">
-          </el-option>
-          <el-option  v-for="title in courseTitles"
-                      :key="title.id"
-                      :label="title.name"
-                      :value="title.id">
-          </el-option></el-select>
-      </el-form-item>
-      <el-form-item label="وضعیت">
-        <el-select v-model="query.status" @change="getCourses" placeholder="وضعیت">
-          <el-option
-            label="همه"
-            value="">
-          </el-option>
-          <el-option  v-for="state in [{id:0,title:'در انتظار تعیین وضعیت'},
+        <el-form-item label="مقطع">
+          <el-select v-model="query.gradeId" @change="getCourses" placeholder="مقطع">
+            <el-option
+              label="همه"
+              value="">
+            </el-option>
+            <el-option v-for="grade in grades"
+                       :key="grade.id"
+                       :label="grade.name"
+                       :value="grade.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="عنوان دوره">
+          <el-select v-model="query.courseTitleId" @change="getCourses" placeholder="عنوان دوره">
+            <el-option
+              label="همه"
+              value="">
+            </el-option>
+            <el-option v-for="title in courseTitles"
+                       :key="title.id"
+                       :label="title.name"
+                       :value="title.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="وضعیت">
+          <el-select v-model="query.status" @change="getCourses" placeholder="وضعیت">
+            <el-option
+              label="همه"
+              value="">
+            </el-option>
+            <el-option v-for="state in [{id:0,title:'در انتظار تعیین وضعیت'},
                                        {id:5,title:'تایید شده'},
                                        {id:10,title:'رد شده'},
                                        {id:15,title:'غیر فعال توسط مدرس'}]"
-                      :key="state.id"
-                      :label="state.title"
-                      :value="state.id">
-          </el-option>
-        </el-select>
-      </el-form-item>
-    </el-form>
+                       :key="state.id"
+                       :label="state.title"
+                       :value="state.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
     </div>
     <el-table v-loading="isLoading" height="720" :data="courseData" size="large" style="width: 100%">
       <el-table-column width="50" label="ردیف">
@@ -151,9 +152,9 @@
         query: {
           pageSize: 10
         },
-        grades:[],
+        grades: [],
         courseData: [],
-        courseTitles:[],
+        courseTitles: [],
         changingApprovalStateItem: undefined,
         selectedCourseId: undefined,
         meta: {}
@@ -172,14 +173,14 @@
           this.meta = {allCount: res.data.allCount};
         });
       },
-      getGrades(){
+      getGrades() {
         axios.get("/api/grades").then(res => {
-          this.grades=res.data
+          this.grades = res.data
         })
       },
-      getCourseTitles(){
+      getCourseTitles() {
         axios.get("/api/coursetitles").then(res => {
-          this.courseTitles=res.data
+          this.courseTitles = res.data
         })
       },
 
@@ -193,7 +194,7 @@
         this.getCourses();
       },
       showDetails(id) {
-        this.selectedCourseId=id;
+        this.selectedCourseId = id;
       },
       previewIconCourse(contentType) {
         switch (contentType) {
