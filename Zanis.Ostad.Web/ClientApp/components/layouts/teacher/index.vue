@@ -21,7 +21,7 @@
         placement="bottom"
         width="300"
         trigger="click"
-        style="position:absolute;left: 23px;"
+        style="position:absolute;left: 23px;cursor:pointer"
       >
         <el-table :data="notifiData" style="width: 100%" height="600">
           <el-table-column property="date">
