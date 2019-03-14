@@ -9,7 +9,7 @@
     :before-close="isOpen">
     <el-progress v-show="uploadProgress" :percentage="uploadProgress"></el-progress>
     <el-form ref="form" :model="form">
-      <el-form-item prop="state" label="انتخاب وضعیت">
+      <el-form-item :rules="[{ required: true, message: 'وضعیت الزامیست'}]" prop="state" label="انتخاب وضعیت">
         <el-select v-model="form.state" placeholder="انتخاب وضعیت" width="100%">
           <el-option
             label="تایید"
@@ -34,8 +34,7 @@
       </el-form-item>
 
       <el-form-item prop="title"
-      :rules="[{ required: true, message: 'وارد کردن عنوان الزامی می باشد'}]"
-       label="عنوان">
+      :rules="[{ required: true, message: 'عنوان الزامی می باشد'}]" label="عنوان">
         <el-input v-model="form.title"></el-input>
       </el-form-item>
 
@@ -44,13 +43,13 @@
       </el-form-item>
 
       <el-form-item prop="order"
-       :rules="[{ required: true, message: 'وارد کردن ترتیب الزامی می باشد'}]"
+       :rules="[{ required: true, message: 'ترتیب الزامی می باشد'}]"
        label="ترتیب">
         <el-input-number v-model.number="form.order" :min="0"></el-input-number>
       </el-form-item>
 
-      <el-form-item prop="adminMessageForTeacher" label="پیام ارسالی برای مدرس در مورد این سرفصل">
-        <el-input type="textarea" v-model="form.adminMessageForTeacher" multiline></el-input>
+      <el-form-item prop="adminMessageForTeacher" label="پیام ارسالی برای مدیر در مورد این سرفصل">
+        <el-input type="textarea" v-model="form.TeacherMessageForAdmin" multiline></el-input>
       </el-form-item>
       <el-button @click="$refs.filePicker.click()">انتخاب فایل</el-button>
       <el-tag type="warning" v-if="form.file.name">{{form.file.name}}</el-tag>
