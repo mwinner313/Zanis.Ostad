@@ -33,7 +33,9 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item prop="title" label="عنوان">
+      <el-form-item prop="title"
+      :rules="[{ required: true, message: 'وارد کردن عنوان الزامی می باشد'}]"
+       label="عنوان">
         <el-input v-model="form.title"></el-input>
       </el-form-item>
 
@@ -41,8 +43,10 @@
         <el-checkbox v-model="form.isPreview">این مورد پیش نمایشی و رایگان میباشد</el-checkbox>
       </el-form-item>
 
-      <el-form-item prop="order" label="ترتیب">
-        <el-input-number v-model="form.order" :min="0"></el-input-number>
+      <el-form-item prop="order"
+       :rules="[{ required: true, message: 'وارد کردن ترتیب الزامی می باشد'}]"
+       label="ترتیب">
+        <el-input-number v-model.number="form.order" :min="0"></el-input-number>
       </el-form-item>
 
       <el-form-item prop="adminMessageForTeacher" label="پیام ارسالی برای مدرس در مورد این سرفصل">

@@ -46,11 +46,11 @@
 
        <el-table-column label="وضعیت" width="220">
 <template slot-scope="scope">
-  <el-tag style="width:100%" v-if="scope.row.approvalStatus===0">
+  <el-tag  class="previewState" v-if="scope.row.approvalStatus===0">
     در انتظار تایید</el-tag>
-  <el-tag style="width:100%" v-if="scope.row.approvalStatus===5" type="success">تایید شده</el-tag>
-  <el-tag style="width:100%" v-if="scope.row.approvalStatus===10" type="danger">رد شده</el-tag>
-  <el-tag style="width:100%" v-if="scope.row.approvalStatus===15" type="warning">غیر فعال توسط مدرس</el-tag>
+  <el-tag  class="previewState" v-if="scope.row.approvalStatus===5" type="success">تایید شده</el-tag>
+  <el-tag  class="previewState" v-if="scope.row.approvalStatus===10" type="danger">رد شده</el-tag>
+  <el-tag  class="previewState" v-if="scope.row.approvalStatus===15" type="warning">غیر فعال توسط مدرس</el-tag>
 </template>
       </el-table-column>
 
@@ -180,5 +180,9 @@
   
   .left {
     float: left !important;
+  }
+  .previewState{
+    width: 100%;
+    text-align:center;
   }
 </style>
