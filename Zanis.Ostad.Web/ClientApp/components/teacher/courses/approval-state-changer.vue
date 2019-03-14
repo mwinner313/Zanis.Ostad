@@ -76,8 +76,8 @@
             .patch("/api/TeacherAccount/courses/" + this.item.id + "/active")
   
             .then(res => {
-  
-              this.$message({
+               this.$emit('close',true);
+                this.$message({
   
                 message: "برای تغییر وضعیت این مورد ابتدا محتوا میبایست توسط مدیر سیستم تعیین وضعیت شود",
   
@@ -85,7 +85,6 @@
   
               });
   
-              this.$emit('close');
   
             });
   
