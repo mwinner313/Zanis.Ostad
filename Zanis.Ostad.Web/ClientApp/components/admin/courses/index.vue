@@ -3,8 +3,44 @@
     <h3 style="display:inline;">دوره ها</h3>
     <div class="float-right">
     <el-form :inline="true">
-      <el-form-item  label="جستجو">
-        <el-input @change="loadData" placeholder="جستجو" v-model="query.search"></el-input>
+
+      <el-form-item  label="کد یا نام استاد ">
+        <el-input @change="getCourses" placeholder="جستجو" v-model="query.teacherUserName"></el-input>
+      </el-form-item>
+
+      <el-form-item  label="کد درس">
+        <el-input @change="getCourses" placeholder="جستجو" v-model="query.lessonCode"></el-input>
+      </el-form-item>
+
+      <el-form-item  label="کد رشته">
+        <el-input @change="getCourses" placeholder="جستجو" v-model="query.fieldCode"></el-input>
+      </el-form-item>
+
+      <el-form-item label="مقطع">
+        <el-select v-model="query.gradeId" @change="getCourses" placeholder="مقطع">
+          <el-option
+            label="همه"
+            value="">
+          </el-option>
+          <el-option  v-for="grade in grades"
+                      :key="grade.id"
+                      :label="grade.name"
+                      :value="grade.id">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="عنوان دوره">
+        <el-select v-model="query.courseTitleId" @change="getCourses" placeholder="عنوان دوره">
+          <el-option
+            label="همه"
+            value="">
+          </el-option>
+          <el-option  v-for="title in courseTitles"
+                      :key="title.id"
+                      :label="title.name"
+                      :value="title.id">
+          </el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="وضعیت">
         <el-select v-model="query.status" @change="getCourses" placeholder="وضعیت">
@@ -21,9 +57,6 @@
                       :value="state.id">
           </el-option>
         </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-checkbox label="خوانده نشده ها" v-model="query.notSeen" @change="getCourses"></el-checkbox>
       </el-form-item>
     </el-form>
     </div>
@@ -119,7 +152,9 @@
         query: {
           pageSize: 10
         },
+        grades:[],
         courseData: [],
+        courseTitles:[],
         changingApprovalStateItem: undefined,
         selectedCourseId: undefined,
         meta: {}
@@ -138,6 +173,17 @@
           this.meta = {allCount: res.data.allCount};
         });
       },
+      getGrades(){
+        axios.get("/api/grades").then(res => {
+          this.grades=res.data
+        })
+      },
+      getCourseTitles(){
+        axios.get("/api/coursetitles").then(res => {
+          this.courseTitles=res.data
+        })
+      },
+
       handleSizeChange(val) {
         this.query.pageSize = val;
         this.getCourses();
@@ -161,8 +207,12 @@
         }
       },
     },
+
+    computed: {},
     mounted() {
       this.getCourses();
+      this.getGrades()
+      this.getCourseTitles()
     }
   };
 </script>
