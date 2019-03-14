@@ -161,7 +161,6 @@
         }
       },
     },
-    computed: {},
     mounted() {
       this.getCourses();
     }

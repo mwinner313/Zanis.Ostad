@@ -21,7 +21,7 @@
                        
                         <span>{{item.title}}</span>
     
-    
+
     
                         <el-tag v-if="item.state==5" type="success" class="icon">تایید شده</el-tag>
     
@@ -36,15 +36,14 @@
     
     
                         <el-tag v-else-if="item.state==15" type="info" class="icon">رد شده توسط استاد</el-tag>
+
+                        <small><i class="el-icon-time"></i>{{ item.createdOn | moment("jYYYY/jM/jD HH:mm") }}</small>
+
+                        <el-button  @click="editingCourseItem=item" type="primary" plain class="float-right">ویرایش</el-button>
     
                     </div>
     
-    
-    
                     <div class="wrapper-body-card">{{item.adminMessageForTeacher}}</div>
-    
-    
-    
                     <div class="wrapper-download-link">
     
                         <el-button type="primary" round class="downloadBtn">
@@ -62,6 +61,8 @@
                 </el-card>
     
             </el-col>
+
+             <CourseItemAddEditDialog @close="loadData" :is-open="!!editingCourseItem" :item="editingCourseItem"></CourseItemAddEditDialog>
     
         </el-row>
     
@@ -70,24 +71,27 @@
 
 <script>
     import axios from "axios";
+    import CourseItemAddEditDialog from './course-item-add-edit-dialog'
     
     export default {
     
         name: "",
     
     
-    
         data() {
     
             return {
     
-                courseDetail: []
+                courseDetail: [],
+
+                editingCourseItem : undefined,
     
             };
     
         },
-    
-    
+        components:{
+        CourseItemAddEditDialog
+        },
     
         props: {
     

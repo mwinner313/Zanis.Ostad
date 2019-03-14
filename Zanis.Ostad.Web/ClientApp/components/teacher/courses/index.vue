@@ -7,10 +7,10 @@
     <el-table height="500" :data="courceData" size="large" style="width: 100%">
   
   
-      <el-table-column label="عنوان" width="300">
+      <el-table-column label="عنوان" width="260">
         <template slot-scope="scope">
-                                                      {{ scope.row.title}}
-</template>
+          {{ scope.row.title}}
+        </template>
       </el-table-column>
 
 
@@ -20,7 +20,7 @@
 </template>
       </el-table-column>
 
-      <el-table-column label="رشته" width="120">
+      <el-table-column label="رشته" width="160">
 <template slot-scope="scope">
    {{ scope.row.fieldName}}
 </template>
@@ -46,11 +46,11 @@
 
        <el-table-column label="وضعیت" width="220">
 <template slot-scope="scope">
-  <el-tag v-if="scope.row.approvalStatus===0">
+  <el-tag style="width:100%" v-if="scope.row.approvalStatus===0">
     در انتظار تایید</el-tag>
-  <el-tag v-if="scope.row.approvalStatus===5" type="success">تایید شده</el-tag>
-  <el-tag v-if="scope.row.approvalStatus===10" type="danger">رد شده</el-tag>
-  <el-tag v-if="scope.row.approvalStatus===15" type="warning">غیر فعال توسط مدرس</el-tag>
+  <el-tag style="width:100%" v-if="scope.row.approvalStatus===5" type="success">تایید شده</el-tag>
+  <el-tag style="width:100%" v-if="scope.row.approvalStatus===10" type="danger">رد شده</el-tag>
+  <el-tag style="width:100%" v-if="scope.row.approvalStatus===15" type="warning">غیر فعال توسط مدرس</el-tag>
 </template>
       </el-table-column>
 
@@ -77,7 +77,7 @@
 
     </el-table>
     <el-pagination
-      class="pagenation"
+       class="pagenation"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page.sync="query.currentPage"
@@ -87,9 +87,7 @@
       :total="meta.allCount"
     ></el-pagination>
 
-    <CourseDetails v-if="selectedCourseId" :isOpen="selectedCourseId" :courseId="selectedCourseId" @close="selectedCourseId=undefined"></CourseDetails>
-
-    
+    <CourseDetails v-if="selectedCourseId" :isOpen="selectedCourseId" :courseId="selectedCourseId" @close="selectedCourseId=undefined"></CourseDetails>  
     <add-course @close="isAddingNewCourse=false" :isOpen="isAddingNewCourse"></add-course>
     <approval-state-changer 
                           :isOpen="changingApprovalStateItem"
@@ -131,9 +129,8 @@
         axios.get("/api/Courses", {
           params: this.query
         }).then(res => {
-  
           this.courceData = res.data.items;
-          this.meta = res.data.allCount;
+          this.meta = {allCount: res.data.allCount};         
         });
       },
       handleSizeChange(val) {
@@ -145,10 +142,6 @@
         this.query.currentPage = val;
         this.getCourse();
       },
-  
-  
-  
-  
     },
   
     mounted() {
