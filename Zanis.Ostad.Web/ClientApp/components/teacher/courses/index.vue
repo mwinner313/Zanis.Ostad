@@ -91,10 +91,10 @@
     :courseId="selectedCourseId" @close="selectedCourseId=undefined"></CourseDetails>  
     
     <add-course @close="isAddingNewCourse=false" :isOpen="isAddingNewCourse"></add-course>
-    <approval-state-changer 
+    <approval-state-changer v-if="changingApprovalStateItem"
                           :isOpen="changingApprovalStateItem"
                           :item="changingApprovalStateItem"
-                          @close="changingApprovalStateItem=undefined"
+                          @close="getCourse"
     ></approval-state-changer>
   </el-card>
 </template>
@@ -116,7 +116,7 @@
         courcedetails: [],
         courcedialog: false,
         selectedCourseId: false,
-        changingApprovalStateItem: false,
+        changingApprovalStateItem: undefined,
         meta: {}
       };
   
@@ -128,6 +128,7 @@
     },
     methods: {
       getCourse() {
+        this.changingApprovalStateItem = undefined;
         axios.get("/api/Courses", {
           params: this.query
         }).then(res => {
