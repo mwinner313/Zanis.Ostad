@@ -586,7 +586,7 @@
   
   };
 </script>
-<style>
+<style scoped>
   .w100 {
   
     width: 100%;

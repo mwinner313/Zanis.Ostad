@@ -102,7 +102,7 @@
             for (let prop in this.form)
               data.append(prop, this.form[prop]);
             let action = this.form.id ? axios.put : axios.post;
-            action('/api/courses/courseItem', data, {
+            action('/api/TeacherAccount/courses/courseItems', data, {
               headers: {
                 'Content-Type': 'multipart/form-data'
               },

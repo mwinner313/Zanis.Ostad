@@ -87,7 +87,9 @@
       :total="meta.allCount"
     ></el-pagination>
 
-    <CourseDetails v-if="selectedCourseId" :isOpen="selectedCourseId" :courseId="selectedCourseId" @close="selectedCourseId=undefined"></CourseDetails>  
+    <CourseDetails v-if="selectedCourseId" :isOpen="selectedCourseId" 
+    :courseId="selectedCourseId" @close="selectedCourseId=undefined"></CourseDetails>  
+    
     <add-course @close="isAddingNewCourse=false" :isOpen="isAddingNewCourse"></add-course>
     <approval-state-changer 
                           :isOpen="changingApprovalStateItem"

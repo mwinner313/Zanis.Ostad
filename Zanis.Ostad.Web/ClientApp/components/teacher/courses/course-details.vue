@@ -21,25 +21,26 @@
                        
                         <span>{{item.title}}</span>
     
-
-    
-                        <el-tag v-if="item.state==5" type="success" class="icon">تایید شده</el-tag>
-    
-    
-    
-                        <el-tag v-else-if="item.state==0" class="icon">در انتظار تایید</el-tag>
-    
-    
-    
-                        <el-tag v-else-if="item.state==10" type="danger" class="icon">رد شده</el-tag>
-    
-    
-    
-                        <el-tag v-else-if="item.state==15" type="info" class="icon">رد شده توسط استاد</el-tag>
-
                         <small><i class="el-icon-time"></i>{{ item.createdOn | moment("jYYYY/jM/jD HH:mm") }}</small>
 
-                        <el-button  @click="editingCourseItem=item" type="primary" plain class="float-right">ویرایش</el-button>
+                        <el-button  @click="editingCourseItem=item" type="primary" plain size="small" class="float-right">ویرایش</el-button>
+
+    
+                        <el-tag v-if="item.state==5" type="success" >تایید شده</el-tag>
+    
+    
+    
+                        <el-tag v-else-if="item.state==0" >در انتظار تایید</el-tag>
+    
+    
+    
+                        <el-tag v-else-if="item.state==10" type="danger">رد شده</el-tag>
+    
+    
+    
+                        <el-tag v-else-if="item.state==15" type="info">رد شده توسط استاد</el-tag>
+
+                        
     
                     </div>
     
@@ -62,7 +63,7 @@
     
             </el-col>
 
-             <CourseItemAddEditDialog @close="loadData" :is-open="!!editingCourseItem" :item="editingCourseItem"></CourseItemAddEditDialog>
+             <CourseItemAddEditDialog @close="getContent" :is-open="!!editingCourseItem" :item="editingCourseItem"></CourseItemAddEditDialog>
     
         </el-row>
     
@@ -116,6 +117,7 @@
         methods: {
     
             getContent() {
+                this.editingCourseItem=undefined;
     
                 axios.get("/api/TeacherAccount/courses/" + this.courseId).then(res => {
     
