@@ -103,6 +103,7 @@
                 message:'لطفا فایل ارسالی را انتخاب کنید',
                 type:'warning'
               })
+              return ;
             }
             let data = new FormData();
             for (let prop in this.form)

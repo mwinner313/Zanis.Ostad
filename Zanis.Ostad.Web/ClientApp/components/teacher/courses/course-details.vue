@@ -7,9 +7,12 @@
         {{ courseDetail.createdOn | moment("jYYYY/jM/jD HH:mm") }}
       </small>
 
-      <el-button class="float-right" @click="editingCourseItem={courseId}" type="success" plain>افزودن سر فصل +
-      </el-button>
-
+      <el-button
+        class="float-right"
+        @click="editingCourseItem={courseId}"
+        type="success"
+        plain
+      >+افزودن سر فصل</el-button>
     </div>
     <el-row :gutter="40">
       <el-col :xs="24" :md="24" :lg="24" v-for="(item,index) in courseDetail.contents" :key="index">
@@ -20,8 +23,6 @@
             <span class="icon" v-html="previewIconCourse(item.contentType)"></span>
             
             <span>{{item.title}}</span>
-
-             
             
             <small>
               <i class="el-icon-time"></i>
@@ -46,13 +47,13 @@
           </div>
 
           <div class="wrapper-body-card">
-            <el-alert title="توضیحات مدیر سیستم برای استاد" type="info" show-icon :closable="false">
-                <br>
-                {{item.adminMessageForTeacher}}
-            </el-alert>
+            <el-card shadow="never" v-if="item.adminMessageForTeacher">
+              <h5>توضیحات مدیر سیستم</h5>
+              {{item.adminMessageForTeacher}}
+            </el-card>
           </div>
           <div class="wrapper-download-link">
-            <el-button type="primary" round class="downloadBtn">
+            <el-button type="success" class="downloadBtn">
               <i class="fas fa-download customDownloadIcon"></i>
               
               <a :href="item.filePath" class="white">دانلود</a>
@@ -80,7 +81,6 @@ export default {
   data() {
     return {
       courseDetail: [],
-
       editingCourseItem: undefined
     };
   },
@@ -101,10 +101,9 @@ export default {
   methods: {
     getContent() {
       this.editingCourseItem = undefined;
-
       axios.get("/api/TeacherAccount/courses/" + this.courseId).then(res => {
         this.courseDetail = res.data;
-        console.log(res);
+        console.log(this.courseDetail);
       });
     },
 
@@ -152,5 +151,8 @@ export default {
 
 .mgl-17 {
   margin-left: 17px;
+}
+.white {
+  color: #fff !important;
 }
 </style>
