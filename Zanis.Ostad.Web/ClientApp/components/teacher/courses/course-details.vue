@@ -11,7 +11,8 @@
         class="float-right"
         @click="editingCourseItem={courseId}"
         type="success"
-        plain>+افزودن سر فصل </el-button>
+        plain
+      >+افزودن سر فصل</el-button>
     </div>
     <el-row :gutter="40">
       <el-col :xs="24" :md="24" :lg="24" v-for="(item,index) in courseDetail.contents" :key="index">
@@ -80,7 +81,6 @@ export default {
   data() {
     return {
       courseDetail: [],
-
       editingCourseItem: undefined
     };
   },
@@ -101,10 +101,9 @@ export default {
   methods: {
     getContent() {
       this.editingCourseItem = undefined;
-
       axios.get("/api/TeacherAccount/courses/" + this.courseId).then(res => {
         this.courseDetail = res.data;
-        console.log(res);
+        console.log(this.courseDetail);
       });
     },
 

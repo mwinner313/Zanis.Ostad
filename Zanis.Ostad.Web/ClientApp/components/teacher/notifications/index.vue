@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <el-row>
-      <el-col :md="16" :lg="16">
+  <el-row>
+    <el-col :md="16" :lg="16">
+      <el-card>
         <el-table :data="notifiData.items" style="width: 100%" height="600">
-          <el-table-column label="تاریخ">
+          <el-table-column label="تاریخ" width="180">
             <template slot-scope="scope">
               <i class="el-icon-time"></i>
               {{ scope.row.createdOn | moment("jYYYY/jM/jD HH:mm")}}
@@ -12,6 +12,12 @@
 
           <el-table-column label="پیام">
             <template slot-scope="scope">{{ scope.row.text}}</template>
+          </el-table-column>
+
+          <el-table-column label="وضعیت">
+            <template slot-scope="scope">
+              <el-button @click="showItem(scope.row)">مشاهده</el-button>
+            </template>
           </el-table-column>
         </el-table>
         <el-pagination
@@ -24,38 +30,41 @@
           layout="total, sizes, prev, pager, next, jumper"
           :total="meta.allCount"
         ></el-pagination>
-      </el-col>
-    </el-row>
-  </div>
+      </el-card>
+    </el-col>
+<course-detils-dialog  v-if="selectedCourseId" :isOpen="selectedCourseId" 
+    :courseId="selectedCourseId" @close="selectedCourseId=undefined"></course-detils-dialog>  
+  </el-row>
 </template>
 
 <script>
+import CourseDetilsDialog from '../../teacher/courses/course-details'
 import axios from "axios";
 export default {
   name: "myMessage",
   data() {
     return {
       notifiData: [],
-      notifiParams: {
-        justNewOnes: false,
-        noPaginate: false,
-        pageSize: 0,
-        pageOffset: 0
-      },
       meta: {},
       query: {
-        pageSize: 10
-      }
+        justNewOnes: false,
+        noPaginate: false,
+        pageSize: 10,
+        pageOffset: 0
+      },
+      courseId: 0,
+      selectedCourseId: undefined
     };
+  },
+  components: {
+    CourseDetilsDialog
   },
   methods: {
     getNotifi() {
-      axios
-        .get("/api/Notification", { params: this.notifiParams })
-        .then(res => {
-          this.notifiData = res.data;
-          this.meta = { allCount: res.data.allCount };
-        });
+      axios.get("/api/Notification", { params: this.query }).then(res => {
+        this.notifiData = res.data;
+        this.meta = { allCount: res.data.allCount };
+      });
     },
     handleSizeChange(val) {
       this.query.pageSize = val;
@@ -65,6 +74,14 @@ export default {
       this.query.pageOffset = (val - 1) * this.query.pageSize;
       this.query.currentPage = val;
       this.getNotifi();
+    },
+    showItem(item) {
+      console.log(item)
+      switch (item.relatedItemType) {
+        case 1:
+          this.selectedCourseId =item.jsonExtraData.CourseId ;
+          break;
+      }
     }
   },
 

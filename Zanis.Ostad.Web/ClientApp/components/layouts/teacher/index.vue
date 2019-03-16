@@ -80,9 +80,9 @@
             </el-menu-item>
           </router-link>
 
-           <router-link to="/teacher/my-message">
+           <router-link to="/teacher/notifications">
             <el-menu-item index="6">
-              <i class="fas fa-chalkboard-teacher"></i>
+             <i class="far fa-envelope"></i>
               <span slot="title">پیام های من</span>
             </el-menu-item>
           </router-link>
