@@ -79,6 +79,14 @@
               <span slot="title">دروس تدریس شده</span>
             </el-menu-item>
           </router-link>
+
+           <router-link to="/teacher/my-message">
+            <el-menu-item index="6">
+              <i class="fas fa-chalkboard-teacher"></i>
+              <span slot="title">پیام های من</span>
+            </el-menu-item>
+          </router-link>
+
         </el-menu>
       </el-aside>
       <el-main class="page-content">

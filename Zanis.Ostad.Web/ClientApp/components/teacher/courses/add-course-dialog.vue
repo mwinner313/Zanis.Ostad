@@ -72,14 +72,11 @@
                 ref="filePicker"
                 style="display: none"
               >
-
               <el-button @click="$refs.filePicker.click()">انتخاب فایل</el-button>
-
+              <el-tag type="warning" v-if="form.zipFile">{{form.zipFile.name}}</el-tag>
               <br>
-
               <el-button
                 style="margin-left: 10px;color:#fff !important"
-                type="submit"
                 size="medium "
                 @click="registerLesson"
               >ارسال</el-button>
@@ -188,6 +185,14 @@ export default {
 
       this.$refs.form.validate(valid => {
         if (valid) {
+          // validation file
+          if (!this.form.zipFile) {
+            this.$message({
+              message: "لطفا فایل ارسالی را انتخاب کنید",
+              type: "warning"
+            });
+            return;
+          }
           let data = new FormData();
 
           data.append("Price", this.form.price);
@@ -228,7 +233,6 @@ export default {
               }
             });
         }
-        
       });
     }
   },

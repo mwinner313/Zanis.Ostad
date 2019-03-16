@@ -2,12 +2,13 @@
   <el-card>
     <h4 style="display:inline;">دروس تدریس شده</h4>
     <div>
-      <el-button @click="isAddingNewCourse=true" class="left">افزودن دوره جدید</el-button>
+      <el-button @click="isAddingNewCourse=true" class="left">
+            افزودن دوره جدید</el-button>
     </div>
     <el-table height="500" :data="courceData" size="large" style="width: 100%">
   
   
-      <el-table-column label="عنوان" width="260">
+      <el-table-column label="عنوان" width="240">
         <template slot-scope="scope">
           {{ scope.row.title}}
         </template>
@@ -26,7 +27,7 @@
 </template>
       </el-table-column>
 
-         <el-table-column label="درس" width="120">
+         <el-table-column label="درس" width="180">
 <template slot-scope="scope">
    {{ scope.row.lessonTitle}}
 </template>
@@ -44,7 +45,7 @@
 </template>
       </el-table-column>
 
-       <el-table-column label="وضعیت" width="220">
+       <el-table-column label="وضعیت" width="180">
 <template slot-scope="scope">
   <el-tag  class="previewState" v-if="scope.row.approvalStatus===0">
     در انتظار تایید</el-tag>

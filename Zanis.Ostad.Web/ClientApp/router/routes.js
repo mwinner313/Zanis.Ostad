@@ -14,6 +14,7 @@ import UserCourses from '../components/user/courses'
 import UserDashboard from '../components/user/dashboard'
 import TeacherDashboard from '../components/teacher/dashboard'
 import TeacherCourses from '../components/teacher/courses'
+import MyMessage from '../components/teacher/myMessage'
 import UserLayout from '../components/layouts/user'
 import TeacherLayout from '../components/layouts/teacher'
 
@@ -116,6 +117,11 @@ export const routes = [
         name: "produced-courses",
         path: "produced-courses",
         component: TeacherCourses
+      },
+      {
+        name: "my-message",
+        path: "my-message",
+        component: MyMessage
       },
       {
         name: "user-exam-samples",
