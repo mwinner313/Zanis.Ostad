@@ -70,7 +70,7 @@ namespace Zains.Ostad.Application.Courses
         }
         public void DeleteFile(string filePath)
         {
-            File.Delete(filePath);
+            File.Delete(_hostingEnvironment.WebRootPath + filePath);
         }
         private async Task<TeacherLessonMapping> GetTeacherLessonMapping(long courseId)
         {

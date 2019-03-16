@@ -7,7 +7,7 @@
     :before-close="isOpen">
     <el-form ref="form" :model="form">
       <el-form-item prop="categoryId" label="انتخاب وضعیت">
-        <el-select v-model="form.selectedStatus" placeholder="انتخاب وضعیت" width="100%">
+        <el-select v-model="form.courseApprovalStatus" placeholder="انتخاب وضعیت" width="100%">
           <el-option
             label="تایید"
             :value="5">
@@ -19,6 +19,15 @@
           </el-option>
         </el-select>
       </el-form-item>
+
+      <el-form-item  prop="type">
+        <el-checkbox v-model="form.updateMessage" label="به روز رسانی پیام ادمین درباره دوره" name="type"></el-checkbox>
+      </el-form-item>
+
+      <el-form-item v-if="form.updateMessage" label="پیام ادمین" >
+        <el-input type="textarea" v-model="form.adminMessageForTeacher"></el-input>
+      </el-form-item>
+
     </el-form>
     <span slot="footer" class="dialog-footer">
     <el-button @click="$emit('close')">بستن</el-button>
@@ -43,7 +52,7 @@
     data() {
       return {
         form: {
-          selectedStatus: 5
+          courseApprovalStatus: 5
         }
       }
     },
@@ -51,7 +60,7 @@
       submit(){
         this.$refs.form.validate((valid) => {
           if (valid) {
-            axios.patch('/api/courses/change_approval_status', {courseApprovalStatus:this.form.selectedStatus,courseId:this.item.id}).then(res => {
+            axios.patch('/api/courses/change_approval_status', {...this.form.courseApprovalStatus,courseId:this.item.id}).then(res => {
               EventBus.$emit('course-state-change');
               this.$emit('close');
             });

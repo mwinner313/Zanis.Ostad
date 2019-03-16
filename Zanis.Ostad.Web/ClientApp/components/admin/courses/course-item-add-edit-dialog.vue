@@ -50,7 +50,7 @@
       </el-form-item>
       <el-button  @click="$refs.filePicker.click()">انتخاب فایل</el-button>
       <el-tag type="warning" v-if="form.file.name">{{form.file.name}}</el-tag>
-      <input type="file" @change="selectFile" ref="filePicker" style="display: none"/>
+      <input type="file" @change="selectFile" accept="video/.mp4,.pdf" ref="filePicker" style="display: none"/>
     </el-form>
     <span slot="footer" class="dialog-footer">
     <el-button @click="$emit('close')">بستن</el-button>
