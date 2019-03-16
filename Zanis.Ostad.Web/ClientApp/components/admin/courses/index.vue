@@ -90,9 +90,10 @@
         </template>
       </el-table-column>
 
+
       <el-table-column label="قیمت">
         <template slot-scope="scope">
-          {{scope.row.price}}
+          {{scope.row.priceAsTomans}} تومان
         </template>
       </el-table-column>
       <el-table-column label="وضعیت" width="200">
@@ -106,6 +107,7 @@
       <el-table-column width="280" label="عملیات">
         <template slot-scope="scope">
           <div style>
+            <el-badge :value="scope.row.pendingToApproveItemsCount" v-if="scope.row.pendingToApproveItemsCount" style="margin-top: 13px;">  </el-badge>
             <el-button @click="showDetails(scope.row.id)">
               مشاهده
             </el-button>
@@ -131,7 +133,7 @@
                             :is-open="!!changingApprovalStateItem"
                             @close="getCourses"></approval-state-changer>
 
-    <course-details v-if="!!selectedCourseId" :isOpen="!!selectedCourseId" @close="selectedCourseId=undefined"
+    <course-details v-if="!!selectedCourseId" :isOpen="!!selectedCourseId" @close="selectedCourseId=undefined || getCourses()"
                     :courseId="selectedCourseId"></course-details>
   </el-card>
 </template>

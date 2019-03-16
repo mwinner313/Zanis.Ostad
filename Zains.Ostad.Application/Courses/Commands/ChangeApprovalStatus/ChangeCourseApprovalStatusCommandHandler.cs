@@ -26,6 +26,8 @@ namespace Zains.Ostad.Application.Courses.Commands.ChangeApprovalStatus
         {
             var course = _repository.GetQueriable().First(x => x.Id == request.CourseId);
             course.ApprovalStatus = request.CourseApprovalStatus;
+            if (request.UpdateMessage)
+                course.AdminMessageForTeacher = request.AdminMessageForTeacher;
             await SendNotifToTeacher(request);
             await _repository.EditAsync(course);
             return Response.Success();

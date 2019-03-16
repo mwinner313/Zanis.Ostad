@@ -8,5 +8,7 @@ namespace Zains.Ostad.Application.Courses.Commands.ChangeApprovalStatus
     {
         public long CourseId { get; set; }
         public CourseApprovalStatus CourseApprovalStatus { get; set; }
+        public string AdminMessageForTeacher { get; set; }
+        public bool UpdateMessage { get; set; }
     }
 }
