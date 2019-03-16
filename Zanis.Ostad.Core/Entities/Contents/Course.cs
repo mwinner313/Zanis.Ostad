@@ -19,6 +19,6 @@ namespace Zanis.Ostad.Core.Entities.Contents
         public CourseApprovalStatus ApprovalStatus { get; set; }
         public ICollection<StudentCourseMapping> Students { get; set; }
         public string ZipFilesPath { get; set; }
-        public int PendingToApproveItemsCount { get; set; }
+        public bool HasPendingItemToApprove { get; set; }
     }
 }

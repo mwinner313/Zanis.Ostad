@@ -189,7 +189,7 @@ namespace Zanis.Ostad.Repository.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<int>("PendingToApproveItemsCount");
+                    b.Property<bool>("HasPendingItemToApprove");
 
                     b.Property<int>("Price");
 
@@ -219,8 +219,6 @@ namespace Zanis.Ostad.Repository.Migrations
                     b.Property<int>("ContentType");
 
                     b.Property<long>("CourseId");
-
-                    b.Property<DateTime>("CreatedOn");
 
                     b.Property<string>("FilePath");
 

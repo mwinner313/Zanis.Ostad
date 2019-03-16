@@ -107,7 +107,7 @@
       <el-table-column width="280" label="عملیات">
         <template slot-scope="scope">
           <div style>
-            <el-badge :value="scope.row.pendingToApproveItemsCount" v-if="scope.row.pendingToApproveItemsCount" style="margin-top: 13px;">  </el-badge>
+            <el-badge value="*" v-if="scope.row.hasPendingItemToApprove" style="margin-top: 13px;">  </el-badge>
             <el-button @click="showDetails(scope.row.id)">
               مشاهده
             </el-button>

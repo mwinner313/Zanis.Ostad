@@ -22,7 +22,7 @@ namespace Zains.Ostad.Application.Courses.Dtos
         public string Description { get; set; }
         public string TeacherAvatar { get; set; }
         public string ZipFilesPath { get; set; }
-        public int PendingToApproveItemsCount { get; set; }
+        public bool HasPendingItemToApprove { get; set; }
         public long TeacherId { get; set; }
         public string TeacherMessageForAdmin { get; set; }
         public string AdminMessageForTeacher { get; set; }

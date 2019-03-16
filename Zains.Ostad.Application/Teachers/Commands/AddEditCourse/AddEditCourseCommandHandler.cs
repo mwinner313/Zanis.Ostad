@@ -121,7 +121,9 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
         {
             switch (contentType)
             {
+                case "video/mp4":
                 case ".mp4": return ContentType.Video;
+                case "application/pdf":
                 case ".pdf": return ContentType.File;
                 default: throw new ArgumentOutOfRangeException(contentType);
             }
@@ -129,7 +131,7 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
         public async Task<Response<CourseItemViewModel>> Handle(AddCourseItemByTeacherCommand request, CancellationToken cancellationToken)
         {
             var course = await _courseRepository.GetById(request.CourseId);
-            course.PendingToApproveItemsCount  += 1;
+            course.HasPendingItemToApprove = true;
             var item = new CourseItem
             {
                 Order = request.Order,
@@ -156,7 +158,7 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
         {
             var item = await _courseItemRepository.GetById(request.Id);
             var course = await _courseRepository.GetById(item.CourseId);
-            course.PendingToApproveItemsCount += 1;
+            course.HasPendingItemToApprove = true;
             MapRequestToCourseItemProperties(request, item);
             try
             {

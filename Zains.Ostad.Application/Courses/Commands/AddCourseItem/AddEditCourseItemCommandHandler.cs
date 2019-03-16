@@ -84,7 +84,7 @@ namespace Zains.Ostad.Application.Courses.Commands.AddCourseItem
                 request.State != CourseItemApprovalState.PendingToApproveByAdmin)
             {
                 var course = await _courseRepo.GetById(item.CourseId);
-                course.PendingToApproveItemsCount -= 1;
+                course.HasPendingItemToApprove = true ;
                 await _courseRepo.EditAsync(course);
             }
         }
