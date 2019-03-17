@@ -281,7 +281,7 @@ namespace Zanis.Ostad.Repository.Migrations
 
                     b.Property<long>("CourseItemId");
 
-                    b.Property<DateTime>("DateTime");
+                    b.Property<DateTime>("CreatedOn");
 
                     b.Property<long>("EditorId");
 

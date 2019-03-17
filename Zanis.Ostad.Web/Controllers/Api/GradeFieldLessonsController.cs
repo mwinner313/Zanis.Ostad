@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Zains.Ostad.Application.Lessons.Dtos;
-using Zains.Ostad.Application.Lessons.Queries;
+
 using Zains.Ostad.Application.Lessons.Queries.GetLesson;
 using Zains.Ostad.Application.Lessons.Queries.GetLessonList;
 using Zanis.Ostad.Web.Infrastracture;
