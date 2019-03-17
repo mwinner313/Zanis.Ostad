@@ -16,6 +16,7 @@ import TeacherDashboard from '../components/teacher/dashboard'
 import EditorDashboard from '../components/editor/Dashboard'
 import TeacherCourses from '../components/teacher/courses'
 import TeacherNotifications from '../components/teacher/notifications'
+import EditorNotifications from '../components/editor/notifications'
 import EditorVideoList from '../components/editor/video'
 import UserLayout from '../components/layouts/user'
 import TeacherLayout from '../components/layouts/teacher'
@@ -157,7 +158,7 @@ export const routes = [
       {
         name: "notifications",
         path: "notifications",
-        component: TeacherNotifications
+        component: EditorNotifications
       },
       {
         name: "video-list",

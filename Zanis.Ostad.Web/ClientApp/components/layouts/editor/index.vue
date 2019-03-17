@@ -52,7 +52,7 @@
               <span slot="title">داشبورد</span>
             </el-menu-item>
           </router-link>
-          <router-link to="/teacher/tickets">
+          <router-link to="/editor/tickets">
             <el-menu-item index="1">
               <i class="fas fa-ticket-alt"></i>
               <span slot="title">تیکت ها
@@ -61,7 +61,7 @@
             </el-menu-item>
           </router-link>
         
-          <router-link to="/teacher/notifications">
+          <router-link to="/editor/notifications">
             <el-menu-item index="6">
               <i class="far fa-envelope"></i>
               <span slot="title">پیام های من</span>
