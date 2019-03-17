@@ -224,6 +224,8 @@ namespace Zanis.Ostad.Repository.Migrations
 
                     b.Property<bool>("IsPreview");
 
+                    b.Property<int?>("LatestEditStatus");
+
                     b.Property<int>("Order");
 
                     b.Property<int>("State");
@@ -269,6 +271,31 @@ namespace Zanis.Ostad.Repository.Migrations
                     b.HasIndex("TeacherId");
 
                     b.ToTable("TeacherLessonMappings");
+                });
+
+            modelBuilder.Entity("Zanis.Ostad.Core.Entities.Edits.EditAssignment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("CourseItemId");
+
+                    b.Property<DateTime>("DateTime");
+
+                    b.Property<long>("EditorId");
+
+                    b.Property<string>("FilePath");
+
+                    b.Property<int>("Status");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseItemId");
+
+                    b.HasIndex("EditorId");
+
+                    b.ToTable("EditAssignment");
                 });
 
             modelBuilder.Entity("Zanis.Ostad.Core.Entities.ExamSampleFile", b =>
@@ -772,6 +799,19 @@ namespace Zanis.Ostad.Repository.Migrations
                         .WithMany("ProducedContents")
                         .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Zanis.Ostad.Core.Entities.Edits.EditAssignment", b =>
+                {
+                    b.HasOne("Zanis.Ostad.Core.Entities.Contents.CourseItem", "CourseItem")
+                        .WithMany("Edits")
+                        .HasForeignKey("CourseItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Zanis.Ostad.Core.Entities.User", "Editor")
+                        .WithMany("EditAssignments")
+                        .HasForeignKey("EditorId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Zanis.Ostad.Core.Entities.ExamSampleFile", b =>

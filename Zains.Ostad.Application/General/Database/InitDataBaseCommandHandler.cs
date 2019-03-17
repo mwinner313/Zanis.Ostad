@@ -38,7 +38,8 @@ namespace Zains.Ostad.Application.General.Database
             {
                 "Admin",
                 "Operator",
-                "Teacher"
+                "Teacher",
+                "Editor"
             };
             foreach (var role in list)
             {

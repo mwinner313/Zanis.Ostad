@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Zains.Ostad.Application.Tickets.Commands.AnswerTicket;
+using Zains.Ostad.Application.Tickets.Commands.ChangeTicketCategory;
 using Zains.Ostad.Application.Tickets.Commands.ChangeTicketState;
 using Zains.Ostad.Application.Tickets.Commands.EditAnswer;
 using Zains.Ostad.Application.Tickets.Commands.MarkUserSendedTicketITemsAsSeen;
@@ -43,6 +44,10 @@ namespace Zanis.Ostad.Web.Controllers.Api
 
         [HttpPatch("changestate")]
         public async Task<ActionResult<TicketItemViewModel>> PatchState([FromBody] ChangeTicektStateCommand cmd) =>
+            Ok(await _mediator.Send(cmd));
+
+        [HttpPatch("changecategory")]
+        public async Task<ActionResult<TicketItemViewModel>> PatchCategory([FromBody] ChangeTicketCategoryCommand cmd) =>
             Ok(await _mediator.Send(cmd));
 
         [HttpPost("ticketItems")]

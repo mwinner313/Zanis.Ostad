@@ -4,7 +4,7 @@ using Zanis.Ostad.Core.Entities.Contents;
 
 namespace Zanis.Ostad.Repository.Config
 {
-    public class ContentGroupConfig : IEntityTypeConfiguration<Course>
+    public class CourseConfig : IEntityTypeConfiguration<Course>
     {
         public void Configure(EntityTypeBuilder<Course> builder)
         {

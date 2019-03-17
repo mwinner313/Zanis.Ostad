@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Zanis.Ostad.Core.Entities.Edits;
 using Zanis.Ostad.Core.Infrastucture;
 
 namespace Zanis.Ostad.Core.Entities.Contents
@@ -16,5 +18,7 @@ namespace Zanis.Ostad.Core.Entities.Contents
         public string AdminMessageForTeacher { get; set; }
         public string TeacherMessageForAdmin { get; set; }
         public DateTime CreatedOn { get; } = DateTime.Now;
+        public EditStatus? LatestEditStatus { get; set; }
+        public ICollection<EditAssignment> Edits { get; set; }
     }
 }

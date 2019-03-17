@@ -12,6 +12,7 @@ namespace Zanis.Ostad.Repository.Config
             builder.HasMany(x => x.Cart).WithOne(x => x.User).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
             builder.HasMany(x => x.Tickets).WithOne(x => x.User).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
             builder.HasMany(x => x.TicketItems).WithOne(x => x.User).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Restrict);
+            builder.HasMany(x => x.EditAssignments).WithOne(x => x.Editor).HasForeignKey(x => x.EditorId).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
