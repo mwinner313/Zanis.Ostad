@@ -2,6 +2,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Zains.Ostad.Application.AutoMapperProfiles;
 using Zains.Ostad.Application.Infrastucture;
 using Zanis.Ostad.Core.Contracts;
@@ -29,7 +30,7 @@ namespace Zains.Ostad.Application.Editors.Queries.GetEditAssignments
 
             return new PagenatedList<EditAssignmentViewModel>
             {
-                Items = queryable
+                Items = queryable.Include(x=>x.CourseItem)
                     .Select(EditAssignmentProfile.Projection).AsQueryable().Pagenate(request).ToList(),
                 AllCount = queryable.Count()
             };

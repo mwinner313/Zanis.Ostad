@@ -5,7 +5,6 @@ namespace Zanis.Ostad.Core.Entities.Edits
         PendingToEdit,
         PendingToApproveByAdmin,
         ApprovedByAdmin,
-        RejectedByAdmin,
-        PendingToReviewAgain
+        RejectedByAdmin
     }
 }
