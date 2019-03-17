@@ -53,6 +53,7 @@
        :isOpen="uploadDialog"
        :itemId="uploadDialog"
        @close="uploadDialog=undefined"
+       @changeStatus="getVideoList"
       ></Upload>
   </el-row>
 </template>
@@ -84,7 +85,7 @@
           axios.get("/api/EditorAccount", {
           params: this.query
         }).then(res => {
-           console.log(res.data);
+          
           this.videoData = res.data;
           this.meta = {allCount: res.data.allCount};         
         });

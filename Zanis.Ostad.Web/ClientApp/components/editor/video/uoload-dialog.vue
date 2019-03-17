@@ -54,7 +54,8 @@ export default {
         })
         .then(res => {
           if (res.data.status == 1) {
-            this.$$emit("close");
+            this.$emit("close");
+            this.$emit('changeStatus');
             this.$message({
               message: "فایل شما با موفقیت ارسال شد",
               type: "success"
