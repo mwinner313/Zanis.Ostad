@@ -13,10 +13,13 @@ import UserExamSamples from '../components/user/exam-samples'
 import UserCourses from '../components/user/courses'
 import UserDashboard from '../components/user/dashboard'
 import TeacherDashboard from '../components/teacher/dashboard'
+import EditorDashboard from '../components/editor/Dashboard'
 import TeacherCourses from '../components/teacher/courses'
 import TeacherNotifications from '../components/teacher/notifications'
+import EditorVideoList from '../components/editor/video'
 import UserLayout from '../components/layouts/user'
 import TeacherLayout from '../components/layouts/teacher'
+import EditorLayout from '../components/layouts/editor'
 
 export const routes = [
   {
@@ -69,7 +72,8 @@ export const routes = [
       },
       {path: "*", redirect: 'dashboard'}
     ]
-  }, {
+  },
+   {
     name: 'user', path: '/user', component: UserLayout, display: 'user', icon: 'user',
     children: [
       {
@@ -132,4 +136,40 @@ export const routes = [
     ]
   },
 
+  {
+    name: 'editor', path: '/editor', component: EditorLayout, display: 'teacher', icon: 'teacher',
+    children: [
+      {
+        name: "editor-dashboard",
+        path: "dashboard",
+        component: EditorDashboard
+      },
+      {
+        name: "tickets",
+        path: "tickets",
+        component: UserTickets
+      },
+      {
+        name: "user-courses",
+        path: "courses",
+        component: UserCourses
+      },
+      {
+        name: "notifications",
+        path: "notifications",
+        component: TeacherNotifications
+      },
+      {
+        name: "video-list",
+        path: "List",
+        component: EditorVideoList
+      },
+      {
+        name: "user-exam-samples",
+        path: "exam-samples",
+        component: UserExamSamples
+      },
+      { path: "*", redirect: 'dashboard' }
+    ]
+  },
 ];

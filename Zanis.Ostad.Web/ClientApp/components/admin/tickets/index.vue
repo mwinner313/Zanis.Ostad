@@ -108,7 +108,9 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="meta.allCount">
     </el-pagination>
-    <messenger @ticketstatechange="changeState" v-if="!!selectedTicket" @close="selectedTicket=undefined"
+    <messenger @ticketstatechange="changeState" 
+    @onCategoryChange="loadData"
+     v-if="!!selectedTicket" @close="selectedTicket=undefined"
                :isOpen="!!selectedTicket" :ticket="selectedTicket"></messenger>
   </el-card>
 </template>
