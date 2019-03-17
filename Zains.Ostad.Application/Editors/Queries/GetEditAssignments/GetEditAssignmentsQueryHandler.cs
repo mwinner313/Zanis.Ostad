@@ -28,8 +28,14 @@ namespace Zains.Ostad.Application.Editors.Queries.GetEditAssignments
             CancellationToken cancellationToken)
         {
             var queryable = _repository.GetQueriable().Where(x => x.EditorId == _workContext.CurrentUserId)
-                .OrderByDescending(x => x.CreatedOn);
-
+                .OrderByDescending(x => x.CreatedOn).AsQueryable();
+            
+            if (request.Status.HasValue)
+                queryable = queryable.Where(x => x.Status == request.Status);
+            
+            if (!string.IsNullOrEmpty(request.Search))
+                queryable = queryable.Where(x => x.Status == request.Status);
+            
             return new PagenatedList<EditAssignmentViewModel>
             {
                 Items = queryable.Include(x => x.CourseItem)
