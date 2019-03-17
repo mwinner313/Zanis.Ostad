@@ -11,5 +11,7 @@ namespace Zanis.Ostad.Core.Contracts
         void DeleteFile(string filePath);
         Task<string> GetFilePathForDownload(IFormFile requestFile, long courseId);
         string GetFilePathForDownload(IFormFile requestZipFile, TeacherLessonMapping teacherLessonMapping);
+        Task SaveEditedFileFileByEditor(IFormFile file, long courseId);
+        Task<string> GetEditedFilePathForDownload(IFormFile file, long courseId);
     }
 }
