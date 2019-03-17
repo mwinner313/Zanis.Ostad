@@ -11,7 +11,9 @@ using Zanis.Ostad.Core.Entities.Edits;
 
 namespace Zains.Ostad.Application.Editors.Queries.GetEditAssignments
 {
-    public class GetEditAssignmentsQueryHandler : IRequestHandler<GetEditAssignmentsQuery, PagenatedList<EditAssignmentViewModel>>
+    public class
+        GetEditAssignmentsQueryHandler : IRequestHandler<GetEditAssignmentsQuery, PagenatedList<EditAssignmentViewModel>
+        >
     {
         private readonly IRepository<EditAssignment, long> _repository;
         private readonly IWorkContext _workContext;
@@ -30,7 +32,15 @@ namespace Zains.Ostad.Application.Editors.Queries.GetEditAssignments
 
             return new PagenatedList<EditAssignmentViewModel>
             {
-                Items = queryable.Include(x=>x.CourseItem)
+                Items = queryable.Include(x => x.CourseItem)
+                    .Include(x => x.CourseItem.Course)
+                    .Include(x => x.CourseItem.Course.CourseTitle)
+                    .Include(x => x.CourseItem.Course.TeacherLessonMapping)
+                    .Include(x => x.CourseItem.Course.TeacherLessonMapping.Teacher)
+                    .Include(x => x.CourseItem.Course.TeacherLessonMapping.LessonFieldMapping)
+                    .Include(x => x.CourseItem.Course.TeacherLessonMapping.LessonFieldMapping.Field)
+                    .Include(x => x.CourseItem.Course.TeacherLessonMapping.LessonFieldMapping.Grade)
+                    .Include(x => x.CourseItem.Course.TeacherLessonMapping.LessonFieldMapping.Lesson)
                     .Select(EditAssignmentProfile.Projection).AsQueryable().Pagenate(request).ToList(),
                 AllCount = queryable.Count()
             };
