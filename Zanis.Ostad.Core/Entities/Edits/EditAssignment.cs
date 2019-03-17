@@ -10,7 +10,7 @@ namespace Zanis.Ostad.Core.Entities.Edits
         public User Editor { get; set; }
         public long EditorId { get; set; }
         public long CourseItemId { get; set; }
-        public DateTime DateTime { get; set; } = DateTime.Now;
+        public DateTime CreatedOn { get; set; } = DateTime.Now;
         public EditStatus Status { get; set; }
         public string FilePath { get; set; }
     }
