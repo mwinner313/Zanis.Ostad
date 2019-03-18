@@ -23,11 +23,6 @@ namespace Zanis.Ostad.Web.Controllers.Api
             _mediator = mediator;
         }
 
-        [HttpGet("editors")]
-        public async Task<ActionResult<PagenatedList<UserDto>>> GetEditors(GetEditorsListQuery query)
-        {
-            return Ok(await _mediator.Send(query));
-        }
 
         [HttpGet]
         public async Task<ActionResult<PagenatedList<EditAssignmentViewModel>>> Get(GetEditAssignsQuery query)
