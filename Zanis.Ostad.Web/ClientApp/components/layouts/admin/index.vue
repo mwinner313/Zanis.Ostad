@@ -35,6 +35,21 @@
                                                    :value="coursesOverView.pendingToApproveByAdmin"/></span>
             </el-menu-item>
           </router-link>
+
+           <router-link to="/admin/editor">
+            <el-menu-item index="4">
+              <i class="fas fa-ticket-alt"></i>
+              <span slot="title">تدوین</span>
+            </el-menu-item>
+          </router-link>
+
+          <router-link to="/admin/editor-list">
+            <el-menu-item index="5">
+              <i class="fas fa-ticket-alt"></i>
+              <span slot="title">تدوینگرها</span>
+            </el-menu-item>
+          </router-link>
+          
         </el-menu>
       </el-aside>
       <el-main class="page-content">

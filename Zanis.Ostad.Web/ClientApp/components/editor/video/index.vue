@@ -62,7 +62,7 @@
   
   
   import axios from "axios";
-  import Upload from './uoload-dialog'
+  import Upload from './upload-dialog'
   export default {
     name: "videoList",
     data() {

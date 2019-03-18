@@ -7,6 +7,8 @@ import AdminLayout from '../components/layouts/admin'
 import AdminDashboard from '../components/admin/dashboard'
 import AdminTickets from '../components/admin/tickets'
 import AdminListCourse from '../components/admin/courses'
+import EditorList from '../components/admin/editor-list'
+import EditorCourses from '../components/admin/editor-courses'
 import ChangePassword from '../components/home/change-password'
 import UserTickets from '../components/user/tickets'
 import UserExamSamples from '../components/user/exam-samples'
@@ -70,6 +72,16 @@ export const routes = [
         name:"admin-courses",
         path:"courses",
         component:AdminListCourse
+      },
+      {
+        name:"editor-courses",
+        path:"editor",
+        component:EditorCourses
+      },
+      {
+        name:"editor-list",
+        path:"editor-list",
+        component:EditorList
       },
       {path: "*", redirect: 'dashboard'}
     ]
