@@ -26,7 +26,7 @@ namespace Zains.Ostad.Application.Fields.Queries.GetFieldsList
 
         public Task<List<FieldListViewModel>> Handle(GetFieldsListQuery request, CancellationToken cancellationToken)
         {
-            var dbQuery = _fieldRepositoy.GetQueriable();
+            var dbQuery = _fieldRepositoy.GetQueryable();
             if (request.GradeId.HasValue)
                 dbQuery = dbQuery.Where(x => x.GradeId == request.GradeId);
             if (request.CollegeId.HasValue)

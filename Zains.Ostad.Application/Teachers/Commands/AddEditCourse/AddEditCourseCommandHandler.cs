@@ -71,7 +71,7 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
         {
             if (_teacherLessonMapping != null && _teacherLessonMapping.LessonId == lessonFieldId)
                 return _teacherLessonMapping;
-            _teacherLessonMapping = _teacherLessonMappingRepo.GetQueriable()
+            _teacherLessonMapping = _teacherLessonMappingRepo.GetQueryable()
                                         .Include(x => x.Teacher)
                                         .Include(x => x.LessonFieldMapping)
                                         .Include(x => x.LessonFieldMapping.Field)
@@ -94,7 +94,7 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
                 LessonId = lessonFieldId
             };
             await _teacherLessonMappingRepo.AddAsync(mapping);
-            return _teacherLessonMappingRepo.GetQueriable()
+            return _teacherLessonMappingRepo.GetQueryable()
                 .Include(x => x.Teacher)
                 .Include(x => x.LessonFieldMapping)
                 .Include(x => x.LessonFieldMapping.Field)

@@ -34,12 +34,12 @@ namespace Zains.Ostad.Application.ExamSamples.Queries.HasAccessToFile
 
         private bool ExamFileExists(HasAccessToFileQuery request)
         {
-            return _examRepository.GetQueriable().Any(x => request.FilePath.Contains(x.FilePath));
+            return _examRepository.GetQueryable().Any(x => request.FilePath.Contains(x.FilePath));
         }
 
         private bool DoesUserBoughtThisItem(HasAccessToFileQuery request)
         {
-            return _studentBoughtExamRepository.GetQueriable().Any(x =>
+            return _studentBoughtExamRepository.GetQueryable().Any(x =>
                 x.Lesson.ExamSamples.Any(e => request.FilePath.Contains(e.ExamSampleFile.FilePath) && x.StudentId == request.UserId));
         }
     }

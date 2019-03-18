@@ -5,10 +5,11 @@ using Zanis.Ostad.Core.Entities.Cart;
 using Zanis.Ostad.Core.Entities.Contents;
 using Zanis.Ostad.Core.Entities.Edits;
 using Zanis.Ostad.Core.Entities.Tickets;
+using Zanis.Ostad.Core.Infrastucture;
 
 namespace Zanis.Ostad.Core.Entities
 {
-    public class User:IdentityUser<long>
+    public class User:IdentityUser<long>, IBaseEntity<long>
     {
         public ICollection<StudentCourseMapping>  BoughtCourses{ get; set; }
         public ICollection<StudentExamSampleMapping>  BoughtExamSamples{ get; set; }
@@ -21,4 +22,6 @@ namespace Zanis.Ostad.Core.Entities
         public ICollection<CartItem> Cart { get; set; }
         public string AvatarPath { get; set; }
     }
+
+  
 }

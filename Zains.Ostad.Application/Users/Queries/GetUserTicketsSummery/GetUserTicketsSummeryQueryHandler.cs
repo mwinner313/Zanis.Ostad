@@ -29,9 +29,9 @@ namespace Zains.Ostad.Application.Users.Queries.GetUserTicketsSummery
         {
             return new TicketMetaData
             {
-                UnReadTicketItemCount = _ticketRepo.GetQueriable().Where(x => x.UserId == _workContext.CurrentUserId)
+                UnReadTicketItemCount = _ticketRepo.GetQueryable().Where(x => x.UserId == _workContext.CurrentUserId)
                     .Sum(x => x.TicketOwnerUnReadedMessagesCount),
-                AllCount = _ticketRepo.GetQueriable().Count(x => x.UserId == _workContext.CurrentUserId)
+                AllCount = _ticketRepo.GetQueryable().Count(x => x.UserId == _workContext.CurrentUserId)
             };
         }
     }

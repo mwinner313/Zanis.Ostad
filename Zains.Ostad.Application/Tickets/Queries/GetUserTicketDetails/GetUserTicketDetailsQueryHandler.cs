@@ -23,7 +23,7 @@ namespace Zains.Ostad.Application.Tickets.Queries.GetUserTicketDetails
 
         public Task<TicketViewModel> Handle(GetUserTicketDetailsQuery request, CancellationToken cancellationToken)
         {
-            return _repository.GetQueriable().ProjectTo<TicketViewModel>(_mapper.ConfigurationProvider)
+            return _repository.GetQueryable().ProjectTo<TicketViewModel>(_mapper.ConfigurationProvider)
                 .FirstAsync(x => x.Id == request.TicketId,  cancellationToken);
         }
     }

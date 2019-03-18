@@ -34,7 +34,7 @@ namespace Zanis.Ostad.Repository
             await _db.SaveChangesAsync();
         }
 
-        public IQueryable<T> GetQueriable()
+        public IQueryable<T> GetQueryable()
         {
             return _db.Set<T>();
         }

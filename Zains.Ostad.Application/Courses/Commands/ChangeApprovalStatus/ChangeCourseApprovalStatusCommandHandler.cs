@@ -24,7 +24,7 @@ namespace Zains.Ostad.Application.Courses.Commands.ChangeApprovalStatus
 
         public async Task<Response> Handle(ChangeCourseApprovalStatusCommand request, CancellationToken cancellationToken)
         {
-            var course = _repository.GetQueriable().First(x => x.Id == request.CourseId);
+            var course = _repository.GetQueryable().First(x => x.Id == request.CourseId);
             course.ApprovalStatus = request.CourseApprovalStatus;
             if (request.UpdateMessage)
                 course.AdminMessageForTeacher = request.AdminMessageForTeacher;
@@ -46,7 +46,7 @@ namespace Zains.Ostad.Application.Courses.Commands.ChangeApprovalStatus
 
         private long GetCourseOwnerId(long courseId)
         {
-            return _repository.GetQueriable().Include(x => x.TeacherLessonMapping).First(x => x.Id == courseId)
+            return _repository.GetQueryable().Include(x => x.TeacherLessonMapping).First(x => x.Id == courseId)
                 .TeacherLessonMapping.TeacherId;
         }
     }

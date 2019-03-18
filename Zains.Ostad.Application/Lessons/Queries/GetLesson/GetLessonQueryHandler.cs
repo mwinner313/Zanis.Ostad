@@ -24,9 +24,9 @@ namespace Zains.Ostad.Application.Lessons.Queries.GetLesson
 
         public async Task<LessonDto> Handle(GetLessonQuery request, CancellationToken cancellationToken)
         {
-            var lesson = await _lessonRepository.GetQueriable().Select(LessonProfile.Projection)
+            var lesson = await _lessonRepository.GetQueryable().Select(LessonProfile.Projection)
                 .FirstAsync(x => x.Id == request.LessonId, cancellationToken);
-            lesson.IsOwnedByCurrentUser = _studentLessonExamMappingRepo.GetQueriable()
+            lesson.IsOwnedByCurrentUser = _studentLessonExamMappingRepo.GetQueryable()
                 .Any(x => x.StudentId == request.RequestingUserId && x.LessonId == lesson.Id);
             return lesson;
         }

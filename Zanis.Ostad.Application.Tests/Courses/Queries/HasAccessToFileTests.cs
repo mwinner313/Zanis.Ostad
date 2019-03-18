@@ -29,7 +29,7 @@ namespace Zanis.Ostad.Application.Tests.Courses.Queries
         [Fact]
         public async Task ShouldSayUnKnownIfFileDoesNotExists()
         {
-            _courseItemRepository.Setup(x => x.GetQueriable())
+            _courseItemRepository.Setup(x => x.GetQueryable())
                 .Returns(new List<CourseItem>().AsQueryable().BuildMock().Object);
 
             var res = await _handler.Handle(new HasAccessToFileQuery(0, "non-existing-file-path"),
@@ -42,7 +42,7 @@ namespace Zanis.Ostad.Application.Tests.Courses.Queries
         {
             var filePath = "path-to-some-secured-file";
             long studentId = 2;
-            _courseItemRepository.Setup(x => x.GetQueriable())
+            _courseItemRepository.Setup(x => x.GetQueryable())
                 .Returns(new List<CourseItem>
                 {
                     new CourseItem
@@ -50,7 +50,7 @@ namespace Zanis.Ostad.Application.Tests.Courses.Queries
                         FilePath = filePath,
                     }
                 }.AsQueryable().BuildMock().Object);
-            _studentCourseRepository.Setup(x => x.GetQueriable()).Returns(new List<StudentCourseMapping>()
+            _studentCourseRepository.Setup(x => x.GetQueryable()).Returns(new List<StudentCourseMapping>()
             {
                 new StudentCourseMapping
                 {
@@ -75,7 +75,7 @@ namespace Zanis.Ostad.Application.Tests.Courses.Queries
         {
             var filePath = "path-to-some-secured-file";
             long studentId = 2;
-            _courseItemRepository.Setup(x => x.GetQueriable())
+            _courseItemRepository.Setup(x => x.GetQueryable())
                 .Returns(new List<CourseItem>
                 {
                     new CourseItem
@@ -83,7 +83,7 @@ namespace Zanis.Ostad.Application.Tests.Courses.Queries
                         FilePath = filePath,
                     }
                 }.AsQueryable().BuildMock().Object);
-            _studentCourseRepository.Setup(x => x.GetQueriable()).Returns(new List<StudentCourseMapping>().AsQueryable().BuildMock().Object);
+            _studentCourseRepository.Setup(x => x.GetQueryable()).Returns(new List<StudentCourseMapping>().AsQueryable().BuildMock().Object);
             var res = await _handler.Handle(new HasAccessToFileQuery(studentId, filePath), CancellationToken.None);
             Assert.Equal(res.Status, ResponseStatus.Fail);
         }
@@ -92,7 +92,7 @@ namespace Zanis.Ostad.Application.Tests.Courses.Queries
         {
             var filePath = "path-to-some-secured-file";
             long studentId = 2;
-            _courseItemRepository.Setup(x => x.GetQueriable())
+            _courseItemRepository.Setup(x => x.GetQueryable())
                 .Returns(new List<CourseItem>
                 {
                     new CourseItem
@@ -101,7 +101,7 @@ namespace Zanis.Ostad.Application.Tests.Courses.Queries
                         IsPreview = true,
                     }
                 }.AsQueryable().BuildMock().Object);
-            _studentCourseRepository.Setup(x => x.GetQueriable()).Returns(new List<StudentCourseMapping>().AsQueryable().BuildMock().Object);
+            _studentCourseRepository.Setup(x => x.GetQueryable()).Returns(new List<StudentCourseMapping>().AsQueryable().BuildMock().Object);
             var res = await _handler.Handle(new HasAccessToFileQuery(studentId, filePath), CancellationToken.None);
             Assert.Equal(res.Status, ResponseStatus.Success);
         }

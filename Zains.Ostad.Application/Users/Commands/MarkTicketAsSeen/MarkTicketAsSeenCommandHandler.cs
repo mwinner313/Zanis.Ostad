@@ -28,7 +28,7 @@ namespace Zains.Ostad.Application.Users.Commands.MarkTicketAsSeen
         {
             var ticket = await _ticketRepository.GetById(request.TicketId);
             var unReadedTicketItems =
-                _ticketItemRepo.GetQueriable().Where(x =>
+                _ticketItemRepo.GetQueryable().Where(x =>
                     !x.IsSeen && x.TicketId == request.TicketId && x.UserId != _workContext.CurrentUserId).ToList();
             ticket.TicketOwnerUnReadedMessagesCount = 0;
             unReadedTicketItems.ForEach(x => x.IsSeen = true);

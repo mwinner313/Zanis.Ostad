@@ -57,7 +57,7 @@ namespace Zains.Ostad.Application.Users.Commands.AddTicketItem
 
         private TicketItem GetTicketItem(TicketItem ticketItem)
         {
-            return _repository.GetQueriable()
+            return _repository.GetQueryable()
                 .Include(x => x.User).Single(x => x.Id == ticketItem.Id);
         }
 

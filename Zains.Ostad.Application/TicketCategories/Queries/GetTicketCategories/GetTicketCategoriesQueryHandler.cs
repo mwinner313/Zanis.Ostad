@@ -25,7 +25,7 @@ namespace Zains.Ostad.Application.TicketCategories.Queries.GetTicketCategories
         public Task<List<TicketCategoryViewModel>> Handle(GetTicketCategoriesQuery request,
             CancellationToken cancellationToken)
         {
-            var dbQuery = _repository.GetQueriable();
+            var dbQuery = _repository.GetQueryable();
             if (request.Type.HasValue)
                 dbQuery = dbQuery.Where(x => x.CategoryType == request.Type);
             return dbQuery.ProjectTo<TicketCategoryViewModel>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);

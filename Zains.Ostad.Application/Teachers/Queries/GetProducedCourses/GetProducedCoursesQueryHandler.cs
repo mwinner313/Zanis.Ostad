@@ -26,7 +26,7 @@ namespace Zains.Ostad.Application.Teachers.Queries.GetProducedCourses
         public async Task<PagenatedList<CourseDto>> Handle(GetProducedCoursesQuery request,
             CancellationToken cancellationToken)
         {
-            var queriable = _courseRepo.GetQueriable()
+            var queriable = _courseRepo.GetQueryable()
                 .Where(x => x.TeacherLessonMapping.TeacherId == _workContext.CurrentUserId);
             return new PagenatedList<CourseDto>
             {
@@ -37,7 +37,7 @@ namespace Zains.Ostad.Application.Teachers.Queries.GetProducedCourses
 
         public Task<CourseDto> Handle(GetProducedCourseDetailQuery request, CancellationToken cancellationToken)
         {
-            return _courseRepo.GetQueriable().Select(CourseProfile.Projection)
+            return _courseRepo.GetQueryable().Select(CourseProfile.Projection)
                 .FirstAsync(x => x.Id == request.CourseId && x.TeacherId == _workContext.CurrentUserId , cancellationToken);
         }
     }

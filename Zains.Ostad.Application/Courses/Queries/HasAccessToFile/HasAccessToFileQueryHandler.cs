@@ -34,18 +34,18 @@ namespace Zains.Ostad.Application.Courses.Queries.HasAccessToFile
 
         private bool IsPreview(string requestFilePath)
         {
-          return  _courseItemRepository.GetQueriable().First(x => requestFilePath.Contains(x.FilePath)).IsPreview;
+          return  _courseItemRepository.GetQueryable().First(x => requestFilePath.Contains(x.FilePath)).IsPreview;
         }
 
         private bool HasAccessToCourseAndCourseItem(HasAccessToFileQuery request)
         {
-            return _studentCourseRepository.GetQueriable().Any(x =>
+            return _studentCourseRepository.GetQueryable().Any(x =>
                 x.StudentId == request.UserId && x.Course.Contents.Any(c => request.FilePath.Contains(c.FilePath)));
         }
 
         private bool CourseItemFileExists(HasAccessToFileQuery request)
         {
-            return _courseItemRepository.GetQueriable().Any(x => request.FilePath.Contains(x.FilePath));
+            return _courseItemRepository.GetQueryable().Any(x => request.FilePath.Contains(x.FilePath));
         }
     }
 }

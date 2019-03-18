@@ -21,7 +21,7 @@ namespace Zains.Ostad.Application.CourseTitles.Queries
         public async Task<List<CourseTitleViewModel>> Handle(GetCourseTitlesQuery request,
             CancellationToken cancellationToken)
         {
-            return _repository.GetQueriable().Select(x => new CourseTitleViewModel() {Id = x.Id, Name = x.Name})
+            return _repository.GetQueryable().Select(x => new CourseTitleViewModel() {Id = x.Id, Name = x.Name})
                 .ToList();
         }
     }

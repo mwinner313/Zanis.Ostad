@@ -25,7 +25,7 @@ namespace Zains.Ostad.Application.Carts.Queries
 
         public  Task<List<CartItemDto>> Handle(GetCartItemsQuery request, CancellationToken cancellationToken)
         {
-            return _cartItemRepository.GetQueriable().Where(x => x.UserId == _workContext.CurrentUserId)
+            return _cartItemRepository.GetQueryable().Where(x => x.UserId == _workContext.CurrentUserId)
                 .Select(CartProfile.Projection).ToListAsync();
         }
     }

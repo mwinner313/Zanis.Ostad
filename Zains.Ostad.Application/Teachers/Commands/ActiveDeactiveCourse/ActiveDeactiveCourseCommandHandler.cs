@@ -42,7 +42,7 @@ namespace Zains.Ostad.Application.Teachers.Commands.ActiveDeactiveCourse
 
         private async Task<Course> GetCourse(long courseId, CancellationToken cancellationToken)
         {
-            return await _repository.GetQueriable()
+            return await _repository.GetQueryable()
                 .FirstAsync(x =>
                         x.Id == courseId && x.TeacherLessonMapping.TeacherId == _workContext.CurrentUserId,
                     cancellationToken);

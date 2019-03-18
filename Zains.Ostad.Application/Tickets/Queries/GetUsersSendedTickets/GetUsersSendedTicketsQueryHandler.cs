@@ -28,7 +28,7 @@ namespace Zains.Ostad.Application.Tickets.Queries.GetUsersSendedTickets
         public async Task<TicketDto> Handle(GetUsersSendedTicketsQuery request,
             CancellationToken cancellationToken)
         {
-            var dbQuery = _ticketRepository.GetQueriable();
+            var dbQuery = _ticketRepository.GetQueryable();
             if (request.State.HasValue)
                 dbQuery = dbQuery.Where(x => x.State == request.State.Value);
             if (request.NotSeen)

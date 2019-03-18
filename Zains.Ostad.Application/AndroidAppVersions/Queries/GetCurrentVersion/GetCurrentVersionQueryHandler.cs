@@ -22,7 +22,7 @@ namespace Zains.Ostad.Application.AndroidAppVersions.Queries.GetCurrentVersion
 
         public async Task<AppVersionViewModel> Handle(GetCurrentVersionQuery request, CancellationToken cancellationToken)
         {
-            return _mapper.Map<AppVersionViewModel>(_repository.GetQueriable().Include(x=>x.Features).OrderByDescending(x => x.Id)
+            return _mapper.Map<AppVersionViewModel>(_repository.GetQueryable().Include(x=>x.Features).OrderByDescending(x => x.Id)
                 .FirstOrDefault());
         }
     }

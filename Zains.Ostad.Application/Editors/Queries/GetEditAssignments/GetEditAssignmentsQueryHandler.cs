@@ -26,7 +26,7 @@ namespace Zains.Ostad.Application.Editors.Queries.GetEditAssignments
         public async Task<PagenatedList<EditAssignmentViewModel>> Handle(GetEditAssignmentsQuery request,
             CancellationToken cancellationToken)
         {
-            var queryable = _repository.GetQueriable().Where(x => x.EditorId == _workContext.CurrentUserId)
+            var queryable = _repository.GetQueryable().Where(x => x.EditorId == _workContext.CurrentUserId)
                 .OrderByDescending(x => x.CreatedOn).AsQueryable();
             
             if (request.Status.HasValue)

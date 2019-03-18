@@ -81,6 +81,7 @@ namespace Zanis.Ostad.Web
                 .AddDefaultTokenProviders();
             services.AddScoped<UserManager<User>, AppUserManager>();
             services.AddScoped<IAppRoleManager, AppRoleManager>();
+            services.AddScoped<IUserRoleRepository, EfUserRoleRepository>();
             services.AddScoped<IAppUserManager, AppUserManager>();
             services.AddScoped<ICoursesFileManager, CoursesFileManager>();
             services.Configure<IdentityOptions>(options =>

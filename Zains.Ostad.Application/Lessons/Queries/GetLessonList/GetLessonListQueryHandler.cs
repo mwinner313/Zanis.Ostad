@@ -28,7 +28,7 @@ namespace Zains.Ostad.Application.Lessons.Queries.GetLessonList
 
         public Task<List<LessonFieldListViewModel>> Handle(GetLessonListQuery request, CancellationToken cancellationToken)
         {
-            var dbQuery = _lessonRepository.GetQueriable();
+            var dbQuery = _lessonRepository.GetQueryable();
             if (request.FieldId.HasValue)
                 dbQuery = dbQuery.Where(x => x.FieldId == request.FieldId);
             if (!string.IsNullOrEmpty(request.SearchText))
@@ -49,7 +49,7 @@ namespace Zains.Ostad.Application.Lessons.Queries.GetLessonList
 
         public Task<List<LessonFieldViewModel>> Handle(GetLessonListWithDetailsQuery request, CancellationToken cancellationToken)
         {
-            var dbQuery = _lessonRepository.GetQueriable().Where(x=>x.Lesson.LessonName.Contains(request.Term)||x.Lesson.LessonCode.Contains(request.Term))
+            var dbQuery = _lessonRepository.GetQueryable().Where(x=>x.Lesson.LessonName.Contains(request.Term)||x.Lesson.LessonCode.Contains(request.Term))
                 .Select(x=>new LessonFieldViewModel
                 {
                     Id = x.Id,

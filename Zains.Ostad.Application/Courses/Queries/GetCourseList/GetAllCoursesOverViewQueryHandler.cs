@@ -21,13 +21,13 @@ namespace Zains.Ostad.Application.Courses.Queries.GetCourseList
         {
             return new AllCoursesOverViewQuery
             {
-                DeactivatedByTeacher = _repository.GetQueriable()
+                DeactivatedByTeacher = _repository.GetQueryable()
                     .Count(x => x.ApprovalStatus == CourseApprovalStatus.DeactivatedByTeacher),
-                ApprovedByAdminOrActivatedByTeacher = _repository.GetQueriable().Count(x =>
+                ApprovedByAdminOrActivatedByTeacher = _repository.GetQueryable().Count(x =>
                     x.ApprovalStatus == CourseApprovalStatus.ApprovedByAdminOrActivatedByTeacher),
-                RejectedByAdmin = _repository.GetQueriable()
+                RejectedByAdmin = _repository.GetQueryable()
                     .Count(x => x.ApprovalStatus == CourseApprovalStatus.RejectedByAdmin),
-                PendingToApproveByAdmin = _repository.GetQueriable()
+                PendingToApproveByAdmin = _repository.GetQueryable()
                     .Count(x => x.ApprovalStatus == CourseApprovalStatus.PendingToApproveByAdmin)
             };
         }

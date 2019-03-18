@@ -28,7 +28,7 @@ namespace Zains.Ostad.Application.Teachers.Queries.GetNotifications
         public async Task<PagenatedList<NotificationViewModel>> Handle(GetNotificationsQuery request,
             CancellationToken cancellationToken)
         {
-            var queryable = _notifRepo.GetQueriable();
+            var queryable = _notifRepo.GetQueryable();
             if (request.JustNewOnes)
                 queryable = queryable.Where(x => !x.IsSeen);
             queryable = queryable.Where(x => x.ReceiverId == _workContext.CurrentUserId)

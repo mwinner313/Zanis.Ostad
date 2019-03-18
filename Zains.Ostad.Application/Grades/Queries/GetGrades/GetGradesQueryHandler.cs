@@ -23,7 +23,7 @@ namespace Zains.Ostad.Application.Grades.Queries.GetGrades
 
         public Task<List<GradeViewModel>> Handle(GetGradesQuery request, CancellationToken cancellationToken)
         {
-            return _gradesRepository.GetQueriable().Where(x=>x.IsActive).ProjectTo<GradeViewModel>(_mapper.ConfigurationProvider).ToListAsync();
+            return _gradesRepository.GetQueryable().Where(x=>x.IsActive).ProjectTo<GradeViewModel>(_mapper.ConfigurationProvider).ToListAsync();
         }
     }
 }

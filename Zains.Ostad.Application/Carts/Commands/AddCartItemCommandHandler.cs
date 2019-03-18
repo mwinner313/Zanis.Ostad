@@ -25,12 +25,12 @@ namespace Zains.Ostad.Application.Carts.Commands
             switch (request.ItemType)
             {
                 case ProductType.LessonExam:
-                    if (_cartItemRepository.GetQueriable()
+                    if (_cartItemRepository.GetQueryable()
                         .Any(x => x.UserId == _workContext.CurrentUserId && x.LessonExamId == request.ItemId))
                         return Response.Success();
                     break;
                 case ProductType.TeacherCourse:
-                    if (_cartItemRepository.GetQueriable()
+                    if (_cartItemRepository.GetQueryable()
                         .Any(x => x.UserId == _workContext.CurrentUserId && x.CourseId == request.ItemId))
                         return Response.Success();
                     break;

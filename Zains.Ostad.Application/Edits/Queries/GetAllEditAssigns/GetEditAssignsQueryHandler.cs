@@ -22,7 +22,7 @@ namespace Zains.Ostad.Application.Edits.Queries.GetAllEditAssigns
     
         public async Task<PagenatedList<EditAssignmentViewModel>> Handle(GetEditAssignsQuery request, CancellationToken cancellationToken)
         {
-            var queryable = _editAssignRepo.GetQueriable()
+            var queryable = _editAssignRepo.GetQueryable()
                 .OrderByDescending(x => x.CreatedOn).AsQueryable();
             
             if (request.Status.HasValue)

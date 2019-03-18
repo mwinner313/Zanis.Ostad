@@ -29,7 +29,7 @@ namespace Zains.Ostad.Application.Users.Queries.GetBoughtCourses
 
         public async Task<PagenatedList<UserCourseDto>> Handle(GetBoughtCoursesQuery request, CancellationToken cancellationToken)
         {
-            var querable = _studentCourseRepo.GetQueriable().Where(x => x.StudentId == _workContext.CurrentUserId);
+            var querable = _studentCourseRepo.GetQueryable().Where(x => x.StudentId == _workContext.CurrentUserId);
             return new PagenatedList<UserCourseDto>
             {
                 Items = await querable

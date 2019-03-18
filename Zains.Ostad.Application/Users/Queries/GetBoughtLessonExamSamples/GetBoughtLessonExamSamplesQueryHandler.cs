@@ -23,7 +23,7 @@ namespace Zains.Ostad.Application.Users.Queries.GetBoughtLessonExamSamples
         }
         public async Task<PagenatedList<LessonExamDto>> Handle(GetBoughtLessonExamSamplesQuery request, CancellationToken cancellationToken)
         {
-            var queryable = _repository.GetQueriable()
+            var queryable = _repository.GetQueryable()
                 .Where(x => x.StudentId == _workContext.CurrentUserId);
             
             return new PagenatedList<LessonExamDto>

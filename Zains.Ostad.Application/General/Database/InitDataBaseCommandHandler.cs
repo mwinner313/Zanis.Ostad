@@ -53,21 +53,21 @@ namespace Zains.Ostad.Application.General.Database
 
         private async Task CreateDefaultTicketCategories()
         {
-            if (_ticketCategoryRepo.GetQueriable().All(x => x.CategoryType != TicketCategoryType.RelatedToTeacher))
+            if (_ticketCategoryRepo.GetQueryable().All(x => x.CategoryType != TicketCategoryType.RelatedToTeacher))
                 await _ticketCategoryRepo.AddAsync(new TicketCategory
                 {
                     Title = "دوره اموزشی استاد",
                     CategoryType = TicketCategoryType.RelatedToTeacher,
                     IsDeletible = false
                 });
-            if (_ticketCategoryRepo.GetQueriable().All(x => x.CategoryType != TicketCategoryType.RelatedToSupport))
+            if (_ticketCategoryRepo.GetQueryable().All(x => x.CategoryType != TicketCategoryType.RelatedToSupport))
                 await _ticketCategoryRepo.AddAsync(new TicketCategory
                 {
                     Title = "پشتیبانی",
                     CategoryType = TicketCategoryType.RelatedToSupport,
                     IsDeletible = false
                 });
-            if (_ticketCategoryRepo.GetQueriable().All(x => x.CategoryType != TicketCategoryType.RelatedToRequest))
+            if (_ticketCategoryRepo.GetQueryable().All(x => x.CategoryType != TicketCategoryType.RelatedToRequest))
             {
                 await _ticketCategoryRepo.AddAsync(new TicketCategory
                 {

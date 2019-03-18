@@ -100,7 +100,7 @@ namespace Zains.Ostad.Application.Orders.Commands
         private List<CartItem> GetCartItems(long userId)
         {
             return _cartRepository
-                .GetQueriable()
+                .GetQueryable()
                 .Where(x => x.UserId == userId)
                 .Include(x => x.Course)
                 .Include(x => x.LessonExam)

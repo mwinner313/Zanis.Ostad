@@ -26,7 +26,7 @@ namespace Zains.Ostad.Application.Colleges.Queries.GetCollegeList
 
         public Task<List<CollegeListViewModel>> Handle(GetCollegeQuery request, CancellationToken cancellationToken)
         {
-            var dbQuery = _collegeRepository.GetQueriable();
+            var dbQuery = _collegeRepository.GetQueryable();
             if (request.GradeId.HasValue)
                 dbQuery = dbQuery.Where(x => x.Fields.Any(f => f.GradeId == request.GradeId));
             if (!string.IsNullOrEmpty(request.SearchText))

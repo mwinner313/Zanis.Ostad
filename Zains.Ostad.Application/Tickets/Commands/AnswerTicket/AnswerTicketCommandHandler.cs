@@ -34,7 +34,7 @@ namespace Zains.Ostad.Application.Tickets.Commands.AnswerTicket
             var ticketItem = CreateTicketItem(request);
             await UpdateTicketStats(ticketItem);
             await _ticketItemRepo.AddAsync(ticketItem);
-            return Response<TicketItemViewModel>.Success(_ticketItemRepo.GetQueriable().Include(x => x.User).ProjectTo
+            return Response<TicketItemViewModel>.Success(_ticketItemRepo.GetQueryable().Include(x => x.User).ProjectTo
                 <TicketItemViewModel>(_mapper.ConfigurationProvider).Single(x => x.Id == ticketItem.Id));
         }
 

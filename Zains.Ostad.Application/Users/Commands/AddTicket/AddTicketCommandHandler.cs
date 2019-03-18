@@ -35,7 +35,7 @@ namespace Zains.Ostad.Application.Users.Commands.AddTicket
         {
             var ticket = CreateTicket(request);
             await _ticketRepo.AddAsync(ticket);
-            return Response<TicketViewModel>.Success(_mapper.Map<TicketViewModel>(_ticketRepo.GetQueriable()
+            return Response<TicketViewModel>.Success(_mapper.Map<TicketViewModel>(_ticketRepo.GetQueryable()
                 .Include(x => x.User).Single(x => x.Id == ticket.Id)));
         }
 
@@ -62,7 +62,7 @@ namespace Zains.Ostad.Application.Users.Commands.AddTicket
             };
             if (request.CourseId.HasValue && request.CourseId != 0)
             {
-                ticket.CategoryId = _ticktCategoryRepository.GetQueriable()
+                ticket.CategoryId = _ticktCategoryRepository.GetQueryable()
                     .First(x => x.CategoryType == TicketCategoryType.RelatedToTeacher).Id;
             }
              if (request.CategoryId.HasValue && request.CategoryId.Value != 0)
@@ -70,7 +70,7 @@ namespace Zains.Ostad.Application.Users.Commands.AddTicket
                 ticket.CategoryId = request.CategoryId.Value;
             }
             else 
-                ticket.CategoryId=_ticktCategoryRepository.GetQueriable()
+                ticket.CategoryId=_ticktCategoryRepository.GetQueryable()
                     .First(x => x.CategoryType == TicketCategoryType.RelatedToSupport).Id;
 
             return ticket;

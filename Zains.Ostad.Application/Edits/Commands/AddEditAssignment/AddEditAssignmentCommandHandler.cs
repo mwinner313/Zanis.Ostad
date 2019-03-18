@@ -41,7 +41,7 @@ namespace Zains.Ostad.Application.Edits.Commands.AddEditAssignment
         public async Task<Response> Handle(AddEditAssignmentByCourseCommand request,
             CancellationToken cancellationToken)
         {
-            var courseItems = _courseItemRepo.GetQueriable().Where(x => x.CourseId == request.CourseId)
+            var courseItems = _courseItemRepo.GetQueryable().Where(x => x.CourseId == request.CourseId)
                 .ToList();
 
             _unitOfWork.Begin();

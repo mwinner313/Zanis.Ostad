@@ -27,7 +27,7 @@ namespace Zanis.Ostad.Application.Tests.ExamSamples.Queries
         public async Task ShouldSayUnKnownIfFileDoesNotExists()
         {
             var filePath = "path-to-some-secured-file";
-            _examRepository.Setup(x => x.GetQueriable())
+            _examRepository.Setup(x => x.GetQueryable())
                 .Returns(new List<ExamSampleFile>().AsQueryable().BuildMock().Object);
             var handler = new HasAccessToFileQueryHandler(_studentBoughtItems.Object, _examRepository.Object);
             var res = await handler.Handle(new HasAccessToFileQuery(0, filePath), CancellationToken.None);
@@ -39,7 +39,7 @@ namespace Zanis.Ostad.Application.Tests.ExamSamples.Queries
         {
             var filePath = "path-to-some-secured-file";
             long studentId = 2;
-            _examRepository.Setup(x => x.GetQueriable())
+            _examRepository.Setup(x => x.GetQueryable())
                 .Returns(new List<ExamSampleFile>
                 {
                     new ExamSampleFile()
@@ -47,7 +47,7 @@ namespace Zanis.Ostad.Application.Tests.ExamSamples.Queries
                         FilePath = filePath
                     }
                 }.AsQueryable().BuildMock().Object);
-            _studentBoughtItems.Setup(x => x.GetQueriable()).Returns(new List<StudentExamSampleMapping>
+            _studentBoughtItems.Setup(x => x.GetQueryable()).Returns(new List<StudentExamSampleMapping>
             {
                 new StudentExamSampleMapping
                 {
@@ -76,7 +76,7 @@ namespace Zanis.Ostad.Application.Tests.ExamSamples.Queries
         {
             var filePath = "path-to-some-secured-file";
             long studentId = 2;
-            _examRepository.Setup(x => x.GetQueriable())
+            _examRepository.Setup(x => x.GetQueryable())
                 .Returns(new List<ExamSampleFile>
                 {
                     new ExamSampleFile
@@ -84,7 +84,7 @@ namespace Zanis.Ostad.Application.Tests.ExamSamples.Queries
                         FilePath = filePath
                     }
                 }.AsQueryable().BuildMock().Object);
-            _studentBoughtItems.Setup(x => x.GetQueriable()).Returns(new List<StudentExamSampleMapping>().AsQueryable().BuildMock().Object);
+            _studentBoughtItems.Setup(x => x.GetQueryable()).Returns(new List<StudentExamSampleMapping>().AsQueryable().BuildMock().Object);
             var handler = new HasAccessToFileQueryHandler(_studentBoughtItems.Object, _examRepository.Object);
             var res = await handler.Handle(new HasAccessToFileQuery(studentId, filePath), CancellationToken.None);
             Assert.Equal(res.Status, ResponseStatus.Fail);

@@ -22,7 +22,7 @@ namespace Zains.Ostad.Application.Courses.Queries.GetCourseItemsToEdit
         public async Task<PagenatedList<CourseItemViewModel>> Handle(GetCourseItemsToEdit request,
             CancellationToken cancellationToken)
         {
-            var queryable = _courseItemRepo.GetQueriable().Where(x => x.ContentType == ContentType.Video);
+            var queryable = _courseItemRepo.GetQueryable().Where(x => x.ContentType == ContentType.Video);
             if (request.EditStatus.HasValue)
                 queryable = queryable.Where(x => x.LatestEditStatus == request.EditStatus);
             

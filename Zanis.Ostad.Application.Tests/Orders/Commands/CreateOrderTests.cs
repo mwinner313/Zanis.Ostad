@@ -47,7 +47,7 @@ namespace Zanis.Ostad.Application.Tests.Orders.Commands
         {
             var userId = 1;
 
-            _cartItemRepository.Setup(x => x.GetQueriable())
+            _cartItemRepository.Setup(x => x.GetQueryable())
                 .Returns(new List<CartItem>().AsQueryable().BuildMock().Object);
             var res = await _handler.Handle(new CreateOrderCommand
             {
@@ -100,7 +100,7 @@ namespace Zanis.Ostad.Application.Tests.Orders.Commands
 
         private void InitCart(int userId)
         {
-            _cartItemRepository.Setup(x => x.GetQueriable())
+            _cartItemRepository.Setup(x => x.GetQueryable())
                 .Returns(new List<CartItem>
                 {
                     new CartItem

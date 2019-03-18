@@ -41,7 +41,7 @@ namespace Zains.Ostad.Application.Courses
             if (_courseId != courseId)
             {
                 _courseId = courseId;
-                _teacherLessonMapping = _teacherLessonMappingRepo.GetQueriable()
+                _teacherLessonMapping = _teacherLessonMappingRepo.GetQueryable()
                     .Include(x => x.Teacher)
                     .Include(x => x.LessonFieldMapping)
                     .Include(x => x.LessonFieldMapping.Field)

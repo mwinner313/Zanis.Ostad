@@ -48,7 +48,7 @@ namespace Zains.Ostad.Application.Orders.Commands
         }
         private async Task ClearUserCart(long userId)
         {
-            var cartItems = _cartRepository.GetQueriable().Where(x => x.UserId == userId).ToList();
+            var cartItems = _cartRepository.GetQueryable().Where(x => x.UserId == userId).ToList();
             foreach (var cartItem in cartItems)
             {
                 await _cartRepository.Delete(cartItem.Id);
@@ -56,7 +56,7 @@ namespace Zains.Ostad.Application.Orders.Commands
         }
         private async Task<Order> GetOrder(ConfirmOrderPaymentCommand request)
         {
-            return await _orderRepository.GetQueriable().Include(x => x.OrderItems)
+            return await _orderRepository.GetQueryable().Include(x => x.OrderItems)
                 .FirstAsync(x => x.Id == request.context.OrderId);
         }
 

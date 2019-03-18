@@ -22,7 +22,7 @@ namespace Zains.Ostad.Application.Teachers.Commands.MarkNotifiactionAsSeen
 
         public async Task<Response> Handle(MarkNotificationAsSeenCommand request, CancellationToken cancellationToken)
         {
-            var notif =await _notifRepo.GetQueriable().FirstOrDefaultAsync(x =>
+            var notif =await _notifRepo.GetQueryable().FirstOrDefaultAsync(x =>
                 x.Id == request.NotificationId && x.ReceiverId == _workContext.CurrentUserId, cancellationToken);
             if (notif is null)
                 return Response.Failed("چنین پیامی برای کاربر ثبت نشده");

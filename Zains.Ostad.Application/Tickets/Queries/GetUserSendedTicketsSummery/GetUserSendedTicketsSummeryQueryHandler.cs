@@ -20,7 +20,7 @@ namespace Zains.Ostad.Application.Tickets.Queries.GetUserSendedTicketsSummery
 
         public async Task<TicketMetaData> Handle(GetUserSendedTicketsSummeryQuery request, CancellationToken cancellationToken)
         {
-            var dbQuery = _ticketRepository.GetQueriable();
+            var dbQuery = _ticketRepository.GetQueryable();
             if (request.NotSeen)
                 dbQuery = dbQuery.Where(x => x.OperatorUnReadedMessagesCount > 0);
             if (!string.IsNullOrEmpty(request.UserName))

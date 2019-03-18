@@ -21,7 +21,7 @@ namespace Zains.Ostad.Application.Carts.Commands
 
         public async Task<Response> Handle(RemoveCartItemCommand request, CancellationToken cancellationToken)
         {
-            var cartItem = _cartItemRepository.GetQueriable()
+            var cartItem = _cartItemRepository.GetQueryable()
                 .FirstOrDefault(x => x.UserId == _workContext.CurrentUserId && x.Id == request.CartItemId);
             if (cartItem is null)
                 return Response.UnKnown("چنین موردی در سبد خرید شما وجود ندارد");

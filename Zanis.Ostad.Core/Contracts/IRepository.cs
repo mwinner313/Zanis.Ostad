@@ -9,7 +9,7 @@ namespace Zanis.Ostad.Core.Contracts
         Task AddAsync(T model);
         Task EditAsync(T model);
         Task Delete(TKey model);
-        IQueryable<T> GetQueriable();
+        IQueryable<T> GetQueryable();
         Task<T> GetById(TKey id);
     }
 }

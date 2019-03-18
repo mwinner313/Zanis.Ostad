@@ -27,7 +27,7 @@ namespace Zains.Ostad.Application.General.SearchInFieldsAndLessons
             var list = new List<SearchResult>();
             if (!request.Type.HasValue || request.Type == SearchItemType.Field)
             {
-                var fields = _fieldRepository.GetQueriable().Where(x => x.Name.Contains(request.Term)).Select(x =>
+                var fields = _fieldRepository.GetQueryable().Where(x => x.Name.Contains(request.Term)).Select(x =>
                     new SearchResult
                     {
                         Id = x.Id,
@@ -40,7 +40,7 @@ namespace Zains.Ostad.Application.General.SearchInFieldsAndLessons
 
             if (!request.Type.HasValue || request.Type == SearchItemType.Lesson)
             {
-                var lessons = _lessonFieldRepository.GetQueriable()
+                var lessons = _lessonFieldRepository.GetQueryable()
                     .Where(x => x.Lesson.LessonName.Contains(request.Term)).GroupBy(x => new
                     {
                         x.Grade.Name,
