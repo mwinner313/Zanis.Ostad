@@ -35,7 +35,21 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
             LessonTitle=x.TeacherLessonMapping.LessonFieldMapping.Lesson.LessonName,
             FieldName=x.TeacherLessonMapping.LessonFieldMapping.Field.Name,
             LessonCode = x.TeacherLessonMapping.LessonFieldMapping.Lesson.LessonCode,
-            Contents = x.Contents.Select(CourseItemProjection.Compile()).OrderBy(o=>o.Order).ToList()
+            Contents = x.Contents.Select(c =>
+                new CourseItemViewModel
+                {
+                    Id = c.Id,
+                    Title = c.Title,
+                    ContentType = c.ContentType,
+                    FilePath = c.FilePath,
+                    CourseId = c.CourseId,
+                    State = c.State,
+                    CreatedOn = c.CreatedOn,
+                    IsPreview = c.IsPreview,
+                    AdminMessageForTeacher = c.AdminMessageForTeacher,
+                    TeacherMessageForAdmin = c.TeacherMessageForAdmin,
+                    Order = c.Order
+                }).OrderBy(o=>o.Order).ToList()
         };
 
         public static Expression<Func<CourseItem, CourseItemViewModel>> CourseItemProjection => c =>
