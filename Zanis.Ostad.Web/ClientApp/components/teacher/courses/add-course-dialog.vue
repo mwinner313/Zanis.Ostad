@@ -1,6 +1,7 @@
 <template>
   <div>
-    <el-dialog title="افزودن دوره" :visible.sync="isOpen" width="80%" @closed="$emit('close')">
+    <el-dialog title="افزودن دوره" :visible.sync="isOpen" 
+    width="80%" @closed="$emit('close')">
       <el-row>
         <el-col :md="12">
           <el-form ref="form" :model="form">
