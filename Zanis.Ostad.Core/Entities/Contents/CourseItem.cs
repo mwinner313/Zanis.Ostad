@@ -9,8 +9,7 @@ namespace Zanis.Ostad.Core.Entities.Contents
     {
         public string Title { get; set; }
         public string FilePath { get; set; }
-        public ContentType ContentType { get; set; }
-        public CourseItemApprovalState State { get; set; }
+       
         public bool IsPreview { get; set; }
         public Course Course { get; set; }
         public long CourseId { get; set; }
@@ -19,6 +18,8 @@ namespace Zanis.Ostad.Core.Entities.Contents
         public string TeacherMessageForAdmin { get; set; }
         public DateTime CreatedOn { get; } = DateTime.Now;
         public EditStatus? LatestEditStatus { get; set; }
+        public ContentType ContentType { get; set; }
+        public CourseItemApprovalState State { get; set; }
         public ICollection<EditAssignment> Edits { get; set; }
     }
 }

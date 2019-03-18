@@ -35,7 +35,11 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
             LessonTitle=x.TeacherLessonMapping.LessonFieldMapping.Lesson.LessonName,
             FieldName=x.TeacherLessonMapping.LessonFieldMapping.Field.Name,
             LessonCode = x.TeacherLessonMapping.LessonFieldMapping.Lesson.LessonCode,
-            Contents = x.Contents.Select(c => new CourseItemViewModel
+            Contents = x.Contents.Select(CourseItemProjection.Compile()).OrderBy(o=>o.Order).ToList()
+        };
+
+        public static Expression<Func<CourseItem, CourseItemViewModel>> CourseItemProjection => c =>
+            new CourseItemViewModel
             {
                 Id = c.Id,
                 Title = c.Title,
@@ -48,9 +52,8 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
                 AdminMessageForTeacher = c.AdminMessageForTeacher,
                 TeacherMessageForAdmin = c.TeacherMessageForAdmin,
                 Order = c.Order
-            }).OrderBy(o=>o.Order).ToList()
-        };
-
+            };
+        
         public static Expression<Func<Course, UserCourseDto>> ProjectionForUser => x => new UserCourseDto
         {
             Id = x.Id,

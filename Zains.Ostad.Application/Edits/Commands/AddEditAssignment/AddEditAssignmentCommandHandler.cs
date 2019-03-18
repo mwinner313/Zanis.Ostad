@@ -14,17 +14,22 @@ namespace Zains.Ostad.Application.Edits.Commands.AddEditAssignment
     {
         private readonly IRepository<EditAssignment, long> _editAssignmentRepo;
         private readonly IRepository<CourseItem, long> _courseItemRepo;
+        private readonly IUnitOfWork _unitOfWork;
 
         public AddEditAssignmentCommandHandler(IRepository<EditAssignment, long> editAssignmentRepo,
-            IRepository<CourseItem, long> courseItemRepo)
+            IRepository<CourseItem, long> courseItemRepo, IUnitOfWork unitOfWork)
         {
             _editAssignmentRepo = editAssignmentRepo;
             _courseItemRepo = courseItemRepo;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Response> Handle(AddEditAssignmentByCourseItemCommand request,
             CancellationToken cancellationToken)
         {
+            var courseItem = await _courseItemRepo.GetById(request.CourseItemId);
+            courseItem.LatestEditStatus = EditStatus.PendingToEdit;
+            await _courseItemRepo.EditAsync(courseItem);
             await _editAssignmentRepo.AddAsync(new EditAssignment
             {
                 CourseItemId = request.CourseItemId,
@@ -36,18 +41,21 @@ namespace Zains.Ostad.Application.Edits.Commands.AddEditAssignment
         public async Task<Response> Handle(AddEditAssignmentByCourseCommand request,
             CancellationToken cancellationToken)
         {
-            var courseItemIds = _courseItemRepo.GetQueriable().Where(x => x.CourseId == request.CourseId)
-                .Select(x => x.Id).ToList();
-            
-            foreach (var itemId in courseItemIds)
+            var courseItems = _courseItemRepo.GetQueriable().Where(x => x.CourseId == request.CourseId)
+                .ToList();
+
+            _unitOfWork.Begin();
+            foreach (var item in courseItems)
             {
                 await _editAssignmentRepo.AddAsync(new EditAssignment
                 {
                     EditorId = request.EditorId,
-                    CourseItemId = itemId
+                    CourseItemId = item.Id
                 });
+                item.LatestEditStatus = EditStatus.PendingToEdit;
+                await _courseItemRepo.EditAsync(item);
             }
-
+            _unitOfWork.Commit();
             return Response.Success();
         }
     }
