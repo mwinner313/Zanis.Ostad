@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,8 +31,8 @@ namespace Zains.Ostad.Application.Edits.Queries.GetEditorsList
 
         public async Task<PagenatedList<UserDto>> Handle(GetEditorsListQuery request, CancellationToken cancellationToken)
         {
-            var role = _appRoleManager.FindByNameAsync("Editor");
-            var userIds = _userRoleRepository.GetQueryable().Where(x => x.RoleId == role.Id).Select(x => x.UserId);
+            var role = await _appRoleManager.FindByNameAsync("Editor");
+            var userIds =  _userRoleRepository.GetQueryable().Where(x => x.RoleId == role.Id).Select(x => x.UserId);
             var users = _appUserManager.Users.Where(x => userIds.Contains(x.Id));
             if (!string.IsNullOrEmpty(request.Search))
             {
@@ -40,7 +41,7 @@ namespace Zains.Ostad.Application.Edits.Queries.GetEditorsList
             return new PagenatedList<UserDto>
             {
                 AllCount = users.Count(),
-                Items = users.ProjectTo<UserDto>().Pagenate(request).ToList()
+                Items = _mapper.Map<List<UserDto>>(users.OrderBy(x=>x.Id).Pagenate(request).ToList())
             };
         }
     }

@@ -1,7 +1,7 @@
 using MediatR;
 using Zanis.Ostad.Core.Dtos;
 
-namespace Zains.Ostad.Application.Edits.Commands
+namespace Zains.Ostad.Application.Edits.Commands.AddEditAssignment
 {
     public class AddEditAssignmentByCourseItemCommand:IRequest<Response>
     {
