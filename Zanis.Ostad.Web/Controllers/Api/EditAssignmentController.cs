@@ -40,10 +40,7 @@ namespace Zanis.Ostad.Web.Controllers.Api
         {
             return Ok(await _mediator.Send(cmd));
         }
-        [HttpPost("bycourse")]
-        public async Task<ActionResult<Response>> PostByCourse([FromBody]AddEditAssignmentByCourseCommand cmd)
-        {
-            return Ok(await _mediator.Send(cmd));
-        }
+
+
     }
 }
