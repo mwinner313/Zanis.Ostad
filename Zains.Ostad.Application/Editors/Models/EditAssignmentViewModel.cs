@@ -11,5 +11,6 @@ namespace Zains.Ostad.Application.Editors.Queries.GetEditAssignments
         public DateTime CreatedOn { get; set; } 
         public EditStatus Status { get; set; }
         public string FilePath { get; set; }
+        public string EditorFullName { get; set; }
     }
 }

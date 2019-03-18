@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Zains.Ostad.Application.AutoMapperProfiles;
 using Zains.Ostad.Application.Infrastucture;
 using Zanis.Ostad.Core.Contracts;
-using Zanis.Ostad.Core.Dtos;
 using Zanis.Ostad.Core.Entities.Edits;
 
 namespace Zains.Ostad.Application.Editors.Queries.GetEditAssignments
