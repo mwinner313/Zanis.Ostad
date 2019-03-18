@@ -21,6 +21,7 @@
 
     <ItemGroup>
       <Folder Include="AndroidAppVersions\Queries" />
+      <Folder Include="Edits\Commands" />
     </ItemGroup>
 
     <ItemGroup>

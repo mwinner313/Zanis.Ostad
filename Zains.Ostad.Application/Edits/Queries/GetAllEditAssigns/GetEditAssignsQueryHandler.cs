@@ -4,30 +4,25 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Zains.Ostad.Application.AutoMapperProfiles;
+using Zains.Ostad.Application.Editors.Queries.GetEditAssignments;
 using Zains.Ostad.Application.Infrastucture;
 using Zanis.Ostad.Core.Contracts;
-using Zanis.Ostad.Core.Dtos;
 using Zanis.Ostad.Core.Entities.Edits;
 
-namespace Zains.Ostad.Application.Editors.Queries.GetEditAssignments
+namespace Zains.Ostad.Application.Edits.Queries.GetAllEditAssigns
 {
-    public class
-        GetEditAssignmentsQueryHandler : IRequestHandler<GetEditAssignmentsQuery, PagenatedList<EditAssignmentViewModel>
-        >
+    public class GetEditAssignsQueryHandler:IRequestHandler<GetEditAssignsQuery,PagenatedList<EditAssignmentViewModel>>
     {
-        private readonly IRepository<EditAssignment, long> _repository;
-        private readonly IWorkContext _workContext;
+        private readonly IRepository<EditAssignment,long> _editAssignRepo;
 
-        public GetEditAssignmentsQueryHandler(IRepository<EditAssignment, long> repository, IWorkContext workContext)
+        public GetEditAssignsQueryHandler(IRepository<EditAssignment, long> editAssignRepo)
         {
-            _repository = repository;
-            _workContext = workContext;
+            _editAssignRepo = editAssignRepo;
         }
-
-        public async Task<PagenatedList<EditAssignmentViewModel>> Handle(GetEditAssignmentsQuery request,
-            CancellationToken cancellationToken)
+    
+        public async Task<PagenatedList<EditAssignmentViewModel>> Handle(GetEditAssignsQuery request, CancellationToken cancellationToken)
         {
-            var queryable = _repository.GetQueriable().Where(x => x.EditorId == _workContext.CurrentUserId)
+            var queryable = _editAssignRepo.GetQueriable()
                 .OrderByDescending(x => x.CreatedOn).AsQueryable();
             
             if (request.Status.HasValue)
@@ -35,7 +30,7 @@ namespace Zains.Ostad.Application.Editors.Queries.GetEditAssignments
             
             if (!string.IsNullOrEmpty(request.Search))
                 queryable = queryable.Where(x => x.CourseItem.Title.Contains(request.Search) || x.Editor.FullName.Contains(request.Search));
-            
+
             return new PagenatedList<EditAssignmentViewModel>
             {
                 Items = queryable.Include(x => x.CourseItem)
