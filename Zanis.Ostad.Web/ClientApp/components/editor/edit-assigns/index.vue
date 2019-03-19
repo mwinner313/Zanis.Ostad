@@ -3,8 +3,8 @@
     <el-col :md="16" :lg="16">
         <el-card>
             <h4 style="display:inline;">لیست ویدئوها</h4>
-                        
-            <el-table height="500" :data="videoData.items" size="large" style="width: 100%">
+
+            <el-table height="500" :data="editAssigns.items" size="large" style="width: 100%">
 
             <el-table-column label="عنوان" width="480">
                 <template slot-scope="scope">
@@ -21,12 +21,12 @@
                 </template>
             </el-table-column>
 
-            
+
             <el-table-column label="عملیات" width="200">
                 <template slot-scope="scope">
                 <el-button>
-              
-                    <a :href="scope.row.courseItemFilePath" class="white">دانلود</a>      
+
+                    <a :href="scope.row.courseItemFilePath" class="white">دانلود</a>
                 </el-button>
                 <el-button @click="uploadDialog=scope.row.courseItemId">آپلود</el-button>
             </template>
@@ -44,23 +44,23 @@
             layout="total, sizes, prev, pager, next, jumper"
             :total="meta.allCount"
             ></el-pagination>
-            
+
         </el-card>
     </el-col>
-  
-      <upload 
+
+      <upload
         v-if="uploadDialog"
        :isOpen="uploadDialog"
        :itemId="uploadDialog"
        @close="uploadDialog=undefined"
-       @changeStatus="getVideoList"
+       @changeStatus="getEditAssigns"
       ></Upload>
   </el-row>
 </template>
 
 <script>
-  
-  
+
+
   import axios from "axios";
   import Upload from './upload-dialog'
   export default {
@@ -70,39 +70,38 @@
         query: {
           pageSize: 10
         },
-        videoData: [],
-        
+        editAssigns: {},
         uploadDialog: false,
         meta: {}
       };
-  
+
     },
     components: {
       Upload
     },
     methods: {
-      getVideoList() {
-          axios.get("/api/EditorAccount", {
+      getEditAssigns() {
+          axios.get("/api/EditorAccount/EditAssigns", {
           params: this.query
         }).then(res => {
-          
-          this.videoData = res.data;
-          this.meta = {allCount: res.data.allCount};         
+
+          this.editAssigns = res.data;
+          this.meta = {allCount: res.data.allCount};
         });
       },
       handleSizeChange(val) {
         this.query.pageSize = val;
-        this.getVideoList();
+        this.getEditAssigns();
       },
       handleCurrentChange(val) {
         this.query.pageOffset = (val - 1) * this.query.pageSize;
         this.query.currentPage = val;
-        this.getVideoList();
+        this.getEditAssigns();
       },
     },
-  
+
     mounted() {
-      this.getVideoList();
+      this.getEditAssigns();
     }
   };
 </script>
@@ -112,15 +111,15 @@
     float: left;
     margin-bottom: 10px;
   }
-  
+
   .card-item {
     margin-bottom: 50px;
   }
-  
+
   .deactive {
     margin-right: 0;
   }
-  
+
   .customDownloadIcon {
     margin: 0;
     line-height: 8px;
@@ -128,11 +127,11 @@
     color: #fff;
     font-size: 14px;
   }
-  
+
   .mgl-17 {
     margin-left: 17px;
   }
-  
+
   .left {
     float: left !important;
   }

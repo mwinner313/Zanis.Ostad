@@ -32,13 +32,13 @@
         ></el-pagination>
       </el-card>
     </el-col>
-<course-detils-dialog  v-if="selectedCourseId" :isOpen="selectedCourseId" 
-    :courseId="selectedCourseId" @close="selectedCourseId=undefined"></course-detils-dialog>  
+<course-details-dialog  v-if="selectedCourseId" :isOpen="selectedCourseId"
+    :courseId="selectedCourseId" @close="selectedCourseId=undefined"></course-details-dialog>
   </el-row>
 </template>
 
 <script>
-import CourseDetilsDialog from '../../teacher/courses/course-details'
+import CourseDetailsDialog from '../teacher/courses/course-details'
 import axios from "axios";
 export default {
   name: "myMessage",
@@ -57,7 +57,7 @@ export default {
     };
   },
   components: {
-    CourseDetilsDialog
+    CourseDetailsDialog: CourseDetailsDialog
   },
   methods: {
     getNotifi() {

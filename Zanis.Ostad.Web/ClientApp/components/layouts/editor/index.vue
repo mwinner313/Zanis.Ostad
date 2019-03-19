@@ -60,7 +60,7 @@
               </span>
             </el-menu-item>
           </router-link>
-        
+
           <router-link to="/editor/notifications">
             <el-menu-item index="6">
               <i class="far fa-envelope"></i>
@@ -68,10 +68,10 @@
             </el-menu-item>
           </router-link>
 
-          <router-link to="/editor/List">
+          <router-link to="/editor/edit-assigns">
             <el-menu-item index="7">
               <i class="far fa-envelope"></i>
-              <span slot="title">لیست ویدئوها</span>
+              <span slot="title">تدوین</span>
             </el-menu-item>
           </router-link>
 

@@ -20,12 +20,12 @@ namespace Zanis.Ostad.Web.Controllers.Api
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet("EditAssigns")]
         public async Task<ActionResult<PagenatedList<EditAssignmentViewModel>>> Get(GetEditAssignmentsQuery query)
         {
             return Ok(await _mediator.Send(query));
         }
-        [HttpPost]
+        [HttpPost("EditAssigns")]
         public async Task<ActionResult<Response>> Post(UploadEditedItemCommand cmd)
         {
             return Ok(await _mediator.Send(cmd));

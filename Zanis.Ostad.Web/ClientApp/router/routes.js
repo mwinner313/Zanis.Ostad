@@ -15,11 +15,10 @@ import UserExamSamples from '../components/user/exam-samples'
 import UserCourses from '../components/user/courses'
 import UserDashboard from '../components/user/dashboard'
 import TeacherDashboard from '../components/teacher/dashboard'
-import EditorDashboard from '../components/editor/Dashboard'
+import EditorDashboard from '../components/editor/dashboard'
 import TeacherCourses from '../components/teacher/courses'
-import TeacherNotifications from '../components/teacher/notifications'
-import EditorNotifications from '../components/editor/notifications'
-import EditorVideoList from '../components/editor/video'
+import Notifications from '../components/notifications'
+import EditorEditAssigns from '../components/editor/edit-assigns'
 import UserLayout from '../components/layouts/user'
 import TeacherLayout from '../components/layouts/teacher'
 import EditorLayout from '../components/layouts/editor'
@@ -138,7 +137,7 @@ export const routes = [
       {
         name: "notifications",
         path: "notifications",
-        component: TeacherNotifications
+        component: Notifications
       },
       {
         name: "user-exam-samples",
@@ -170,12 +169,12 @@ export const routes = [
       {
         name: "notifications",
         path: "notifications",
-        component: EditorNotifications
+        component: Notifications
       },
       {
-        name: "video-list",
-        path: "List",
-        component: EditorVideoList
+        name: "edit-assigns",
+        path: "edit-assigns",
+        component: EditorEditAssigns
       },
       {
         name: "user-exam-samples",
