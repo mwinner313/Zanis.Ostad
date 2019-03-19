@@ -92,11 +92,11 @@
       </el-table-column>
       <el-table-column width="280" label="عملیات">
         <template slot-scope="scope">
-          <div style>
+          <div style="display:flex">
             <el-badge value="*" v-if="scope.row.hasPendingItemToApprove" style="margin-top: 13px;"></el-badge>
             <el-button @click="showDetails(scope.row.id)">مشاهده</el-button>
             <el-button @click="changingApprovalStateItem=scope.row" class="deactive">تغییر وضعیت</el-button>
-            <el-button @click="selectedEditor=scope.row.id">تدوینگر</el-button>
+            <el-button style="margin-right:0" @click="selectedItemEditor=scope.row.id">تدوین</el-button>
           </div>
         </template>
       </el-table-column>
@@ -125,12 +125,12 @@
       :courseId="selectedCourseId"
     ></course-details>
 
-    <related-dialog-editor
-      v-if="selectedEditor"
-      :isOpen="selectedEditor"
-      :courseId="selectedEditor"
-      @close="selectedEditor=undefined"
-    ></related-dialog-editor>
+    <assinment-dialog-editor
+      v-if="selectedItemEditor"
+      :isOpen="selectedItemEditor"
+      :courseId="selectedItemEditor"
+      @close="selectedItemEditor=undefined"
+    ></assinment-dialog-editor>
   </el-card>
 </template>
 
@@ -138,13 +138,13 @@
 import axios from "axios";
 import ApprovalStateChanger from "./approval-state-changer";
 import CourseDetails from "./course-details";
-import RelatedDialogEditor from "./related-dialog-editor";
+import AssinmentDialogEditor from "./assinment-dialog-editor";
 export default {
   name: "AdminListCourse",
   components: {
     ApprovalStateChanger,
     CourseDetails,
-    RelatedDialogEditor
+    AssinmentDialogEditor
   },
   data() {
     return {
@@ -156,7 +156,7 @@ export default {
       courseTitles: [],
       changingApprovalStateItem: undefined,
       selectedCourseId: undefined,
-      selectedEditor: undefined,
+      selectedItemEditor: undefined,
       meta: {}
     };
   },
