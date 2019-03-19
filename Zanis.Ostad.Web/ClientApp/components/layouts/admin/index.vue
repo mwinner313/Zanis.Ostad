@@ -36,7 +36,7 @@
             </el-menu-item>
           </router-link>
 
-           <router-link to="/admin/editor">
+           <router-link to="/admin/editor-assignments">
             <el-menu-item index="4">
               <i class="fas fa-ticket-alt"></i>
               <span slot="title">تدوین</span>
@@ -49,7 +49,7 @@
               <span slot="title">تدوینگرها</span>
             </el-menu-item>
           </router-link>
-          
+
         </el-menu>
       </el-aside>
       <el-main class="page-content">

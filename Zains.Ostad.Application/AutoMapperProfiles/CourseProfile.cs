@@ -25,15 +25,15 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
             Description = x.Description,
             Price = x.Price,
             ApprovalStatus = x.ApprovalStatus,
-            CreatedOn=x.CreatedOn,
+            CreatedOn = x.CreatedOn,
             Teacher = x.TeacherLessonMapping.Teacher.FullName,
             AdminMessageForTeacher = x.AdminMessageForTeacher,
             TeacherMessageForAdmin = x.TeacherMessageForAdmin,
             TeacherAvatar = x.TeacherLessonMapping.Teacher.AvatarPath,
             Title = x.CourseTitle.Name + " - " + x.TeacherLessonMapping.LessonFieldMapping.Lesson.LessonName,
             GradeTitle = x.TeacherLessonMapping.LessonFieldMapping.Grade.Name,
-            LessonTitle=x.TeacherLessonMapping.LessonFieldMapping.Lesson.LessonName,
-            FieldName=x.TeacherLessonMapping.LessonFieldMapping.Field.Name,
+            LessonTitle = x.TeacherLessonMapping.LessonFieldMapping.Lesson.LessonName,
+            FieldName = x.TeacherLessonMapping.LessonFieldMapping.Field.Name,
             LessonCode = x.TeacherLessonMapping.LessonFieldMapping.Lesson.LessonCode,
             Contents = x.Contents.Select(c =>
                 new CourseItemViewModel
@@ -45,11 +45,12 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
                     CourseId = c.CourseId,
                     State = c.State,
                     CreatedOn = c.CreatedOn,
+                    LatestEditStatus = c.LatestEditStatus,
                     IsPreview = c.IsPreview,
                     AdminMessageForTeacher = c.AdminMessageForTeacher,
                     TeacherMessageForAdmin = c.TeacherMessageForAdmin,
                     Order = c.Order
-                }).OrderBy(o=>o.Order).ToList()
+                }).OrderBy(o => o.Order).ToList()
         };
 
         public static Expression<Func<CourseItem, CourseItemViewModel>> CourseItemProjection => c =>
@@ -63,11 +64,12 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
                 State = c.State,
                 CreatedOn = c.CreatedOn,
                 IsPreview = c.IsPreview,
+                LatestEditStatus = c.LatestEditStatus,
                 AdminMessageForTeacher = c.AdminMessageForTeacher,
                 TeacherMessageForAdmin = c.TeacherMessageForAdmin,
                 Order = c.Order
             };
-        
+
         public static Expression<Func<Course, UserCourseDto>> ProjectionForUser => x => new UserCourseDto
         {
             Id = x.Id,

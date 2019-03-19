@@ -1,5 +1,6 @@
 using System;
 using Zanis.Ostad.Core.Entities.Contents;
+using Zanis.Ostad.Core.Entities.Edits;
 
 namespace Zains.Ostad.Application.Courses.Dtos
 {
@@ -16,5 +17,6 @@ namespace Zains.Ostad.Application.Courses.Dtos
         public long CourseId { get; set; }
         public bool IsPreview { get; set; }
         public long Id { get; set; }
+        public EditStatus? LatestEditStatus { get; set; }
     }
 }

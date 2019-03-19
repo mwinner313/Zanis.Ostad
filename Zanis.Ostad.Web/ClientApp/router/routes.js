@@ -8,7 +8,7 @@ import AdminDashboard from '../components/admin/dashboard'
 import AdminTickets from '../components/admin/tickets'
 import AdminListCourse from '../components/admin/courses'
 import EditorList from '../components/admin/editor-list'
-import EditorCourses from '../components/admin/editor-courses'
+import EditAssignment from '../components/admin/edit-assignments'
 import ChangePassword from '../components/home/change-password'
 import UserTickets from '../components/user/tickets'
 import UserExamSamples from '../components/user/exam-samples'
@@ -73,9 +73,9 @@ export const routes = [
         component:AdminListCourse
       },
       {
-        name:"editor-courses",
-        path:"editor",
-        component:EditorCourses
+        name:"editor-assignments",
+        path:"editor-assignments",
+        component:EditAssignment
       },
       {
         name:"editor-list",

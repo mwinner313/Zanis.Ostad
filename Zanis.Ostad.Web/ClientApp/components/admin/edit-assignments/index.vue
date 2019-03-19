@@ -4,7 +4,7 @@
     <div class="float-right">
       <el-form :inline="true">
         <el-form-item label="جستجو">
-          <el-input @change="getData" placeholder="جستجو" v-model="query.search"></el-input>
+          <el-input @change.prevent="getData" placeholder="جستجو" v-model="query.search"></el-input>
         </el-form-item>
       </el-form>
     </div>
@@ -87,7 +87,7 @@ export default {
   },
   mounted() {
     this.getData();
-    this.getData = _.debounce(this.getData, 100);
+    this.getData = _.debounce(this.getData, 500);
   }
 };
 </script>

@@ -2,7 +2,7 @@
   <el-row>
     <el-col :md="16" :lg="16">
       <el-card>
-        <el-table :data="notifiData.items" style="width: 100%" height="600">
+        <el-table :data="notifications.items" style="width: 100%" height="600">
           <el-table-column label="تاریخ" width="180">
             <template slot-scope="scope">
               <i class="el-icon-time"></i>
@@ -44,7 +44,7 @@ export default {
   name: "myMessage",
   data() {
     return {
-      notifiData: [],
+      notifications: {},
       meta: {},
       query: {
         justNewOnes: false,
@@ -60,23 +60,22 @@ export default {
     CourseDetailsDialog: CourseDetailsDialog
   },
   methods: {
-    getNotifi() {
+    getNotifications() {
       axios.get("/api/Notification", { params: this.query }).then(res => {
-        this.notifiData = res.data;
+        this.notifications = res.data;
         this.meta = { allCount: res.data.allCount };
       });
     },
     handleSizeChange(val) {
       this.query.pageSize = val;
-      this.getNotifi();
+      this.getNotifications();
     },
     handleCurrentChange(val) {
       this.query.pageOffset = (val - 1) * this.query.pageSize;
       this.query.currentPage = val;
-      this.getNotifi();
+      this.getNotifications();
     },
     showItem(item) {
-      console.log(item)
       switch (item.relatedItemType) {
         case 1:
           this.selectedCourseId =item.jsonExtraData.CourseId ;
@@ -86,7 +85,7 @@ export default {
   },
 
   mounted() {
-    this.getNotifi();
+    this.getNotifications();
   }
 };
 </script>
