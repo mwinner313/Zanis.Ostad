@@ -3,7 +3,7 @@ using Zains.Ostad.Application.Editors.Queries.GetEditAssignments;
 using Zains.Ostad.Application.Infrastucture;
 using Zanis.Ostad.Core.Entities.Edits;
 
-namespace Zains.Ostad.Application.Edits.Queries.GetEditorEditAssignments
+namespace Zains.Ostad.Application.Admin.Edits.Queries.GetEditorEditAssignments
 {
     public class GetEditorEditAssignmentQuery:Pagenation, IRequest<PagenatedList<EditAssignmentViewModel>>
     {

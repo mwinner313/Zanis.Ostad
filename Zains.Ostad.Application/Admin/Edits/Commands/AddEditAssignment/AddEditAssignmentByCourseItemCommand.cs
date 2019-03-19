@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using MediatR;
 using Zanis.Ostad.Core.Dtos;
 
-namespace Zains.Ostad.Application.Edits.Commands.AddEditAssignment
+namespace Zains.Ostad.Application.Admin.Edits.Commands.AddEditAssignment
 {
     public class AddEditAssignmentByCourseItemCommand:IRequest<Response>
     {

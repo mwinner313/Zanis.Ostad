@@ -9,7 +9,7 @@ using Zains.Ostad.Application.Infrastucture;
 using Zanis.Ostad.Core.Contracts;
 using Zanis.Ostad.Core.Entities.Edits;
 
-namespace Zains.Ostad.Application.Edits.Queries.GetAllEditAssigns
+namespace Zains.Ostad.Application.Admin.Edits.Queries.GetAllEditAssigns
 {
     public class GetEditAssignsQueryHandler:IRequestHandler<GetEditAssignsQuery,PagenatedList<EditAssignmentViewModel>>
     {

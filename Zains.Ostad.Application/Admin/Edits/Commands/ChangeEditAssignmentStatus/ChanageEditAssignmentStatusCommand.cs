@@ -2,7 +2,7 @@ using MediatR;
 using Zanis.Ostad.Core.Dtos;
 using Zanis.Ostad.Core.Entities.Edits;
 
-namespace Zains.Ostad.Application.Edits.Commands.ChangeEditAssignmentStatus
+namespace Zains.Ostad.Application.Admin.Edits.Commands.ChangeEditAssignmentStatus
 {
     public class ChanageEditAssignmentStatusCommand : IRequest<Response>
     {

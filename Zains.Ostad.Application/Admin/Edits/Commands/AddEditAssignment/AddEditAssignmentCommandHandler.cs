@@ -8,7 +8,7 @@ using Zanis.Ostad.Core.Dtos;
 using Zanis.Ostad.Core.Entities.Contents;
 using Zanis.Ostad.Core.Entities.Edits;
 
-namespace Zains.Ostad.Application.Edits.Commands.AddEditAssignment
+namespace Zains.Ostad.Application.Admin.Edits.Commands.AddEditAssignment
 {
     public class AddEditAssignmentCommandHandler : IRequestHandler<AddEditAssignmentByCourseItemCommand, Response>
     {

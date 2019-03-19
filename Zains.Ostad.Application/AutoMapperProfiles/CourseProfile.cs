@@ -3,7 +3,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using AutoMapper;
 using Zains.Ostad.Application.Courses.Dtos;
-using Zains.Ostad.Application.Lessons.Queries.GetLesson;
 using Zains.Ostad.Application.Users.Dto;
 using Zanis.Ostad.Core.Entities.Contents;
 

@@ -7,7 +7,7 @@ using Zanis.Ostad.Core.Dtos;
 using Zanis.Ostad.Core.Entities.Contents;
 using Zanis.Ostad.Core.Entities.Edits;
 
-namespace Zains.Ostad.Application.Edits.Commands.ChangeEditAssignmentStatus
+namespace Zains.Ostad.Application.Admin.Edits.Commands.ChangeEditAssignmentStatus
 {
     public class
         ChangeEditAssignmentStatusCommandHandler : IRequestHandler<ChanageEditAssignmentStatusCommand, Response>

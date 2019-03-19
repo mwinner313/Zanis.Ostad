@@ -3,16 +3,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Zains.Ostad.Application.Infrastucture;
 using Zains.Ostad.Application.Users;
 using Zains.Ostad.Application.Users.Dto;
 using Zanis.Ostad.Core.Contracts;
-using Zanis.Ostad.Core.Entities;
 
-namespace Zains.Ostad.Application.Edits.Queries.GetEditorsList
+namespace Zains.Ostad.Application.Admin.Edits.Queries.GetEditorsList
 {
     public class GetEditorsListQueryHandler : IRequestHandler<GetEditorsListQuery, PagenatedList<UserDto>>
     {
