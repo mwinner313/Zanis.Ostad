@@ -5,7 +5,7 @@
         {{course.title}}
 
         <a :href="course.zipFilesPath">
-          <el-button class="float-right" style="margin-left: 30px;" type="primary" plain>
+          <el-button class="float-right" style="margin-left: 30px !important;" type="primary" plain>
             <i class="fas fa-download" style="font-size:13px;"></i>
             دانلود محتوای آپلود شده توسط استاد
           </el-button>

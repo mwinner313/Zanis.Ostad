@@ -7,26 +7,20 @@
    >
     <el-form ref="form" :model="form">
       <el-form-item prop="categoryId" label="انتخاب وضعیت">
-        <el-select v-model="form.courseApprovalStatus" placeholder="انتخاب وضعیت" width="100%">
+        <el-select v-model="form.status" placeholder="انتخاب وضعیت" width="100%">
           <el-option
             label="تایید"
-            :value="5">
+            :value="2">
           </el-option>
 
           <el-option
             label="رد"
-            :value="10">
+            :value="3">
           </el-option>
         </el-select>
       </el-form-item>
 
-      <el-form-item  prop="type">
-        <el-checkbox v-model="form.updateMessage" label="به روز رسانی پیام ادمین درباره دوره" name="type"></el-checkbox>
-      </el-form-item>
 
-      <el-form-item v-if="form.updateMessage" label="پیام ادمین" >
-        <el-input type="textarea" v-model="form.adminMessageForTeacher"></el-input>
-      </el-form-item>
 
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -52,16 +46,17 @@
     data() {
       return {
         form: {
-          courseApprovalStatus: 5
+          status: 2
         }
       }
     },
     methods:{
       submit(){
+        console.log(this.item)
         this.$refs.form.validate((valid) => {
           if (valid) {
-            axios.patch('/api/courses/change_approval_status', {...this.form.courseApprovalStatus,courseId:this.item.id}).then(res => {
-              EventBus.$emit('course-state-change');
+            axios.patch('\n' +
+              '/api/EditAssignment/change_state', {editId:this.item.id,status:this.form.status}).then(res => {
               this.$emit('close');
             });
           }
@@ -73,6 +68,6 @@
 
 <style scoped>
   .el-select {
-   width:100%;
+    width:100%;
   }
 </style>

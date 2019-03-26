@@ -22,6 +22,7 @@ import EditorEditAssigns from '../components/editor/edit-assigns'
 import UserLayout from '../components/layouts/user'
 import TeacherLayout from '../components/layouts/teacher'
 import EditorLayout from '../components/layouts/editor'
+import UserManagement from '../components/admin/users'
 
 export const routes = [
   {
@@ -61,6 +62,11 @@ export const routes = [
         name: "admin-dashboard",
         path: "dashboard",
         component: AdminDashboard
+      },
+      {
+        name: "users",
+        path: "users",
+        component: UserManagement
       },
       {
         name: "tickets",

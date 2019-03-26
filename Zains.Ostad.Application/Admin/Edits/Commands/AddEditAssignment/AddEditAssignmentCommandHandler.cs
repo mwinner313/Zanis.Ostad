@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,23 +28,53 @@ namespace Zains.Ostad.Application.Admin.Edits.Commands.AddEditAssignment
         public async Task<Response> Handle(AddEditAssignmentByCourseItemCommand request,
             CancellationToken cancellationToken)
         {
-            var courseItems = await _courseItemRepo.GetQueryable().Where(x => request.CourseItemIds.Contains(x.Id))
-                .ToListAsync( cancellationToken);
+            var courseItems = await GetCourseItems(request, cancellationToken);
+            var alreadyAssignedItemsCount = 0;
             _unitOfWork.Begin();
             foreach (var item in courseItems)
             {
-                item.LatestEditStatus = EditStatus.PendingToEdit;
-                await _courseItemRepo.EditAsync(item);
-                await _editAssignmentRepo.AddAsync(new EditAssignment
+                if (IsAlreadyAssignedToSomeEditor(item))
                 {
-                    CourseItemId = item.Id,
-                    EditorId = request.EditorId
-                });
+                    alreadyAssignedItemsCount++;
+                    continue;
+                }
+
+                await UpdateCourseItemLatestState(item);
+                await AddEditAssign(request, item);
             }
+
             _unitOfWork.Commit();
-            return Response.Success();
+            return alreadyAssignedItemsCount > 0
+                ? Response.Success($"{alreadyAssignedItemsCount}" + "مورد انتخابی در حال حاظر در دست تدوین است ")
+                : Response.Success();
         }
 
-      
+        private async Task<List<CourseItem>> GetCourseItems(AddEditAssignmentByCourseItemCommand request,
+            CancellationToken cancellationToken)
+        {
+            return await _courseItemRepo.GetQueryable().Where(x => request.CourseItemIds.Contains(x.Id))
+                .ToListAsync(cancellationToken);
+        }
+
+        private async Task AddEditAssign(AddEditAssignmentByCourseItemCommand request, CourseItem item)
+        {
+            await _editAssignmentRepo.AddAsync(new EditAssignment
+            {
+                CourseItemId = item.Id,
+                EditorId = request.EditorId
+            });
+        }
+
+        private async Task UpdateCourseItemLatestState(CourseItem item)
+        {
+            item.LatestEditStatus = EditStatus.PendingToEdit;
+            await _courseItemRepo.EditAsync(item);
+        }
+
+        private bool IsAlreadyAssignedToSomeEditor(CourseItem item)
+        {
+            return _editAssignmentRepo.GetQueryable()
+                .Any(x => x.CourseItemId == item.Id && x.Status != EditStatus.RejectedByAdmin);
+        }
     }
 }

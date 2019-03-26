@@ -22,6 +22,12 @@
               <span slot="title">داشبورد</span>
             </el-menu-item>
           </router-link>
+          <router-link to="/admin/users">
+            <el-menu-item index="6">
+              <i class="fas fa-ticket-alt"></i>
+              <span slot="title">کاربران</span>
+            </el-menu-item>
+          </router-link>
           <router-link to="/admin/tickets">
             <el-menu-item index="1">
               <i class="fas fa-ticket-alt"></i>

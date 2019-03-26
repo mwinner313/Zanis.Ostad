@@ -12,5 +12,6 @@ namespace Zains.Ostad.Application.Editors.Queries.GetEditAssignments
         public EditStatus Status { get; set; }
         public string FilePath { get; set; }
         public string EditorFullName { get; set; }
+        public long Id { get; set; }
     }
 }

@@ -29,12 +29,16 @@ namespace Zanis.Ostad.Web.Controllers.Api
             return Ok(await _mediator.Send(query));
         }
 
-        [HttpPost("bycourseitem")]
+        [HttpPost]
         public async Task<ActionResult<Response>> PostByCourseItem([FromBody]AddEditAssignmentByCourseItemCommand cmd)
         {
             return Ok(await _mediator.Send(cmd));
         }
 
-
+        [HttpPatch("change_state")]
+        public async Task<ActionResult<Response>> PatchEditState([FromBody]ChangeEditAssignmentStateCommand cmd)
+        {
+            return Ok(await _mediator.Send(cmd));
+        }
     }
 }

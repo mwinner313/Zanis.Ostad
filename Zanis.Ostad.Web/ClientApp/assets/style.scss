@@ -97,10 +97,12 @@ h2,
 h3,
 h4,
 h5,
-h6 ,p, span{
+h6 ,p{
   color: #545454;
 }
-
+.el-button{
+  margin:0 3px !important;
+}
 body,html {
   direction: rtl;
   height:100%;

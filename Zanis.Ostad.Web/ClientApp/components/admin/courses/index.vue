@@ -90,7 +90,7 @@
           <el-tag v-if="scope.row.approvalStatus===15" type="warning">غیر فعال توسط مدرس</el-tag>
         </template>
       </el-table-column>
-      <el-table-column width="280" label="عملیات">
+      <el-table-column width="320" label="عملیات">
         <template slot-scope="scope">
           <div style="display:flex">
             <el-badge value="*" v-if="scope.row.hasPendingItemToApprove" style="margin-top: 13px;"></el-badge>
@@ -125,12 +125,12 @@
       :courseId="selectedCourseId"
     ></course-details>
 
-    <assinment-dialog-editor
+    <AssignToEditorDialog
       v-if="selectedItemEditor"
       :isOpen="selectedItemEditor"
       :courseId="selectedItemEditor"
       @close="selectedItemEditor=undefined"
-    ></assinment-dialog-editor>
+    ></AssignToEditorDialog>
   </el-card>
 </template>
 
@@ -138,13 +138,13 @@
 import axios from "axios";
 import ApprovalStateChanger from "./approval-state-changer";
 import CourseDetails from "./course-details";
-import AssinmentDialogEditor from "./assinment-dialog-editor";
+import AssignToEditorDialog from "./assinment-to-editor-dialog";
 export default {
   name: "AdminListCourse",
   components: {
     ApprovalStateChanger,
     CourseDetails,
-    AssinmentDialogEditor
+    AssignToEditorDialog
   },
   data() {
     return {

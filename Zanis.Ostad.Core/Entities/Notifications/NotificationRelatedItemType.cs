@@ -4,6 +4,7 @@ namespace Zanis.Ostad.Core.Entities.Notifications
     {
         Nothing,
         Course,
-        CourseItem
+        CourseItem,
+        EditAssignment
     }
 }

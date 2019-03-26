@@ -5,10 +5,11 @@ namespace Zanis.Ostad.Core.Dtos
         public ResponseStatus Status { get; set; }
         public string Message { get; set; }
 
-        public static Response Success()
+        public static Response Success(string message="")
         {
             return new Response
             {
+                Message = message,
                 Status = ResponseStatus.Success
             };
         }

@@ -5,10 +5,10 @@
       <el-button @click="isAddingNewCourse=true" class="left">
             افزودن دوره جدید</el-button>
     </div>
-    <el-table height="500" :data="courceData" size="large" style="width: 100%">
-  
-  
-      <el-table-column label="عنوان" width="240">
+    <el-table height="500" :data="courceData" size="large" >
+
+
+      <el-table-column label="عنوان">
         <template slot-scope="scope">
           {{ scope.row.title}}
         </template>
@@ -62,16 +62,16 @@
 </template>
       </el-table-column>
 
-      
+
 
        <el-table-column label="عملیات">
 <template slot-scope="scope">
   <el-row type="flex">
-  
+
     <el-button @click="changingApprovalStateItem=scope.row" class="deactive">
       تغییر وضعیت
     </el-button>
-  
+
   </el-row>
 </template>
       </el-table-column>
@@ -88,9 +88,9 @@
       :total="meta.allCount"
     ></el-pagination>
 
-    <CourseDetails v-if="selectedCourseId" :isOpen="selectedCourseId" 
-    :courseId="selectedCourseId" @close="selectedCourseId=undefined"></CourseDetails>  
-    
+    <CourseDetails v-if="selectedCourseId" :isOpen="selectedCourseId"
+    :courseId="selectedCourseId" @close="selectedCourseId=undefined"></CourseDetails>
+
     <add-course @close="isAddingNewCourse=false" :isOpen="isAddingNewCourse"></add-course>
     <approval-state-changer v-if="changingApprovalStateItem"
                           :isOpen="changingApprovalStateItem"
@@ -120,7 +120,7 @@
         changingApprovalStateItem: undefined,
         meta: {}
       };
-  
+
     },
     components: {
       ApprovalStateChanger,
@@ -134,7 +134,7 @@
           params: this.query
         }).then(res => {
           this.courceData = res.data.items;
-          this.meta = {allCount: res.data.allCount};         
+          this.meta = {allCount: res.data.allCount};
         });
       },
       handleSizeChange(val) {
@@ -147,7 +147,7 @@
         this.getCourse();
       },
     },
-  
+
     mounted() {
       this.getCourse();
     }
@@ -159,15 +159,15 @@
     float: left;
     margin-bottom: 10px;
   }
-  
+
   .card-item {
     margin-bottom: 50px;
   }
-  
+
   .deactive {
     margin-right: 0;
   }
-  
+
   .customDownloadIcon {
     margin: 0;
     line-height: 8px;
@@ -175,11 +175,11 @@
     color: #fff;
     font-size: 14px;
   }
-  
+
   .mgl-17 {
     margin-left: 17px;
   }
-  
+
   .left {
     float: left !important;
   }

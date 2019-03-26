@@ -47,7 +47,7 @@ export default {
   methods: {
     getData() {
       axios
-        .get("/api/EditAssignment/editors", { params: this.query })
+        .get("/api/editors", { params: this.query })
         .then(res => {
           console.log(res.data);
           this.listData = res.data;

@@ -6,7 +6,7 @@
     append-to-body
     width="40%"
     @closed="resetProgressState"
-    :before-close="isOpen">
+   >
     <el-progress v-show="uploadProgress" :percentage="uploadProgress"></el-progress>
     <el-form ref="form" :model="form">
       <el-form-item :rules="[{ required: true, message: 'وضعیت الزامیست'}]" prop="state" label="انتخاب وضعیت">
