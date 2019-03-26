@@ -6,15 +6,16 @@
     @closed="$emit('close')"
    >
     <el-form ref="form" :model="form">
-      <el-form-item prop="categoryId" label="انتخاب وضعیت">
-        <el-checkbox
-          v-for="role in roles"
-          name="type"
-          :label="role.name"
-          v-model="selectedItemIds"
-          border>
-        </el-checkbox>
+      <el-form-item prop="roles" label="انتخاب نقش ها">
+
       </el-form-item>
+      <el-checkbox
+        v-for="role in roles"
+        name="type"
+        :label="role.name"
+        v-model="user.roles"
+        border>
+      </el-checkbox>
     </el-form>
     <span slot="footer" class="dialog-footer">
     <el-button @click="$emit('close')">بستن</el-button>
@@ -41,14 +42,16 @@
       return {
         form: {},
         roles:[],
-        selectedItemIds:[]
+        user:{roles:[]}
       }
     },
     mounted(){
+      this.user=Object.assign({},this.item);
       axios.get('/api/admin/roles').then(res=>{
         this.roles=res.data;
       });
     },
+
     methods: {
       submit() {
         this.$refs.form.validate((valid) => {
