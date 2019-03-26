@@ -2,22 +2,22 @@
   <el-dialog
     title="جستجو"
     :visible.sync="isOpen"
-    width="46%"
+    width="50%"
     append-to-body
     modal-append-to-body
     @closed="$emit('close')"
   >
     <el-container>
       <el-row :gutter="5" type="flex">
-        <el-col :md="12">
-          <el-form>
+        <el-col :md="12" :lg="12">
+          <el-form @submit.native.prevent>
             <el-form-item>
               <el-input placeholder="کلمه" v-model="termSearch"></el-input>
             </el-form-item>
           </el-form>
         </el-col>
         <el-col :md="12">
-          <el-select v-model="selectedGrade" filterable placeholder="مقطع">
+          <el-select v-model="selectedGradeId" filterable placeholder="مقطع">
             <el-option
               v-for="item in gradeItems"
               :key="item.value"
@@ -27,8 +27,8 @@
           </el-select>
         </el-col>
         <el-col :md="12">
+          <!-- @change="getLessonFields" -->
           <el-select
-            @change="getLessonFields"
             v-model="fieldId"
             filterable
             remote
@@ -50,24 +50,31 @@
             </el-option>
           </el-select>
         </el-col>
+        <el-col :md="2">
+          <el-button
+            :disabled="canSearchForLessons"
+            @click="getListData"
+            type="success"
+          >بگرد</el-button>
+        </el-col>
       </el-row>
       <br>
     </el-container>
     <!-- lessonItems -->
-    <el-table :data="lessonItems" style="width: 100%">
-      <el-table-column width="300" label="نام درس">
+    <el-table :data="lessonItems">
+      <el-table-column label="نام درس">
         <template slot-scope="scope">{{ scope.row.lessonName }}</template>
       </el-table-column>
 
-      <el-table-column width="130" label="مقطع">
+      <el-table-column label="مقطع">
         <template slot-scope="scope">{{ scope.row.gradeName }}</template>
       </el-table-column>
 
-      <el-table-column width="130" label="رشته">
+      <el-table-column label="رشته">
         <template slot-scope="scope">{{ scope.row.fieldName }}</template>
       </el-table-column>
 
-      <el-table-column width="130" label="عملیات">
+      <el-table-column label="عملیات">
         <template slot-scope="scope">
           <el-button @click="selectLessonItem(scope.row)" type="primary" class="white" plain>انتخاب</el-button>
         </template>
@@ -88,7 +95,7 @@ export default {
   data() {
     return {
       termSearch: "",
-      selectedGrade: "",
+      selectedGradeId: "",
       fieldId: "",
       gradeItems: [],
       fieldItems: [],
@@ -102,7 +109,7 @@ export default {
           params: {
             Term: this.termSearch,
             FieldId: this.fieldId,
-            GradeId: this.selectedGrade
+            GradeId: this.selectedGradeId
           }
         })
         .then(res => {
@@ -112,7 +119,10 @@ export default {
     getFieldItems(fieldSearchTearm) {
       axios
         .get("/api/Fields", {
-          params: { GradeId: this.selectedGrade, SearchText: fieldSearchTearm }
+          params: {
+            GradeId: this.selectedGradeId,
+            SearchText: fieldSearchTearm
+          }
         })
         .then(res => {
           this.fieldItems = res.data;
@@ -123,15 +133,23 @@ export default {
       this.$emit("close");
     },
     // changeFieldItem
-    getLessonFields() {
-      this.getlessons();
-    },
+    // getLessonFields() {
+    //   this.getlessons();
+    // },
     // getGradeItems
     getGradeItems() {
       axios.get("/api/Grades").then(res => {
         this.gradeItems = res.data;
       });
+    },
+    getListData() {
+      this.getlessons();
     }
+  },
+  computed:{
+      canSearchForLessons(){
+          return !this.termSearch && !this.selectedGradeId && !this.fieldId;
+      }
   },
   mounted() {
     this.getGradeItems();

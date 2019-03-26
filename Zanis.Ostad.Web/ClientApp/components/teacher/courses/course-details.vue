@@ -53,9 +53,8 @@
             </el-card>
           </div>
           <div class="wrapper-download-link">
-            <el-button type="success" class="downloadBtn">
+            <el-button type="success" class="downloadBtnCustom">
               <i class="fas fa-download customDownloadIcon"></i>
-              
               <a :href="item.filePath" class="white">دانلود</a>
             </el-button>
           </div>
@@ -127,10 +126,10 @@ export default {
 };
 </script>
 
-<style scoped>
-.downloadBtn {
+<style>
+.downloadBtnCustom {
   float: left;
-  margin: 10px 0;
+  margin: 10px 0 !important;
 }
 
 .card-item {

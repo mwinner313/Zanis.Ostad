@@ -1,88 +1,85 @@
 <template>
   <div>
-    <el-dialog title="افزودن دوره" :visible.sync="isOpen" 
-    width="80%" @closed="$emit('close')">
+    <el-dialog title="افزودن دوره" :visible.sync="isOpen" width="80%" @closed="$emit('close')">
       <el-row>
         <el-col :md="12">
-          <el-form ref="form" :model="form">
-            <el-progress v-show="uploadProgress" :percentage="uploadProgress"></el-progress>
+          <el-card shadow="always">
+            <el-form ref="form" :model="form">
+              <el-progress v-show="uploadProgress" :percentage="uploadProgress"></el-progress>
 
-            <el-form-item
-              label="قیمت"
-              prop="price"
-              :rules="[
+              <el-form-item
+                label="قیمت"
+                prop="price"
+                :rules="[
   
                   { required: true, message: 'وارد کردن قیمت الزامی می باشد'},
   
                   { type: 'number', message: 'فیمت باید عددی باشد'}
   
                 ]"
-            >
-              <el-input type="text" placeholder="قیمت" v-model.number="form.price"></el-input>
-            </el-form-item>
+              >
+                <el-input type="text" placeholder="قیمت" v-model.number="form.price"></el-input>
+              </el-form-item>
 
-            <el-form-item
-              prop="description"
-              :rules="[
+              <el-form-item
+                prop="description"
+                :rules="[
   
                   { required: true, message: 'وارد کردن توضیحات الزامی می باشد'}]"
-              label="توضیحات"
-            >
-              <el-input placeholder="توضیحات" v-model="form.description"></el-input>
-            </el-form-item>
-
-            <el-form-item label="پیام به مدیریت">
-              <el-input type="textarea" v-model="form.teacherMessage"></el-input>
-            </el-form-item>
-
-            <el-form-item
-              prop="courseTitle"
-              :rules="[{ required: true, message: 'انتخاب کردن عنوان الزامی می باشد'}]"
-              label="عناوین"
-            >
-              <el-select v-model="form.courseTitle" placeholder="عناوین" class="w100">
-                <el-option
-                  v-for="item in courseTitles"
-                  :key="item.value"
-                  :label="item.name"
-                  :value="item.id"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-
-            <el-form-item>
-              <el-button class="w100" @click="isLessonsearchDialog = true">انتخاب درس</el-button>
-            </el-form-item>
-
-            <el-form-item>
-              <el-tag
-                class="w100"
-                type="danger"
-                v-if="itemSelectedLesson==''"
-              >در حال حاظر درسی را انتخاب نکرده اید</el-tag>
-
-              <el-tag class="w100" v-else>{{itemSelectedLesson}}</el-tag>
-            </el-form-item>
-
-            <el-form-item>
-              <input
-                type="file"
-                name="myfile"
-                accept=".zip"
-                @change="processFile"
-                ref="filePicker"
-                style="display: none"
+                label="توضیحات"
               >
-              <el-button @click="$refs.filePicker.click()">انتخاب فایل</el-button>
-              <el-tag type="warning" v-if="form.zipFile">{{form.zipFile.name}}</el-tag>
-              <br>
-              <el-button
-                style="margin-left: 10px;color:#fff !important"
-                size="medium "
-                @click="registerLesson"
-              >ارسال</el-button>
-            </el-form-item>
-          </el-form>
+                <el-input placeholder="توضیحات" v-model="form.description"></el-input>
+              </el-form-item>
+
+              <el-form-item label="پیام به مدیریت">
+                <el-input type="textarea" v-model="form.teacherMessage"></el-input>
+              </el-form-item>
+
+              <el-form-item
+                prop="courseTitle"
+                :rules="[{ required: true, message: 'انتخاب کردن عنوان الزامی می باشد'}]"
+                label="عنوان"
+              >
+                <el-select v-model="form.courseTitle" placeholder="عنوان" class="w100">
+                  <el-option
+                    v-for="item in courseTitles"
+                    :key="item.value"
+                    :label="item.name"
+                    :value="item.id"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+
+              <el-form-item>
+                <el-button class="w100" @click="isLessonsearchDialog = true">انتخاب درس</el-button>
+              </el-form-item>
+
+              <el-form-item>
+                <el-tag
+                  class="w100"
+                  type="danger"
+                  v-if="itemSelectedLesson==''"
+                >در حال حاظر درسی را انتخاب نکرده اید</el-tag>
+
+                <el-tag class="w100" v-else>{{itemSelectedLesson}}</el-tag>
+              </el-form-item>
+
+              <el-form-item>
+                <input
+                  type="file"
+                  name="myfile"
+                  accept=".zip"
+                  @change="processFile"
+                  ref="filePicker"
+                  style="display: none"
+                >
+                <el-button @click="$refs.filePicker.click()">انتخاب فایل</el-button>
+                <el-tag type="warning" v-if="form.zipFile">{{form.zipFile.name}}</el-tag>
+                <br>
+                <el-button type="primary" class="sendBtn w100" size="medium" @click="registerLesson">ارسال</el-button>
+              </el-form-item>
+            </el-form>
+          </el-card>
         </el-col>
 
         <el-col :md="12">
@@ -247,7 +244,10 @@ export default {
 .w100 {
   width: 100%;
 }
-
+.sendBtn {
+  margin-left: 10px;
+  color: #fff !important;
+}
 .el-upload,
 .el-upload-dragger {
   width: 100%;
