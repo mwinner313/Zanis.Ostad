@@ -1,12 +1,21 @@
 <template>
   <el-dialog
-    title="جستجو"
     :visible.sync="isOpen"
     width="50%"
     append-to-body
     modal-append-to-body
     @closed="$emit('close')"
   >
+    <div slot="title">
+      <span>جستجو</span>
+      <br>
+      <el-alert
+        :closable="false"
+        type="info"
+        center
+        show-icon
+      >لطفا با پرکردن ورودی های زیر به نسبت انتخاب کردن درسهای مرتبط به دوره ی آموزشی خود اقدام کنید</el-alert>
+    </div>
     <el-container>
       <el-row :gutter="5" type="flex">
         <el-col :md="12" :lg="12">
@@ -51,11 +60,7 @@
           </el-select>
         </el-col>
         <el-col :md="2">
-          <el-button
-            :disabled="canSearchForLessons"
-            @click="getListData"
-            type="success"
-          >بگرد</el-button>
+          <el-button :disabled="canSearchForLessons" @click="getListData" type="success">بگرد</el-button>
         </el-col>
       </el-row>
       <br>
@@ -86,7 +91,7 @@
 <script>
 import axios from "axios";
 export default {
-  name: "test",
+  name: "search-Lesson",
   props: {
     isOpen: {
       type: Boolean
@@ -99,7 +104,8 @@ export default {
       fieldId: "",
       gradeItems: [],
       fieldItems: [],
-      lessonItems: []
+      lessonItems: [],
+      close: false
     };
   },
   methods: {
@@ -146,10 +152,10 @@ export default {
       this.getlessons();
     }
   },
-  computed:{
-      canSearchForLessons(){
-          return !this.termSearch && !this.selectedGradeId && !this.fieldId;
-      }
+  computed: {
+    canSearchForLessons() {
+      return !this.termSearch && !this.selectedGradeId && !this.fieldId;
+    }
   },
   mounted() {
     this.getGradeItems();

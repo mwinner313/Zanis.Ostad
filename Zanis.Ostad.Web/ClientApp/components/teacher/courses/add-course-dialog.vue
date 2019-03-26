@@ -51,7 +51,7 @@
               </el-form-item>
 
               <el-form-item>
-                <el-button class="w100" @click="isLessonsearchDialog = true">انتخاب درس</el-button>
+                <el-button type="warning" class="w100" @click="isLessonsearchDialog = true">انتخاب درس</el-button>
               </el-form-item>
 
               <el-form-item>
@@ -71,9 +71,9 @@
                   accept=".zip"
                   @change="processFile"
                   ref="filePicker"
-                  style="display: none"
-                >
-                <el-button @click="$refs.filePicker.click()">انتخاب فایل</el-button>
+                  style="display: none">
+
+                <el-button type="info" @click="$refs.filePicker.click()">انتخاب فایل</el-button>
                 <el-tag type="warning" v-if="form.zipFile">{{form.zipFile.name}}</el-tag>
                 <br>
                 <el-button type="primary" class="sendBtn w100" size="medium" @click="registerLesson">ارسال</el-button>
