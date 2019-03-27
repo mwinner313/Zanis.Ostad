@@ -5,7 +5,7 @@
       <el-form :inline="true">
         <el-form-item label="جستجو">
           <el-input @change="getData" placeholder="جستجو" v-model="query.search"></el-input>
-        </el-form-item>
+        </el-form-item>         
 
         <el-form-item label="وضعیت">
           <el-select v-model="query.Status" @change="getData" placeholder="وضعیت">
