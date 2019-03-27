@@ -2,7 +2,7 @@
   <el-card>
     <h3 style="display:inline;">تدوینگرها</h3>
     <div class="float-right">
-      <el-form :inline="true">
+      <el-form :inline="true" @submit.native.prevent>
         <el-form-item label="جستجو">
           <el-input @change="getData" placeholder="جستجو" v-model="query.search"></el-input>
         </el-form-item>
@@ -33,6 +33,7 @@
 
 <script>
 import axios from "axios";
+import _ from "lodash";
 export default {
   data() {
     return {
@@ -46,13 +47,11 @@ export default {
   },
   methods: {
     getData() {
-      axios
-        .get("/api/editors", { params: this.query })
-        .then(res => {
-          console.log(res.data);
-          this.listData = res.data;
-          this.meta = { allCount: res.data.allCount };
-        });
+      axios.get("/api/editors", { params: this.query }).then(res => {
+        console.log(res.data);
+        this.listData = res.data;
+        this.meta = { allCount: res.data.allCount };
+      });
     },
     handleSizeChange(val) {
       this.query.pageSize = val;
@@ -66,6 +65,7 @@ export default {
   },
   mounted() {
     this.getData();
+    this.getData = _.debounce(this.getData, 500);
   }
 };
 </script>
