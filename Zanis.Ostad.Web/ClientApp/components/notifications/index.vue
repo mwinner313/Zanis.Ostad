@@ -32,13 +32,17 @@
         ></el-pagination>
       </el-card>
     </el-col>
-<course-details-dialog  v-if="selectedCourseId" :isOpen="selectedCourseId"
-    :courseId="selectedCourseId" @close="selectedCourseId=undefined"></course-details-dialog>
+    <course-details-dialog
+      v-if="selectedCourseId"
+      :isOpen="selectedCourseId"
+      :courseId="selectedCourseId"
+      @close="selectedCourseId=undefined"
+    ></course-details-dialog>
   </el-row>
 </template>
 
 <script>
-import CourseDetailsDialog from '../teacher/courses/course-details'
+import CourseDetailsDialog from "../teacher/courses/course-details";
 import axios from "axios";
 export default {
   name: "myMessage",
@@ -78,7 +82,7 @@ export default {
     showItem(item) {
       switch (item.relatedItemType) {
         case 1:
-          this.selectedCourseId =item.jsonExtraData.CourseId ;
+          this.selectedCourseId = item.jsonExtraData.CourseId;
           break;
       }
     }
