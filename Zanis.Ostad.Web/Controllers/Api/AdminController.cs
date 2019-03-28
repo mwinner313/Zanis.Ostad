@@ -2,12 +2,13 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Zains.Ostad.Application.Admin.Users.Commands.ChangeUserRoles;
 using Zains.Ostad.Application.Admin.Users.Queries;
 
 namespace Zanis.Ostad.Web.Controllers.Api
 {
 
-    [Authorize]
+    [Authorize(Roles="Admin")]
     [Route("api/[controller]")]
     public class AdminController : Controller
     {
@@ -29,11 +30,10 @@ namespace Zanis.Ostad.Web.Controllers.Api
             return Ok(await _mediator.Send(query));
         }
 
-        [HttpPost("assign_role_to_user")]
-        public async Task<IActionResult> PostAssignUserToRole(GetUsersListQuery query)
+        [HttpPost("change_user_roles")]
+        public async Task<IActionResult> PostAssignUserToRole([FromBody]ChangeUserRolesCommand cmd)
         {
-            return Ok(await _mediator.Send(query));
+            return Ok(await _mediator.Send(cmd));
         }
-
     }
 }

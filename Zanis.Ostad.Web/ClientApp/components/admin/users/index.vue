@@ -54,7 +54,7 @@
           عملیات
         </template>
         <template slot-scope="scope">
-          <el-button @click="showUser(scope.row)" type="success" plain>مشاهده</el-button>
+          <el-button @click="showUser(scope.row)" type="primary" plain>تغییر نقش</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -69,20 +69,20 @@
       :total="meta.allCount">
     </el-pagination>
 
-    <UserDetailsDialog
+    <ChangeUserRoleDialog
       v-if="selectedUser"
       :item="selectedUser"
       :is-open="!!selectedUser"
-      @close="selectedUser=undefined"
-    ></UserDetailsDialog>
+      @close="closeUserRoleDialog"
+    ></ChangeUserRoleDialog>
   </el-card>
 </template>
 
 <script>
   import axios from 'axios';
-  import UserDetailsDialog from './user-details-dialog'
+  import ChangeUserRoleDialog from './change-user-role-dialog.vue'
   export default {
-    components:{UserDetailsDialog},
+    components:{ChangeUserRoleDialog},
     data() {
       return {
         selectedUser: null,
@@ -94,6 +94,11 @@
       }
     },
     methods: {
+      closeUserRoleDialog(e){
+        this.selectedUser = undefined;
+        if(e && e.reloadData)
+          this.loadData();
+      },
       showUser(user){
         this.selectedUser=user;
       },
