@@ -40,7 +40,8 @@
           <h5 style="text-align:center">تدوینگرها</h5>
           <el-form @submit.native.prevent :inline="true">
             <el-form-item>
-              <el-input  clearable @change="getEditorList" placeholder="جستجو" v-model="query.search"></el-input>
+              <el-input  clearable @change="getEditorList"
+               placeholder="جستجو" v-model="query.search"></el-input>
             </el-form-item>
           </el-form>
 
