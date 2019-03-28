@@ -56,9 +56,8 @@
       submit() {
         this.$refs.form.validate((valid) => {
           if (valid) {
-            axios.patch('\n' +
-              '/api/EditAssignment/change_state', {editId: this.item.id, status: this.form.status}).then(res => {
-              this.$emit('close');
+            axios.post('/api/Admin/change_user_roles', {userId: this.item.id, roles: this.user.roles}).then(res => {
+              this.$emit('close',{reloadData:true});
             });
           }
         });
