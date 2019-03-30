@@ -49,7 +49,7 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
         {
             var teacherLessonMapping = await GetTeacherLessonMapping(request.LessonFieldId);
             var course = CreateCourseData(request, teacherLessonMapping);
-            await _coursesFileManager.SaveFile(request.ZipFile, teacherLessonMapping);
+           
             await _courseRepository.AddAsync(course);
             return Response.Success();
         }
@@ -62,8 +62,7 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
                 Description = request.Description,
                 CourseTitleId = request.CourseTitleId,
                 TeacherLessonMappingId = teacherLessonMapping.Id,
-                AdminMessageForTeacher = request.TeacherMessageForAdmin,
-                ZipFilesPath = _coursesFileManager.GetFilePathForDownload(request.ZipFile, teacherLessonMapping)
+                AdminMessageForTeacher = request.TeacherMessageForAdmin
             };
         }
 

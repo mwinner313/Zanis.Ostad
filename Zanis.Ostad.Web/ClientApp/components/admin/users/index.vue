@@ -30,7 +30,6 @@
       size="medium"
       style="width: 100%">
 
-
       <el-table-column
         label="شناسه کاربری"
         prop="userName">

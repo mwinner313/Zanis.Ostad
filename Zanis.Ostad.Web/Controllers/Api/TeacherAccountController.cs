@@ -72,5 +72,11 @@ namespace Zanis.Ostad.Web.Controllers.Api
         {
             return Ok(await _mediator.Send(new ActiveCourseCommand{CourseId = id}));
         }
+
+        [HttpGet("salesreport")]
+        public async Task<ActionResult<PagenatedList<CourseDto>>> GetSalesRort(long id)
+        {
+            return Ok(await _mediator.Send(new ActiveCourseCommand{CourseId = id}));
+        }
     }
 }
