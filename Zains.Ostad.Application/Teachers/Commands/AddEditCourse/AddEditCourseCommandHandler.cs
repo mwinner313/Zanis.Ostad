@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Zains.Ostad.Application.Courses.Dtos;
+using Zains.Ostad.Application.Courses.Queries.GetCourseDetails;
 using Zanis.Ostad.Core.Contracts;
 using Zanis.Ostad.Core.Dtos;
 using Zanis.Ostad.Core.Entities.Contents;
@@ -19,7 +20,7 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
 {
     public class AddEditCourseCommandHandler : 
         IRequestHandler<EditCourseCommand, Response>,
-        IRequestHandler<AddCourseCommand, Response>,
+        IRequestHandler<AddCourseCommand, Response<CourseDto>>,
         IRequestHandler<UpdateCourseItemByTeacherCommand, Response<CourseItemViewModel>>,
         IRequestHandler<AddCourseItemByTeacherCommand, Response<CourseItemViewModel>>
     {
@@ -27,6 +28,7 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
         private readonly IRepository<TeacherLessonMapping, long> _teacherLessonMappingRepo;
         private readonly IWorkContext _workContext;
         private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
         private readonly IRepository<CourseItem, long> _courseItemRepository;
         private readonly ICoursesFileManager _coursesFileManager;
         private readonly IUnitOfWork _unitOfWork;
@@ -34,7 +36,7 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
 
         public AddEditCourseCommandHandler(IRepository<Course, long> courseRepository,
             IRepository<TeacherLessonMapping, long> teacherLessonMappingRepo, IWorkContext workContext,
-            ICoursesFileManager coursesFileManager, IMapper mapper, IUnitOfWork unitOfWork, IRepository<CourseItem, long> courseItemRepository)
+            ICoursesFileManager coursesFileManager, IMapper mapper, IUnitOfWork unitOfWork, IRepository<CourseItem, long> courseItemRepository, IMediator mediator)
         {
             _courseRepository = courseRepository;
             _teacherLessonMappingRepo = teacherLessonMappingRepo;
@@ -43,15 +45,16 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _courseItemRepository = courseItemRepository;
+            _mediator = mediator;
         }
 
-        public async Task<Response> Handle(AddCourseCommand request, CancellationToken cancellationToken)
+        public async Task<Response<CourseDto>> Handle(AddCourseCommand request, CancellationToken cancellationToken)
         {
             var teacherLessonMapping = await GetTeacherLessonMapping(request.LessonFieldId);
             var course = CreateCourseData(request, teacherLessonMapping);
            
             await _courseRepository.AddAsync(course);
-            return Response.Success();
+            return Response<CourseDto>.Success(await _mediator.Send(new GetCourseDetailsQuery{CourseId = course.Id}, cancellationToken));
         }
 
         private Course CreateCourseData(AddCourseCommand request, TeacherLessonMapping teacherLessonMapping)
