@@ -6,10 +6,10 @@
         <el-form-item label="جستجو">
           <el-input @change="loadData" placeholder="جستجو" v-model="query.search"></el-input>
         </el-form-item>
-        <el-form-item label="بخش">
-          <el-select v-model="query.roleId" @change="loadData" placeholder="بخش">
+        <el-form-item label="نقش">
+          <el-select v-model="query.roleId" @change="loadData" placeholder="نقش">
             <el-option label="همه" value>x</el-option>
-            <el-option v-for="role in roles" :key="role.id" :label="role.title" :value="role.id"></el-option>
+            <el-option v-for="role in roles" :key="role.id" :label="role.name" :value="role.id"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -98,10 +98,17 @@ export default {
         this.meta = { allCount: res.data.allCount };
         this.isLoading = false;
       });
+    },
+    getRoules() {
+      axios.get("/api/Admin/roles").then(res => {
+        this.roles = res.data;
+        console.log(this.roles);
+      });
     }
   },
   mounted() {
     this.loadData();
+    this.getRoules();
     this.loadData = _.debounce(this.loadData, 400);
   }
 };
