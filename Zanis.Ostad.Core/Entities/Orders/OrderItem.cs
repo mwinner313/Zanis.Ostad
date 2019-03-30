@@ -7,5 +7,7 @@ namespace Zanis.Ostad.Core.Entities.Orders
         public int Price { get; set; }
         public long ProductId { get; set; }
         public ProductType ProductType { get; set; }
+        public Order Order { get; set; }
+        public long? OrderId { get; set; }
     }
 }

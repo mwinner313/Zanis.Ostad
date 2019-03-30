@@ -12,7 +12,6 @@ namespace Zanis.Ostad.Repository.Config
                 .OnDelete(DeleteBehavior.Restrict);
             builder.HasOne(x => x.Grade).WithMany(x => x.Fields).HasForeignKey(x => x.GradeId)
                 .OnDelete(DeleteBehavior.Restrict);
-
         }
     }
 }

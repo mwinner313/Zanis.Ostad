@@ -18,7 +18,6 @@ namespace Zanis.Ostad.Core.Entities.Contents
         public DateTime CreatedOn { get; } = DateTime.Now;
         public CourseApprovalStatus ApprovalStatus { get; set; }
         public ICollection<StudentCourseMapping> Students { get; set; }
-        public string ZipFilesPath { get; set; }
         public bool HasPendingItemToApprove { get; set; }
     }
 }

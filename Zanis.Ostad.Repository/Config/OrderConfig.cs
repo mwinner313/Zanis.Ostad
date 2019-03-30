@@ -9,7 +9,7 @@ namespace Zanis.Ostad.Repository.Config
     {
         public void Configure(EntityTypeBuilder<Order> builder)
         {
-            builder.HasMany(x => x.OrderItems).WithOne().OnDelete(DeleteBehavior.Restrict);
+            builder.HasMany(x => x.OrderItems).WithOne().HasForeignKey(x=>x.OrderId).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -19,7 +19,6 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
         {
             Id = x.Id,
             TeacherId = x.TeacherLessonMapping.Teacher.Id,
-            ZipFilesPath = x.ZipFilesPath,
             HasPendingItemToApprove = x.HasPendingItemToApprove,
             Description = x.Description,
             Price = x.Price,
