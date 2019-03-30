@@ -62,13 +62,13 @@ namespace Zanis.Ostad.Web.Controllers.Api
             return Ok(await _mediator.Send(cmd));
         }
 
-        [HttpPatch("coursesitems/{id}/deactive")]
+        [HttpPatch("course_items/{id}/deactive")]
         public async Task<ActionResult<PagenatedList<CourseDto>>> DeactiveCourse(long id)
         {
             return Ok(await _mediator.Send(new DeactiveCourseCommand{CourseId = id}));
         }
 
-        [HttpPatch("coursesitems/{id}/active")]
+        [HttpPatch("course_items/{id}/active")]
         public async Task<ActionResult<PagenatedList<CourseDto>>> ActiveCourse(long id)
         {
             return Ok(await _mediator.Send(new ActiveCourseCommand{CourseId = id}));
