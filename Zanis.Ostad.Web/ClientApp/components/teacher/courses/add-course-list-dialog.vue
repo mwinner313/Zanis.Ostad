@@ -8,15 +8,11 @@
   >
     <el-progress v-show="uploadProgress" :percentage="uploadProgress"></el-progress>
     <el-form ref="form" :model="form">
-      <el-form-item
-        prop="title"
-        :rules="[{ required: true, message: 'عنوان الزامی می باشد'}]"
-        label="عنوان"
-      >
+      <el-form-item prop="title" label="عنوان">
         <el-input v-model="form.title"></el-input>
       </el-form-item>
 
-      <el-form-item prop="adminMessageForTeacher" label="پیام ارسالی برای مدیر در مورد این سرفصل">
+      <el-form-item prop="TeacherMessageForAdmin" label="پیام ارسالی برای مدیر در مورد این سرفصل">
         <el-input type="textarea" v-model="form.TeacherMessageForAdmin" multiline></el-input>
       </el-form-item>
       <el-button @click="$refs.filePicker.click()">انتخاب فایل</el-button>
@@ -59,6 +55,9 @@ export default {
     submit() {
       this.$refs.form.validate(valid => {
         this.$emit("submit", this.form);
+        this.$refs.form.resetFields();
+        this.form.file = "";
+        this.$emit("close");
       });
     }
   }

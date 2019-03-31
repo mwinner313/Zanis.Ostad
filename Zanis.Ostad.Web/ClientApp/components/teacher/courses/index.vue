@@ -2,63 +2,56 @@
   <el-card>
     <h4 style="display:inline;">دروس تدریس شده</h4>
     <div>
-      <el-button @click="isAddingNewCourse=true" class="left">
-            افزودن دوره جدید</el-button>
+      <el-button @click="isAddingNewCourse=true" class="left">افزودن دوره جدید</el-button>
     </div>
-    <el-table height="500" :data="courceData" size="large" >
-
-
+    <el-table height="500" :data="courceData" size="large">
       <el-table-column label="عنوان">
-        <template slot-scope="scope">
-          {{ scope.row.title}}
-        </template>
+        <template slot-scope="scope">{{ scope.row.title}}</template>
       </el-table-column>
 
-
       <el-table-column label="مقطع" width="120">
-<template slot-scope="scope">
-   {{ scope.row.gradeTitle}}
+        <template slot-scope="scope">{{ scope.row.gradeTitle}}</template>
+      </el-table-column>
+    </el-table>
+  </el-card>
 </template>
       </el-table-column>
 
       <el-table-column label="رشته" width="160">
-<template slot-scope="scope">
-   {{ scope.row.fieldName}}
-</template>
+<template slot-scope="scope">{{ scope.row.fieldName}}</template>
       </el-table-column>
 
          <el-table-column label="درس" width="180">
-<template slot-scope="scope">
-   {{ scope.row.lessonTitle}}
-</template>
+<template slot-scope="scope">{{ scope.row.lessonTitle}}</template>
       </el-table-column>
 
     <el-table-column label="قیمت" width="90">
-<template slot-scope="scope">
-   {{scope.row.price}}
-</template>
+<template slot-scope="scope">{{scope.row.price}}</template>
       </el-table-column>
 
       <el-table-column label="کددرس" width="90">
-<template slot-scope="scope">
-   {{ scope.row.lessonCode}}
-</template>
+<template slot-scope="scope">{{ scope.row.lessonCode}}</template>
       </el-table-column>
 
        <el-table-column label="وضعیت" width="180">
 <template slot-scope="scope">
-  <el-tag  class="previewState" v-if="scope.row.approvalStatus===0">
-    در انتظار تایید</el-tag>
-  <el-tag  class="previewState" v-if="scope.row.approvalStatus===5" type="success">تایید شده</el-tag>
-  <el-tag  class="previewState" v-if="scope.row.approvalStatus===10" type="danger">رد شده</el-tag>
-  <el-tag  class="previewState" v-if="scope.row.approvalStatus===15" type="warning">غیر فعال توسط مدرس</el-tag>
+  <el-tag class="previewState" v-if="scope.row.approvalStatus===0">در انتظار تایید</el-tag>
+  <el-tag class="previewState" v-if="scope.row.approvalStatus===5" type="success">تایید شده</el-tag>
+  <el-tag class="previewState" v-if="scope.row.approvalStatus===10" type="danger">رد شده</el-tag>
+  <el-tag
+    class="previewState"
+    v-if="scope.row.approvalStatus===15"
+    type="warning"
+  >غیر فعال توسط مدرس</el-tag>
 </template>
       </el-table-column>
 
       <el-table-column label="جزئیات" width="150">
 <template slot-scope="scope">
-  <el-button v-bind:disabled="scope.row.contents.length==0" @click="selectedCourseId=scope.row.id">
-    مشاهده</el-button>
+  <el-button
+    v-bind:disabled="scope.row.contents.length==0"
+    @click="selectedCourseId=scope.row.id"
+  >مشاهده</el-button>
 </template>
       </el-table-column>
 
@@ -67,14 +60,9 @@
        <el-table-column label="عملیات">
 <template slot-scope="scope">
   <el-row type="flex">
-
-    <el-button @click="changingApprovalStateItem=scope.row" class="deactive">
-      تغییر وضعیت
-    </el-button>
-
+    <el-button @click="changingApprovalStateItem=scope.row" class="deactive">تغییر وضعیت</el-button>
   </el-row>
-</template>
-      </el-table-column>
+   </el-table-column>
 
     </el-table>
     <el-pagination
@@ -100,91 +88,93 @@
   </el-card>
 </template>
 
+
 <script>
-  import AddCourse from './add-course-dialog';
-  import ApprovalStateChanger from './approval-state-changer';
-  import CourseDetails from './course-details.vue';
-  import axios from "axios";
-  export default {
-    name: "AdminListCourse",
-    data() {
-      return {
-        query: {
-          pageSize: 10
-        },
-        courceData: [],
-        isAddingNewCourse: false,
-        courcedetails: [],
-        courcedialog: false,
-        selectedCourseId: false,
-        changingApprovalStateItem: undefined,
-        meta: {}
-      };
-
-    },
-    components: {
-      ApprovalStateChanger,
-      AddCourse,
-      CourseDetails
-    },
-    methods: {
-      getCourse() {
-        this.changingApprovalStateItem = undefined;
-        axios.get("/api/Courses", {
+import AddCourse from "./add-course-dialog";
+import ApprovalStateChanger from "./approval-state-changer";
+import CourseDetails from "./course-details.vue";
+import axios from "axios";
+export default {
+  name: "AdminListCourse",
+  data() {
+    return {
+      query: {
+        pageSize: 10
+      },
+      courceData: [],
+      isAddingNewCourse: false,
+      courcedetails: [],
+      courcedialog: false,
+      selectedCourseId: false,
+      changingApprovalStateItem: undefined,
+      meta: {}
+    };
+  },
+  components: {
+    ApprovalStateChanger,
+    AddCourse,
+    CourseDetails
+  },
+  methods: {
+    getCourse() {
+      this.changingApprovalStateItem = undefined;
+      axios
+        .get("/api/Courses", {
           params: this.query
-        }).then(res => {
+        })
+        .then(res => {
           this.courceData = res.data.items;
-          this.meta = {allCount: res.data.allCount};
+          this.meta = { allCount: res.data.allCount };
         });
-      },
-      handleSizeChange(val) {
-        this.query.pageSize = val;
-        this.getCourse();
-      },
-      handleCurrentChange(val) {
-        this.query.pageOffset = (val - 1) * this.query.pageSize;
-        this.query.currentPage = val;
-        this.getCourse();
-      },
     },
-
-    mounted() {
+    handleSizeChange(val) {
+      this.query.pageSize = val;
+      this.getCourse();
+    },
+    handleCurrentChange(val) {
+      this.query.pageOffset = (val - 1) * this.query.pageSize;
+      this.query.currentPage = val;
       this.getCourse();
     }
-  };
+  },
+
+  mounted() {
+    this.getCourse();
+  }
+};
 </script>
 
 <style scoped>
-  .downloadBtn {
-    float: left;
-    margin-bottom: 10px;
-  }
+.downloadBtn {
+  float: left;
+  margin-bottom: 10px;
+}
 
-  .card-item {
-    margin-bottom: 50px;
-  }
+.card-item {
+  margin-bottom: 50px;
+}
 
-  .deactive {
-    margin-right: 0;
-  }
+.deactive {
+  margin-right: 0;
+}
 
-  .customDownloadIcon {
-    margin: 0;
-    line-height: 8px;
-    padding-left: 5px;
-    color: #fff;
-    font-size: 14px;
-  }
+.customDownloadIcon {
+  margin: 0;
+  line-height: 8px;
+  padding-left: 5px;
+  color: #fff;
+  font-size: 14px;
+}
 
-  .mgl-17 {
-    margin-left: 17px;
-  }
+.mgl-17 {
+  margin-left: 17px;
+}
 
-  .left {
-    float: left !important;
-  }
-  .previewState{
-    width: 100%;
-    text-align:center;
-  }
+.left {
+  float: left !important;
+}
+.previewState {
+  width: 100%;
+  text-align: center;
+}
 </style>

@@ -24,8 +24,7 @@
               <el-form-item
                 prop="description"
                 :rules="[
-  
-                  { required: true, message: 'وارد کردن توضیحات الزامی می باشد'}]"
+                    { required: true, message: 'وارد کردن توضیحات الزامی می باشد'}]"
                 label="توضیحات"
               >
                 <el-input placeholder="توضیحات" v-model="form.description"></el-input>
@@ -105,6 +104,34 @@
             <div class="btn-upload-wrapper">
               <el-button type="primary" @click="addCourseList=true">افزودن سرفصل جدید</el-button>
             </div>
+            <div class="details-item-wrapper mg-r-t-15">
+              <div
+                class="item"
+                v-show="courseItems.length"
+                v-for="(item,index) in courseItems"
+                :key="index"
+              >
+                <div class="header-item">
+                  <p>
+                    عنوان:
+                    <span>{{item.title}}</span>
+                    <el-button style="float:left" @click="editItem(index)">ویرایش</el-button>
+                  </p>
+                </div>
+                <div class="content-item">
+                  <p>
+                    توضیحات
+                    <span>{{item.TeacherMessageForAdmin}}</span>
+                  </p>
+                </div>
+                <div class="footer-item">
+                  <div class="file-name-wrapper">
+                    <span>نام فایل</span>
+                    <el-tag>{{item.file.name}}</el-tag>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </el-col>
       </el-row>
@@ -128,7 +155,6 @@
 </template>
 <script>
 import axios from "axios";
-
 import searchLesson from "./search-lesson";
 import addCourseListDialog from "./add-course-list-dialog";
 export default {
@@ -163,6 +189,8 @@ export default {
 
       courseTitles: [],
 
+      responseCourseId: 0,
+
       courseItems: [],
 
       form: {
@@ -189,6 +217,7 @@ export default {
     },
     addItemToCourseItems(item) {
       this.courseItems.push(item);
+      console.log(this.courseItems);
     },
 
     selectLesson(item) {
@@ -208,7 +237,15 @@ export default {
 
     registerLesson() {
       // validationArea
+      this.responseCourseId = 0;
+      if (this.courseItems.length == 0) {
+        this.$message({
+          type: "error",
+          message: "کاربر گرامی برای این درس حداقل یک سرفصل را باید آپلود کنید"
+        });
 
+        return false;
+      }
       this.$refs.form.validate(valid => {
         if (valid) {
           // validation file
@@ -248,19 +285,25 @@ export default {
             })
 
             .then(res => {
-              console.log(res);
-              // if (res.data.status == 1) {
-              //   this.$message({
-              //     message: "دوره شما با موفقیت ثبت شد",
+              if (res.data.status == 1) {
+                this.$message({
+                  message: "دوره شما با موفقیت ثبت شد",
+                  type: "success"
+                });
+                this.courseItems.forEach(element => {
+                  console.log(element, "el");
+                });
 
-              //     type: "success"
-              //   });
+                this.responseCourseId = res.data.data.id;
 
-              //   this.$emit("close");
-              // }
+                this.$emit("close");
+              }
             });
         }
       });
+    },
+    editItem(itemId) {
+      console.log(itemId);
     }
   },
 
@@ -270,9 +313,27 @@ export default {
 };
 </script>
 <style scoped>
+.item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+
+.footer-item {
+  border-top: 1px solid #ccc;
+  padding: 10px;
+}
 .btn-upload-wrapper {
   margin-top: 20px;
   text-align: center;
+}
+.mg-r-t-15 {
+  margin-right: 15px;
+  margin-top: 15px;
+}
+.el-card__header {
+  padding-bottom: 0px !important;
 }
 .w100 {
   width: 100%;
