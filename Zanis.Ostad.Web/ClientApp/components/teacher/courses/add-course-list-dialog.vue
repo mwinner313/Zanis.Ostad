@@ -21,17 +21,12 @@
       </el-form-item>
       <el-button @click="$refs.filePicker.click()">انتخاب فایل</el-button>
       <el-tag type="warning" v-if="form.file.name">{{form.file.name}}</el-tag>
-      <input
-        type="file"
-        accept="video/mp4, .pdf"
-        @change="selectFile"
-        ref="filePicker"
-        style="display: none"
-      >
+      <input type="file" accept=".pdf" @change="selectFile" ref="filePicker" style="display: none">
     </el-form>
+
     <span slot="footer" class="dialog-footer">
       <el-button @click="$emit('close')">بستن</el-button>
-      <el-button type="primary">ثبت</el-button>
+      <el-button type="primary" @click="submit">ثبت</el-button>
     </span>
   </el-dialog>
 </template>
@@ -60,6 +55,11 @@ export default {
     resetProgressState() {
       this.$emit("close");
       this.uploadProgress = 0;
+    },
+    submit() {
+      this.$refs.form.validate(valid => {
+        this.$emit("submit", this.form);
+      });
     }
   }
 };

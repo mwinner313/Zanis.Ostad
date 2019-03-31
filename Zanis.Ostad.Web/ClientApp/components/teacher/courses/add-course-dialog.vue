@@ -69,7 +69,7 @@
               </el-form-item>
 
               <el-form-item>
-                <input
+                <!-- <input
                   type="file"
                   name="myfile"
                   accept=".zip"
@@ -80,7 +80,7 @@
 
                 <el-button type="info" @click="$refs.filePicker.click()">انتخاب فایل</el-button>
                 <el-tag type="warning" v-if="form.zipFile">{{form.zipFile.name}}</el-tag>
-                <br>
+                <br>-->
                 <el-button
                   type="primary"
                   class="sendBtn w100"
@@ -114,12 +114,16 @@
     <searchLesson
       :isOpen="isLessonsearchDialog"
       @close="selectedLesson=undefined"
-      v-on:lessonSelected="getItems($event)"
+      v-on:lessonSelected="selectLesson($event)"
       v-on:close="closeSearchgDialog"
     ></searchLesson>
 
     <!-- addCourseListDialog -->
-    <addCourseListDialog :isOpen="addCourseList" @close="addCourseList=undefined"></addCourseListDialog>
+    <addCourseListDialog
+      @submit="addItemToCourseItems"
+      :isOpen="addCourseList"
+      @close="addCourseList=false"
+    ></addCourseListDialog>
   </div>
 </template>
 <script>
@@ -159,6 +163,8 @@ export default {
 
       courseTitles: [],
 
+      courseItems: [],
+
       form: {
         price: 0,
 
@@ -176,19 +182,20 @@ export default {
   },
 
   methods: {
-    getCourseTitle() {
+    getCourseTitles() {
       axios.get("/api/courseTitles").then(res => {
         this.courseTitles = res.data;
       });
     },
+    addItemToCourseItems(item) {
+      this.courseItems.push(item);
+    },
 
-    getItems(item) {
+    selectLesson(item) {
       this.itemSelectedLesson =
         item.gradeName + " - " + item.fieldName + " - " + item.lessonName;
 
       this.form.lessonFieldId = item.id;
-
-      console.log(item);
     },
 
     closeSearchgDialog() {
@@ -205,13 +212,13 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           // validation file
-          if (!this.form.zipFile) {
-            this.$message({
-              message: "لطفا فایل ارسالی را انتخاب کنید",
-              type: "warning"
-            });
-            return;
-          }
+          // if (!this.form.zipFile) {
+          //   this.$message({
+          //     message: "لطفا فایل ارسالی را انتخاب کنید",
+          //     type: "warning"
+          //   });
+          //   return;
+          // }
           let data = new FormData();
 
           data.append("Price", this.form.price);
@@ -224,32 +231,33 @@ export default {
 
           data.append("LessonFieldId", this.form.lessonFieldId);
 
-          data.append("ZipFile", this.form.zipFile);
+          // data.append("ZipFile", this.form.zipFile);
 
           axios
 
             .post("/api/TeacherAccount/courses", data, {
               headers: {
                 "Content-Type": "multipart/form-data"
-              },
-
-              onUploadProgress: progressEvent => {
-                this.uploadProgress = Math.floor(
-                  (progressEvent.loaded * 100) / progressEvent.total
-                );
               }
+
+              // onUploadProgress: progressEvent => {
+              //   this.uploadProgress = Math.floor(
+              //     (progressEvent.loaded * 100) / progressEvent.total
+              //   );
+              // }
             })
 
             .then(res => {
-              if (res.data.status == 1) {
-                this.$message({
-                  message: "دوره شما با موفقیت ثبت شد",
+              console.log(res);
+              // if (res.data.status == 1) {
+              //   this.$message({
+              //     message: "دوره شما با موفقیت ثبت شد",
 
-                  type: "success"
-                });
+              //     type: "success"
+              //   });
 
-                this.$emit("close");
-              }
+              //   this.$emit("close");
+              // }
             });
         }
       });
@@ -257,7 +265,7 @@ export default {
   },
 
   mounted() {
-    this.getCourseTitle();
+    this.getCourseTitles();
   }
 };
 </script>
