@@ -51,7 +51,11 @@
               </el-form-item>
 
               <el-form-item>
-                <el-button type="warning" class="w100" @click="isLessonsearchDialog = true">انتخاب درس</el-button>
+                <el-button
+                  type="warning"
+                  class="w100"
+                  @click="isLessonsearchDialog = true"
+                >انتخاب درس</el-button>
               </el-form-item>
 
               <el-form-item>
@@ -71,12 +75,18 @@
                   accept=".zip"
                   @change="processFile"
                   ref="filePicker"
-                  style="display: none">
+                  style="display: none"
+                >
 
                 <el-button type="info" @click="$refs.filePicker.click()">انتخاب فایل</el-button>
                 <el-tag type="warning" v-if="form.zipFile">{{form.zipFile.name}}</el-tag>
                 <br>
-                <el-button type="primary" class="sendBtn w100" size="medium" @click="registerLesson">ارسال</el-button>
+                <el-button
+                  type="primary"
+                  class="sendBtn w100"
+                  size="medium"
+                  @click="registerLesson"
+                >ارسال</el-button>
               </el-form-item>
             </el-form>
           </el-card>
@@ -91,6 +101,11 @@
             :closable="false"
             show-icon
           ></el-alert>
+          <div class="upload-course-item-wrapper">
+            <div class="btn-upload-wrapper">
+              <el-button type="primary" @click="addCourseList=true">افزودن سرفصل جدید</el-button>
+            </div>
+          </div>
         </el-col>
       </el-row>
     </el-dialog>
@@ -102,13 +117,16 @@
       v-on:lessonSelected="getItems($event)"
       v-on:close="closeSearchgDialog"
     ></searchLesson>
+
+    <!-- addCourseListDialog -->
+    <addCourseListDialog :isOpen="addCourseList" @close="addCourseList=undefined"></addCourseListDialog>
   </div>
 </template>
 <script>
 import axios from "axios";
 
 import searchLesson from "./search-lesson";
-
+import addCourseListDialog from "./add-course-list-dialog";
 export default {
   name: "add-course-dialog",
 
@@ -119,11 +137,14 @@ export default {
   },
 
   components: {
-    searchLesson
+    searchLesson,
+    addCourseListDialog
   },
 
   data() {
     return {
+      addCourseList: undefined,
+
       isLessonsearchDialog: false,
 
       selectedTeacherItem: "",
@@ -241,6 +262,10 @@ export default {
 };
 </script>
 <style scoped>
+.btn-upload-wrapper {
+  margin-top: 20px;
+  text-align: center;
+}
 .w100 {
   width: 100%;
 }

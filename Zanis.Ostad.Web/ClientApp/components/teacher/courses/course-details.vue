@@ -19,11 +19,11 @@
         <el-card class="card-item">
           <div slot="header" class="clearfix">
             <span>{{item.order}}.</span>
-            
+
             <span class="icon" v-html="previewIconCourse(item.contentType)"></span>
-            
+
             <span>{{item.title}}</span>
-            
+
             <small>
               <i class="el-icon-time"></i>
               {{ item.createdOn | moment("jYYYY/jM/jD HH:mm") }}
