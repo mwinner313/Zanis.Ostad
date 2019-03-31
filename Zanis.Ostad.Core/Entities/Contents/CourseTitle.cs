@@ -7,5 +7,6 @@ namespace Zanis.Ostad.Core.Entities.Contents
     {
         public string Name { get; set; }
         public ICollection<Course> Courses { get; set; }
+        public string Description { get; set; }
     }
 }
