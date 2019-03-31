@@ -3,9 +3,10 @@
     <h4 style="display:inline;">دروس تدریس شده</h4>
     <div>
       <el-button @click="isAddingNewCourse=true" class="left">
-            افزودن دوره جدید</el-button>
+        افزودن دوره جدید
+      </el-button>
     </div>
-    <el-table height="500" :data="courceData" size="large" >
+    <el-table height="500" :data="courseData" size="large">
 
 
       <el-table-column label="عنوان">
@@ -16,69 +17,70 @@
 
 
       <el-table-column label="مقطع" width="120">
-<template slot-scope="scope">
-   {{ scope.row.gradeTitle}}
-</template>
+        <template slot-scope="scope">
+          {{ scope.row.gradeTitle}}
+        </template>
       </el-table-column>
 
       <el-table-column label="رشته" width="160">
-<template slot-scope="scope">
-   {{ scope.row.fieldName}}
-</template>
+        <template slot-scope="scope">
+          {{ scope.row.fieldName}}
+        </template>
       </el-table-column>
 
-         <el-table-column label="درس" width="180">
-<template slot-scope="scope">
-   {{ scope.row.lessonTitle}}
-</template>
+      <el-table-column label="درس" width="180">
+        <template slot-scope="scope">
+          {{ scope.row.lessonTitle}}
+        </template>
       </el-table-column>
 
-    <el-table-column label="قیمت" width="90">
-<template slot-scope="scope">
-   {{scope.row.price}}
-</template>
+      <el-table-column label="قیمت" width="90">
+        <template slot-scope="scope">
+          {{scope.row.price}}
+        </template>
       </el-table-column>
 
       <el-table-column label="کددرس" width="90">
-<template slot-scope="scope">
-   {{ scope.row.lessonCode}}
-</template>
+        <template slot-scope="scope">
+          {{ scope.row.lessonCode}}
+        </template>
       </el-table-column>
 
-       <el-table-column label="وضعیت" width="180">
-<template slot-scope="scope">
-  <el-tag  class="previewState" v-if="scope.row.approvalStatus===0">
-    در انتظار تایید</el-tag>
-  <el-tag  class="previewState" v-if="scope.row.approvalStatus===5" type="success">تایید شده</el-tag>
-  <el-tag  class="previewState" v-if="scope.row.approvalStatus===10" type="danger">رد شده</el-tag>
-  <el-tag  class="previewState" v-if="scope.row.approvalStatus===15" type="warning">غیر فعال توسط مدرس</el-tag>
-</template>
+      <el-table-column label="وضعیت" width="180">
+        <template slot-scope="scope">
+          <el-tag class="previewState" v-if="scope.row.approvalStatus===0">
+            در انتظار تایید
+          </el-tag>
+          <el-tag class="previewState" v-if="scope.row.approvalStatus===5" type="success">تایید شده</el-tag>
+          <el-tag class="previewState" v-if="scope.row.approvalStatus===10" type="danger">رد شده</el-tag>
+          <el-tag class="previewState" v-if="scope.row.approvalStatus===15" type="warning">غیر فعال توسط مدرس</el-tag>
+        </template>
       </el-table-column>
 
       <el-table-column label="جزئیات" width="150">
-<template slot-scope="scope">
-  <el-button v-bind:disabled="scope.row.contents.length==0" @click="selectedCourseId=scope.row.id">
-    مشاهده</el-button>
-</template>
+        <template slot-scope="scope">
+          <el-button v-bind:disabled="scope.row.contents.length==0" @click="selectedCourseId=scope.row.id">
+            مشاهده
+          </el-button>
+        </template>
       </el-table-column>
 
 
+      <el-table-column label="عملیات">
+        <template slot-scope="scope">
+          <el-row type="flex">
 
-       <el-table-column label="عملیات">
-<template slot-scope="scope">
-  <el-row type="flex">
+            <el-button @click="changingApprovalStateItem=scope.row" class="deactive">
+              تغییر وضعیت
+            </el-button>
 
-    <el-button @click="changingApprovalStateItem=scope.row" class="deactive">
-      تغییر وضعیت
-    </el-button>
-
-  </el-row>
-</template>
+          </el-row>
+        </template>
       </el-table-column>
 
     </el-table>
     <el-pagination
-       class="pagenation"
+      class="pagenation"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page.sync="query.currentPage"
@@ -89,13 +91,13 @@
     ></el-pagination>
 
     <CourseDetails v-if="selectedCourseId" :isOpen="selectedCourseId"
-    :courseId="selectedCourseId" @close="selectedCourseId=undefined"></CourseDetails>
+                   :courseId="selectedCourseId" @close="selectedCourseId=undefined"></CourseDetails>
 
     <add-course @close="isAddingNewCourse=false" :isOpen="isAddingNewCourse"></add-course>
     <approval-state-changer v-if="changingApprovalStateItem"
-                          :isOpen="changingApprovalStateItem"
-                          :item="changingApprovalStateItem"
-                          @close="getCourse"
+                            :isOpen="changingApprovalStateItem"
+                            :item="changingApprovalStateItem"
+                            @close="getCourse"
     ></approval-state-changer>
   </el-card>
 </template>
@@ -105,17 +107,15 @@
   import ApprovalStateChanger from './approval-state-changer';
   import CourseDetails from './course-details.vue';
   import axios from "axios";
+
   export default {
-    name: "AdminListCourse",
     data() {
       return {
         query: {
           pageSize: 10
         },
-        courceData: [],
+        courseData: [],
         isAddingNewCourse: false,
-        courcedetails: [],
-        courcedialog: false,
         selectedCourseId: false,
         changingApprovalStateItem: undefined,
         meta: {}
@@ -130,10 +130,10 @@
     methods: {
       getCourse() {
         this.changingApprovalStateItem = undefined;
-        axios.get("/api/Courses", {
+        axios.get("/api/TeacherAccount/courses", {
           params: this.query
         }).then(res => {
-          this.courceData = res.data.items;
+          this.courseData = res.data.items;
           this.meta = {allCount: res.data.allCount};
         });
       },
@@ -183,8 +183,9 @@
   .left {
     float: left !important;
   }
-  .previewState{
+
+  .previewState {
     width: 100%;
-    text-align:center;
+    text-align: center;
   }
 </style>
