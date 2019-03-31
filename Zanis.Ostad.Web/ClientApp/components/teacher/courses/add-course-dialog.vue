@@ -102,7 +102,7 @@
           ></el-alert>
           <div class="upload-course-item-wrapper">
             <div class="btn-upload-wrapper">
-              <el-button type="primary" @click="addCourseList=true">افزودن سرفصل جدید</el-button>
+              <el-button type="primary" @click="addCourseItem=true">افزودن سرفصل جدید</el-button>
             </div>
             <div class="details-item-wrapper mg-r-t-15">
               <div
@@ -146,17 +146,17 @@
     ></searchLesson>
 
     <!-- addCourseListDialog -->
-    <addCourseListDialog
+    <addCourseItemDialog
       @submit="addItemToCourseItems"
-      :isOpen="addCourseList"
+      :isOpen="addCourseItem"
       @close="addCourseList=false"
-    ></addCourseListDialog>
+    ></addCourseItemDialog>
   </div>
 </template>
 <script>
 import axios from "axios";
 import searchLesson from "./search-lesson";
-import addCourseListDialog from "./add-course-list-dialog";
+import addCourseItemDialog from "./add-course-item-dialog";
 export default {
   name: "add-course-dialog",
 
@@ -168,12 +168,12 @@ export default {
 
   components: {
     searchLesson,
-    addCourseListDialog
+    addCourseItemDialog
   },
 
   data() {
     return {
-      addCourseList: undefined,
+      addCourseItem: undefined,
 
       isLessonsearchDialog: false,
 
