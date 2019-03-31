@@ -6,7 +6,7 @@ using Zanis.Ostad.Core.Dtos;
 
 namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
 {
-    public class AddCourseCommand:IRequest<Response>
+    public class AddCourseCommand:IRequest<Response<CourseDto>>
     {
         public int Price { get; set; }
         public string Description { get; set; }

@@ -8,6 +8,7 @@ using Zains.Ostad.Application.Infrastucture;
 using Zains.Ostad.Application.Teachers.Commands.ActiveDeactiveCourse;
 using Zains.Ostad.Application.Teachers.Commands.AddEditCourse;
 using Zains.Ostad.Application.Teachers.Queries.GetProducedCourses;
+using Zains.Ostad.Application.Teachers.Queries.GetSalesReport;
 using Zanis.Ostad.Web.Infrastracture;
 
 namespace Zanis.Ostad.Web.Controllers.Api
@@ -61,22 +62,22 @@ namespace Zanis.Ostad.Web.Controllers.Api
             return Ok(await _mediator.Send(cmd));
         }
 
-        [HttpPatch("courses/{id}/deactive")]
+        [HttpPatch("course_items/{id}/deactive")]
         public async Task<ActionResult<PagenatedList<CourseDto>>> DeactiveCourse(long id)
         {
             return Ok(await _mediator.Send(new DeactiveCourseCommand{CourseId = id}));
         }
 
-        [HttpPatch("courses/{id}/active")]
+        [HttpPatch("course_items/{id}/active")]
         public async Task<ActionResult<PagenatedList<CourseDto>>> ActiveCourse(long id)
         {
             return Ok(await _mediator.Send(new ActiveCourseCommand{CourseId = id}));
         }
 
         [HttpGet("salesreport")]
-        public async Task<ActionResult<PagenatedList<CourseDto>>> GetSalesRort(long id)
+        public async Task<ActionResult<PagenatedList<CourseDto>>> GetSalesReport(GetSalesReportQuery query)
         {
-            return Ok(await _mediator.Send(new ActiveCourseCommand{CourseId = id}));
+            return Ok(await _mediator.Send(query));
         }
     }
 }
