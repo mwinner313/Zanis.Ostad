@@ -11,11 +11,11 @@
                 label="قیمت"
                 prop="price"
                 :rules="[
-  
+
                   { required: true, message: 'وارد کردن قیمت الزامی می باشد'},
-  
+
                   { type: 'number', message: 'فیمت باید عددی باشد'}
-  
+
                 ]"
               >
                 <el-input type="text" placeholder="قیمت" v-model.number="form.price"></el-input>
@@ -61,7 +61,7 @@
                 <el-tag
                   class="w100"
                   type="danger"
-                  v-if="itemSelectedLesson==''"
+                  v-if="!itemSelectedLesson"
                 >در حال حاظر درسی را انتخاب نکرده اید</el-tag>
 
                 <el-tag class="w100" v-else>{{itemSelectedLesson}}</el-tag>
@@ -107,7 +107,6 @@
             <div class="details-item-wrapper mg-r-t-15">
               <div
                 class="item"
-                v-show="courseItems.length"
                 v-for="(item,index) in courseItems"
                 :key="index"
               >
@@ -121,7 +120,7 @@
                 <div class="content-item">
                   <p>
                     توضیحات
-                    <span>{{item.TeacherMessageForAdmin}}</span>
+                    <span>{{item.teacherMessageForAdmin}}</span>
                   </p>
                 </div>
                 <div class="footer-item">
