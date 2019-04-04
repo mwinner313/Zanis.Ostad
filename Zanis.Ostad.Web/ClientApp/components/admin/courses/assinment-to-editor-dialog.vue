@@ -147,4 +147,8 @@ export default {
 
 <style>
 
+.has-gutter{
+  display:none;
+}
+
 </style>

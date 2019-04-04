@@ -141,8 +141,8 @@
     <searchLesson
       :isOpen="isLessonsearchDialog"
       @close="selectedLesson=undefined"
-      v-on:lessonSelected="selectLesson($event)"
-      v-on:close="closeSearchgDialog"
+     :lessonSelected="selectLesson($event)"
+     :close="closeSearchgDialog"
     ></searchLesson>
 
     <!-- addCourseListDialog -->
@@ -180,7 +180,7 @@ export default {
       itemSelectedLesson: "",
       selectedLesson: null,
       close: false,
-      itemEdited:null,
+      itemEdited:{},
       uploadProgress: 0,
       courseTitles: [],
       responseCourseId: 0,
