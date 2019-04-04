@@ -12,7 +12,7 @@
         </el-card>
       </el-col>
     </el-row>
-    <AddCourseDialog preSelectedCourseTitleId="selectedCourseTitleId" @close="selectedCourseTitleId=undefined" :isOpen="!!selectedCourseTitleId"></AddCourseDialog>
+    <AddCourseDialog :preSelectedCourseTitleId="selectedCourseTitleId" @close="selectedCourseTitleId=undefined" :isOpen="!!selectedCourseTitleId"></AddCourseDialog>
   </div>
 </template>
 
