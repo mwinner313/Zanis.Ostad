@@ -191,7 +191,7 @@ export default {
     selectLesson(item) {
       this.itemSelectedLesson =
         item.gradeName + " - " + item.fieldName + " - " + item.lessonName;
-      this.form.lessonFieldId = item.id;
+
     },
 
     closeSearchDialog() {
@@ -245,6 +245,7 @@ export default {
     },
     editItem(item) {
       this.editItem=item;
+      
     }
   },
   mounted() {
