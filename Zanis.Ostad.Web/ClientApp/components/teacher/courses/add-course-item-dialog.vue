@@ -19,7 +19,7 @@
       <el-tag type="warning" v-if="form.file.name">{{form.file.name}}</el-tag>
       <input type="file" accept=".pdf" @change="selectFile" ref="filePicker" style="display: none">
     </el-form>
-
+    <span v-for="i in isEdited">{{i}}</span>
     <span slot="footer" class="dialog-footer">
       <el-button @click="$emit('close')">بستن</el-button>
       <el-button type="primary" @click="submit">ثبت</el-button>
@@ -35,13 +35,16 @@ export default {
         title: "",
         TeacherMessageForAdmin: "",
         file: {}
-      },
+      },      
       uploadProgress: 0
     };
   },
   props: {
     isOpen: {
       type: Boolean
+    },
+    isEdited:{
+      type:Object,
     }
   },
   methods: {
@@ -53,11 +56,11 @@ export default {
       this.uploadProgress = 0;
     },
     submit() {
-      this.$refs.form.validate(valid => {
-        this.$emit("submit", this.form);
+        this.$refs.form.validate(valid => {
+        this.$emit("submit",Object.assign({},this.form));
         this.$refs.form.resetFields();
         this.form.file = "";
-        // this.$emit("close");
+        this.$emit("close");
       });
     }
   }
