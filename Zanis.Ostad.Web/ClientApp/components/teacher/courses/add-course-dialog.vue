@@ -6,40 +6,12 @@
           <el-card shadow="always">
             <el-form ref="form" :model="form">
               <el-progress v-show="uploadProgress" :percentage="uploadProgress"></el-progress>
-
               <el-form-item
-                label="قیمت"
-                prop="price"
-                :rules="[
-  
-                  { required: true, message: 'وارد کردن قیمت الزامی می باشد'},
-  
-                  { type: 'number', message: 'فیمت باید عددی باشد'}
-  
-                ]"
-              >
-                <el-input type="text" placeholder="قیمت" v-model.number="form.price"></el-input>
-              </el-form-item>
-
-              <el-form-item
-                prop="description"
-                :rules="[
-                    { required: true, message: 'وارد کردن توضیحات الزامی می باشد'}]"
-                label="توضیحات"
-              >
-                <el-input placeholder="توضیحات" v-model="form.description"></el-input>
-              </el-form-item>
-
-              <el-form-item label="پیام به مدیریت">
-                <el-input type="textarea" v-model="form.teacherMessage"></el-input>
-              </el-form-item>
-
-              <el-form-item
-                prop="courseTitle"
+                prop="courseTitleId"
                 :rules="[{ required: true, message: 'انتخاب کردن عنوان الزامی می باشد'}]"
                 label="عنوان"
               >
-                <el-select v-model="form.courseTitle" placeholder="عنوان" class="w100">
+                <el-select v-model="form.courseTitleId" placeholder="عنوان" class="w100">
                   <el-option
                     v-for="item in courseTitles"
                     :key="item.value"
@@ -47,6 +19,31 @@
                     :value="item.id"
                   ></el-option>
                 </el-select>
+              </el-form-item>
+              <el-form-item
+                prop="description"
+                label="توضیحات"
+              >
+                <el-input  type="textarea" placeholder="توضیحات" v-model="form.description"></el-input>
+              </el-form-item>
+              <el-form-item
+                label="قیمت"
+                prop="price"
+                :rules="[
+
+                  { required: true, message: 'وارد کردن قیمت الزامی می باشد'},
+
+                  { type: 'number', message: 'فیمت باید عددی باشد'}
+
+                ]"
+              >
+                <el-input type="text" placeholder="قیمت" v-model.number="form.price"></el-input>
+              </el-form-item>
+
+
+
+              <el-form-item label="پیام به مدیریت">
+                <el-input type="textarea" v-model="form.teacherMessage"></el-input>
               </el-form-item>
 
               <el-form-item>
@@ -61,25 +58,12 @@
                 <el-tag
                   class="w100"
                   type="danger"
-                  v-if="itemSelectedLesson==''"
+                  v-if="!itemSelectedLesson"
                 >در حال حاظر درسی را انتخاب نکرده اید</el-tag>
-
                 <el-tag class="w100" v-else>{{itemSelectedLesson}}</el-tag>
               </el-form-item>
 
               <el-form-item>
-                <!-- <input
-                  type="file"
-                  name="myfile"
-                  accept=".zip"
-                  @change="processFile"
-                  ref="filePicker"
-                  style="display: none"
-                >
-
-                <el-button type="info" @click="$refs.filePicker.click()">انتخاب فایل</el-button>
-                <el-tag type="warning" v-if="form.zipFile">{{form.zipFile.name}}</el-tag>
-                <br>-->
                 <el-button
                   type="primary"
                   class="sendBtn w100"
@@ -107,7 +91,6 @@
             <div class="details-item-wrapper mg-r-t-15">
               <div
                 class="item"
-                v-show="courseItems.length"
                 v-for="(item,index) in courseItems"
                 :key="index"
               >
@@ -121,7 +104,7 @@
                 <div class="content-item">
                   <p>
                     توضیحات
-                    <span>{{item.TeacherMessageForAdmin}}</span>
+                    <span>{{item.teacherMessageForAdmin}}</span>
                   </p>
                 </div>
                 <div class="footer-item">
@@ -141,8 +124,8 @@
     <searchLesson
       :isOpen="isLessonsearchDialog"
       @close="selectedLesson=undefined"
-     :lessonSelected="selectLesson($event)"
-     :close="closeSearchgDialog"
+      :lessonSelected="selectLesson"
+      :close="closeSearchDialog"
     ></searchLesson>
 
     <!-- addCourseListDialog -->
@@ -180,23 +163,17 @@ export default {
       itemSelectedLesson: "",
       selectedLesson: null,
       close: false,
-      itemEdited:{},
+      itemEdited:null,
       uploadProgress: 0,
       courseTitles: [],
       responseCourseId: 0,
       courseItems: [],
       form: {
         price: 0,
-
         description: "",
-
-        courseTitle: "",
-
+        courseTitleId: "",
         teacherMessage: "",
-
         lessonFieldId: 0,
-
-        zipFile: ""
       }
     };
   },
@@ -209,26 +186,21 @@ export default {
     },
     addItemToCourseItems(item) {
       this.courseItems.push(item);
-      console.log(this.courseItems);
     },
 
     selectLesson(item) {
       this.itemSelectedLesson =
         item.gradeName + " - " + item.fieldName + " - " + item.lessonName;
-
       this.form.lessonFieldId = item.id;
     },
 
-    closeSearchgDialog() {
+    closeSearchDialog() {
       this.isLessonsearchDialog = false;
     },
-
     processFile(event) {
       this.form.zipFile = event.target.files[0];
     },
-
     registerLesson() {
-      // validationArea
       this.responseCourseId = 0;
       if (this.courseItems.length == 0) {
         this.$message({
@@ -240,40 +212,17 @@ export default {
       }
       this.$refs.form.validate(valid => {
         if (valid) {
-          // validation file
-          // if (!this.form.zipFile) {
-          //   this.$message({
-          //     message: "لطفا فایل ارسالی را انتخاب کنید",
-          //     type: "warning"
-          //   });
-          //   return;
-          // }
           let data = new FormData();
-
           data.append("Price", this.form.price);
-
           data.append("Description", this.form.description);
-
           data.append("TeacherMessageForAdmin", this.form.teacherMessage);
-
-          data.append("CourseTitleId", this.form.courseTitle);
-
+          data.append("CourseTitleId", this.form.courseTitleId);
           data.append("LessonFieldId", this.form.lessonFieldId);
-
-          // data.append("ZipFile", this.form.zipFile);
-
           axios
-
             .post("/api/TeacherAccount/courses", data, {
               headers: {
                 "Content-Type": "multipart/form-data"
               }
-
-              // onUploadProgress: progressEvent => {
-              //   this.uploadProgress = Math.floor(
-              //     (progressEvent.loaded * 100) / progressEvent.total
-              //   );
-              // }
             })
 
             .then(res => {
@@ -296,10 +245,8 @@ export default {
     },
     editItem(item) {
       this.editItem=item;
-      console.log(this.editItem);
     }
   },
-
   mounted() {
     this.getCourseTitles();
   }
