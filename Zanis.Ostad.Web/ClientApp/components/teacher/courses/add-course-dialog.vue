@@ -114,7 +114,7 @@
                   <p>
                     عنوان:
                     <span>{{item.title}}</span>
-                    <el-button style="float:left" @click="editItem(index)">ویرایش</el-button>
+                    <el-button style="float:left" @click="editItem(item)">ویرایش</el-button>
                   </p>
                 </div>
                 <div class="content-item">
@@ -148,6 +148,7 @@
     <addCourseItemDialog
       @submit="addItemToCourseItems"
       :isOpen="addCourseItem"
+      :isEdited="itemEdited"
       @close="addCourseList=false"
     ></addCourseItemDialog>
   </div>
@@ -173,25 +174,16 @@ export default {
   data() {
     return {
       addCourseItem: undefined,
-
       isLessonsearchDialog: false,
-
       selectedTeacherItem: "",
-
       itemSelectedLesson: "",
-
       selectedLesson: null,
-
       close: false,
-
+      itemEdited:null,
       uploadProgress: 0,
-
       courseTitles: [],
-
       responseCourseId: 0,
-
       courseItems: [],
-
       form: {
         price: 0,
 
@@ -301,8 +293,9 @@ export default {
         }
       });
     },
-    editItem(itemId) {
-      console.log(itemId);
+    editItem(item) {
+      this.editItem=item;
+      console.log(this.editItem);
     }
   },
 
