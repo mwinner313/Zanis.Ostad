@@ -2,6 +2,10 @@
   <div>
     <el-dialog title="افزودن دوره" :visible.sync="isOpen" width="80%" @closed="$emit('close')">
       <el-row>
+
+
+
+
         <el-col :md="12">
           <el-card shadow="always">
             <el-form ref="form" :model="form">
@@ -24,7 +28,7 @@
                 prop="description"
                 label="توضیحات"
               >
-                <el-input  type="textarea" placeholder="توضیحات" v-model="form.description"></el-input>
+                <el-input type="textarea" placeholder="توضیحات" v-model="form.description"></el-input>
               </el-form-item>
               <el-form-item
                 label="قیمت"
@@ -41,7 +45,6 @@
               </el-form-item>
 
 
-
               <el-form-item label="پیام به مدیریت">
                 <el-input type="textarea" v-model="form.teacherMessage"></el-input>
               </el-form-item>
@@ -51,7 +54,8 @@
                   type="warning"
                   class="w100"
                   @click="isLessonsearchDialog = true"
-                >انتخاب درس</el-button>
+                >انتخاب درس
+                </el-button>
               </el-form-item>
 
               <el-form-item>
@@ -59,7 +63,8 @@
                   class="w100"
                   type="danger"
                   v-if="!itemSelectedLesson"
-                >در حال حاظر درسی را انتخاب نکرده اید</el-tag>
+                >در حال حاظر درسی را انتخاب نکرده اید
+                </el-tag>
                 <el-tag class="w100" v-else>{{itemSelectedLesson}}</el-tag>
               </el-form-item>
 
@@ -69,11 +74,17 @@
                   class="sendBtn w100"
                   size="medium"
                   @click="registerLesson"
-                >ارسال</el-button>
+                >ارسال
+                </el-button>
               </el-form-item>
             </el-form>
           </el-card>
         </el-col>
+
+
+
+
+
 
         <el-col :md="12">
           <el-alert
@@ -86,7 +97,7 @@
           ></el-alert>
           <div class="upload-course-item-wrapper">
             <div class="btn-upload-wrapper">
-              <el-button type="primary" @click="addCourseItem=true">افزودن سرفصل جدید</el-button>
+              <el-button type="primary" @click="itemEdited={}">افزودن سرفصل جدید</el-button>
             </div>
             <div class="details-item-wrapper mg-r-t-15">
               <div
@@ -123,196 +134,207 @@
     <!-- searchLessonItem -->
     <searchLesson
       :isOpen="isLessonsearchDialog"
-      @close="selectedLesson=undefined"
-      :lessonSelected="selectLesson"
-      :close="closeSearchDialog"
+      @close="isLessonsearchDialog=undefined"
+      @lessonSelected="selectLesson"
     ></searchLesson>
 
     <!-- addCourseListDialog -->
     <addCourseItemDialog
       @submit="addItemToCourseItems"
-      :isOpen="addCourseItem"
+      :isOpen="!!itemEdited"
       :isEdited="itemEdited"
-      @close="addCourseList=false"
+      @close="itemEdited=undefined"
     ></addCourseItemDialog>
   </div>
 </template>
 <script>
-import axios from "axios";
-import searchLesson from "./search-lesson";
-import addCourseItemDialog from "./add-course-item-dialog";
-export default {
-  name: "add-course-dialog",
+  import axios from "axios";
+  import searchLesson from "./search-lesson";
+  import addCourseItemDialog from "./add-course-item-dialog";
 
-  props: {
-    isOpen: {
-      type: Boolean
-    }
-  },
+  export default {
+    name: "add-course-dialog",
 
-  components: {
-    searchLesson,
-    addCourseItemDialog
-  },
-
-  data() {
-    return {
-      addCourseItem: undefined,
-      isLessonsearchDialog: false,
-      selectedTeacherItem: "",
-      itemSelectedLesson: "",
-      selectedLesson: null,
-      close: false,
-      itemEdited:null,
-      uploadProgress: 0,
-      courseTitles: [],
-      responseCourseId: 0,
-      courseItems: [],
-      form: {
-        price: 0,
-        description: "",
-        courseTitleId: "",
-        teacherMessage: "",
-        lessonFieldId: 0,
+    props: {
+      isOpen: {
+        type: Boolean
+      },
+      preSelectedCourseTitleId: {
+        type: Number
       }
-    };
-  },
-
-  methods: {
-    getCourseTitles() {
-      axios.get("/api/courseTitles").then(res => {
-        this.courseTitles = res.data;
-      });
-    },
-    addItemToCourseItems(item) {
-      this.courseItems.push(item);
     },
 
-    selectLesson(item) {
-      this.itemSelectedLesson =
-        item.gradeName + " - " + item.fieldName + " - " + item.lessonName;
-      this.form.lessonFieldId = item.id;
+    components: {
+      searchLesson,
+      addCourseItemDialog
     },
 
-    closeSearchDialog() {
-      this.isLessonsearchDialog = false;
-    },
-    processFile(event) {
-      this.form.zipFile = event.target.files[0];
-    },
-    registerLesson() {
-      this.responseCourseId = 0;
-      if (this.courseItems.length == 0) {
-        this.$message({
-          type: "error",
-          message: "کاربر گرامی برای این درس حداقل یک سرفصل را باید آپلود کنید"
-        });
-
-        return false;
-      }
-      this.$refs.form.validate(valid => {
-        if (valid) {
-          let data = new FormData();
-          data.append("Price", this.form.price);
-          data.append("Description", this.form.description);
-          data.append("TeacherMessageForAdmin", this.form.teacherMessage);
-          data.append("CourseTitleId", this.form.courseTitleId);
-          data.append("LessonFieldId", this.form.lessonFieldId);
-          axios
-            .post("/api/TeacherAccount/courses", data, {
-              headers: {
-                "Content-Type": "multipart/form-data"
-              }
-            })
-
-            .then(res => {
-              if (res.data.status == 1) {
-                this.$message({
-                  message: "دوره شما با موفقیت ثبت شد",
-                  type: "success"
-                });
-                this.courseItems.forEach(element => {
-                  console.log(element, "el");
-                });
-
-                this.responseCourseId = res.data.data.id;
-
-                this.$emit("close");
-              }
-            });
+    data() {
+      return {
+        isLessonsearchDialog: false,
+        selectedTeacherItem: "",
+        itemSelectedLesson: "",
+        selectedLesson: null,
+        close: false,
+        itemEdited: null,
+        uploadProgress: 0,
+        courseTitles: [],
+        responseCourseId: 0,
+        courseItems: [],
+        form: {
+          price: undefined,
+          description: "",
+          courseTitleId: "",
+          teacherMessage: "",
+          lessonFieldId: 0,
         }
-      });
+      };
     },
-    editItem(item) {
-      this.editItem=item;
+    updated() {
+      if (this.preSelectedCourseTitleId)
+        this.form.courseTitleId = this.preSelectedCourseTitleId;
+    },
+    methods: {
+      getCourseTitles() {
+        axios.get("/api/courseTitles").then(res => {
+          this.courseTitles = res.data;
+        });
+      },
+      addItemToCourseItems(item) {
+        this.courseItems.push(item);
+      },
+
+      selectLesson(item) {
+        this.itemSelectedLesson =
+          item.gradeName + " - " + item.fieldName + " - " + item.lessonName;
+        this.form.lessonFieldId = item.id;
+      },
+
+      closeSearchDialog() {
+        this.isLessonsearchDialog = false;
+      },
+      processFile(event) {
+        this.form.zipFile = event.target.files[0];
+      },
+      registerLesson() {
+        this.responseCourseId = 0;
+        if (this.courseItems.length == 0) {
+          this.$message({
+            type: "error",
+            message: "کاربر گرامی برای این درس حداقل یک سرفصل را باید آپلود کنید"
+          });
+
+          return false;
+        }
+        this.$refs.form.validate(valid => {
+          if (valid) {
+            let data = new FormData();
+            data.append("Price", this.form.price);
+            data.append("Description", this.form.description);
+            data.append("TeacherMessageForAdmin", this.form.teacherMessage);
+            data.append("CourseTitleId", this.form.courseTitleId);
+            data.append("LessonFieldId", this.form.lessonFieldId);
+            axios
+              .post("/api/TeacherAccount/courses", data, {
+                headers: {
+                  "Content-Type": "multipart/form-data"
+                }
+              })
+
+              .then(res => {
+                if (res.data.status == 1) {
+                  this.$message({
+                    message: "دوره شما با موفقیت ثبت شد",
+                    type: "success"
+                  });
+                  this.courseItems.forEach(element => {
+                    console.log(element, "el");
+                  });
+
+                  this.responseCourseId = res.data.data.id;
+
+                  this.$emit("close");
+                }
+              });
+          }
+        });
+      },
+      editItem(item) {
+        this.editItem = item;
+      }
+    },
+    mounted() {
+      this.getCourseTitles();
     }
-  },
-  mounted() {
-    this.getCourseTitles();
-  }
-};
+  };
 </script>
 <style scoped>
-.item {
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 5px;
-}
+  .item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+  }
 
-.footer-item {
-  border-top: 1px solid #ccc;
-  padding: 10px;
-}
-.btn-upload-wrapper {
-  margin-top: 20px;
-  text-align: center;
-}
-.mg-r-t-15 {
-  margin-right: 15px;
-  margin-top: 15px;
-}
-.el-card__header {
-  padding-bottom: 0px !important;
-}
-.w100 {
-  width: 100%;
-}
-.sendBtn {
-  margin-left: 10px;
-  color: #fff !important;
-}
-.el-upload,
-.el-upload-dragger {
-  width: 100%;
-}
+  .footer-item {
+    border-top: 1px solid #ccc;
+    padding: 10px;
+  }
 
-.a {
-  z-index: -1;
-}
+  .btn-upload-wrapper {
+    margin-top: 20px;
+    text-align: left;
+  }
 
-.white {
-  color: #fff !important;
-}
+  .mg-r-t-15 {
+    margin-right: 15px;
+    margin-top: 15px;
+  }
 
-.el-tag {
-  display: inline;
+  .el-card__header {
+    padding-bottom: 0px !important;
+  }
 
-  float: left;
+  .w100 {
+    width: 100%;
+  }
 
-  text-align: center;
+  .sendBtn {
+    margin-left: 10px;
+    color: #fff !important;
+  }
 
-  font-size: 14px;
-}
+  .el-upload,
+  .el-upload-dragger {
+    width: 100%;
+  }
 
-.description-Added-Course {
-  margin-right: 16px;
-}
+  .a {
+    z-index: -1;
+  }
 
-.description-Added-Course .title-Description {
-  text-align: justify;
+  .white {
+    color: #fff !important;
+  }
 
-  line-height: 10px;
-}
+  .el-tag {
+    display: inline;
+
+    float: left;
+
+    text-align: center;
+
+    font-size: 14px;
+  }
+
+  .description-Added-Course {
+    margin-right: 16px;
+  }
+
+  .description-Added-Course .title-Description {
+    text-align: justify;
+
+    line-height: 10px;
+  }
 </style>
 

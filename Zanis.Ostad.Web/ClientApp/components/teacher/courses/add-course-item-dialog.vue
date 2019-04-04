@@ -15,8 +15,11 @@
       <el-form-item prop="TeacherMessageForAdmin" label="پیام ارسالی برای مدیر در مورد این سرفصل">
         <el-input type="textarea" v-model="form.TeacherMessageForAdmin" multiline></el-input>
       </el-form-item>
-      <el-button @click="$refs.filePicker.click()">انتخاب فایل</el-button>
-      <el-tag type="warning" v-if="form.file.name">{{form.file.name}}</el-tag>
+      <el-card>
+        <el-button @click="$refs.filePicker.click()">انتخاب فایل</el-button>
+        <el-tag type="warning" v-if="form.file.name">{{form.file.name}}</el-tag>
+        <el-tag type="info" v-if="!form.file.name">لطفا فایل اموزشی مربوط به این سر فصل از دوره را انتخاب کنید</el-tag>
+      </el-card>
       <input type="file" accept=".pdf" @change="selectFile" ref="filePicker" style="display: none">
     </el-form>
     <span v-for="i in isEdited">{{i}}</span>
@@ -35,7 +38,7 @@ export default {
         title: "",
         TeacherMessageForAdmin: "",
         file: {}
-      },      
+      },
       uploadProgress: 0
     };
   },

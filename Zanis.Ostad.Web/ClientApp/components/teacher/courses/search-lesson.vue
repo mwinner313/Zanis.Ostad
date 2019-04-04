@@ -60,7 +60,7 @@
           </el-select>
         </el-col>
         <el-col :md="2">
-          <el-button :disabled="canSearchForLessons" @click="getListData" type="success">بگرد</el-button>
+          <el-button :disabled="canNotSearchForLessons" @click="getListData" type="success">بگرد</el-button>
         </el-col>
       </el-row>
       <br>
@@ -134,15 +134,10 @@ export default {
           this.fieldItems = res.data;
         });
     },
-    selectLessonItem(id) {
-      this.$emit("lessonSelected", id);
+    selectLessonItem(lesson) {
+      this.$emit("lessonSelected", lesson);
       this.$emit("close");
     },
-    // changeFieldItem
-    // getLessonFields() {
-    //   this.getlessons();
-    // },
-    // getGradeItems
     getGradeItems() {
       axios.get("/api/Grades").then(res => {
         this.gradeItems = res.data;
@@ -153,8 +148,8 @@ export default {
     }
   },
   computed: {
-    canSearchForLessons() {
-      return !this.termSearch && !this.selectedGradeId && !this.fieldId;
+    canNotSearchForLessons() {
+      return (!this.termSearch || !this.selectedGradeId || !this.fieldId);
     }
   },
   mounted() {
