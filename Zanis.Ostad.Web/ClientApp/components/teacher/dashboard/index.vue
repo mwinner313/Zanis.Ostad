@@ -1,27 +1,31 @@
 <template>
   <div>
     <el-row :gutter="40">
-
       <el-col v-for="item in courseTitles" :span="6">
         <el-card class="box-card bg-c-blue">
           <i class="fas fa-file-alt text-white float-right "></i>
           <h4 class="clearfix text-white"> {{item.name}}</h4>
           <p  class="title-description">{{item.description}}</p>
           <h4 class="card-number">
-            <el-button type="success" plain>شروع آموزش</el-button>
+            <el-button @click="selectedCourseTitleId=item.id" type="success" plain>شروع آموزش</el-button>
           </h4>
         </el-card>
       </el-col>
     </el-row>
-
+    <AddCourseDialog preSelectedCourseTitleId="selectedCourseTitleId" @close="selectedCourseTitleId=undefined" :isOpen="!!selectedCourseTitleId"></AddCourseDialog>
   </div>
 </template>
 
 <script>
+  import AddCourseDialog from './../courses/add-course-dialog'
   export default {
     name: "",
+    components:{
+      AddCourseDialog
+    },
     data() {
       return {
+        selectedCourseTitleId:undefined,
         courseTitles: []
       }
     },

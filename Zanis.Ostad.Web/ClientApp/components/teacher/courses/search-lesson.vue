@@ -21,7 +21,7 @@
         <el-col :md="12" :lg="12">
           <el-form @submit.native.prevent>
             <el-form-item>
-              <el-input placeholder="کلمه" v-model="termSearch"></el-input>
+              <el-input placeholder="نام درس" v-model="termSearch"></el-input>
             </el-form-item>
           </el-form>
         </el-col>
