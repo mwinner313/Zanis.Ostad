@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     :visible.sync="isOpen"
-    width="100%"
+    width="80%"
     append-to-body
     modal-append-to-body
     @closed="$emit('close')"
@@ -16,60 +16,56 @@
         show-icon>لطفا با پرکردن ورودی های زیر به نسبت انتخاب کردن درسهای مرتبط به دوره ی آموزشی خود اقدام کنید
       </el-alert>
     </div>
-    <el-container>
-      <el-row :gutter="5" type="flex">
-        <el-col :md="12" :lg="12">
-          <el-form @submit.native.prevent>
-            <el-form-item>
-              <el-input placeholder="نام درس" v-model="termSearch"></el-input>
-            </el-form-item>
-          </el-form>
-        </el-col>
-        <el-col :md="12">
-          <el-select v-model="selectedGradeId" filterable placeholder="مقطع">
-            <el-option
-              v-for="item in gradeItems"
-              :key="item.value"
-              :label="item.name"
-              :value="item.id"
-            ></el-option>
-          </el-select>
-        </el-col>
-        <el-col :md="12">
-          <!-- @change="getLessonFields" -->
-          <el-select
-            v-model="fieldId"
-            filterable
-            remote
-            reserve-keyword
-            placeholder="رشته"
-            :remote-method="getFieldItems"
-          >
-            <el-option
-              v-for="item in fieldItems"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
+    <el-row :gutter="5" type="flex">
+      <el-col>
+        <el-form :inline="true" @submit.native.prevent>
+          <el-form-item>
+            <el-input placeholder="نام درس" v-model="termSearch"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-select v-model="selectedGradeId" filterable placeholder="مقطع">
+              <el-option
+                v-for="item in gradeItems"
+                :key="item.value"
+                :label="item.name"
+                :value="item.id"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-select
+              v-model="fieldId"
+              filterable
+              remote
+              reserve-keyword
+              placeholder="رشته"
+              :remote-method="getFieldItems"
             >
-              {{item.name}}
-              -
-              <span
-                style="color:#ff8787;font-size:12px"
-              >{{item.gradeName}}</span>
-            </el-option>
-          </el-select>
-        </el-col>
-        <el-col :md="10">
+              <el-option
+                v-for="item in fieldItems"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              >
+                {{item.name}}
+                -
+                <span
+                  style="color:#ff8787;font-size:12px"
+                >{{item.gradeName}}</span>
+              </el-option>
+            </el-select>
+          </el-form-item>
           <el-button :disabled="canNotSearchForLessons" @click="getListData" type="success">بگرد</el-button>
-          <el-button @click="addCourseToList" type="primary" :disabled="!selectedLessons">افزودن</el-button>
-        </el-col>
-      </el-row>
-      <br>
-    </el-container>
-    <!-- lessonItems -->
-    <el-container>
-      <el-row>
-        <el-col :md="12" :lg="12">
+          <el-button @click="addCourseToList" type="primary" v-show="selectedLessons.length"
+                     :disabled="!selectedLessons">افزودن
+          </el-button>
+        </el-form>
+      </el-col>
+    </el-row>
+    <br>
+    <el-row :gutter="10">
+      <el-col :md="12" :lg="12">
+        <el-card>
           <el-table :data="lessonItems">
             <el-table-column>
               <template slot-scope="scope">
@@ -93,19 +89,19 @@
               <template slot-scope="scope">{{ scope.row.fieldName }}</template>
             </el-table-column>
           </el-table>
-        </el-col>
-        <el-col :md="12" :lg="12">
-          <el-card>
-            <div slot="header" class="clearfix">
-              دروس انتخاب شده
-            </div>
-            <ul>
-              <li v-for="item in finalySelectedItems">{{item.fieldName}}</li>
-            </ul>
-          </el-card>
-        </el-col>
-      </el-row>
-    </el-container>
+        </el-card>
+      </el-col>
+      <el-col :md="12" :lg="12">
+        <el-card>
+          <div slot="header" class="clearfix">
+            دروس انتخاب شده
+          </div>
+          <ul>
+            <li v-for="item in finalySelectedItems">{{item.fieldName}}</li>
+          </ul>
+        </el-card>
+      </el-col>
+    </el-row>
   </el-dialog>
 </template>
 
@@ -172,11 +168,7 @@
         this.getlessons();
       },
       addCourseToList() {
-        this.finalySelectedItems.push(this.lessonItems.filter((item) =>
-          this.selectedLessons.some((select) =>
-            item.id === select
-          )));
-        console.log(this.finalySelectedItems);
+        this.finalySelectedItems.push(this.lessonItems.filter((item) => this.selectedLessons.some((select) => item.id === select)));
       }
     },
     computed: {
