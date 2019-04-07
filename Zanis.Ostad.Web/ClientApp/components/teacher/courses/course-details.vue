@@ -12,7 +12,15 @@
         @click="editingCourseItem={courseId}"
         type="success"
         plain
-      >+افزودن سر فصل</el-button>
+      >+افزودن سر فصل
+      </el-button>
+      <p
+        v-show="courseDetail.adminMessageForTeacher"
+        class="message-admin-for-teacher-wrapper">
+        <span>توضیحات مدیر سیستم برای استاد</span>
+        <br>
+        {{courseDetail.adminMessageForTeacher}}
+      </p>
     </div>
     <el-row :gutter="40">
       <el-col :xs="24" :md="24" :lg="24" v-for="(item,index) in courseDetail.contents" :key="index">
@@ -35,7 +43,8 @@
               plain
               size="small"
               class="float-right"
-            >ویرایش</el-button>
+            >ویرایش
+            </el-button>
 
             <el-tag v-if="item.state==5" type="success">تایید شده</el-tag>
 
@@ -71,87 +80,97 @@
 </template>
 
 <script>
-import axios from "axios";
-import CourseItemAddEditDialog from "./course-item-add-edit-dialog";
+  import axios from "axios";
+  import CourseItemAddEditDialog from "./course-item-add-edit-dialog";
 
-export default {
-  name: "",
+  export default {
+    name: "",
 
-  data() {
-    return {
-      courseDetail: [],
-      editingCourseItem: undefined
-    };
-  },
-  components: {
-    CourseItemAddEditDialog
-  },
-
-  props: {
-    isOpen: {
-      type: Boolean
+    data() {
+      return {
+        courseDetail: [],
+        editingCourseItem: undefined
+      };
+    },
+    components: {
+      CourseItemAddEditDialog
     },
 
-    courseId: {
-      type: Number
-    }
-  },
+    props: {
+      isOpen: {
+        type: Boolean
+      },
 
-  methods: {
-    getContent() {
-      this.editingCourseItem = undefined;
-      axios.get("/api/TeacherAccount/courses/" + this.courseId).then(res => {
-        this.courseDetail = res.data;
-        console.log(this.courseDetail);
-      });
-    },
-
-    previewIconCourse(contentType) {
-      switch (contentType) {
-        case 0:
-          return '<i class="far fa-file-pdf"></i>';
-
-        case 1:
-          return '<i class="far fa-file-video"></i>';
-
-        default:
-          return "";
+      courseId: {
+        type: Number
       }
-    }
-  },
+    },
 
-  mounted() {
-    this.getContent();
-  }
-};
+    methods: {
+      getContent() {
+        this.editingCourseItem = undefined;
+        axios.get("/api/TeacherAccount/courses/" + this.courseId).then(res => {
+          this.courseDetail = res.data;
+          console.log(this.courseDetail);
+        });
+      },
+
+      previewIconCourse(contentType) {
+        switch (contentType) {
+          case 0:
+            return '<i class="far fa-file-pdf"></i>';
+
+          case 1:
+            return '<i class="far fa-file-video"></i>';
+
+          default:
+            return "";
+        }
+      }
+    },
+
+    mounted() {
+      this.getContent();
+    }
+  };
 </script>
 
 <style>
-.downloadBtnCustom {
-  float: left;
-  margin: 10px 0 !important;
-}
+  .downloadBtnCustom {
+    float: left;
+    margin: 10px 0 !important;
+  }
 
-.card-item {
-  margin-bottom: 50px;
-}
+  .card-item {
+    margin-bottom: 50px;
+  }
 
-.deactive {
-  margin-right: 0;
-}
+  .deactive {
+    margin-right: 0;
+  }
 
-.customDownloadIcon {
-  margin: 0;
-  line-height: 8px;
-  padding-left: 5px;
-  color: #fff;
-  font-size: 14px;
-}
+  .customDownloadIcon {
+    margin: 0;
+    line-height: 8px;
+    padding-left: 5px;
+    color: #fff;
+    font-size: 14px;
+  }
 
-.mgl-17 {
-  margin-left: 17px;
-}
-.white {
-  color: #fff !important;
-}
+  .mgl-17 {
+    margin-left: 17px;
+  }
+
+  .white {
+    color: #fff !important;
+  }
+
+  .message-admin-for-teacher-wrapper {
+    border: 1px solid #c0c0c0;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    margin-top: 15px;
+    padding: 10px;
+  }
 </style>

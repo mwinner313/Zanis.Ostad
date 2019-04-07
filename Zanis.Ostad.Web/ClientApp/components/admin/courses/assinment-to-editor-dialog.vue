@@ -17,8 +17,9 @@
                   name="type"
                   :label="scope.row.id"
                   v-model="selectedItemIds"
-                  border
-                >{{scope.row.title}}</el-checkbox>
+                  border>
+                  {{scope.row.title}}
+                </el-checkbox>
               </template>
             </el-table-column>
             <el-table-column>

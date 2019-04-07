@@ -3,14 +3,14 @@
     <div slot="title">
       <p>
         {{course.title}}
-
         <a :href="course.zipFilesPath">
           <el-button class="float-right" style="margin-left: 30px !important;" type="primary" plain>
             <i class="fas fa-download" style="font-size:13px;"></i>
             دانلود محتوای آپلود شده توسط استاد
           </el-button>
         </a>
-        <el-button class="float-right" @click="editingCourseItem={courseId,order:0}" style="margin-left: 30px;" type="success"
+        <el-button class="float-right" @click="editingCourseItem={courseId,order:0}" style="margin-left: 30px;"
+                   type="success"
                    plain>افزودن سر فصل +
         </el-button>
         <br>
@@ -39,7 +39,7 @@
         <el-card class="card-item">
           <div slot="header" class="clearfix">
             <el-button @click="editingCourseItem=item" type="primary" plain class="float-right">ویرایش</el-button>
-            <h5>    {{item.order}}.
+            <h5> {{item.order}}.
               <span class="icon" v-html="previewIconCourse(item.contentType)"></span>
               <span>{{item.title}}</span></h5>
             <small><i class="el-icon-time"></i>{{ course.createdOn | moment("jYYYY/jM/jD HH:mm") }}</small>
@@ -50,12 +50,12 @@
           </div>
 
           <div class="body-card-container">
-            <el-card  v-if="item.teacherMessageForAdmin" shadow="never">
+            <el-card v-if="item.teacherMessageForAdmin" shadow="never">
               <h5>توضیحات برای مدیر سیستم از طرف استاد</h5>
               <p> {{item.teacherMessageForAdmin}}</p>
             </el-card>
             <br>
-            <el-card v-if="item.adminMessageForTeacher" shadow="never" >
+            <el-card v-if="item.adminMessageForTeacher" shadow="never">
               <h5>توضیحات برای استاد از طرف مدیر سیستم</h5>
               <p> {{item.adminMessageForTeacher}}</p>
             </el-card>
@@ -108,6 +108,7 @@
         axios
           .get("/api/Courses/" + this.courseId)
           .then(res => {
+            console.log(res.data);
             this.course = res.data;
           })
           .catch(err => {
