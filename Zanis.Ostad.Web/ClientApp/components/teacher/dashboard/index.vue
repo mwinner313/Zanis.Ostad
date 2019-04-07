@@ -1,11 +1,18 @@
 <template>
   <div>
-    <el-row :gutter="40">
-      <el-col v-for="item in courseTitles" :span="6">
-        <el-card class="box-card bg-c-blue">
-          <i class="fas fa-file-alt text-white float-right "></i>
-          <h4 class="clearfix text-white"> {{item.name}}</h4>
-          <p  class="title-description">{{item.description}}</p>
+    <el-row :gutter="10">
+      <el-col v-for="item in courseTitles" :span="12">
+        <el-card class="box-card">
+          <h4 class="clearfix "> {{item.name}}</h4>
+          <el-row :gutter="50">
+            <br>
+            <el-col style="text-align: center;" :span="6">
+              <img :src="item.imagePath" width="162" alt="">
+            </el-col>
+            <el-col  :span="18">
+              <p  class="title-description">  {{item.description}}</p>
+            </el-col>
+          </el-row>
           <h4 class="card-number">
             <el-button @click="selectedCourseTitleId=item.id" type="success" plain>شروع آموزش</el-button>
           </h4>
@@ -84,8 +91,10 @@
     float: left;
   }
   .title-description{
-    color:white;
     text-align: justify;
     padding-top:10px;
+  }
+  .box-card{
+    margin-top: 10px;
   }
 </style>
