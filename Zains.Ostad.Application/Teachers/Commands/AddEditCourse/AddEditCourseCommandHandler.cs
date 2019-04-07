@@ -14,6 +14,7 @@ using Zains.Ostad.Application.Courses.Dtos;
 using Zains.Ostad.Application.Courses.Queries.GetCourseDetails;
 using Zanis.Ostad.Core.Contracts;
 using Zanis.Ostad.Core.Dtos;
+using Zanis.Ostad.Core.Entities;
 using Zanis.Ostad.Core.Entities.Contents;
 
 namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
@@ -55,6 +56,7 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
         {
             return new Course
             {
+                Lessons =request.LessonFieldIds.Select(x=>new CourseLessonFieldGradeMapping(){LessonId = x}).ToList(),
                 Price = request.Price,
                 Description = request.Description,
                 CourseTitleId = request.CourseTitleId,
