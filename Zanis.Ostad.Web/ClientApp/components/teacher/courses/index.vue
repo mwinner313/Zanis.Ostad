@@ -34,9 +34,9 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="قیمت" width="90">
+      <el-table-column label="قیمت (تومان)" >
         <template slot-scope="scope">
-          {{scope.row.price}}
+          {{scope.row.priceAsTomans}}
         </template>
       </el-table-column>
 

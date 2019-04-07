@@ -25,21 +25,17 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
         IRequestHandler<AddCourseItemByTeacherCommand, Response<CourseItemViewModel>>
     {
         private readonly IRepository<Course, long> _courseRepository;
-        private readonly IRepository<TeacherLessonMapping, long> _teacherLessonMappingRepo;
         private readonly IWorkContext _workContext;
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
         private readonly IRepository<CourseItem, long> _courseItemRepository;
         private readonly ICoursesFileManager _coursesFileManager;
         private readonly IUnitOfWork _unitOfWork;
-        private TeacherLessonMapping _teacherLessonMapping;
 
-        public AddEditCourseCommandHandler(IRepository<Course, long> courseRepository,
-            IRepository<TeacherLessonMapping, long> teacherLessonMappingRepo, IWorkContext workContext,
+        public AddEditCourseCommandHandler(IRepository<Course, long> courseRepository, IWorkContext workContext,
             ICoursesFileManager coursesFileManager, IMapper mapper, IUnitOfWork unitOfWork, IRepository<CourseItem, long> courseItemRepository, IMediator mediator)
         {
             _courseRepository = courseRepository;
-            _teacherLessonMappingRepo = teacherLessonMappingRepo;
             _workContext = workContext;
             _coursesFileManager = coursesFileManager;
             _mapper = mapper;
@@ -50,71 +46,32 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
 
         public async Task<Response<CourseDto>> Handle(AddCourseCommand request, CancellationToken cancellationToken)
         {
-            var teacherLessonMapping = await GetTeacherLessonMapping(request.LessonFieldId);
-            var course = CreateCourseData(request, teacherLessonMapping);
-           
+            var course = CreateCourseData(request);
             await _courseRepository.AddAsync(course);
             return Response<CourseDto>.Success(await _mediator.Send(new GetCourseDetailsQuery{CourseId = course.Id}, cancellationToken));
         }
 
-        private Course CreateCourseData(AddCourseCommand request, TeacherLessonMapping teacherLessonMapping)
+        private Course CreateCourseData(AddCourseCommand request)
         {
             return new Course
             {
                 Price = request.Price,
                 Description = request.Description,
                 CourseTitleId = request.CourseTitleId,
-                TeacherLessonMappingId = teacherLessonMapping.Id,
+                TeacherId = _workContext.CurrentUserId,
                 AdminMessageForTeacher = request.TeacherMessageForAdmin
             };
         }
 
-        private async Task<TeacherLessonMapping> GetTeacherLessonMapping(long lessonFieldId)
-        {
-            if (_teacherLessonMapping != null && _teacherLessonMapping.LessonId == lessonFieldId)
-                return _teacherLessonMapping;
-            _teacherLessonMapping = _teacherLessonMappingRepo.GetQueryable()
-                                        .Include(x => x.Teacher)
-                                        .Include(x => x.LessonFieldMapping)
-                                        .Include(x => x.LessonFieldMapping.Field)
-                                        .Include(x => x.LessonFieldMapping.Lesson)
-                                        .Include(x => x.LessonFieldMapping.Grade)
-                                        .FirstOrDefault(x =>
-                                            x.TeacherId == _workContext.CurrentUserId &&
-                                            x.LessonId == lessonFieldId) ??
-                                    await CreateNewTeacherLessonMapping(lessonFieldId,
-                                        _workContext.CurrentUserId);
-            return _teacherLessonMapping;
-        }
-
-        private async Task<TeacherLessonMapping> CreateNewTeacherLessonMapping(long lessonFieldId,
-            long teacherId)
-        {
-            var mapping = new TeacherLessonMapping
-            {
-                TeacherId = teacherId,
-                LessonId = lessonFieldId
-            };
-            await _teacherLessonMappingRepo.AddAsync(mapping);
-            return _teacherLessonMappingRepo.GetQueryable()
-                .Include(x => x.Teacher)
-                .Include(x => x.LessonFieldMapping)
-                .Include(x => x.LessonFieldMapping.Field)
-                .Include(x => x.LessonFieldMapping.Lesson)
-                .Include(x => x.LessonFieldMapping.Grade)
-                .First(x => x.Id == mapping.Id);
-        }
 
         public async Task<Response> Handle(EditCourseCommand request, CancellationToken cancellationToken)
         {
             var course = await _courseRepository.GetById(request.CourseId);
-            var teacherLessonMapping = await GetTeacherLessonMapping(request.LessonFieldId);
             course.Price = request.Price;
             course.ApprovalStatus = CourseApprovalStatus.PendingToApproveByAdmin;
             course.TeacherMessageForAdmin = request.TeacherMessageForAdmin;
             course.Description = request.Description;
             course.CourseTitleId = request.CourseTitleId;
-            course.TeacherLessonMappingId = teacherLessonMapping.Id;
             await _courseRepository.EditAsync(course);
             return Response.Success();
         }
@@ -132,7 +89,7 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
         }
         public async Task<Response<CourseItemViewModel>> Handle(AddCourseItemByTeacherCommand request, CancellationToken cancellationToken)
         {
-            var course = await _courseRepository.GetById(request.CourseId);
+            var course =  _courseRepository.GetQueryable().Include(x=>x.Teacher).First(x=>x.Id==request.CourseId);
             course.HasPendingItemToApprove = true;
             var item = new CourseItem
             {
@@ -146,8 +103,8 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
             
             if (request.File != null)
             {
-                await _coursesFileManager.SaveFile(request.File, item.CourseId);
-                item.FilePath = await _coursesFileManager.GetFilePathForDownload(request.File, item.CourseId);
+                await _coursesFileManager.SaveFile(request.File,course.Teacher.UserName, item.CourseId);
+                item.FilePath =  _coursesFileManager.GetFilePathForDownload(request.File,course.Teacher.UserName, item.CourseId);
                 item.ContentType = GetContentType(request.File.ContentType);
             }
 
@@ -197,8 +154,9 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
             if (request.File != null)
             {
                 _coursesFileManager.DeleteFile(item.FilePath);
-                await _coursesFileManager.SaveFile(request.File, item.CourseId);
-                item.FilePath = await _coursesFileManager.GetFilePathForDownload(request.File, item.CourseId);
+                var course = _courseRepository.GetQueryable().Include(x => x.Teacher).First(x=>x.Id==request.Id);
+                await _coursesFileManager.SaveFile(request.File,course.Teacher.UserName, item.CourseId);
+                item.FilePath =  _coursesFileManager.GetFilePathForDownload(request.File,course.Teacher.UserName, item.CourseId);
                 item.ContentType = GetContentType(request.File.ContentType);
             }
         }

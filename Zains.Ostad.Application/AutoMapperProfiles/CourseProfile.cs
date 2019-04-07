@@ -15,24 +15,24 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
             CreateMap<CourseItem, CourseItemViewModel>();
         }
 
-        public static Expression<Func<Course, CourseDto>> Projection => x => new CourseDto
+        public static Expression<Func<Course, CourseDto>>     Projection => x => new CourseDto
         {
             Id = x.Id,
-            TeacherId = x.TeacherLessonMapping.Teacher.Id,
+            TeacherId = x.TeacherId,
             HasPendingItemToApprove = x.HasPendingItemToApprove,
             Description = x.Description,
             Price = x.Price,
             ApprovalStatus = x.ApprovalStatus,
             CreatedOn = x.CreatedOn,
-            Teacher = x.TeacherLessonMapping.Teacher.FullName,
+            Teacher = x.Teacher.FullName,
             AdminMessageForTeacher = x.AdminMessageForTeacher,
             TeacherMessageForAdmin = x.TeacherMessageForAdmin,
-            TeacherAvatar = x.TeacherLessonMapping.Teacher.AvatarPath,
-            Title = x.CourseTitle.Name + " - " + x.TeacherLessonMapping.LessonFieldMapping.Lesson.LessonName,
-            GradeTitle = x.TeacherLessonMapping.LessonFieldMapping.Grade.Name,
-            LessonTitle = x.TeacherLessonMapping.LessonFieldMapping.Lesson.LessonName,
-            FieldName = x.TeacherLessonMapping.LessonFieldMapping.Field.Name,
-            LessonCode = x.TeacherLessonMapping.LessonFieldMapping.Lesson.LessonCode,
+            TeacherAvatar = x.Teacher.AvatarPath,
+            Title = x.CourseTitle.Name + " - " + x.Lessons.First().Lesson.Lesson.LessonName,
+            GradeTitle = x.Lessons.First().Lesson.Grade.Name,
+            LessonTitle = x.Lessons.First().Lesson.Lesson.LessonName,
+            FieldName = x.Lessons.First().Lesson.Field.Name,
+            LessonCode = x.Lessons.First().Lesson.Lesson.LessonCode,
             Contents = x.Contents.Select(c =>
                 new CourseItemViewModel
                 {
@@ -71,8 +71,8 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
         public static Expression<Func<Course, UserCourseDto>> ProjectionForUser => x => new UserCourseDto
         {
             Id = x.Id,
-            LessonName = x.TeacherLessonMapping.LessonFieldMapping.Lesson.LessonName,
-            Teacher = x.TeacherLessonMapping.Teacher.FullName,
+            LessonName = x.Lessons.First().Lesson.Lesson.LessonName,
+            Teacher = x.Teacher.FullName,
             Description = x.Description,
             Title = x.CourseTitle.Name,
             Contents = x.Contents.Select(c => new CourseItemViewModel

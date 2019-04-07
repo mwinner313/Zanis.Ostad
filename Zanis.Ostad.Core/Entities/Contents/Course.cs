@@ -10,14 +10,15 @@ namespace Zanis.Ostad.Core.Entities.Contents
         public string Description { get; set; }
         public string AdminMessageForTeacher { get; set; }
         public string TeacherMessageForAdmin { get; set; }
-        public ICollection<CourseItem> Contents { get; set; }
-        public TeacherLessonMapping TeacherLessonMapping { get; set; }
-        public long TeacherLessonMappingId { get; set; }
+        public ICollection<CourseItem> Contents { get; set; }=new List<CourseItem>();
+        public ICollection<CourseLessonFieldGradeMapping> Lessons { get; set; }=new List<CourseLessonFieldGradeMapping>();
         public CourseTitle CourseTitle { get; set; }
         public int CourseTitleId { get; set; }
         public DateTime CreatedOn { get; } = DateTime.Now;
         public CourseApprovalStatus ApprovalStatus { get; set; }
         public ICollection<StudentCourseMapping> Students { get; set; }
         public bool HasPendingItemToApprove { get; set; }
+        public long TeacherId { get; set; }
+        public User Teacher { get; set; }
     }
 }

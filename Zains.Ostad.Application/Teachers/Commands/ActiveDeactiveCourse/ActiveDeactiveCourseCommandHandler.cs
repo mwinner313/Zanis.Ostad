@@ -44,7 +44,7 @@ namespace Zains.Ostad.Application.Teachers.Commands.ActiveDeactiveCourse
         {
             return await _repository.GetQueryable()
                 .FirstAsync(x =>
-                        x.Id == courseId && x.TeacherLessonMapping.TeacherId == _workContext.CurrentUserId,
+                        x.Id == courseId && x.TeacherId == _workContext.CurrentUserId,
                     cancellationToken);
         }
 

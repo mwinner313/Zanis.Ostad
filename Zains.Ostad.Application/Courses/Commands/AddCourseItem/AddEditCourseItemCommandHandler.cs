@@ -5,6 +5,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Zains.Ostad.Application.Courses.Dtos;
 using Zanis.Ostad.Core.Contracts;
 using Zanis.Ostad.Core.Entities.Contents;
@@ -30,6 +32,7 @@ namespace Zains.Ostad.Application.Courses.Commands.AddCourseItem
 
         public async Task<CourseItemViewModel> Handle(AddCourseItemCommand request, CancellationToken cancellationToken)
         {
+            var course =  _courseRepo.GetQueryable().First(x=>x.Id==request.CourseId);
             var item = new CourseItem
             {
                 CourseId = request.CourseId,
@@ -38,10 +41,10 @@ namespace Zains.Ostad.Application.Courses.Commands.AddCourseItem
                 Order = request.Order !=0?request.Order:_courseItemRepo.GetQueryable().Count(x=>x.CourseId==request.CourseId) + 1 ,
                 Title = request.Title,
                 ContentType = request.File !=null? GetContentType(request.File.ContentType):ContentType.File,
-                FilePath = await _coursesFileManager.GetFilePathForDownload(request.File, request.CourseId),
+                FilePath =  _coursesFileManager.GetFilePathForDownload(request.File,course.Teacher.UserName, request.CourseId),
                 IsPreview = request.IsPreview
             };
-            await _coursesFileManager.SaveFile(request.File, request.CourseId);
+            await _coursesFileManager.SaveFile(request.File,course.Teacher.UserName, request.CourseId);
             await _courseItemRepo.AddAsync(item);
             return _mapper.Map<CourseItemViewModel>(item);
         }
@@ -73,8 +76,10 @@ namespace Zains.Ostad.Application.Courses.Commands.AddCourseItem
             {
                 if(File.Exists(item.FilePath))
                 _coursesFileManager.DeleteFile(item.FilePath);
-                await _coursesFileManager.SaveFile(request.File, item.CourseId);
-                item.FilePath = await _coursesFileManager.GetFilePathForDownload(request.File, item.CourseId);
+                var course = _courseRepo.GetQueryable().Include(x => x.Teacher)
+                    .First(x => x.Contents.Any(c => c.Id == request.Id));
+                await _coursesFileManager.SaveFile(request.File,course.Teacher.UserName, item.CourseId);
+                item.FilePath =  _coursesFileManager.GetFilePathForDownload(request.File,course.Teacher.UserName, item.CourseId);
             }
         }
 

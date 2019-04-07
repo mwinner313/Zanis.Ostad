@@ -193,7 +193,7 @@ namespace Zanis.Ostad.Repository.Migrations
 
                     b.Property<int>("Price");
 
-                    b.Property<long>("TeacherLessonMappingId");
+                    b.Property<long>("TeacherId");
 
                     b.Property<string>("TeacherMessageForAdmin");
 
@@ -201,7 +201,7 @@ namespace Zanis.Ostad.Repository.Migrations
 
                     b.HasIndex("CourseTitleId");
 
-                    b.HasIndex("TeacherLessonMappingId");
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("Courses");
                 });
@@ -236,7 +236,7 @@ namespace Zanis.Ostad.Repository.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("Contents");
+                    b.ToTable("CourseItems");
                 });
 
             modelBuilder.Entity("Zanis.Ostad.Core.Entities.Contents.CourseTitle", b =>
@@ -256,23 +256,23 @@ namespace Zanis.Ostad.Repository.Migrations
                     b.ToTable("CourseTitles");
                 });
 
-            modelBuilder.Entity("Zanis.Ostad.Core.Entities.Contents.TeacherLessonMapping", b =>
+            modelBuilder.Entity("Zanis.Ostad.Core.Entities.CourseLessonFieldGradeMapping", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long>("LessonId");
+                    b.Property<long>("CourseId");
 
-                    b.Property<long>("TeacherId");
+                    b.Property<long>("LessonId");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CourseId");
+
                     b.HasIndex("LessonId");
 
-                    b.HasIndex("TeacherId");
-
-                    b.ToTable("TeacherLessonMappings");
+                    b.ToTable("CourseLessonFieldGradeMappings");
                 });
 
             modelBuilder.Entity("Zanis.Ostad.Core.Entities.Edits.EditAssignment", b =>
@@ -780,9 +780,9 @@ namespace Zanis.Ostad.Repository.Migrations
                         .HasForeignKey("CourseTitleId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Zanis.Ostad.Core.Entities.Contents.TeacherLessonMapping", "TeacherLessonMapping")
-                        .WithMany("Courses")
-                        .HasForeignKey("TeacherLessonMappingId")
+                    b.HasOne("Zanis.Ostad.Core.Entities.User", "Teacher")
+                        .WithMany("ProducedContents")
+                        .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -794,17 +794,17 @@ namespace Zanis.Ostad.Repository.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("Zanis.Ostad.Core.Entities.Contents.TeacherLessonMapping", b =>
+            modelBuilder.Entity("Zanis.Ostad.Core.Entities.CourseLessonFieldGradeMapping", b =>
                 {
-                    b.HasOne("Zanis.Ostad.Core.Entities.LessonFieldMapping", "LessonFieldMapping")
-                        .WithMany("TeacherLessonMappings")
-                        .HasForeignKey("LessonId")
+                    b.HasOne("Zanis.Ostad.Core.Entities.Contents.Course", "Course")
+                        .WithMany("Lessons")
+                        .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Zanis.Ostad.Core.Entities.User", "Teacher")
-                        .WithMany("ProducedContents")
-                        .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.HasOne("Zanis.Ostad.Core.Entities.LessonFieldMapping", "Lesson")
+                        .WithMany("Courses")
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Zanis.Ostad.Core.Entities.Edits.EditAssignment", b =>

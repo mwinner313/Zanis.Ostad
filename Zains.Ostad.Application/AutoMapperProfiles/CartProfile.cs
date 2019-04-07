@@ -3,10 +3,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using AutoMapper;
 using Zains.Ostad.Application.Carts.Dto;
-using Zains.Ostad.Application.Carts.Queries;
-using Zains.Ostad.Application.ExamSamples.Dto;
-using Zains.Ostad.Application.Lessons.Queries.GetLesson;
-using Zains.Ostad.Application.Users.Dto;
 using Zanis.Ostad.Core.Entities.Cart;
 
 namespace Zains.Ostad.Application.AutoMapperProfiles
@@ -25,7 +21,7 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
                 ItemType = x.ItemType,
                 Id = x.Id,
                 ProductTitle=
-                    x.ItemType==ProductType.LessonExam?" نمونه سوالات "+x.LessonExam.LessonName :x.Course.CourseTitle.Name + " - " +x.Course.TeacherLessonMapping.LessonFieldMapping.Lesson.LessonName,
+                    x.ItemType==ProductType.LessonExam?" نمونه سوالات "+x.LessonExam.LessonName :x.Course.CourseTitle.Name + " - " +x.Course.Lessons.First().Lesson.Lesson.LessonName,
                 Price=x.ItemType==ProductType.LessonExam?x.LessonExam.ExamSamplesPrice:x.Course.Price
          }; }
         }

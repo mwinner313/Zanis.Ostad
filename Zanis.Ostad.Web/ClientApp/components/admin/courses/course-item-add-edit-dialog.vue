@@ -37,20 +37,18 @@
         <el-input v-model="form.title"></el-input>
       </el-form-item>
 
-      <el-form-item prop="isPreview">
-        <el-checkbox v-model="form.isPreview">این مورد پیش نمایشی و رایگان میباشد</el-checkbox>
-      </el-form-item>
-
-      <el-form-item  prop="order" label="ترتیب">
-        <el-input-number v-model="form.order" :min="0"></el-input-number>
-      </el-form-item>
-
       <el-form-item prop="adminMessageForTeacher" label="پیام ارسالی برای مدرس در مورد این سرفصل">
         <el-input type="textarea" v-model="form.adminMessageForTeacher" multiline></el-input>
       </el-form-item>
+      <el-form-item prop="isPreview">
+        <el-checkbox v-model="form.isPreview">این مورد پیش نمایشی و رایگان میباشد</el-checkbox>
+      </el-form-item>
+      <el-form-item  prop="order" label="ترتیب">
+        <el-input-number v-model="form.order" :min="0"></el-input-number>
+      </el-form-item>
       <el-button  @click="$refs.filePicker.click()">انتخاب فایل</el-button>
       <el-tag type="warning" v-if="form.file.name">{{form.file.name}}</el-tag>
-      <input type="file" @change="selectFile" accept="video/.mp4,.pdf" ref="filePicker" style="display: none"/>
+      <input type="file" @change="selectFile" accept="video/mp4,application/pdf" ref="filePicker" style="display: none"/>
     </el-form>
     <span slot="footer" class="dialog-footer">
     <el-button @click="$emit('close')">بستن</el-button>
@@ -98,11 +96,11 @@
       submit() {
         this.$refs.form.validate((valid) => {
           if (valid) {
-            if(!this.form.file.name){
+            if(!this.form.file.name && !this.form.id){
               this.$message({
                 message:'لطفا فایل ارسالی را انتخاب کنید',
                 type:'warning'
-              })
+              });
               return ;
             }
             let data = new FormData();

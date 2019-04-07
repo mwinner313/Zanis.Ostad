@@ -37,12 +37,12 @@ namespace Zains.Ostad.Application.Admin.Edits.Queries.GetAllEditAssigns
                     .Include(x=>x.Editor)
                     .Include(x => x.CourseItem.Course)
                     .Include(x => x.CourseItem.Course.CourseTitle)
-                    .Include(x => x.CourseItem.Course.TeacherLessonMapping)
-                    .Include(x => x.CourseItem.Course.TeacherLessonMapping.Teacher)
-                    .Include(x => x.CourseItem.Course.TeacherLessonMapping.LessonFieldMapping)
-                    .Include(x => x.CourseItem.Course.TeacherLessonMapping.LessonFieldMapping.Field)
-                    .Include(x => x.CourseItem.Course.TeacherLessonMapping.LessonFieldMapping.Grade)
-                    .Include(x => x.CourseItem.Course.TeacherLessonMapping.LessonFieldMapping.Lesson)
+                    .Include(x => x.CourseItem.Course.Teacher)
+                    .Include(x => x.CourseItem.Course.Lessons)
+                    .Include(x => x.CourseItem.Course.Lessons.Select(l=>l.Lesson))
+                    .Include(x => x.CourseItem.Course.Lessons.Select(l=>l.Lesson.Lesson))
+                    .Include(x => x.CourseItem.Course.Lessons.Select(l=>l.Lesson.Field))
+                    .Include(x => x.CourseItem.Course.Lessons.Select(l=>l.Lesson.Grade))
                     .Select(EditAssignmentProfile.Projection).AsQueryable().Pagenate(request).ToList(),
                 AllCount = queryable.Count()
             };

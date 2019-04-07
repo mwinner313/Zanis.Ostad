@@ -37,7 +37,7 @@
           <router-link to="/admin/courses">
             <el-menu-item index="3">
               <i class="fas fa-ticket-alt"></i>
-              <span slot="title">دوره ها <el-badge v-if="!!coursesOverView"
+              <span slot="title">دوره ها <el-badge v-if="!!coursesOverView && coursesOverView.pendingToApproveByAdmin"
                                                    :value="coursesOverView.pendingToApproveByAdmin"/></span>
             </el-menu-item>
           </router-link>
@@ -98,7 +98,6 @@
   .admin-wrapper {
     width: 100%;
     height: 100%;
-    overflow: hidden;
   }
 </style>
 

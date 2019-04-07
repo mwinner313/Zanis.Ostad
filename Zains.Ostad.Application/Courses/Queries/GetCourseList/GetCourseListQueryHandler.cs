@@ -42,20 +42,20 @@ namespace Zains.Ostad.Application.Courses.Queries.GetCourseList
 
             if (!string.IsNullOrEmpty(request.TeacherUserName))
                 queryable = queryable.Where(x =>
-                    x.TeacherLessonMapping.Teacher.UserName.Contains(request.TeacherUserName) ||
-                    x.TeacherLessonMapping.Teacher.FullName.Contains(request.TeacherUserName));
+                    x.Teacher.UserName.Contains(request.TeacherUserName) ||
+                    x.Teacher.FullName.Contains(request.TeacherUserName));
 
             if (!string.IsNullOrEmpty(request.LessonCode))
                 queryable = queryable.Where(x =>
-                    x.TeacherLessonMapping.LessonFieldMapping.Lesson.LessonCode.Contains(request.LessonCode));
+                    x.Lessons.Any(l=>l.Lesson.Lesson.LessonCode.Contains(request.LessonCode)));
 
             if (!string.IsNullOrEmpty(request.FieldCode))
                 queryable = queryable.Where(x =>
-                    x.TeacherLessonMapping.LessonFieldMapping.Field.Code.Contains(request.FieldCode));
+                   x.Lessons.Any(l=>l.Lesson.Field.Code.Contains(request.FieldCode)));
 
             if (request.GradeId.HasValue)
                 queryable = queryable.Where(x =>
-                    x.TeacherLessonMapping.LessonFieldMapping.GradeId == request.GradeId);
+                    x.Lessons.Any(l=>l.Lesson.GradeId == request.GradeId));
             
             if (request.CourseTitleId.HasValue)
                 queryable = queryable.Where(x =>

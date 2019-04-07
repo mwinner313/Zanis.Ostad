@@ -46,8 +46,7 @@ namespace Zains.Ostad.Application.Courses.Commands.ChangeApprovalStatus
 
         private long GetCourseOwnerId(long courseId)
         {
-            return _repository.GetQueryable().Include(x => x.TeacherLessonMapping).First(x => x.Id == courseId)
-                .TeacherLessonMapping.TeacherId;
+            return _repository.GetQueryable().First(x => x.Id == courseId).TeacherId;
         }
     }
 }

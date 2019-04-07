@@ -45,14 +45,14 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
                         FilePath = e.ExamSampleFile.FilePath,
                         SemesterTitle = e.ExamSampleFile.Semester.Title,
                     }).ToList(),
-                    Courses = x.Lesson.Fields.SelectMany(f => f.TeacherLessonMappings.SelectMany(tl =>
-                            tl.Courses.Where(c => c.ApprovalStatus == CourseApprovalStatus.ApprovedByAdminOrActivatedByTeacher)))
+                    Courses = x.Lesson.Fields.SelectMany(f => f.Courses.Select(tl =>
+                            tl.Course).Where(c => c.ApprovalStatus == CourseApprovalStatus.ApprovedByAdminOrActivatedByTeacher))
                         .Select(c =>
                             new CourseDto
                             {
                                 Id = c.Id,
                                 Price = c.Price,
-                                Teacher = c.TeacherLessonMapping.Teacher.FullName,
+                                Teacher = c.Teacher.FullName,
                                 Title = c.CourseTitle.Name,
                             }).ToList()
                 };
