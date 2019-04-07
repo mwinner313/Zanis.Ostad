@@ -107,7 +107,7 @@ i {
   padding: 0 24px 0 40px;
   color: white;
   cursor: pointer;
-}
+}change_approval_status
 
 .page-content {
   background-image: url("/assets/images/mooning.png");
@@ -118,7 +118,6 @@ i {
 .user-wrapper {
   width: 100%;
   height: 100%;
-  overflow: hidden;
 }
 </style>
 

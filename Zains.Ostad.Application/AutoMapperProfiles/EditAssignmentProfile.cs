@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Zains.Ostad.Application.Editors.Queries.GetEditAssignments;
@@ -20,7 +21,7 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
             Id=x.Id,
             CreatedOn = x.CreatedOn,
             CourseItemId = x.CourseItemId,
-            Title = $"{x.CourseItem?.Title} - {x.CourseItem?.Course?.CourseTitle?.Name} - {x.CourseItem?.Course?.TeacherLessonMapping?.LessonFieldMapping?.Lesson?.LessonName} - {x.CourseItem?.Course?.TeacherLessonMapping?.LessonFieldMapping?.Field.Name} - {x.CourseItem?.Course?.TeacherLessonMapping?.LessonFieldMapping?.Grade?.Name} - {x.CourseItem?.Course?.TeacherLessonMapping?.Teacher?.FullName}",
+            Title = $"{x.CourseItem?.Title} - {x.CourseItem?.Course?.CourseTitle?.Name} - {x.CourseItem?.Course?.Lessons?.FirstOrDefault()?.Lesson.Lesson.LessonCode} - {x.CourseItem?.Course?.Lessons?.FirstOrDefault()?.Lesson.Field.Name} - {x.CourseItem?.Course?.Lessons?.FirstOrDefault()?.Lesson.Grade?.Name} - {x.CourseItem?.Course?.Teacher.FullName}",
             CourseItemFilePath = x.CourseItem?.FilePath,
             EditorFullName = x.Editor?.FullName
         }; 

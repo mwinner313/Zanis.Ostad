@@ -13,7 +13,7 @@ namespace Zanis.Ostad.Core.Entities
     {
         public ICollection<StudentCourseMapping>  BoughtCourses{ get; set; }
         public ICollection<StudentExamSampleMapping>  BoughtExamSamples{ get; set; }
-        public ICollection<TeacherLessonMapping> ProducedContents { get; set; }
+        public ICollection<Course> ProducedContents { get; set; }
         public ICollection<Ticket> Tickets { get; set; }
         public ICollection<TicketItem> TicketItems { get; set; }
         public ICollection<EditAssignment> EditAssignments { get; set; }

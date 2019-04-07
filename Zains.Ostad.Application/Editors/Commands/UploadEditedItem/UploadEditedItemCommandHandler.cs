@@ -23,11 +23,14 @@ namespace Zains.Ostad.Application.Editors.Commands.UploadEditedItem
 
         public async Task<Response> Handle(UploadEditedItemCommand request, CancellationToken cancellationToken)
         {
-            var ea = await _editAssignmentRepo.GetQueryable().Include(x => x.CourseItem)
+            var ea = await _editAssignmentRepo.GetQueryable().Include(x => x.CourseItem).ThenInclude(x => x.Course)
+                .ThenInclude(x => x.Teacher)
                 .FirstAsync(x => x.Id == request.EditAssignmnetId, cancellationToken);
             ea.Status = EditStatus.PendingToApproveByAdmin;
-            await _coursesFileManager.SaveEditedFileFileByEditor(request.File, ea.CourseItem.CourseId);
-            ea.FilePath = await _coursesFileManager.GetEditedFilePathForDownload(request.File, ea.CourseItem.CourseId);
+            await _coursesFileManager.SaveEditedFileFileByEditor(request.File, ea.CourseItem.Course.Teacher.UserName,
+                ea.CourseItem.CourseId);
+            ea.FilePath = await _coursesFileManager.GetEditedFilePathForDownload(request.File,
+                ea.CourseItem.Course.Teacher.UserName, ea.CourseItem.CourseId);
             await _editAssignmentRepo.EditAsync(ea);
             return Response.Success();
         }

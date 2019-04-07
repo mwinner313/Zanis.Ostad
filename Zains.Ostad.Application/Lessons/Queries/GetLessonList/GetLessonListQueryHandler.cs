@@ -39,7 +39,7 @@ namespace Zains.Ostad.Application.Lessons.Queries.GetLessonList
                     dbQuery = dbQuery.Where(x => x.Lesson.ExamSamples.Any());
                     break;
                 case ProductType.TeacherCourse:
-                    dbQuery = dbQuery.Where(x => x.TeacherLessonMappings.Any(tl => tl.Courses.Any()));
+                    dbQuery = dbQuery.Where(x => x.Courses.Any());
                     break;
             }
 

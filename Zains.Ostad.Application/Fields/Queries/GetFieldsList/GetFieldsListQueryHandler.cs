@@ -41,7 +41,7 @@ namespace Zains.Ostad.Application.Fields.Queries.GetFieldsList
                     break;
                 case ProductType.TeacherCourse:
                     dbQuery = dbQuery.Where(
-                        f => f.FieldLessons.Any(l => l.Lesson.Fields.Any(x=>x.TeacherLessonMappings.Any(tl => tl.Courses.Any()))));
+                        f => f.FieldLessons.Any(l => l.Lesson.Fields.Any(x=>x.Courses.Any())));
                     break;
             }
 

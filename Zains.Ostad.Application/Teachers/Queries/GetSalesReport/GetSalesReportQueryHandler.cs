@@ -28,7 +28,7 @@ namespace Zains.Ostad.Application.Teachers.Queries.GetSalesReport
             CancellationToken cancellationToken)
         {
             var teacherCourseIds = _courseRepo.GetQueryable()
-                .Where(x => x.TeacherLessonMapping.TeacherId == _workContext.CurrentUserId).Select(x => x.Id).ToList();
+                .Where(x => x.TeacherId == _workContext.CurrentUserId).Select(x => x.Id).ToList();
             var saleReports = _orderItemRepo.GetQueryable().Where(x =>
                     x.ProductType == ProductType.TeacherCourse && teacherCourseIds.Contains(x.ProductId))
                 .Select(x => new CourseSaleReport

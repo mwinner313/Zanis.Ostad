@@ -12,7 +12,14 @@ namespace Zanis.Ostad.Core.Entities
         public int FieldId { get; set; }
         public Grade Grade { get; set; }
         public int GradeId { get; set; }
-        public ICollection<TeacherLessonMapping> TeacherLessonMappings { get; set; }
-      
+        public ICollection<CourseLessonFieldGradeMapping> Courses { get; set; }
+    }
+
+    public class CourseLessonFieldGradeMapping:BaseEntity<long>
+    {
+        public Course Course { get; set; }
+        public long CourseId { get; set; }
+        public LessonFieldMapping Lesson { get; set; }
+        public long LessonId { get; set; }
     }
 }

@@ -38,7 +38,7 @@ namespace Zains.Ostad.Application.Colleges.Queries.GetCollegeList
                     break;
                 case ProductType.TeacherCourse:
                     dbQuery = dbQuery.Where(x =>
-                        x.Fields.Any(f => f.FieldLessons.Any(s=>s.GradeId==request.GradeId && s.Lesson.Fields.Any(fl=>fl.TeacherLessonMappings.Any(tl => tl.Courses.Any())))));
+                        x.Fields.Any(f => f.FieldLessons.Any(s=>s.GradeId==request.GradeId && s.Lesson.Fields.Any(fl=>fl.Courses.Any()))));
                     break;
             }
 

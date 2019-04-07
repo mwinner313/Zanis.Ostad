@@ -79,7 +79,7 @@
         <template slot-scope="scope">{{ scope.row.teacher}}</template>
       </el-table-column>
 
-      <el-table-column label="قیمت">
+      <el-table-column  width="200" label="قیمت">
         <template slot-scope="scope">{{scope.row.priceAsTomans}} تومان</template>
       </el-table-column>
       <el-table-column label="وضعیت" width="200">

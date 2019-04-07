@@ -18,8 +18,9 @@ namespace Zanis.Ostad.Repository.Config
             builder.HasMany(x => x.Students)
                 .WithOne(x => x.Course)
                 .HasForeignKey(x => x.CourseId);
-            builder.HasOne(x => x.TeacherLessonMapping).WithMany(x => x.Courses)
-                .HasForeignKey(x => x.TeacherLessonMappingId).OnDelete(DeleteBehavior.Restrict);
+            builder.HasMany(x => x.Lessons)
+                .WithOne(x => x.Course)
+                .HasForeignKey(x => x.CourseId).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

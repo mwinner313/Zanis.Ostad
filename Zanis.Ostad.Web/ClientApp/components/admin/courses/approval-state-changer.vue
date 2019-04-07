@@ -60,7 +60,7 @@
       submit(){
         this.$refs.form.validate((valid) => {
           if (valid) {
-            axios.patch('/api/courses/change_approval_status', {...this.form.courseApprovalStatus,courseId:this.item.id}).then(res => {
+            axios.patch('/api/courses/change_approval_status', {courseApprovalStatus:this.form.courseApprovalStatus,courseId:this.item.id}).then(res => {
               EventBus.$emit('course-state-change');
               this.$emit('close');
             });
