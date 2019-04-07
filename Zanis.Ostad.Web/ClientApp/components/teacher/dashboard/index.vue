@@ -1,15 +1,15 @@
 <template>
   <div>
     <el-row :gutter="10">
-      <el-col v-for="item in courseTitles" :span="12">
+      <el-col v-for="item in courseTitles" :md="12" :sm="24">
         <el-card class="box-card">
           <h4 class="clearfix "> {{item.name}}</h4>
           <el-row :gutter="50">
             <br>
-            <el-col style="text-align: center;" :span="6">
+            <el-col style="text-align: center;" :sm="24" :md="6">
               <img :src="item.imagePath" width="162" alt="">
             </el-col>
-            <el-col  :span="18">
+            <el-col   :sm="24" :md="18">
               <p  class="title-description">  {{item.description}}</p>
             </el-col>
           </el-row>
