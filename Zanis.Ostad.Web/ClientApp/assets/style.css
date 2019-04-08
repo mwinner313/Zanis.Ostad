@@ -3,6 +3,16 @@
   color: white; }
 
 @font-face {
+  font-family: BalvardiDastnevis;
+  font-style: normal;
+  src: url("../assets/fonts/balvardidastnevisfree.eot");
+  src: url("../assets/fonts/balvardidastnevisfree.eot?#iefix") format("embedded-opentype"), url("../assets/fonts/balvardidastnevisfree.woff2") format("woff2"), url("../assets/fonts/balvardidastnevisfree.woff") format("woff"), url("../assets/fonts/balvardidastnevisfree.ttf") format("truetype"); }
+@font-face {
+  font-family: "EntezareZohoor B3";
+  font-style: normal;
+  src: url("../assets/fonts/entezarb3-v2-0-1-p30download-com.eot");
+  src: url("../assets/fonts/entezarb3-v2-0-1-p30download-com.eot?#iefix") format("embedded-opentype"), url("../assets/fonts/entezarb3-v2-0-1-p30download-com.woff2") format("woff2"), url("../assets/fonts/entezarb3-v2-0-1-p30download-com.woff") format("woff"), url("../assets/fonts/entezarb3-v2-0-1-p30download-com.ttf") format("truetype"); }
+@font-face {
   font-family: IRANSans;
   font-style: normal;
   font-weight: bold;
@@ -40,14 +50,6 @@ h4,
 h5,
 h6 {
   font-family: IRANSans; }
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6, p {
-  color: #545454; }
 
 .el-button {
   margin: 0 3px !important; }
@@ -114,11 +116,10 @@ a {
     color: white; }
 
 #main-nav {
-  background-color: rgba(0, 0, 0, 0.6); }
+  background-color: #535252; }
 
 .nav-link {
   margin: 0 15px;
-  font-weight: bold;
   color: white !important; }
 
 .nav-item.active a {
@@ -163,18 +164,44 @@ a {
   @media only screen and (max-width: 600px) {
     .main-header {
       min-height: 343px; } }
+  .main-header #intro-wrapper {
+    min-height: 870px; }
+    .main-header #intro-wrapper h1 {
+      margin: 80px 20px 0 0;
+      display: inline-block;
+      color: #d6d4d3;
+      font-family: 'EntezareZohoor B3';
+      font-size: 70px;
+      border-bottom: 3px solid white;
+      border-top: 3px solid white; }
+    .main-header #intro-wrapper h2 {
+      margin: 55px 20px 0 0;
+      font-family: BalvardiDastnevis;
+      font-size: 58px;
+      color: #efe778; }
+    @media only screen and (max-width: 600px) {
+      .main-header #intro-wrapper {
+        min-height: 343px; } }
 
-#intro-image-wrapper {
-  justify-content: center;
-  min-height: 745px; }
-  @media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
-    #intro-image-wrapper img {
-      width: 910px !important; } }
-  @media only screen and (max-width: 600px) {
-    #intro-image-wrapper {
-      min-height: 343px; }
-      #intro-image-wrapper img {
-        height: 343px !important; } }
+.yellow-large-separator {
+  height: 100px;
+  background-color: #efe778; }
+
+.two-side-title {
+  color: #535252;
+  text-align: center;
+  position: relative; }
+  .two-side-title:before, .two-side-title:after {
+    top: 13px;
+    content: " ";
+    background-color: #afafaf;
+    width: 44%;
+    height: 2px;
+    position: absolute; }
+  .two-side-title:before {
+    right: 0px; }
+  .two-side-title:after {
+    left: 0px; }
 
 #support-nav {
   padding-left: 0px;
@@ -187,9 +214,6 @@ a {
   #support-nav .navbar-nav {
     padding-left: 0px;
     padding-right: 0px; }
-
-#header-content-wrapper {
-  background-color: rgba(0, 0, 0, 0.3); }
 
 .no-margin {
   margin: 0px !important; }

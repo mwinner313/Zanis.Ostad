@@ -19,6 +19,8 @@ $desktop-width: 1024px;
 }
 
 $yello-deep: #fed14a;
+$yello: #efe778;
+
 $purple: #9475cd;
 $gray: #757575;
 $green: #27a16e;
@@ -26,6 +28,25 @@ $green: #27a16e;
 ::selection {
   background: #9475cd;
   color:white;
+}
+
+@font-face {
+  font-family: BalvardiDastnevis;
+  font-style: normal;
+  src: url('../assets/fonts/balvardidastnevisfree.eot');
+  src: url('../assets/fonts/balvardidastnevisfree.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
+  url('../assets/fonts/balvardidastnevisfree.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/
+  url('../assets/fonts/balvardidastnevisfree.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+  url('../assets/fonts/balvardidastnevisfree.ttf') format('truetype');
+}
+@font-face {
+  font-family: "EntezareZohoor B3";
+  font-style: normal;
+  src: url('../assets/fonts/entezarb3-v2-0-1-p30download-com.eot');
+  src: url('../assets/fonts/entezarb3-v2-0-1-p30download-com.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
+  url('../assets/fonts/entezarb3-v2-0-1-p30download-com.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/
+  url('../assets/fonts/entezarb3-v2-0-1-p30download-com.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+  url('../assets/fonts/entezarb3-v2-0-1-p30download-com.ttf') format('truetype');
 }
 @font-face {
   font-family: IRANSans;
@@ -92,14 +113,6 @@ h6 {
   font-family: IRANSans;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 ,p{
-  color: #545454;
-}
 .el-button{
   margin:0 3px !important;
 }
@@ -183,12 +196,11 @@ a {
 }
 
 #main-nav {
-  background-color: rgba(0, 0, 0, 0.6)
+  background-color:#535252;
 }
 
 .nav-link {
   margin: 0 15px;
-  font-weight: bold;
   color: white !important;
 }
 
@@ -247,21 +259,52 @@ a {
   @media only screen and (max-width: 600px) {
     min-height: 343px;
   }
-}
-
-#intro-image-wrapper {
-  justify-content: center;
-  min-height: 745px;
-  @media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
-    img {
-      width: 910px !important;
+  #intro-wrapper {
+    h1{
+      margin:80px 20px 0 0;
+      display:inline-block;
+      color:#d6d4d3;
+      font-family: 'EntezareZohoor B3';
+      font-size:70px;
+      border-bottom: 3px solid white;
+      border-top: 3px solid white;
+    }
+    h2{
+      margin:55px 20px 0 0;
+      font-family: BalvardiDastnevis;
+      font-size:58px;
+      color: $yello;
+    }
+    min-height: 870px;
+    @media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    }
+    @media only screen and (max-width: 600px) {
+      min-height: 343px;
     }
   }
-  @media only screen and (max-width: 600px) {
-    min-height: 343px;
-    img {
-      height: 343px !important;
-    }
+}
+.yellow-large-separator{
+  height: 100px;
+  background-color: $yello;
+}
+.two-side-title{
+  color:#535252;
+  text-align:center;
+  position: relative;
+  &:before,&:after{
+        top: 13px;
+        content: " ";
+        background-color: #afafaf;
+        width: 44%;
+        height: 2px;
+        position: absolute;
+
+      }
+  &:before{
+    right: 0px;
+  }
+  &:after{
+    left: 0px;
   }
 }
 
@@ -280,9 +323,7 @@ a {
   }
 }
 
-#header-content-wrapper {
-  background-color: rgba(0, 0, 0, 0.3)
-}
+
 
 .no-margin {
   margin: 0px !important;

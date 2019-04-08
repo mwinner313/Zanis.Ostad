@@ -3,10 +3,7 @@
     <main-header></main-header>
     <main class="">
       <div class="container p-0">
-        <search-box-mobile></search-box-mobile>
-        <search-box></search-box>
-        <product-selector></product-selector>
-
+          <h3 class="two-side-title">دانشگاه ها</h3>
       </div>
       <section class="visual-learning">
         <div class="container">
@@ -36,18 +33,12 @@
 </template>
 
 <script>
-  import productSelector from './product-selector';
-  import SearchBox from './search-box';
-  import SearchBoxMobile from './search-box-mobile';
   import MainHeader from '../layouts/main/header/index';
   import CoursesSlider from './courses-slider';
 
   export default {
     name: "home",
     components: {
-      productSelector,
-      SearchBox,
-      SearchBoxMobile,
       MainHeader,
       CoursesSlider
     }
