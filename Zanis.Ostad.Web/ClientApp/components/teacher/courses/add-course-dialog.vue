@@ -8,10 +8,16 @@
               <el-progress v-show="uploadProgress" :percentage="uploadProgress"></el-progress>
               <el-form-item
                 prop="courseTitle"
-                :rules="[{ required: true, message: 'انتخاب کردن عنوان الزامی می باشد'}]"
-                label="عنوان"
-              >
-                <el-select v-model="form.courseCategoryId" placeholder="عنوان" class="w100">
+                :rules="[{ required: true, message: 'وارد کردن عنوان الزامی می باشد'}]"
+                label="عنوان">
+                <el-input type="text" placeholder="عنوان" v-model="form.courseTitle"></el-input>
+              </el-form-item>
+              <el-form-item
+                prop="courseCategoryId"
+                :rules="[{ required: true, message: 'انتخاب کردن عنوان محتوا الزامی می باشد'}]"
+                label="عنوان محتوا">
+
+                <el-select v-model="form.courseCategoryId" placeholder="عنوان محتوا" class="w100">
                   <el-option
                     v-for="item in courseTitles"
                     :key="item.value"
@@ -32,8 +38,7 @@
                 :rules="[
                   { required: true, message: 'وارد کردن قیمت الزامی می باشد'},
                   { type: 'number', message: 'فیمت باید عددی باشد'}
-                ]"
-              >
+                ]">
                 <el-input type="text" placeholder="قیمت" v-model.number="form.price"></el-input>
               </el-form-item>
               <el-form-item label="پیام به مدیریت">
@@ -175,7 +180,6 @@
           lessonFieldId: [],
         }
       };
-
     },
     updated() {
       if (this.preSelectedCourseTitleId)
@@ -190,13 +194,11 @@
       addItemToCourseItems(item) {
         this.courseItems.push(item);
       },
-
       selectLesson(item) {
         let id = item.map(x => x.id);
         this.form.lessonFieldId.push(id);
         console.log(this.form.lessonFieldId);
       },
-
       closeSearchDialog() {
         this.isLessonsearchDialog = false;
       },
@@ -214,17 +216,20 @@
         }
         this.$refs.form.validate(valid => {
           if (valid) {
-            let data = new FormData();
-            data.append("Price", this.form.price);
-            data.append("Description", this.form.description);
-            data.append("TeacherMessageForAdmin", this.form.teacherMessage);
-            data.append("courseCategoryId", this.form.courseCategoryId);
-            data.append("LessonFieldIds", this.form.lessonFieldId);
+            /*       let data = new FormData();
+                   data.append("Price", this.form.price);
+                   data.append("Description", this.form.description);
+                   data.append("TeacherMessageForAdmin", this.form.teacherMessage);
+                   data.append("courseCategoryId", this.form.courseCategoryId);
+                   data.append("LessonFieldIds", this.form.lessonFieldId);*/
             axios
-              .post("/api/TeacherAccount/courses", data, {
-                headers: {
-                  "Content-Type": "multipart/form-data"
-                }
+              .post("/api/TeacherAccount/courses", {
+                price: this.form.price,
+                description: this.form.description,
+                teacherMessageForAdmin: this.form.teacherMessage,
+                courseCategoryId: this.form.courseCategoryId,
+                title: this.form.courseTitle,
+                lessonFieldIds: this.form.lessonFieldId
               })
               .then(res => {
                 if (res.data.status == 1) {
@@ -235,9 +240,7 @@
                   this.courseItems.forEach(element => {
                     console.log(element, "el");
                   });
-
                   this.responseCourseId = res.data.data.id;
-
                   this.$emit("close");
                 }
               });
