@@ -59,7 +59,8 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
                 Lessons =request.LessonFieldIds.Select(x=>new CourseLessonFieldGradeMapping(){LessonId = x}).ToList(),
                 Price = request.Price,
                 Description = request.Description,
-                CourseTitleId = request.CourseTitleId,
+                Title = request.Title,
+                CourseCategoryId = request.CourseCategoryId,
                 TeacherId = _workContext.CurrentUserId,
                 AdminMessageForTeacher = request.TeacherMessageForAdmin
             };
@@ -70,10 +71,11 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
         {
             var course = await _courseRepository.GetById(request.CourseId);
             course.Price = request.Price;
+            course.Title = request.Title;
             course.ApprovalStatus = CourseApprovalStatus.PendingToApproveByAdmin;
             course.TeacherMessageForAdmin = request.TeacherMessageForAdmin;
             course.Description = request.Description;
-            course.CourseTitleId = request.CourseTitleId;
+            course.CourseCategoryId = request.CourseCategoryId;
             await _courseRepository.EditAsync(course);
             return Response.Success();
         }

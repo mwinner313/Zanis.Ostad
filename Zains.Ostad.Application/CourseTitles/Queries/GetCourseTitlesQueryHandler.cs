@@ -11,9 +11,9 @@ namespace Zains.Ostad.Application.CourseTitles.Queries
 {
     public class GetCourseTitlesQueryHandler : IRequestHandler<GetCourseTitlesQuery, List<CourseTitleViewModel>>
     {
-        private IRepository<CourseTitle, int> _repository;
+        private IRepository<CourseCategory, int> _repository;
 
-        public GetCourseTitlesQueryHandler(IRepository<CourseTitle, int> repository)
+        public GetCourseTitlesQueryHandler(IRepository<CourseCategory, int> repository)
         {
             _repository = repository;
         }

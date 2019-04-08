@@ -13,13 +13,13 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
             CreateMap<Ticket, TicketViewModel>().ForMember(x => x.CourseTitle,
                 opt => opt.MapFrom(x =>
                     x.CourseId.HasValue
-                        ? x.Course.CourseTitle.Name + " - " +
+                        ? x.Course.CourseCategory.Name + " - " +
                           x.Course.Lessons.First().Lesson.Lesson.LessonName
                         : ""));
             CreateMap<Ticket, TicketListViewModel>().ForMember(x => x.CourseTitle,
                 opt => opt.MapFrom(x =>
                     x.CourseId.HasValue
-                        ? x.Course.CourseTitle.Name + " - " +
+                        ? x.Course.CourseCategory.Name + " - " +
                           x.Course.Lessons.First().Lesson.Lesson.LessonName
                         : ""));
             CreateMap<TicketItem, TicketItemViewModel>();

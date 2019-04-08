@@ -53,7 +53,7 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
                                 Id = c.Id,
                                 Price = c.Price,
                                 Teacher = c.Teacher.FullName,
-                                Title = c.CourseTitle.Name,
+                                Title = c.CourseCategory.Name,
                             }).ToList()
                 };
             }

@@ -185,7 +185,7 @@ namespace Zanis.Ostad.Repository.Migrations
 
                     b.Property<int>("ApprovalStatus");
 
-                    b.Property<int>("CourseTitleId");
+                    b.Property<int>("CourseCategoryId");
 
                     b.Property<DateTime>("CreatedOn");
 
@@ -199,13 +199,32 @@ namespace Zanis.Ostad.Repository.Migrations
 
                     b.Property<string>("TeacherMessageForAdmin");
 
+                    b.Property<string>("Title");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseTitleId");
+                    b.HasIndex("CourseCategoryId");
 
                     b.HasIndex("TeacherId");
 
                     b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("Zanis.Ostad.Core.Entities.Contents.CourseCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("ImagePath");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CourseTitles");
                 });
 
             modelBuilder.Entity("Zanis.Ostad.Core.Entities.Contents.CourseItem", b =>
@@ -239,23 +258,6 @@ namespace Zanis.Ostad.Repository.Migrations
                     b.HasIndex("CourseId");
 
                     b.ToTable("CourseItems");
-                });
-
-            modelBuilder.Entity("Zanis.Ostad.Core.Entities.Contents.CourseTitle", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("ImagePath");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CourseTitles");
                 });
 
             modelBuilder.Entity("Zanis.Ostad.Core.Entities.CourseLessonFieldGradeMapping", b =>
@@ -777,9 +779,9 @@ namespace Zanis.Ostad.Repository.Migrations
 
             modelBuilder.Entity("Zanis.Ostad.Core.Entities.Contents.Course", b =>
                 {
-                    b.HasOne("Zanis.Ostad.Core.Entities.Contents.CourseTitle", "CourseTitle")
+                    b.HasOne("Zanis.Ostad.Core.Entities.Contents.CourseCategory", "CourseCategory")
                         .WithMany("Courses")
-                        .HasForeignKey("CourseTitleId")
+                        .HasForeignKey("CourseCategoryId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Zanis.Ostad.Core.Entities.User", "Teacher")

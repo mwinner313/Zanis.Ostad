@@ -26,7 +26,7 @@ namespace Zains.Ostad.Application.Courses.Queries.GetCourseList
             var queryable = _repository.GetQueryable();
             
             queryable = ApplyFilter(request, queryable).Include(x => x.Teacher)
-                .Include(x => x.CourseTitle)
+                .Include(x => x.CourseCategory)
                 .Include(x=>x.Contents)
                 .Include(x => x.Lessons).ThenInclude(x => x.Lesson)
                 .Include(x => x.Lessons).ThenInclude(x => x.Lesson.Lesson)
@@ -65,7 +65,7 @@ namespace Zains.Ostad.Application.Courses.Queries.GetCourseList
 
             if (request.CourseTitleId.HasValue)
                 queryable = queryable.Where(x =>
-                    x.CourseTitleId == request.CourseTitleId);
+                    x.CourseCategoryId == request.CourseTitleId);
 
             return queryable;
         }

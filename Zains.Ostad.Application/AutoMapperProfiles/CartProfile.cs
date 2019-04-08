@@ -21,7 +21,7 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
                 ItemType = x.ItemType,
                 Id = x.Id,
                 ProductTitle=
-                    x.ItemType==ProductType.LessonExam?" نمونه سوالات "+x.LessonExam.LessonName :x.Course.CourseTitle.Name + " - " +x.Course.Lessons.First().Lesson.Lesson.LessonName,
+                    x.ItemType==ProductType.LessonExam?" نمونه سوالات "+x.LessonExam.LessonName :x.Course.CourseCategory.Name + " - " +x.Course.Lessons.First().Lesson.Lesson.LessonName,
                 Price=x.ItemType==ProductType.LessonExam?x.LessonExam.ExamSamplesPrice:x.Course.Price
          }; }
         }

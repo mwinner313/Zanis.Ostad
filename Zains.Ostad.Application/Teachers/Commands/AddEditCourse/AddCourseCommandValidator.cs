@@ -7,7 +7,7 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
         public AddCourseCommandValidator()
         {
             RuleFor(x => x.Price).NotEqual(0);
-            RuleFor(x => x.CourseTitleId).NotEqual(0);
+            RuleFor(x => x.CourseCategoryId).NotEqual(0);
             RuleFor(x => x.LessonFieldIds).NotNull();
         }
     }

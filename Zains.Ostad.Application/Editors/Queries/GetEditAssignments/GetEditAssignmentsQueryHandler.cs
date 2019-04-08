@@ -39,7 +39,7 @@ namespace Zains.Ostad.Application.Editors.Queries.GetEditAssignments
             {
                 Items = queryable.Include(x => x.CourseItem)
                     .Include(x => x.CourseItem.Course)
-                    .Include(x => x.CourseItem.Course.CourseTitle)
+                    .Include(x => x.CourseItem.Course.CourseCategory)
                     .Include(x => x.CourseItem.Course.Lessons)
                     .Include(x => x.CourseItem.Course.Teacher)
                     .Include(x => x.CourseItem.Course.Lessons.Select(l=>l.Lesson))
