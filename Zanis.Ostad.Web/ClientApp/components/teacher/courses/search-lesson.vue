@@ -56,9 +56,7 @@
             </el-select>
           </el-form-item>
           <el-button :disabled="canNotSearchForLessons" @click="getListData" type="success">بگرد</el-button>
-          <el-button @click="addCourseToList" type="primary" v-show="selectedLessons.length"
-                     :disabled="!selectedLessons">افزودن
-          </el-button>
+          <el-button @click="addLessonToList" type="primary" v-show="selectedLessons.length">افزودن</el-button>
         </el-form>
       </el-col>
     </el-row>
@@ -93,12 +91,25 @@
       </el-col>
       <el-col :md="12" :lg="12">
         <el-card>
-          <div slot="header" class="clearfix">
-            دروس انتخاب شده
-          </div>
-          <ul>
-            <li v-for="item in finalySelectedItems">{{item.fieldName}}</li>
-          </ul>
+          <el-table :data="finalySelectedItems">
+            <el-table-column label="نام درس">
+              <template slot-scope="scope">{{ scope.row.lessonName }}</template>
+            </el-table-column>
+
+            <el-table-column label="مقطع">
+              <template slot-scope="scope">{{ scope.row.gradeName }}</template>
+            </el-table-column>
+
+            <el-table-column label="رشته">
+              <template slot-scope="scope">{{ scope.row.fieldName }}</template>
+            </el-table-column>
+
+            <el-table-column label="حذف">
+              <template slot-scope="scope">
+                <i class="fas fa-trash-alt pointer" @click="deleteItemSelected(scope.row.id)"></i>
+              </template>
+            </el-table-column>
+          </el-table>
         </el-card>
       </el-col>
     </el-row>
@@ -125,6 +136,7 @@
         lessonItems: [],
         selectedLessons: [],
         finalySelectedItems: [],
+        selectedLessonDelete: [],
         close: false
       };
     },
@@ -155,10 +167,6 @@
             this.fieldItems = res.data;
           });
       },
-      /* selectLessonItem(lesson) {
-         this.$emit("lessonSelected", lesson);
-         this.$emit("close");
-       },*/
       getGradeItems() {
         axios.get("/api/Grades").then(res => {
           this.gradeItems = res.data;
@@ -167,17 +175,21 @@
       getListData() {
         this.getlessons();
       },
-      addCourseToList() {
-        this.finalySelectedItems.push(this.lessonItems.filter((item) => this.selectedLessons.some((select) => item.id === select)));
-      }
+      addLessonToList() {
+        this.finalySelectedItems.push(...this.lessonItems.filter((item) => this.selectedLessons.some((select) => item.id === select
+          && !this.finalySelectedItems.some(x => x.id === select))));
+        this.selectedLessons = [];
+        this.$emit('lessonSelected', this.finalySelectedItems);
+        this.$emit('close');
+      },
+      deleteItemSelected(id) {
+        this.finalySelectedItems = this.finalySelectedItems.filter(item => item.id !== id);
+      },
     },
     computed: {
       canNotSearchForLessons() {
         return (!this.termSearch || !this.selectedGradeId || !this.fieldId);
       },
-      // transferData(){
-      //   return this.lessonItems.map(x=>({key:x.id,label:x.lessonName}))
-      // }
     },
     mounted() {
       this.getGradeItems();
@@ -186,5 +198,8 @@
 </script>
 
 <style>
+  .pointer {
+    cursor: pointer;
+  }
 </style>
 

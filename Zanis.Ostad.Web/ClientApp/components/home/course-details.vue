@@ -16,7 +16,7 @@
             </p>
           </div>
           <div class="col-sm-4">
-                  <button @click.prevent="addToCart" class="add-cart float-right">افزودن به سبد خرید</button>
+            <button @click.prevent="addToCart" class="add-cart float-right">افزودن به سبد خرید</button>
           </div>
         </div>
       </div>
@@ -26,8 +26,8 @@
         <div class="row no-gutters">
           <div class="col-sm-12 " ref="videoContainer">
             <video-player v-if="playingItem" class="video-player-box"
-            :options="playerOptions"
-            :playsinline="true">
+                          :options="playerOptions"
+                          :playsinline="true">
             </video-player>
           </div>
         </div>

@@ -15,34 +15,9 @@
         </template>
       </el-table-column>
 
-
-      <el-table-column label="مقطع" width="120">
-        <template slot-scope="scope">
-          {{ scope.row.gradeTitle}}
-        </template>
-      </el-table-column>
-
-      <el-table-column label="رشته" width="160">
-        <template slot-scope="scope">
-          {{ scope.row.fieldName}}
-        </template>
-      </el-table-column>
-
-      <el-table-column label="درس" width="180">
-        <template slot-scope="scope">
-          {{ scope.row.lessonTitle}}
-        </template>
-      </el-table-column>
-
-      <el-table-column label="قیمت (تومان)" >
+      <el-table-column label="قیمت (تومان)">
         <template slot-scope="scope">
           {{scope.row.priceAsTomans}}
-        </template>
-      </el-table-column>
-
-      <el-table-column label="کددرس" width="90">
-        <template slot-scope="scope">
-          {{ scope.row.lessonCode}}
         </template>
       </el-table-column>
 

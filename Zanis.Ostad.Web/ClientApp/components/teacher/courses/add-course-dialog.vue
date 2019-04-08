@@ -2,20 +2,22 @@
   <div>
     <el-dialog title="افزودن دوره" :visible.sync="isOpen" width="80%" @closed="$emit('close')">
       <el-row>
-
-
-
-
         <el-col :md="12">
           <el-card shadow="always">
             <el-form ref="form" :model="form">
               <el-progress v-show="uploadProgress" :percentage="uploadProgress"></el-progress>
               <el-form-item
-                prop="courseTitleId"
-                :rules="[{ required: true, message: 'انتخاب کردن عنوان الزامی می باشد'}]"
-                label="عنوان"
-              >
-                <el-select v-model="form.courseTitleId" placeholder="عنوان" class="w100">
+                prop="courseTitle"
+                :rules="[{ required: true, message: 'وارد کردن عنوان الزامی می باشد'}]"
+                label="عنوان">
+                <el-input type="text" placeholder="عنوان" v-model="form.courseTitle"></el-input>
+              </el-form-item>
+              <el-form-item
+                prop="courseCategoryId"
+                :rules="[{ required: true, message: 'انتخاب کردن عنوان محتوا الزامی می باشد'}]"
+                label="عنوان محتوا">
+
+                <el-select v-model="form.courseCategoryId" placeholder="عنوان محتوا" class="w100">
                   <el-option
                     v-for="item in courseTitles"
                     :key="item.value"
@@ -34,17 +36,11 @@
                 label="قیمت"
                 prop="price"
                 :rules="[
-
                   { required: true, message: 'وارد کردن قیمت الزامی می باشد'},
-
                   { type: 'number', message: 'فیمت باید عددی باشد'}
-
-                ]"
-              >
+                ]">
                 <el-input type="text" placeholder="قیمت" v-model.number="form.price"></el-input>
               </el-form-item>
-
-
               <el-form-item label="پیام به مدیریت">
                 <el-input type="textarea" v-model="form.teacherMessage"></el-input>
               </el-form-item>
@@ -53,7 +49,7 @@
                 <el-button
                   type="warning"
                   class="w100"
-                  @click="isLessonsearchDialog = true"
+                  @click="isLessonsearchDialog = {}"
                 >انتخاب درس
                 </el-button>
               </el-form-item>
@@ -80,12 +76,6 @@
             </el-form>
           </el-card>
         </el-col>
-
-
-
-
-
-
         <el-col :md="12">
           <el-alert
             style="margin-right:10px"
@@ -133,7 +123,7 @@
 
     <!-- searchLessonItem -->
     <searchLesson
-      :isOpen="isLessonsearchDialog"
+      :isOpen="!!isLessonsearchDialog"
       @close="isLessonsearchDialog=undefined"
       @lessonSelected="selectLesson"
     ></searchLesson>
@@ -184,9 +174,10 @@
         form: {
           price: undefined,
           description: "",
-          courseTitleId: "",
+          courseCategoryId: "",
+          courseTitle: "",
           teacherMessage: "",
-          lessonFieldId: 0,
+          lessonFieldId: [],
         }
       };
     },
@@ -203,13 +194,11 @@
       addItemToCourseItems(item) {
         this.courseItems.push(item);
       },
-
       selectLesson(item) {
-        this.itemSelectedLesson =
-          item.gradeName + " - " + item.fieldName + " - " + item.lessonName;
-        this.form.lessonFieldId = item.id;
+        let id = item.map(x => x.id);
+        this.form.lessonFieldId.push(id);
+        console.log(this.form.lessonFieldId);
       },
-
       closeSearchDialog() {
         this.isLessonsearchDialog = false;
       },
@@ -223,24 +212,25 @@
             type: "error",
             message: "کاربر گرامی برای این درس حداقل یک سرفصل را باید آپلود کنید"
           });
-
           return false;
         }
         this.$refs.form.validate(valid => {
           if (valid) {
-            let data = new FormData();
-            data.append("Price", this.form.price);
-            data.append("Description", this.form.description);
-            data.append("TeacherMessageForAdmin", this.form.teacherMessage);
-            data.append("CourseTitleId", this.form.courseTitleId);
-            data.append("LessonFieldId", this.form.lessonFieldId);
+            /*       let data = new FormData();
+                   data.append("Price", this.form.price);
+                   data.append("Description", this.form.description);
+                   data.append("TeacherMessageForAdmin", this.form.teacherMessage);
+                   data.append("courseCategoryId", this.form.courseCategoryId);
+                   data.append("LessonFieldIds", this.form.lessonFieldId);*/
             axios
-              .post("/api/TeacherAccount/courses", data, {
-                headers: {
-                  "Content-Type": "multipart/form-data"
-                }
+              .post("/api/TeacherAccount/courses", {
+                price: this.form.price,
+                description: this.form.description,
+                teacherMessageForAdmin: this.form.teacherMessage,
+                courseCategoryId: this.form.courseCategoryId,
+                title: this.form.courseTitle,
+                lessonFieldIds: this.form.lessonFieldId
               })
-
               .then(res => {
                 if (res.data.status == 1) {
                   this.$message({
@@ -250,9 +240,7 @@
                   this.courseItems.forEach(element => {
                     console.log(element, "el");
                   });
-
                   this.responseCourseId = res.data.data.id;
-
                   this.$emit("close");
                 }
               });

@@ -10,19 +10,6 @@
     <el-progress v-show="uploadProgress" :percentage="uploadProgress"></el-progress>
     <el-form ref="form" :model="form">
       <el-form-item
-        :rules="[{ required: true, message: 'وضعیت الزامیست'}]"
-        prop="state"
-        label="انتخاب وضعیت"
-      >
-        <el-select v-model="form.state" placeholder="انتخاب وضعیت" width="100%">
-          <el-option label="تایید" :value="5"></el-option>
-          <el-option label="رد" :value="10"></el-option>
-          <el-option label="در انتظار تعیین وضعیت" disabled :value="0"></el-option>
-          <el-option disabled label="رد شده توسط استاد" :value="15"></el-option>
-        </el-select>
-      </el-form-item>
-
-      <el-form-item
         prop="title"
         :rules="[{ required: true, message: 'عنوان الزامی می باشد'}]"
         label="عنوان"
