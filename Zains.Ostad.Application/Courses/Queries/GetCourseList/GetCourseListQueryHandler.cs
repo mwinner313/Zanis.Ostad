@@ -23,14 +23,20 @@ namespace Zains.Ostad.Application.Courses.Queries.GetCourseList
         public async Task<PagenatedList<CourseDto>> Handle(GetCourseListQuery request,
             CancellationToken cancellationToken)
         {
-            var queryable = _repository.GetQueryable().OrderByDescending(x => x.CreatedOn).AsQueryable();
+            var queryable = _repository.GetQueryable();
             
-            queryable = ApplyFilter(request, queryable);
-
+            queryable = ApplyFilter(request, queryable).Include(x => x.Teacher)
+                .Include(x => x.CourseCategory)
+                .Include(x=>x.Contents)
+                .Include(x => x.Lessons).ThenInclude(x => x.Lesson)
+                .Include(x => x.Lessons).ThenInclude(x => x.Lesson.Lesson)
+                .Include(x => x.Lessons).ThenInclude(x => x.Lesson.Field)
+                .Include(x => x.Lessons).ThenInclude(x => x.Lesson.Grade);
+            var items = await queryable.Pagenate(request).Select(CourseProfile.ProjectionList)
+                .ToListAsync(cancellationToken);
             return new PagenatedList<CourseDto>
             {
-                Items = await queryable.Select(CourseProfile.Projection).Pagenate(request)
-                    .ToListAsync(cancellationToken),
+                Items = items,
                 AllCount = queryable.Count()
             };
         }
@@ -47,20 +53,20 @@ namespace Zains.Ostad.Application.Courses.Queries.GetCourseList
 
             if (!string.IsNullOrEmpty(request.LessonCode))
                 queryable = queryable.Where(x =>
-                    x.Lessons.Any(l=>l.Lesson.Lesson.LessonCode.Contains(request.LessonCode)));
+                    x.Lessons.Any(l => l.Lesson.Lesson.LessonCode.Contains(request.LessonCode)));
 
             if (!string.IsNullOrEmpty(request.FieldCode))
                 queryable = queryable.Where(x =>
-                   x.Lessons.Any(l=>l.Lesson.Field.Code.Contains(request.FieldCode)));
+                    x.Lessons.Any(l => l.Lesson.Field.Code.Contains(request.FieldCode)));
 
             if (request.GradeId.HasValue)
                 queryable = queryable.Where(x =>
-                    x.Lessons.Any(l=>l.Lesson.GradeId == request.GradeId));
-            
+                    x.Lessons.Any(l => l.Lesson.GradeId == request.GradeId));
+
             if (request.CourseTitleId.HasValue)
                 queryable = queryable.Where(x =>
-                    x.CourseTitleId == request.CourseTitleId);
-            
+                    x.CourseCategoryId == request.CourseTitleId);
+
             return queryable;
         }
     }

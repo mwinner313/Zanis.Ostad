@@ -40,7 +40,7 @@ namespace Zanis.Ostad.Web.Controllers.Api
         }
 
         [HttpPost("courses")]
-        public async Task<ActionResult<PagenatedList<CourseDto>>> AddCourse([FromForm]AddCourseCommand cmd)
+        public async Task<ActionResult<PagenatedList<CourseDto>>> AddCourse([FromBody]AddCourseCommand cmd)
         {
             return Ok(await _mediator.Send(cmd));
         }

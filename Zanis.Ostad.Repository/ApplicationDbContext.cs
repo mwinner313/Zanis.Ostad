@@ -36,7 +36,7 @@ namespace Zanis.Ostad.Repository
 
         public DbSet<CourseItem> CourseItems { get; set; }
         public DbSet<Course> Courses { get; set; }
-        public DbSet<CourseTitle> CourseTitles { get; set; }
+        public DbSet<CourseCategory> CourseTitles { get; set; }
         public DbSet<CourseLessonFieldGradeMapping> CourseLessonFieldGradeMappings { get; set; }
         public DbSet<StudentCourseMapping> StudentCourseMappings { get; set; }
         public DbSet<StudentExamSampleMapping> StudentExamSampleMappings { get; set; }

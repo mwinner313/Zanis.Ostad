@@ -8,8 +8,8 @@ namespace Zanis.Ostad.Repository.Config
     {
         public void Configure(EntityTypeBuilder<Course> builder)
         {
-            builder.HasOne(x => x.CourseTitle).WithMany(x => x.Courses)
-                .HasForeignKey(x => x.CourseTitleId).OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(x => x.CourseCategory).WithMany(x => x.Courses)
+                .HasForeignKey(x => x.CourseCategoryId).OnDelete(DeleteBehavior.Restrict);
             builder.HasMany(x => x.Contents)
                 .WithOne(x => x.Course)
                 .HasForeignKey(x => x.CourseId)
