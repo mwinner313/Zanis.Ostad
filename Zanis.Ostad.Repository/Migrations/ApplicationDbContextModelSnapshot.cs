@@ -187,6 +187,8 @@ namespace Zanis.Ostad.Repository.Migrations
 
                     b.Property<int>("CourseTitleId");
 
+                    b.Property<DateTime>("CreatedOn");
+
                     b.Property<string>("Description");
 
                     b.Property<bool>("HasPendingItemToApprove");

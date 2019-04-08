@@ -14,7 +14,7 @@ namespace Zanis.Ostad.Core.Entities.Contents
         public ICollection<CourseLessonFieldGradeMapping> Lessons { get; set; }=new List<CourseLessonFieldGradeMapping>();
         public CourseTitle CourseTitle { get; set; }
         public int CourseTitleId { get; set; }
-        public DateTime CreatedOn { get; } = DateTime.Now;
+        public DateTime CreatedOn { get; set; } = DateTime.Now;
         public CourseApprovalStatus ApprovalStatus { get; set; }
         public ICollection<StudentCourseMapping> Students { get; set; }
         public bool HasPendingItemToApprove { get; set; }

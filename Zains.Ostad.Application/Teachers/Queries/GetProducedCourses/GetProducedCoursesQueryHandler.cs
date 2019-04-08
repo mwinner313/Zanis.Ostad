@@ -35,7 +35,6 @@ namespace Zains.Ostad.Application.Teachers.Queries.GetProducedCourses
                 .Include(x => x.Lessons).ThenInclude(x => x.Lesson.Lesson)
                 .Include(x => x.Lessons).ThenInclude(x => x.Lesson.Field)
                 .Include(x => x.Lessons).ThenInclude(x => x.Lesson.Grade);
-            var ss = queriable.Pagenate(request).ToList();
             return new PagenatedList<CourseDto>
             {
                 AllCount = queriable.Count(),

@@ -15,7 +15,7 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
             CreateMap<CourseItem, CourseItemViewModel>();
         }
 
-        public static Expression<Func<Course, CourseDto>>     Projection => x => new CourseDto
+        public static Expression<Func<Course, CourseDto>> ProjectionList => x => new CourseDto
         {
             Id = x.Id,
             TeacherId = x.TeacherId,
@@ -28,11 +28,31 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
             AdminMessageForTeacher = x.AdminMessageForTeacher,
             TeacherMessageForAdmin = x.TeacherMessageForAdmin,
             TeacherAvatar = x.Teacher.AvatarPath,
-            Title = x.CourseTitle.Name + " - " + x.Lessons.First().Lesson.Lesson.LessonName,
-            GradeTitle = x.Lessons.First().Lesson.Grade.Name,
-            LessonTitle = x.Lessons.First().Lesson.Lesson.LessonName,
-            FieldName = x.Lessons.First().Lesson.Field.Name,
-            LessonCode = x.Lessons.First().Lesson.Lesson.LessonCode,
+            Title = x.CourseTitle.Name + " - " + x.Lessons.FirstOrDefault().Lesson.Lesson.LessonName,
+            GradeTitle = x.Lessons.FirstOrDefault().Lesson.Grade.Name,
+            LessonTitle = x.Lessons.FirstOrDefault().Lesson.Lesson.LessonName,
+            FieldName = x.Lessons.FirstOrDefault().Lesson.Field.Name,
+            LessonCode = x.Lessons.FirstOrDefault().Lesson.Lesson.LessonCode,
+        };
+
+        public static Expression<Func<Course, CourseDto>> Projection => x => new CourseDto
+        {
+            Id = x.Id,
+            TeacherId = x.TeacherId,
+            HasPendingItemToApprove = x.HasPendingItemToApprove,
+            Description = x.Description,
+            Price = x.Price,
+            ApprovalStatus = x.ApprovalStatus,
+            CreatedOn = x.CreatedOn,
+            Teacher = x.Teacher.FullName,
+            AdminMessageForTeacher = x.AdminMessageForTeacher,
+            TeacherMessageForAdmin = x.TeacherMessageForAdmin,
+            TeacherAvatar = x.Teacher.AvatarPath,
+            Title = x.CourseTitle.Name + " - " + x.Lessons.FirstOrDefault().Lesson.Lesson.LessonName,
+            GradeTitle = x.Lessons.FirstOrDefault().Lesson.Grade.Name,
+            LessonTitle = x.Lessons.FirstOrDefault().Lesson.Lesson.LessonName,
+            FieldName = x.Lessons.FirstOrDefault().Lesson.Field.Name,
+            LessonCode = x.Lessons.FirstOrDefault().Lesson.Lesson.LessonCode,
             Contents = x.Contents.Select(c =>
                 new CourseItemViewModel
                 {
