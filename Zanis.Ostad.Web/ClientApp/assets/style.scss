@@ -287,19 +287,19 @@ a {
   height: 100px;
   background-color: $yello;
 }
-.two-side-title{
-  color:#535252;
-  text-align:center;
+.two-side-title {
+  color: #535252;
+  text-align: center;
   position: relative;
-  &:before,&:after{
-        top: 13px;
-        content: " ";
-        background-color: #afafaf;
-        width: 44%;
-        height: 2px;
-        position: absolute;
+  &:before, &:after {
+    top: 13px;
+    content: " ";
+    background-color: #afafaf;
+    width: 44%;
+    height: 2px;
+    position: absolute;
 
-      }
+  }
   &:before{
     right: 0px;
   }
@@ -307,6 +307,7 @@ a {
     left: 0px;
   }
 }
+
 
 #support-nav {
   padding-left: 0px;
