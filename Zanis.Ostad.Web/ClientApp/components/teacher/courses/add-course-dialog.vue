@@ -8,16 +8,16 @@
               <el-progress v-show="uploadProgress" :percentage="uploadProgress"></el-progress>
               <el-form-item
                 prop="courseTitle"
-                :rules="[{ required: true, message: 'وارد کردن عنوان الزامی می باشد'}]"
+                :rules="[{ required: true, message: 'وارد کردن عنوان محتوا الزامی می باشد'}]"
                 label="عنوان">
-                <el-input type="text" placeholder="عنوان" v-model="form.courseTitle"></el-input>
+                <el-input type="text" placeholder="عنوان محتوا" v-model="form.courseTitle"></el-input>
               </el-form-item>
               <el-form-item
                 prop="courseCategoryId"
-                :rules="[{ required: true, message: 'انتخاب کردن عنوان محتوا الزامی می باشد'}]"
-                label="عنوان محتوا">
+                :rules="[{ required: true, message: 'انتخاب کردن عنوان نوع محتوا الزامی می باشد'}]"
+                label="نوع محتوا">
 
-                <el-select v-model="form.courseCategoryId" placeholder="عنوان محتوا" class="w100">
+                <el-select v-model="form.courseCategoryId" placeholder="نوع محتوا" class="w100">
                   <el-option
                     v-for="item in courseTitles"
                     :key="item.value"
@@ -168,7 +168,7 @@
         close: false,
         itemEdited: null,
         uploadProgress: 0,
-        courseTitles: [],
+        courseCategory: [],
         responseCourseId: 0,
         courseItems: [],
         form: {
@@ -186,9 +186,9 @@
         this.form.courseTitleId = this.preSelectedCourseTitleId;
     },
     methods: {
-      getCourseTitles() {
+      getCourseCategorys() {
         axios.get("/api/courseTitles").then(res => {
-          this.courseTitles = res.data;
+          this.courseCategory = res.data;
         });
       },
       addItemToCourseItems(item) {
@@ -197,7 +197,6 @@
       selectLesson(item) {
         let id = item.map(x => x.id);
         this.form.lessonFieldId.push(id);
-        console.log(this.form.lessonFieldId);
       },
       closeSearchDialog() {
         this.isLessonsearchDialog = false;
@@ -216,12 +215,6 @@
         }
         this.$refs.form.validate(valid => {
           if (valid) {
-            /*       let data = new FormData();
-                   data.append("Price", this.form.price);
-                   data.append("Description", this.form.description);
-                   data.append("TeacherMessageForAdmin", this.form.teacherMessage);
-                   data.append("courseCategoryId", this.form.courseCategoryId);
-                   data.append("LessonFieldIds", this.form.lessonFieldId);*/
             axios
               .post("/api/TeacherAccount/courses", {
                 price: this.form.price,
@@ -252,7 +245,8 @@
       }
     },
     mounted() {
-      this.getCourseTitles();
+      //this.getCourseTitles();
+      this.getCourseCategorys();
     }
   };
 </script>
