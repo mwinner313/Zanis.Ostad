@@ -13,44 +13,47 @@
         <b-collapse is-nav id="nav_collapse">
 
           <b-navbar-nav>
-            <b-nav-item href="#" @click="showLoginModal">
-              ورود
-            </b-nav-item>
+            <!--<b-nav-item href="#" @click="showLoginModal">-->
+              <!--<button class="login-btn">ورود</button>-->
+            <!--</b-nav-item>-->
             <b-nav-item href="#" @click="showRegisterModal">
-              ثبت نام
+              <button class="signup-btn"> ورود / ثبت نام</button>
             </b-nav-item>
-          </b-navbar-nav>
-
-          <ul class="navbar-nav ml-auto">
-            <!--<li class="nav-item profile-item-container d-none d-sm-block"  v-if="user">-->
-            <!--<a href="#" class="nav-link"> <i class="fas fa-user"></i> {{user.fullName}} </a>-->
-            <!--<div class="profile-items">-->
-            <!--<ul>-->
-            <!--<li>-->
-            <!--<router-link to="/my-lessons"> دروس من</router-link>-->
-            <!--</li>-->
-            <!--</ul>-->
-            <!--</div>-->
-            <!--</li>-->
-
-            <li  class="nav-item  cart-container d-none d-sm-block">
-              <a href="#" class="nav-link"> <i class="fas fa-shopping-cart "></i> &nbsp; سبد خرید
-                <i class="fas fa-caret-down "></i> </a>
+            <li class="nav-item  cart-container d-none d-sm-block">
+              <a class="cart-btn"> <i class="fas fa-shopping-cart"></i> &nbsp;</a>
               <div class="cart">
                 <cart></cart>
               </div>
             </li>
 
-            <li v-if="user" class="navbar-nav">
-              <router-link to="/user" class="nav-link">  <i class="fas fa-user"></i> {{user.fullName}} </router-link>
-            </li>
-
             <li v-b-modal.modal1 class="navbar-nav d-block d-sm-none">
               <a href="#" class="nav-link"> <i class="fas fa-shopping-cart "></i> سبد خرید</a>
             </li>
+          </b-navbar-nav>
+
+          <ul class="navbar-nav ml-auto">
+            <li v-if="user" class="navbar-nav">
+              <div class="drop-down">
+                <div id="dropDown" class="drop-down__button">
+                  <span class="drop-down__name"  @click="userMenuToggled=!userMenuToggled">
+                    {{user.fullName}}
+                    </span>
+                </div>
+                <div class="drop-down__menu-box" v-show="userMenuToggled">
+                  <ul class="drop-down__menu" >
+                    <li data-name="profile" class="drop-down__item"> <router-link to="/user" ><i class="fas fa-user"></i> &nbsp;حساب کاربری </router-link> </li>
+                    <li @click="signOut" data-name="profile" class="drop-down__item">خروج</li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+            &nbsp;
+            <li>
+              <a href="/start-teaching">
+                  <button class="start-teaching">شروع تدریس</button>
+              </a>
+            </li>
           </ul>
-
-
         </b-collapse>
       </div>
     </b-navbar>
@@ -65,8 +68,8 @@
 
 <script>
   import Cart from './cart'
-  import storage from 'storage-helper'
   import EventBus from '../../../../event-bus'
+  import storage from 'storage-helper'
 
   export default {
     name: "",
@@ -75,7 +78,8 @@
     },
     data() {
       return {
-        user: null
+        user: null,
+        userMenuToggled:false
       }
     },
     methods: {
@@ -84,6 +88,11 @@
       },
       showRegisterModal() {
         this.$root.$emit('bv::show::modal', 'register-dialog')
+      },
+      signOut(){
+        this.user = undefined;
+        storage.setItem('Authorization',undefined);
+        storage.setItem('user',undefined);
       }
     },
     mounted() {
@@ -97,8 +106,4 @@
 </script>
 
 <style scoped>
-  .navbar-toggler {
-    background-color: wheat;
-  }
-
 </style>

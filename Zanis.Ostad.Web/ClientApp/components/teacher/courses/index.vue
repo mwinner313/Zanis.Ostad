@@ -7,8 +7,6 @@
       </el-button>
     </div>
     <el-table height="500" :data="courseData" size="large">
-
-
       <el-table-column label="عنوان">
         <template slot-scope="scope">
           {{ scope.row.title}}

@@ -1,36 +1,24 @@
 <template>
-  <header class="main-header">
-
-    <main-nav></main-nav>
-    <div id="header-content-wrapper">
-      <!--<nav class="navbar navbar-expand-lg navbar-light ">-->
-        <!--<div class="container " id="support-nav">-->
-          <!--<ul class="navbar-nav mr-auto ">-->
-            <!--<li class="nav-item active">-->
-              <!--<a class="nav-link" href="#">درباره ما</a>-->
-            <!--</li>-->
-            <!--<li class="nav-item ">-->
-              <!--<a class="nav-link no-margin" href="#">درباره ما</a>-->
-            <!--</li>-->
-          <!--</ul>-->
-          <!--<div class="float-left">-->
-            <!--<ul class="navbar-nav mr-auto ">-->
-              <!--<li class="nav-item active ">-->
-                <!--<a class="nav-link no-margin" href="#">درباره ما</a>-->
-              <!--</li>-->
-            <!--</ul>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</nav>-->
-      <div class="d-flex " id="intro-image-wrapper">
-        <img src="../../../../assets/images/header-lines.png" alt=""/>
-      </div>
-    </div>
-  </header>
+ <div>
+   <header class="main-header">
+     <main-nav></main-nav>
+     <div id="intro-wrapper" class="container">
+       <div class="row">
+         <div class="col-12">
+           <h1>آموزش تصویری و تخصصی دروس دانشگاهی </h1>
+           <h2>  آموزش ، آزمون، حل تمرین</h2>
+           <h2>  نمونه سوالات 10 ترم</h2>
+         </div>
+       </div>
+     </div>
+   </header>
+   <div class="yellow-large-separator"></div>
+ </div>
 </template>
 
 <script>
   import MainNav from './main-nav'
+
   export default {
     name: "main-layout-header",
     components: {
