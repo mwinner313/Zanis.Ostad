@@ -23,7 +23,7 @@ import UserLayout from '../components/layouts/user'
 import TeacherLayout from '../components/layouts/teacher'
 import EditorLayout from '../components/layouts/editor'
 import UserManagement from '../components/admin/users'
-
+import StartTeaching from '../components/home/start-teaching'
 export const routes = [
   {
     name: 'main', path: '', component: MainLayout, display: 'Home', icon: 'home',
@@ -32,6 +32,11 @@ export const routes = [
         name: 'home',
         path: "/",
         component: HomePage
+      },
+      {
+        name: 'start-teaching',
+        path: "/start-teaching",
+        component: StartTeaching
       },
       {
         name: 'lesson',

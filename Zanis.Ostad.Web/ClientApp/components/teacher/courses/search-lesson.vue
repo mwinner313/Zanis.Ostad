@@ -89,8 +89,11 @@
           </el-table>
         </el-card>
       </el-col>
-      <el-col :md="12" :lg="12">
+      <el-col :md="12" :lg="12" v-show="finalySelectedItems.length">
         <el-card>
+          <p>دروس انتخابی شما
+            <button @click="submit" class="xanis-btn float-right">ثبت</button>
+          </p>
           <el-table :data="finalySelectedItems">
             <el-table-column label="نام درس">
               <template slot-scope="scope">{{ scope.row.lessonName }}</template>
@@ -104,7 +107,7 @@
               <template slot-scope="scope">{{ scope.row.fieldName }}</template>
             </el-table-column>
 
-            <el-table-column label="حذف">
+            <el-table-column label="">
               <template slot-scope="scope">
                 <i class="fas fa-trash-alt pointer" @click="deleteItemSelected(scope.row.id)"></i>
               </template>
@@ -179,12 +182,14 @@
         this.finalySelectedItems.push(...this.lessonItems.filter((item) => this.selectedLessons.some((select) => item.id === select
           && !this.finalySelectedItems.some(x => x.id === select))));
         this.selectedLessons = [];
-        this.$emit('lessonSelected', this.finalySelectedItems);
-        this.$emit('close');
       },
       deleteItemSelected(id) {
         this.finalySelectedItems = this.finalySelectedItems.filter(item => item.id !== id);
       },
+      submit(){
+        this.$emit('lessonsSelected',this.finalySelectedItems.map(x=>x.id));
+        this.$emit('close')
+      }
     },
     computed: {
       canNotSearchForLessons() {

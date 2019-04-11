@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog title="افزودن دوره" :visible.sync="isOpen" width="80%" @closed="$emit('close')">
+    <el-dialog title="ثبت دوره" :visible.sync="isOpen" width="80%" @closed="$emit('close')">
       <el-row>
         <el-col :md="12">
           <el-card shadow="always">
@@ -8,18 +8,18 @@
               <el-progress v-show="uploadProgress" :percentage="uploadProgress"></el-progress>
               <el-form-item
                 prop="courseTitle"
-                :rules="[{ required: true, message: 'وارد کردن عنوان محتوا الزامی می باشد'}]"
+                :rules="[{ required: true, message: 'وارد کردن عنوان دوره الزامی می باشد'}]"
                 label="عنوان">
-                <el-input type="text" placeholder="عنوان محتوا" v-model="form.courseTitle"></el-input>
+                <el-input type="text" placeholder="عنوان دوره" v-model="form.courseTitle"></el-input>
               </el-form-item>
               <el-form-item
                 prop="courseCategoryId"
-                :rules="[{ required: true, message: 'انتخاب کردن عنوان نوع محتوا الزامی می باشد'}]"
-                label="نوع محتوا">
+                :rules="[{ required: true, message: 'انتخاب کردن عنوان نوع دوره الزامی می باشد'}]"
+                label="نوع دوره">
 
-                <el-select v-model="form.courseCategoryId" placeholder="نوع محتوا" class="w100">
+                <el-select v-model="form.courseCategoryId" placeholder="نوع دوره" class="w100">
                   <el-option
-                    v-for="item in courseTitles"
+                    v-for="item in courseCategories"
                     :key="item.value"
                     :label="item.name"
                     :value="item.id"
@@ -65,13 +65,14 @@
               </el-form-item>
 
               <el-form-item>
-                <el-button
+
+                <button
                   type="primary"
-                  class="sendBtn w100"
+                  class="sendBtn w100 xanis-btn"
                   size="medium"
-                  @click="registerLesson"
+                  @click.prevent="registerLesson"
                 >ارسال
-                </el-button>
+                </button>
               </el-form-item>
             </el-form>
           </el-card>
@@ -85,10 +86,12 @@
             :closable="false"
             show-icon
           ></el-alert>
+
           <div class="upload-course-item-wrapper">
             <div class="btn-upload-wrapper">
-              <el-button type="primary" @click="itemEdited={}">افزودن سرفصل جدید</el-button>
+              <button class="xanis-btn-secondary" @click.prevent="editingItem={}">افزودن سرفصل جدید</button>
             </div>
+
             <div class="details-item-wrapper mg-r-t-15">
               <div
                 class="item"
@@ -104,7 +107,7 @@
                 </div>
                 <div class="content-item">
                   <p>
-                    توضیحات
+                    توضیحات <br><br>
                     <span>{{item.teacherMessageForAdmin}}</span>
                   </p>
                 </div>
@@ -117,6 +120,7 @@
               </div>
             </div>
           </div>
+
         </el-col>
       </el-row>
     </el-dialog>
@@ -125,15 +129,15 @@
     <searchLesson
       :isOpen="!!isLessonsearchDialog"
       @close="isLessonsearchDialog=undefined"
-      @lessonSelected="selectLesson"
+      @lessonsSelected="selectLessons"
     ></searchLesson>
 
     <!-- addCourseListDialog -->
     <addCourseItemDialog
       @submit="addItemToCourseItems"
-      :isOpen="!!itemEdited"
-      :isEdited="itemEdited"
-      @close="itemEdited=undefined"
+      :isOpen="!!editingItem"
+      :editingItem="editingItem"
+      @close="editingItem=undefined"
     ></addCourseItemDialog>
   </div>
 </template>
@@ -166,14 +170,13 @@
         itemSelectedLesson: "",
         selectedLesson: null,
         close: false,
-        itemEdited: null,
+        editingItem: null,
         uploadProgress: 0,
-        courseCategory: [],
+        courseCategories: [],
         responseCourseId: 0,
         courseItems: [],
         form: {
           price: undefined,
-          description: "",
           courseCategoryId: "",
           courseTitle: "",
           teacherMessage: "",
@@ -186,17 +189,20 @@
         this.form.courseTitleId = this.preSelectedCourseTitleId;
     },
     methods: {
-      getCourseCategorys() {
-        axios.get("/api/courseTitles").then(res => {
-          this.courseCategory = res.data;
+      getCourseCategories() {
+        axios.get("/api/courseCategories").then(res => {
+          this.courseCategories = res.data;
         });
       },
       addItemToCourseItems(item) {
+        if (item.editing) {
+          item.editing = undefined;
+          this.courseItems.splice(_.findIndex(x => x.editing), 1, item);
+        }else
         this.courseItems.push(item);
       },
-      selectLesson(item) {
-        let id = item.map(x => x.id);
-        this.form.lessonFieldId.push(id);
+      selectLessons(lessonIds) {
+        this.form.lessonFieldId=lessonIds;
       },
       closeSearchDialog() {
         this.isLessonsearchDialog = false;
@@ -241,12 +247,12 @@
         });
       },
       editItem(item) {
-        this.editItem = item;
+        this.editingItem = item;
+        this.editingItem.editing = true;
       }
     },
     mounted() {
-      //this.getCourseTitles();
-      this.getCourseCategorys();
+      this.getCourseCategories();
     }
   };
 </script>
@@ -273,49 +279,12 @@
     margin-top: 15px;
   }
 
-  .el-card__header {
-    padding-bottom: 0px !important;
-  }
-
   .w100 {
     width: 100%;
   }
 
-  .sendBtn {
-    margin-left: 10px;
-    color: #fff !important;
-  }
-
-  .el-upload,
-  .el-upload-dragger {
-    width: 100%;
-  }
-
-  .a {
-    z-index: -1;
-  }
-
-  .white {
-    color: #fff !important;
-  }
-
-  .el-tag {
-    display: inline;
-
-    float: left;
-
-    text-align: center;
-
-    font-size: 14px;
-  }
-
-  .description-Added-Course {
-    margin-right: 16px;
-  }
-
   .description-Added-Course .title-Description {
     text-align: justify;
-
     line-height: 10px;
   }
 </style>

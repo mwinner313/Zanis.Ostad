@@ -94,4 +94,8 @@
     color: white;
     cursor: pointer;
   }
+  .no-margin {
+    margin: 0px !important;
+  }
+
 </style>

@@ -59,6 +59,79 @@
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import '../../../../assets/_variables.scss';
+footer {
+  background-color: #414040;
+  padding-top: 110px;
+  .social-links {
+    margin-top: 50px;
+    ul {
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      li {
+        @media only screen and (max-device-width: 768px) {
+          margin: 0 7px;
+          padding: 25px;
+          font-size: 26px;
+          color: white;
+        }
+        cursor: pointer;
+        margin: 0 17px;
+        padding: 30px;
+        font-size: 34px;
+        border: 1px solid white;
+        color: white;
+        border-radius: 37px;
+        transition: all 0.3s;
+        position: relative;
+        a {
+          left: 25%;
+          top: 18%;
+          position: absolute;
+          i {
+            transition: all 0.3s;
+          }
+        }
+        &:hover {
+          border: 1px solid $yellow !important;
+          a {
+            i {
+              color: $yellow;
+            }
+          }
+        }
+      }
+    }
+    margin-bottom: 21px;
+  }
+  .copyright {
+    font-size: 16px;
+  }
+  .other-links {
+    @media only screen and (max-device-width: 768px) {
+      padding-right: 10px;
+      padding-top: 30px;
+    }
+    padding-right: 82px;
+    ul {
+      padding: 0px;
+      margin-top: 33px;
+      list-style: none;
+      li {
+        font-size: 16px;
+        padding-top: 16px;
+        transition: all 0.3s;
+        color: white;
+        :hover {
+          color: $yellow;
+        }
+      }
+    }
+  }
+}
 
 </style>

@@ -55,6 +55,46 @@
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
+  .universities {
+    margin: 27px 0 78px 0;
+  }
+
+  .university-box {
+    width: 212px;
+    margin: 5px;
+  figure {
+    margin: 0;
+  }
+  background-color: white;
+  box-shadow: 1px 0px 13px -7px #000000;
+  span {
+    font-size: 25px;
+    padding-bottom: 24px;
+    color: #535252;
+    font-weight: lighter;
+    display: block;
+  }
+  text-align: center;
+  }
+  .two-side-title {
+    color: #535252;
+    text-align: center;
+    position: relative;
+    &:before, &:after {
+      top: 13px;
+      content: " ";
+      background-color: #afafaf;
+      width: 44%;
+      height: 2px;
+      position: absolute;
+    }
+    &:before {
+      right: 0px;
+    }
+    &:after {
+      left: 0px;
+    }
+  }
 </style>

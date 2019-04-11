@@ -26,4 +26,7 @@
 </script>
 
 <style scoped>
+  main {
+    margin: 40px 0 0 0;
+  }
 </style>

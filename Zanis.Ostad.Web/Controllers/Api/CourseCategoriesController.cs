@@ -9,10 +9,10 @@ using Zanis.Ostad.Web.Infrastracture;
 namespace Zanis.Ostad.Web.Controllers.Api
 {
     [Route("api/[controller]")]
-    public class CourseTitlesController : BaseController
+    public class CourseCategoriesController : BaseController
     {
         private readonly IMediator _mediator;
-        public CourseTitlesController(IMediator mediator)
+        public CourseCategoriesController(IMediator mediator)
         {
             _mediator = mediator;
         }

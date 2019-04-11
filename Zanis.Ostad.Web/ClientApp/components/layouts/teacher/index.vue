@@ -79,14 +79,12 @@
               <span slot="title">دروس تدریس شده</span>
             </el-menu-item>
           </router-link>
-
-           <router-link to="/teacher/notifications">
+          <router-link to="/teacher/notifications">
             <el-menu-item index="6">
-             <i class="far fa-envelope"></i>
+              <i class="far fa-envelope"></i>
               <span slot="title">پیام های من</span>
             </el-menu-item>
           </router-link>
-
         </el-menu>
       </el-aside>
       <el-main class="page-content">
@@ -97,104 +95,106 @@
 </template>
 
 <style>
-.el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 200px;
-}
+  .el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: 200px;
+  }
 
-.el-menu-vertical-demo {
-  height: 100%;
-}
-i {
-  font-size: 20px;
-  margin: 5px;
-}
-.header {
-  display: flex;
-  flex-direction: row;
-  color: white;
-  align-items: center;
-}
+  .el-menu-vertical-demo {
+    height: 100%;
+  }
 
-.menu-toggle {
-  padding: 0 24px 0 40px;
-  color: white;
-  cursor: pointer;
-}
+  i {
+    font-size: 20px;
+    margin: 5px;
+  }
 
-.page-content {
-  background-image: url("/assets/images/mooning.png");
-  background-repeat: repeat;
-  margin: 0px;
-}
+  .header {
+    display: flex;
+    flex-direction: row;
+    color: white;
+    align-items: center;
+  }
 
-.user-wrapper {
-  width: 100%;
-  height: 100%;
-}
+  .menu-toggle {
+    padding: 0 24px 0 40px;
+    color: white;
+    cursor: pointer;
+  }
+
+  .page-content {
+    background-image: url("/assets/images/mooning.png");
+    background-repeat: repeat;
+    margin: 0px;
+  }
+
+  .user-wrapper {
+    width: 100%;
+    height: 100%;
+  }
 </style>
 
 <script>
-import axios from "axios";
-import EventBus from "../../../event-bus";
-import logo from "../../../assets/images/ostad-glass-CMYK.png";
+  import axios from "axios";
+  import EventBus from "../../../event-bus";
+  import logo from "../../../assets/images/ostad-glass-CMYK.png";
 
-export default {
-  data() {
-    return {
-      logo: logo,
-      unReadTicketItemCount: undefined,
-      asideWidth: "200px",
-      isCollapse: false,
-      notifiData: [],
-      notifiParams: {
-        JustNewOnes: true,
-        NoPaginate: true,
-        PageSize: 0,
-        PageOffset: 0
+  export default {
+    data() {
+      return {
+        logo: logo,
+        unReadTicketItemCount: undefined,
+        asideWidth: "200px",
+        isCollapse: false,
+        notifiData: [],
+        notifiParams: {
+          JustNewOnes: true,
+          NoPaginate: true,
+          PageSize: 0,
+          PageOffset: 0
+        }
+      };
+    },
+    mounted() {
+      if (window.location.pathname === "/user")
+        this.$router.push({name: "user-dashboard", params: {}});
+      this.loadSideBarNotificationsCount();
+      EventBus.$on("userOpenedUnReadTicketItem", () => {
+        this.loadUnReadTicketItemsCount();
+      });
+    },
+    methods: {
+      getNotifi() {
+        axios
+          .get("/api/Notification", {params: this.notifiParams})
+          .then(res => {
+            this.notifiData = res.data.items;
+            console.log(res.data.items);
+          });
+      },
+      toggleSideMenu() {
+        this.isCollapse = !this.isCollapse;
+        window.setTimeout(
+          () => (this.asideWidth = this.isCollapse ? "67px" : "203px"),
+          100
+        );
+      },
+      loadSideBarNotificationsCount() {
+        this.loadUnReadTicketItemsCount();
+      },
+      loadUnReadTicketItemsCount() {
+        axios
+          .get("/api/account/tickets", {params: {pageOffset: 0, pageSize: 1}})
+          .then(res => {
+            this.unReadTicketItemCount = res.data.metaData.unReadTicketItemCount;
+          });
       }
-    };
-  },
-  mounted() {
-    if (window.location.pathname === "/user")
-      this.$router.push({ name: "user-dashboard", params: {} });
-    this.loadSideBarNotificationsCount();
-    EventBus.$on("userOpenedUnReadTicketItem", () => {
-      this.loadUnReadTicketItemsCount();
-    });
-  },
-  methods: {
-    getNotifi() {
-      axios
-        .get("/api/Notification", { params: this.notifiParams })
-        .then(res => {
-          this.notifiData = res.data.items;
-          console.log(res.data.items);
-        });
-    },
-    toggleSideMenu() {
-      this.isCollapse = !this.isCollapse;
-      window.setTimeout(
-        () => (this.asideWidth = this.isCollapse ? "67px" : "203px"),
-        100
-      );
-    },
-    loadSideBarNotificationsCount() {
-      this.loadUnReadTicketItemsCount();
-    },
-    loadUnReadTicketItemsCount() {
-      axios
-        .get("/api/account/tickets", { params: { pageOffset: 0, pageSize: 1 } })
-        .then(res => {
-          this.unReadTicketItemCount = res.data.metaData.unReadTicketItemCount;
-        });
     }
-  }
-};
+  };
 </script>
 
 <style scoped>
-.small-icon {
-  font-size: 16px;
+  .small-icon {
+    font-size: 16px;
 
-}
+  }
 </style>
