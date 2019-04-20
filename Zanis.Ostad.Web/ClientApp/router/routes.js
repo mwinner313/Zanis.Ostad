@@ -24,6 +24,8 @@ import TeacherLayout from '../components/layouts/teacher'
 import EditorLayout from '../components/layouts/editor'
 import UserManagement from '../components/admin/users'
 import StartTeaching from '../components/home/start-teaching'
+import ContentExplorer from '../components/home/content-explorer'
+
 export const routes = [
   {
     name: 'main', path: '', component: MainLayout, display: 'Home', icon: 'home',
@@ -57,6 +59,15 @@ export const routes = [
         name: 'changepassword',
         path: '/changepassword',
         component: ChangePassword
+      },{
+        name: 'content-explorer-by-college',
+        path: '/college/:collegeId-:collegePermaLink',
+        component:ContentExplorer
+      },
+      {
+        name: 'content-explorer-by-college-and-field',
+        path: '/college/:collegeId-:collegePermaLink?/grade/:gradeId-:gradePermaLink?/field/:fieldId-:fieldPermaLink?',
+        component:ContentExplorer
       },
     ]
   },
@@ -195,4 +206,8 @@ export const routes = [
       { path: "*", redirect: 'dashboard' }
     ]
   },
+  {
+    path: '*',
+    redirect: '/'
+  }
 ];

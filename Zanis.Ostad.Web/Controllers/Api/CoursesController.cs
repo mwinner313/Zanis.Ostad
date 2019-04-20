@@ -9,6 +9,7 @@ using Zains.Ostad.Application.Courses.Queries.GetCourseDetails;
 using Zains.Ostad.Application.Courses.Queries.GetCourseList;
 using Zains.Ostad.Application.Infrastucture;
 using Zanis.Ostad.Core.Dtos;
+using Zanis.Ostad.Core.Entities.Contents;
 using Zanis.Ostad.Web.Infrastracture;
 
 namespace Zanis.Ostad.Web.Controllers.Api
@@ -37,6 +38,12 @@ namespace Zanis.Ostad.Web.Controllers.Api
         [HttpGet]
         public async Task<ActionResult<PagenatedList<CourseDto>>> Get(GetCourseListQuery query)
         {
+            return Ok(await _mediator.Send(query));
+        }
+        [HttpGet("actives")]
+        public async Task<ActionResult<PagenatedList<CourseDto>>> GetActives(GetCourseListQuery query)
+        {
+            query.Status = CourseApprovalStatus.ApprovedByAdminOrActivatedByTeacher;
             return Ok(await _mediator.Send(query));
         }
 

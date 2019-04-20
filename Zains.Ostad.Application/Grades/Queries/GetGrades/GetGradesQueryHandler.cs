@@ -11,7 +11,9 @@ using Zanis.Ostad.Core.Entities;
 
 namespace Zains.Ostad.Application.Grades.Queries.GetGrades
 {
-    public class GetGradesQueryHandler:IRequestHandler<GetGradesQuery,List<GradeViewModel>>
+    public class GetGradesQueryHandler:IRequestHandler<GetGradesQuery,List<GradeViewModel>>,
+        IRequestHandler<GetGradeQuery,GradeViewModel>
+
     {
         private readonly IRepository<Grade, int> _gradesRepository;
         private readonly IMapper _mapper;
@@ -24,6 +26,12 @@ namespace Zains.Ostad.Application.Grades.Queries.GetGrades
         public Task<List<GradeViewModel>> Handle(GetGradesQuery request, CancellationToken cancellationToken)
         {
             return _gradesRepository.GetQueryable().Where(x=>x.IsActive).ProjectTo<GradeViewModel>(_mapper.ConfigurationProvider).ToListAsync();
+        }
+
+        public async Task<GradeViewModel> Handle(GetGradeQuery request, CancellationToken cancellationToken)
+        {
+            var grade =await _gradesRepository.GetById(request.GradeId);
+            return _mapper.Map<GradeViewModel>(grade);
         }
     }
 }

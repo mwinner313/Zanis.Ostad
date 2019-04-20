@@ -1,7 +1,6 @@
 <template>
   <el-container class="admin-wrapper">
-    <el-header class="header" style="padding:0px;    background-color: #1fc8db;
-            background-image: linear-gradient(141deg, rgb(93, 122, 226) 0%, rgb(31, 200, 219) 51%, rgb(44, 181, 232) 75%); position:relative">
+    <el-header class="header" >
       <span class="menu-toggle" @click="toggleSideMenu"><i class="fas fa-bars"></i></span>
       <router-link to="/">
         <img :src="logo" height="48" alt=""></router-link>
@@ -81,6 +80,8 @@
     flex-direction: row;
     color: white;
     align-items: center;
+    padding:0px;    background-color: #1fc8db;
+    background-image: linear-gradient(to right, #282e37, #2a353e, #2b3d45, #2d444a, #304c4e);
   }
 
   .menu-toggle {

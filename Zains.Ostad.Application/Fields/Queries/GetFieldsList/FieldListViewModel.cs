@@ -8,5 +8,6 @@ namespace Zains.Ostad.Application.Fields.Queries.GetFieldsList
         public int? CollegeId { get; set; }
         public int GradeId { get; set; }
         public string GradeName { get; set; }
+        public string PermaLink { get; set; }
     }
 }

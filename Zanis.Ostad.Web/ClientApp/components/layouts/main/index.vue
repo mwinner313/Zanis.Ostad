@@ -57,91 +57,6 @@
   color: white;
 }
 
-@font-face {
-  font-family: BalvardiDastnevis;
-  font-style: normal;
-  src: url('../../../assets/fonts/balvardidastnevisfree.eot');
-  src: url('../../../assets/fonts/balvardidastnevisfree.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
-  url('../../../assets/fonts/balvardidastnevisfree.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/
-  url('../../../assets/fonts/balvardidastnevisfree.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
-  url('../../../assets/fonts/balvardidastnevisfree.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: "EntezareZohoor B3";
-  font-style: normal;
-  src: url('../../../assets/fonts/entezarb3-v2-0-1-p30download-com.eot');
-  src: url('../../../assets/fonts/entezarb3-v2-0-1-p30download-com.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
-  url('../../../assets/fonts/entezarb3-v2-0-1-p30download-com.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/
-  url('../../../assets/fonts/entezarb3-v2-0-1-p30download-com.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
-  url('../../../assets/fonts/entezarb3-v2-0-1-p30download-com.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: IRANSans;
-  font-style: normal;
-  font-weight: bold;
-  src: url('../../../assets/fonts/eot/IRANSansWeb_Bold.eot');
-  src: url('../../../assets/fonts/eot/IRANSansWeb_Bold.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
-  url('../../../assets/fonts/woff2/IRANSansWeb_Bold.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/
-  url('../../../assets/fonts/woff/IRANSansWeb_Bold.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
-  url('../../../assets/fonts/ttf/IRANSansWeb_Bold.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: IRANSans;
-  font-style: normal;
-  font-weight: 500;
-  src: url('../../../assets/fonts/eot/IRANSansWeb_Medium.eot');
-  src: url('../../../assets/fonts/eot/IRANSansWeb_Medium.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
-  url('../../../assets/fonts/woff2/IRANSansWeb_Medium.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/
-  url('../../../assets/fonts/woff/IRANSansWeb_Medium.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
-  url('../../../assets/fonts/ttf/IRANSansWeb_Medium.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: IRANSans;
-  font-style: normal;
-  font-weight: 300;
-  src: url('../../../assets/fonts/eot/IRANSansWeb_Light.eot');
-  src: url('../../../assets/fonts/eot/IRANSansWeb_Light.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
-  url('../../../assets/fonts/woff2/IRANSansWeb_Light.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/
-  url('../../../assets/fonts/woff/IRANSansWeb_Light.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
-  url('../../../assets/fonts/ttf/IRANSansWeb_Light.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: IRANSans;
-  font-style: normal;
-  font-weight: 200;
-  src: url('/fonts/eot/IRANSansWeb_UltraLight.eot');
-  src: url('../../../assets/fonts/eot/IRANSansWeb_UltraLight.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
-  url('../../../assets/fonts/woff2/IRANSansWeb_UltraLight.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/
-  url('../../../assets/fonts/woff/IRANSansWeb_UltraLight.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
-  url('../../../assets/fonts/ttf/IRANSansWeb_UltraLight.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: IRANSans;
-  font-style: normal;
-  font-weight: normal;
-  src: url('../../../assets/fonts/eot/IRANSansWeb.eot');
-  src: url('../../../assets/fonts/eot/IRANSansWeb.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
-  url('../../../assets/fonts/woff2/IRANSansWeb.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/
-  url('../../../assets/fonts/woff/IRANSansWeb.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
-  url('../../../assets/fonts/ttf/IRANSansWeb.ttf') format('truetype');
-}
-
-*,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: IRANSans;
-}
-
 .el-button {
   margin: 0 3px !important;
 }
@@ -191,18 +106,6 @@ body, html {
   color: green;
 }
 
-button {
-  outline: none !important;
-  &:focus {
-    outline: none !important;
-  }
-  cursor: pointer;
-  border: 0px solid red;
-  padding: 7px 10px;
-  border-radius: 3px;
-  color: #717171;
-  background-color: #efe778;
-}
 
 .btn {
   box-shadow: 1px 2px 10px 2px #bdbdbd;

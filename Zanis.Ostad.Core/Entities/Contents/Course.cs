@@ -20,6 +20,8 @@ namespace Zanis.Ostad.Core.Entities.Contents
         public bool HasPendingItemToApprove { get; set; }
         public long TeacherId { get; set; }
         public User Teacher { get; set; }
+        public string ImagePath { get; set; }
+        public TimeSpan Duration { get; set; }
         public string Title { get; set; }
     }
 }

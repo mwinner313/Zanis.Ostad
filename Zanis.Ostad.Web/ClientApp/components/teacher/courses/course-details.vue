@@ -17,7 +17,7 @@
       <p
         v-show="courseDetail.adminMessageForTeacher"
         class="message-admin-for-teacher-wrapper">
-        <span>توضیحات مدیر سیستم برای استاد</span>
+        <span>پیام مدیر</span>
         <br>
         {{courseDetail.adminMessageForTeacher}}
       </p>

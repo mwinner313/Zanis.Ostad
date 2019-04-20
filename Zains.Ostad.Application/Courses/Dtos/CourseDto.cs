@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Zains.Ostad.Application.Lessons.Queries.GetLessonList;
 using Zanis.Ostad.Core.Entities.Contents;
 
 namespace Zains.Ostad.Application.Courses.Dtos
@@ -13,12 +14,10 @@ namespace Zains.Ostad.Application.Courses.Dtos
         public ContentType PreviewType { get; set; }
         public CourseApprovalStatus ApprovalStatus { get; set; }
         public string PreviewFilePath { get; set; }
-        public string GradeTitle { get; set; }
-        public List<string> RelatedFields { get; set; }
+        public List<LessonFieldViewModel> RelatedLessonFields { get; set; }
         public List<CourseItemViewModel> Contents { get; set; }
         public bool IsOwnedByCurrentUser { get; set; }
         public long Id { get; set; }
-        public string LessonCode { get; set; }
         public string Description { get; set; }
         public string TeacherAvatar { get; set; }
         public bool HasPendingItemToApprove { get; set; }
@@ -28,5 +27,7 @@ namespace Zains.Ostad.Application.Courses.Dtos
         public DateTime CreatedOn { get; set; }
         public string LessonTitle { get; set; }
         public string FieldName { get; set; }
+        public string ImagePath { get; set; }
+        public TimeSpan Duration { get; set; }
     }
 }

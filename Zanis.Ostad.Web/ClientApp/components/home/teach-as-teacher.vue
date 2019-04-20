@@ -2,8 +2,8 @@
  <div>
    <div class="yellow-small-separator"></div>
    <div class="teach-as-teacher">
-      <h3>به عنوان مدرس در استاد زانیس آموزش دهید</h3>
-     <button>شروع تدریس</button>
+     <h3>به عنوان مدرس در استاد زانیس آموزش دهید</h3>
+     <router-link to="/start-teaching"><button>شروع تدریس</button></router-link>
    </div>
  </div>
 </template>

@@ -11,6 +11,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.Webpack;
@@ -77,6 +78,10 @@ namespace Zanis.Ostad.Web
 
         private static void ConfigureIdentitySystem(IServiceCollection services)
         {
+            services.Configure<FormOptions>(x =>
+            {
+                x.MultipartBodyLengthLimit = 419430400;
+            });
             services.AddIdentity<User, Role>().AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
             services.AddScoped<UserManager<User>, AppUserManager>();
@@ -127,7 +132,7 @@ namespace Zanis.Ostad.Web
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddFluentValidation(x =>
                 {
-                    x.RegisterValidatorsFromAssembly(typeof(GetCollegeQuery).Assembly);
+                    x.RegisterValidatorsFromAssembly(typeof(GetCollegesQuery).Assembly);
                     x.LocalizationEnabled = true;
                     ValidatorOptions.LanguageManager.Culture = new CultureInfo("fa-IR");
                 });

@@ -6,14 +6,14 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Zanis.Ostad.Core.Contracts;
 using Zanis.Ostad.Core.Entities;
 using Zanis.Ostad.Core.Entities.Cart;
 
 namespace Zains.Ostad.Application.Colleges.Queries.GetCollegeList
 {
-    public class GetCollegeQueryHandler : IRequestHandler<GetCollegeQuery, List<CollegeListViewModel>>
+    public class GetCollegeQueryHandler : IRequestHandler<GetCollegesQuery, List<CollegeListViewModel>>
+    ,IRequestHandler<GetCollegeDetailsQuery,CollegeListViewModel>
     {
         private readonly IRepository<College, int> _collegeRepository;
         private readonly IMapper _mapper;
@@ -24,7 +24,7 @@ namespace Zains.Ostad.Application.Colleges.Queries.GetCollegeList
             _mapper = mapper;
         }
 
-        public Task<List<CollegeListViewModel>> Handle(GetCollegeQuery request, CancellationToken cancellationToken)
+        public Task<List<CollegeListViewModel>> Handle(GetCollegesQuery request, CancellationToken cancellationToken)
         {
             var dbQuery = _collegeRepository.GetQueryable();
             if (request.GradeId.HasValue)
@@ -43,6 +43,11 @@ namespace Zains.Ostad.Application.Colleges.Queries.GetCollegeList
             }
 
             return dbQuery.ProjectTo<CollegeListViewModel>(_mapper.ConfigurationProvider).ToListAsync();
+        }
+
+        public async Task<CollegeListViewModel> Handle(GetCollegeDetailsQuery request, CancellationToken cancellationToken)
+        {
+          return _mapper.Map<CollegeListViewModel>(await _collegeRepository.GetById(request.CollegeId));
         }
     }
 }

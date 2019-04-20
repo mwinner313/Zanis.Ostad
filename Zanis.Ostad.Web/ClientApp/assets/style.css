@@ -1,190 +1,376 @@
+@font-face {
+  font-family: BalvardiDastnevis;
+  font-style: normal;
+  src: url("../assets/fonts/balvardidastnevisfree.eot");
+  src: url("../assets/fonts/balvardidastnevisfree.eot?#iefix") format("embedded-opentype"), url("../assets/fonts/balvardidastnevisfree.woff2") format("woff2"), url("../assets/fonts/balvardidastnevisfree.woff") format("woff"), url("../assets/fonts/balvardidastnevisfree.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "EntezareZohoor B3";
+  font-style: normal;
+  src: url("../assets/fonts/entezarb3-v2-0-1-p30download-com.eot");
+  src: url("../assets/fonts/entezarb3-v2-0-1-p30download-com.eot?#iefix") format("embedded-opentype"), url("../assets/fonts/entezarb3-v2-0-1-p30download-com.woff2") format("woff2"), url("../assets/fonts/entezarb3-v2-0-1-p30download-com.woff") format("woff"), url("../assets/fonts/entezarb3-v2-0-1-p30download-com.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: IRANSans;
+  font-style: normal;
+  font-weight: bold;
+  src: url("../assets/fonts/eot/IRANSansWeb_Bold.eot");
+  src: url("../assets/fonts/eot/IRANSansWeb_Bold.eot?#iefix") format("embedded-opentype"), url("../assets/fonts/woff2/IRANSansWeb_Bold.woff2") format("woff2"), url("../assets/fonts/woff/IRANSansWeb_Bold.woff") format("woff"), url("../assets/fonts/ttf/IRANSansWeb_Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: IRANSans;
+  font-style: normal;
+  font-weight: 500;
+  src: url("../assets/fonts/eot/IRANSansWeb_Medium.eot");
+  src: url("../assets/fonts/eot/IRANSansWeb_Medium.eot?#iefix") format("embedded-opentype"), url("../assets/fonts/woff2/IRANSansWeb_Medium.woff2") format("woff2"), url("../assets/fonts/woff/IRANSansWeb_Medium.woff") format("woff"), url("../assets/fonts/ttf/IRANSansWeb_Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: IRANSans;
+  font-style: normal;
+  font-weight: 300;
+  src: url("../assets/fonts/eot/IRANSansWeb_Light.eot");
+  src: url("../assets/fonts/eot/IRANSansWeb_Light.eot?#iefix") format("embedded-opentype"), url("../assets/fonts/woff2/IRANSansWeb_Light.woff2") format("woff2"), url("../assets/fonts/woff/IRANSansWeb_Light.woff") format("woff"), url("../assets/fonts/ttf/IRANSansWeb_Light.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: IRANSans;
+  font-style: normal;
+  font-weight: 200;
+  src: url("/fonts/eot/IRANSansWeb_UltraLight.eot");
+  src: url("../assets/fonts/eot/IRANSansWeb_UltraLight.eot?#iefix") format("embedded-opentype"), url("../assets/fonts/woff2/IRANSansWeb_UltraLight.woff2") format("woff2"), url("../assets/fonts/woff/IRANSansWeb_UltraLight.woff") format("woff"), url("../assets/fonts/ttf/IRANSansWeb_UltraLight.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: IRANSans;
+  font-style: normal;
+  font-weight: normal;
+  src: url("../assets/fonts/eot/IRANSansWeb.eot");
+  src: url("../assets/fonts/eot/IRANSansWeb.eot?#iefix") format("embedded-opentype"), url("../assets/fonts/woff2/IRANSansWeb.woff2") format("woff2"), url("../assets/fonts/woff/IRANSansWeb.woff") format("woff"), url("../assets/fonts/ttf/IRANSansWeb.ttf") format("truetype");
+}
+
+*,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: IRANSans;
+}
+
+html, body {
+  height: 100%;
+}
+
+button {
+  outline: none !important;
+  cursor: pointer;
+  border: 0px solid red;
+  padding: 7px 10px;
+  border-radius: 3px;
+  color: #717171;
+  background-color: #efe778;
+}
+
+button:focus {
+  outline: none !important;
+}
+
 .xanis-btn-secondary {
   cursor: pointer;
   color: #717171;
-  border: 1px solid #efe778; }
+  border: 1px solid #efe778;
+}
 
 .xanis-btn {
   min-width: 70px;
   cursor: pointer;
+  -webkit-transition: all 0.3s;
   transition: all 0.3s;
   color: #717171;
-  background-image: linear-gradient(to right, #efe778, #edee90, #ecf4a7, #edfabd, #f1ffd3); }
-  .xanis-btn:hover {
-    box-shadow: 1px 0 5px #c5c59f;
-    background-image: linear-gradient(to right, #e6f63e, #ecf843, #f3fa49, #f9fd4e, #ffff53); }
+  background-image: -webkit-gradient(linear, left top, right top, from(#efe778), color-stop(#edee90), color-stop(#ecf4a7), color-stop(#edfabd), to(#f1ffd3));
+  background-image: linear-gradient(to right, #efe778, #edee90, #ecf4a7, #edfabd, #f1ffd3);
+}
+
+.xanis-btn:hover {
+  -webkit-box-shadow: 1px 0 5px #c5c59f;
+          box-shadow: 1px 0 5px #c5c59f;
+  background-image: -webkit-gradient(linear, left top, right top, from(#e6f63e), color-stop(#ecf843), color-stop(#f3fa49), color-stop(#f9fd4e), to(#ffff53));
+  background-image: linear-gradient(to right, #e6f63e, #ecf843, #f3fa49, #f9fd4e, #ffff53);
+}
 
 .product-types {
   margin: 40px 0px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: row; }
-  .product-types p.product-title {
-    white-space: nowrap;
-    margin: 0px; }
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
 
-.box {
-  cursor: pointer;
-  color: #757575;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  font-weight: bold;
-  min-height: 180px;
-  background-color: #ffd965;
-  align-items: center;
-  border-radius: 2px;
-  box-shadow: 1px 1px 1px 1px #ffd965; }
-
-.grow-1 {
-  margin-left: 25px;
-  flex-grow: 1; }
+.product-types p.product-title {
+  white-space: nowrap;
+  margin: 0px;
+}
 
 .courses {
   padding: 20px 15px;
-  flex-direction: column; }
-  .courses .card {
-    padding: 20px 0;
-    background-color: white;
-    box-shadow: 0 1px 6px 1px #d6d6d6;
-    border-radius: 5px; }
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.courses .card {
+  padding: 20px 0;
+  background-color: white;
+  -webkit-box-shadow: 0 1px 6px 1px #d6d6d6;
+          box-shadow: 0 1px 6px 1px #d6d6d6;
+  border-radius: 5px;
+}
 
 .course {
   background-color: white;
   margin: 15px 0px 0px 15px;
   padding: 15px;
   border-radius: 15px;
-  box-shadow: 1px 1px 7px 1px #d8d8d8;
-  transition: all 0.1s; }
-  @media only screen and (max-device-width: 768px) {
-    .course {
-      margin: 15px 0 0 0; } }
-  .course:hover {
-    margin: 12px 0px 3px 15px;
-    box-shadow: 1px 1px 26px 5px #eaeaea; }
-  .course h6 {
-    margin-bottom: 25px; }
-  .course span {
-    display: block;
-    margin-bottom: 10px; }
-  .course .price-cart {
-    display: flex;
-    justify-content: space-between;
-    align-items: center; }
-    .course .price-cart .price {
-      color: #ef4123; }
-  .course .btn-buy {
-    background-color: #ef4123;
-    color: white; }
-  .course .btn-show {
-    margin-left: 5px;
-    background-color: #9475cd;
-    color: white;
-    border-radius: 6px;
-    box-shadow: 1px 2px 10px 2px #bdbdbd; }
+  -webkit-box-shadow: 1px 1px 7px 1px #d8d8d8;
+          box-shadow: 1px 1px 7px 1px #d8d8d8;
+  -webkit-transition: all 0.1s;
+  transition: all 0.1s;
+}
+
+@media only screen and (max-device-width: 768px) {
+  .course {
+    margin: 15px 0 0 0;
+  }
+}
+
+.course:hover {
+  margin: 12px 0px 3px 15px;
+  -webkit-box-shadow: 1px 1px 26px 5px #eaeaea;
+          box-shadow: 1px 1px 26px 5px #eaeaea;
+}
+
+.course h6 {
+  margin-bottom: 25px;
+}
+
+.course span {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.course .price-cart {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.course .price-cart .price {
+  color: #ef4123;
+}
+
+.course .btn-buy {
+  background-color: #ef4123;
+  color: white;
+}
+
+.course .btn-show {
+  margin-left: 5px;
+  background-color: #9475cd;
+  color: white;
+  border-radius: 6px;
+  -webkit-box-shadow: 1px 2px 10px 2px #bdbdbd;
+          box-shadow: 1px 2px 10px 2px #bdbdbd;
+}
 
 .cart-container {
-  position: relative; }
-  .cart-container:hover .cart {
-    display: block; }
-  .cart-container .cart {
-    display: none;
-    position: absolute;
-    z-index: 36;
-    width: 600px;
-    background-color: white;
-    left: 0;
-    border-radius: 3px;
-    padding: 15px;
-    margin-top: 10px; }
-    .cart-container .cart:before {
-      content: " ";
-      width: 0;
-      position: absolute;
-      height: 0;
-      top: -28px;
-      left: 25px;
-      border-style: solid;
-      border-width: 16px 24px 12px 24px;
-      border-color: transparent transparent #ffffff transparent; }
+  position: relative;
+}
+
+.cart-container:hover .cart {
+  display: block;
+}
+
+.cart-container .cart {
+  display: none;
+  position: absolute;
+  z-index: 36;
+  width: 600px;
+  background-color: white;
+  left: 0;
+  border-radius: 3px;
+  padding: 15px;
+  margin-top: 10px;
+}
+
+.cart-container .cart:before {
+  content: " ";
+  width: 0;
+  position: absolute;
+  height: 0;
+  top: -28px;
+  left: 25px;
+  border-style: solid;
+  border-width: 16px 24px 12px 24px;
+  border-color: transparent transparent #ffffff transparent;
+}
 
 .cart-item {
   border-bottom: 1px solid #e8e8e8;
-  padding: 10px 10px; }
-  .cart-item .delete-item {
-    cursor: pointer;
-    padding-left: 7px; }
-    .cart-item .delete-item i {
-      font-size: 12px; }
+  padding: 10px 10px;
+}
+
+.cart-item .delete-item {
+  cursor: pointer;
+  padding-left: 7px;
+}
+
+.cart-item .delete-item i {
+  font-size: 12px;
+}
 
 .modal-cart-container button {
   position: fixed;
   bottom: 13px;
   right: 5%;
-  width: 90%; }
+  width: 90%;
+}
 
 .course-header {
   color: white;
-  background-color: #2e2e2e; }
-  .course-header .teacher-avatar {
-    border-radius: 50%;
-    border: 6px solid #3f3f3f;
-    width: 90px;
-    height: 90px;
-    background-size: cover; }
-  .course-header .teacher-name {
-    padding-top: 15px; }
-    .course-header .teacher-name p {
-      color: white; }
-  .course-header .add-cart {
-    margin-top: 6px;
-    color: white !important;
-    background-color: #9475cd !important;
-    padding: 13px 26px; }
+  background-color: #2e2e2e;
+}
+
+.course-header .teacher-avatar {
+  border-radius: 50%;
+  border: 6px solid #3f3f3f;
+  width: 90px;
+  height: 90px;
+  background-size: cover;
+}
+
+.course-header .teacher-name {
+  padding-top: 15px;
+}
+
+.course-header .teacher-name p {
+  color: white;
+}
+
+.course-header .add-cart {
+  margin-top: 6px;
+  color: white !important;
+  background-color: #9475cd !important;
+  padding: 13px 26px;
+}
 
 .video-container {
   background-color: black;
-  padding: 10px 0; }
+  padding: 10px 0;
+}
 
 .card-title {
   color: #9475cd;
   padding: 4px;
   font-size: 20px;
   display: inline;
-  border-bottom: 5px solid #f1c2387a; }
+  border-bottom: 5px solid #f1c2387a;
+}
 
 .course-details {
-  background-color: #f4f4f4; }
+  background-color: #f4f4f4;
+}
 
 .card-d {
-  box-shadow: 0 3px 12px #bfbfbf;
+  -webkit-box-shadow: 0 3px 12px #bfbfbf;
+          box-shadow: 0 3px 12px #bfbfbf;
   margin: 20px 0 0 0;
   padding: 27px 47px 27px 47px;
   background-color: white;
-  border-radius: 5px; }
-  @media only screen and (max-device-width: 768px) {
-    .card-d {
-      margin: 20px 5px 5px 0;
-      padding: 27px 13px 27px 11px; } }
-  .card-d ul.course-item-list {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 30px 0; }
-    .card-d ul.course-item-list li {
-      border-bottom: 2px solid #e6e6e6;
-      cursor: pointer;
-      padding: 20px 10px; }
-      .card-d ul.course-item-list li.lock {
-        color: gray; }
-      .card-d ul.course-item-list li.active {
-        color: #28a745;
-        background-color: #f4f4f4; }
+  border-radius: 5px;
+}
+
+@media only screen and (max-device-width: 768px) {
+  .card-d {
+    margin: 20px 5px 5px 0;
+    padding: 27px 13px 27px 11px;
+  }
+}
+
+.card-d ul.course-item-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 30px 0;
+}
+
+.card-d ul.course-item-list li {
+  border-bottom: 2px solid #e6e6e6;
+  cursor: pointer;
+  padding: 20px 10px;
+}
+
+.card-d ul.course-item-list li.lock {
+  color: gray;
+}
+
+.card-d ul.course-item-list li.active {
+  color: #28a745;
+  background-color: #f4f4f4;
+}
 
 .vjs_video_3-dimensions {
-  width: 100% !important; }
+  width: 100% !important;
+}
 
 .last-courses .title {
-  margin: 30px 0; }
-  .last-courses .title h3 {
-    border-bottom: 5px solid #ffd965;
-    display: inline; }
+  margin: 30px 0;
+}
 
+.last-courses .title h3 {
+  border-bottom: 5px solid #ffd965;
+  display: inline;
+}
+
+.page-item {
+  margin: 0 2px;
+}
+
+.page-link {
+  -webkit-box-shadow: 0 1px 8px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+          box-shadow: 0 1px 8px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  color: #929292 !important;
+}
+
+.page-link:hover {
+  background-color: #efe778 !important;
+}
+
+.page-link:focus {
+  -webkit-box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.25);
+          box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.25);
+}
+
+.page-item:last-child .page-link {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.page-item:first-child .page-link {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
 /*# sourceMappingURL=style.css.map */

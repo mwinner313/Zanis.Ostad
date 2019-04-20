@@ -32,7 +32,7 @@ namespace Zains.Ostad.Application.Courses.Queries.GetCourseList
                 .Include(x => x.Lessons).ThenInclude(x => x.Lesson.Lesson)
                 .Include(x => x.Lessons).ThenInclude(x => x.Lesson.Field)
                 .Include(x => x.Lessons).ThenInclude(x => x.Lesson.Grade);
-            var items = await queryable.Pagenate(request).Select(CourseProfile.ProjectionList)
+            var items = await queryable.OrderByDescending(x=>x.Id).Pagenate(request).Select(CourseProfile.ProjectionList)
                 .ToListAsync(cancellationToken);
             return new PagenatedList<CourseDto>
             {
@@ -54,7 +54,11 @@ namespace Zains.Ostad.Application.Courses.Queries.GetCourseList
             if (!string.IsNullOrEmpty(request.LessonCode))
                 queryable = queryable.Where(x =>
                     x.Lessons.Any(l => l.Lesson.Lesson.LessonCode.Contains(request.LessonCode)));
-
+            
+            if (request.FieldId.HasValue)
+                queryable = queryable.Where(x =>
+                    x.Lessons.Any(l => l.Lesson.FieldId==request.FieldId));
+            
             if (!string.IsNullOrEmpty(request.FieldCode))
                 queryable = queryable.Where(x =>
                     x.Lessons.Any(l => l.Lesson.Field.Code.Contains(request.FieldCode)));

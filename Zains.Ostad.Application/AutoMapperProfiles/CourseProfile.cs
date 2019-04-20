@@ -3,8 +3,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using AutoMapper;
 using Zains.Ostad.Application.Courses.Dtos;
+using Zains.Ostad.Application.Lessons.Queries.GetLessonList;
 using Zains.Ostad.Application.Users.Dto;
+using Zanis.Ostad.Core.Entities;
 using Zanis.Ostad.Core.Entities.Contents;
+using Zanis.Ostad.Core.Entities.Orders;
 
 namespace Zains.Ostad.Application.AutoMapperProfiles
 {
@@ -22,15 +25,27 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
             HasPendingItemToApprove = x.HasPendingItemToApprove,
             Description = x.Description,
             Price = x.Price,
+            ImagePath = x.ImagePath,
+            Duration = x.Duration,
             ApprovalStatus = x.ApprovalStatus,
             CreatedOn = x.CreatedOn,
             Teacher = x.Teacher.FullName,
             AdminMessageForTeacher = x.AdminMessageForTeacher,
             TeacherMessageForAdmin = x.TeacherMessageForAdmin,
             TeacherAvatar = x.Teacher.AvatarPath,
-            Title = x.CourseCategory.Name + " - " + x.Title
+            Title = x.CourseCategory.Name + " - " + x.Title,
+            RelatedLessonFields = x.Lessons.Select(l => new LessonFieldViewModel
+            {
+                Id = l.Lesson.Id,
+                LessonName = l.Lesson.Lesson.LessonName,
+                LessonId = l.Lesson.LessonId,
+                FieldName = l.Lesson.Field.Name,
+                FieldId = l.Lesson.FieldId,
+                GradeId = l.Lesson.GradeId,
+                GradeName = l.Lesson.Grade.Name
+            }).ToList()
         };
-        
+
         public static Expression<Func<Course, CourseDto>> Projection => x => new CourseDto
         {
             Id = x.Id,
@@ -45,6 +60,16 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
             TeacherMessageForAdmin = x.TeacherMessageForAdmin,
             TeacherAvatar = x.Teacher.AvatarPath,
             Title = x.CourseCategory.Name + " - " + x.Title,
+            RelatedLessonFields = x.Lessons.Select(l => new LessonFieldViewModel
+            {
+                Id = l.Lesson.Id,
+                LessonName = l.Lesson.Lesson.LessonName,
+                LessonId = l.Lesson.LessonId,
+                FieldName = l.Lesson.Field.Name,
+                FieldId = l.Lesson.FieldId,
+                GradeId = l.Lesson.GradeId,
+                GradeName = l.Lesson.Grade.Name
+            }).ToList(),
             Contents = x.Contents.Select(c =>
                 new CourseItemViewModel
                 {

@@ -32,7 +32,7 @@ namespace Zains.Ostad.Application.Courses.Commands.AddCourseItem
 
         public async Task<CourseItemViewModel> Handle(AddCourseItemCommand request, CancellationToken cancellationToken)
         {
-            var course =  _courseRepo.GetQueryable().First(x=>x.Id==request.CourseId);
+            var course =  _courseRepo.GetQueryable().Include(x=>x.Teacher).First(x=>x.Id==request.CourseId);
             var item = new CourseItem
             {
                 CourseId = request.CourseId,

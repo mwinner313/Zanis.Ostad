@@ -42,7 +42,8 @@
     },
     methods: {
       async loadCartItems() {
-        if (storage.getItem('Authorization'))
+        let authorization=storage.getItem('Authorization');
+        if ([undefined,'undefined',null].indexOf(authorization)  ==  -1)
           this.cartItems = (await this.$http.get('/api/cart')).data;
       },
       remove(item) {

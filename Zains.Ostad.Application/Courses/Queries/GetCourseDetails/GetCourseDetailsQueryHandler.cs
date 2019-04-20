@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Zains.Ostad.Application.AutoMapperProfiles;
 using Zains.Ostad.Application.Courses.Dtos;
+using Zains.Ostad.Application.Lessons.Queries.GetLessonList;
 using Zanis.Ostad.Core.Contracts;
 using Zanis.Ostad.Core.Entities;
 using Zanis.Ostad.Core.Entities.Contents;
@@ -38,10 +39,7 @@ namespace Zains.Ostad.Application.Courses.Queries.GetCourseDetails
                 course.IsOwnedByCurrentUser = _studentCoursesRepo.GetQueryable().Any(x =>
                     x.CourseId == request.CourseId && x.StudentId == request.CurrentUserId.Value);
             
-            course.RelatedFields = _lessonFieldMappingRepo.GetQueryable().Where(x =>
-                    x.Lesson.LessonCode == course.LessonCode && x.Grade.Name == course.GradeTitle)
-                .Select(x => x.Field.Name)
-                .ToList();
+          
             return course;
         }
     }

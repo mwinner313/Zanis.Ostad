@@ -63,26 +63,18 @@
         <template slot-scope="scope">{{scope.row.id}}</template>
       </el-table-column>
 
-      <el-table-column width="380" label="عنوان">
+      <el-table-column label="عنوان">
         <template slot-scope="scope">{{ scope.row.title}}</template>
-      </el-table-column>
-
-      <el-table-column label="کددرس">
-        <template slot-scope="scope">{{ scope.row.lessonCode}}</template>
-      </el-table-column>
-
-      <el-table-column label="مقطع">
-        <template slot-scope="scope">{{ scope.row.gradeTitle}}</template>
       </el-table-column>
 
       <el-table-column label="نام استاد">
         <template slot-scope="scope">{{ scope.row.teacher}}</template>
       </el-table-column>
 
-      <el-table-column  width="200" label="قیمت">
+      <el-table-column label="قیمت">
         <template slot-scope="scope">{{scope.row.priceAsTomans}} تومان</template>
       </el-table-column>
-      <el-table-column label="وضعیت" width="200">
+      <el-table-column width="200">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.approvalStatus===0">در انتظار تعیین وضعیت</el-tag>
           <el-tag v-if="scope.row.approvalStatus===5" type="success">تایید شده</el-tag>

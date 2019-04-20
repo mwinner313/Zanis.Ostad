@@ -5,5 +5,6 @@ namespace Zains.Ostad.Application.Grades.Queries.GetGrades
         public int Id { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
+        public string PermaLink { get; set; }
     }
 }

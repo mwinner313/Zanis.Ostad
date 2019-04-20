@@ -5,12 +5,11 @@
         <el-col :md="12">
           <el-card shadow="always">
             <el-form ref="form" :model="form">
-              <el-progress v-show="uploadProgress" :percentage="uploadProgress"></el-progress>
               <el-form-item
-                prop="courseTitle"
+                prop="title"
                 :rules="[{ required: true, message: 'وارد کردن عنوان دوره الزامی می باشد'}]"
                 label="عنوان">
-                <el-input type="text" placeholder="عنوان دوره" v-model="form.courseTitle"></el-input>
+                <el-input type="text" placeholder="عنوان دوره" v-model="form.title"></el-input>
               </el-form-item>
               <el-form-item
                 prop="courseCategoryId"
@@ -33,16 +32,16 @@
                 <el-input type="textarea" placeholder="توضیحات" v-model="form.description"></el-input>
               </el-form-item>
               <el-form-item
-                label="قیمت"
+                label=" قیمت (ریال)"
                 prop="price"
                 :rules="[
                   { required: true, message: 'وارد کردن قیمت الزامی می باشد'},
                   { type: 'number', message: 'فیمت باید عددی باشد'}
                 ]">
-                <el-input type="text" placeholder="قیمت" v-model.number="form.price"></el-input>
+                <el-input type="text" placeholder="قیمت (ریال)" v-model.number="form.price"></el-input>
               </el-form-item>
               <el-form-item label="پیام به مدیریت">
-                <el-input type="textarea" v-model="form.teacherMessage"></el-input>
+                <el-input type="textarea" v-model="form.teacherMessageForAdmin"></el-input>
               </el-form-item>
 
               <el-form-item>
@@ -53,15 +52,26 @@
                 >انتخاب درس
                 </el-button>
               </el-form-item>
+              <el-table v-if="selectedLessons.length" :data="selectedLessons">
+                <el-table-column label="نام درس">
+                  <template slot-scope="scope">{{ scope.row.lessonName }}</template>
+                </el-table-column>
 
+                <el-table-column label="مقطع">
+                  <template slot-scope="scope">{{ scope.row.gradeName }}</template>
+                </el-table-column>
+
+                <el-table-column label="رشته">
+                  <template slot-scope="scope">{{ scope.row.fieldName }}</template>
+                </el-table-column>
+              </el-table>
               <el-form-item>
                 <el-tag
                   class="w100"
                   type="danger"
-                  v-if="!itemSelectedLesson"
+                  v-if="!selectedLessons.length"
                 >در حال حاظر درسی را انتخاب نکرده اید
                 </el-tag>
-                <el-tag class="w100" v-else>{{itemSelectedLesson}}</el-tag>
               </el-form-item>
 
               <el-form-item>
@@ -80,18 +90,15 @@
         <el-col :md="12">
           <el-alert
             style="margin-right:10px"
-            title="توضیحات"
+            title="فایل های آموزشی خود را به ترتیب به عنوان سرفصل اضافه کنید"
             type="info"
-            description="در این بخش توضیحات قرار می گیرد"
             :closable="false"
             show-icon
           ></el-alert>
-
           <div class="upload-course-item-wrapper">
             <div class="btn-upload-wrapper">
               <button class="xanis-btn-secondary" @click.prevent="editingItem={}">افزودن سرفصل جدید</button>
             </div>
-
             <div class="details-item-wrapper mg-r-t-15">
               <div
                 class="item"
@@ -103,6 +110,7 @@
                     عنوان:
                     <span>{{item.title}}</span>
                     <el-button style="float:left" @click="editItem(item)">ویرایش</el-button>
+                    <el-button style="float:left" @click="removeItem(item)">حذف</el-button>
                   </p>
                 </div>
                 <div class="content-item">
@@ -115,12 +123,12 @@
                   <div class="file-name-wrapper">
                     <span>نام فایل</span>
                     <el-tag>{{item.file.name}}</el-tag>
+                    <el-progress v-show="item.startToUpload" :percentage="item.uploadProgress"></el-progress>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
         </el-col>
       </el-row>
     </el-dialog>
@@ -151,10 +159,13 @@
 
     props: {
       isOpen: {
-        type: Boolean
+        type : Boolean
       },
-      preSelectedCourseTitleId: {
-        type: Number
+      preSelectedCourseCategoryId: {
+        type : Number
+      },
+      customMessageForSuccess : {
+        type : Function
       }
     },
 
@@ -169,25 +180,21 @@
         selectedTeacherItem: "",
         itemSelectedLesson: "",
         selectedLesson: null,
+        selectedLessons: [],
         close: false,
         editingItem: null,
-        uploadProgress: 0,
         courseCategories: [],
-        responseCourseId: 0,
         courseItems: [],
         form: {
           price: undefined,
           courseCategoryId: "",
-          courseTitle: "",
-          teacherMessage: "",
+          title: "",
+          teacherMessageForAdmin: "",
           lessonFieldId: [],
         }
       };
     },
-    updated() {
-      if (this.preSelectedCourseTitleId)
-        this.form.courseTitleId = this.preSelectedCourseTitleId;
-    },
+
     methods: {
       getCourseCategories() {
         axios.get("/api/courseCategories").then(res => {
@@ -198,11 +205,12 @@
         if (item.editing) {
           item.editing = undefined;
           this.courseItems.splice(_.findIndex(x => x.editing), 1, item);
-        }else
-        this.courseItems.push(item);
+        } else
+          this.courseItems.push(item);
       },
-      selectLessons(lessonIds) {
-        this.form.lessonFieldId=lessonIds;
+      selectLessons(lessons) {
+        this.selectedLessons = lessons;
+        this.form.lessonFieldId = lessons.map(x => x.id);
       },
       closeSearchDialog() {
         this.isLessonsearchDialog = false;
@@ -211,7 +219,6 @@
         this.form.zipFile = event.target.files[0];
       },
       registerLesson() {
-        this.responseCourseId = 0;
         if (this.courseItems.length == 0) {
           this.$message({
             type: "error",
@@ -219,36 +226,71 @@
           });
           return false;
         }
+        if (this.selectedLessons.length == 0) {
+          this.$message({
+            type: "error",
+            message: "کاربر گرامی برای این درس حداقل یک درس را باید اتخاب کنید"
+          });
+          return false;
+        }
         this.$refs.form.validate(valid => {
           if (valid) {
+            this.form.lessonFieldIds=this.selectedLessons.map(x=>x.id);
             axios
-              .post("/api/TeacherAccount/courses", {
-                price: this.form.price,
-                description: this.form.description,
-                teacherMessageForAdmin: this.form.teacherMessage,
-                courseCategoryId: this.form.courseCategoryId,
-                title: this.form.courseTitle,
-                lessonFieldIds: this.form.lessonFieldId
-              })
+              .post("/api/TeacherAccount/courses", this.form)
               .then(res => {
                 if (res.data.status == 1) {
-                  this.$message({
-                    message: "دوره شما با موفقیت ثبت شد",
-                    type: "success"
-                  });
-                  this.courseItems.forEach(element => {
-                    console.log(element, "el");
-                  });
-                  this.responseCourseId = res.data.data.id;
-                  this.$emit("close");
+                  this.sendCourseItems(res.data.data.id,0);
                 }
               });
           }
         });
       },
+      sendCourseItems(courseId, idx) {
+        var vm=this;
+        let currentItemToUpload = this.courseItems[idx];
+        if (!currentItemToUpload) {
+          this.showSuccessDialog();
+          return;
+        }
+        currentItemToUpload.courseId = courseId;
+        let data=new FormData();
+        for (let prop in currentItemToUpload)
+          data.append(prop, currentItemToUpload[prop]);
+        vm.courseItems[idx].startToUpload=true;
+        this.$http.post("/api/TeacherAccount/courses/courseItems", data, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+          onUploadProgress: (progressEvent) => {
+            vm.courseItems[idx].uploadProgress = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
+            vm.$forceUpdate()
+          }
+        }).then(res => this.sendCourseItems(courseId, idx + 1));
+      },
       editItem(item) {
         this.editingItem = item;
         this.editingItem.editing = true;
+      },
+      removeItem(item){
+        this.courseItems.splice(this.courseItems.indexOf(item),1);
+      },
+      showSuccessDialog(){
+        if(this.customMessageForSuccess){
+          this.customMessageForSuccess();
+          this.$emit('close')
+        }else{
+          this.message({
+            type:'success',
+            message:'دوره شما با موفقیت ثبت شد'
+          });
+          this.$emit('close')
+        }
+      }
+    },
+    watch:{
+      preSelectedCourseCategoryId(val){
+        this.form.courseCategoryId = val;
       }
     },
     mounted() {

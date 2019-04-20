@@ -8,7 +8,8 @@ namespace Zanis.Ostad.Core.Entities
         public int Id { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
-        public string CoverPath { get; set; }
+        public string IconPath { get; set; }
+        public string PermaLink { get; set; }
         public ICollection<Field> Fields { get; set; }
     }
 }

@@ -15,5 +15,6 @@ namespace Zanis.Ostad.Core.Entities
         public int CollegeId { get; set; }
         
         public ICollection<LessonFieldMapping> FieldLessons { get; set; }
+        public string PermaLink { get; set; }
     }
 }

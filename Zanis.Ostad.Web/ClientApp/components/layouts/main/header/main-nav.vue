@@ -36,13 +36,16 @@
               <div class="drop-down">
                 <div id="dropDown" class="drop-down__button">
                   <span class="drop-down__name" @click="userMenuToggled=!userMenuToggled">
+                    <i class="far fa-user"></i>
                     {{user.fullName}}
+                    &nbsp;
+                    <i class="fas fa-caret-down"></i>
                     </span>
                 </div>
                 <div class="drop-down__menu-box" v-show="userMenuToggled">
                   <ul class="drop-down__menu">
                     <li data-name="profile" class="drop-down__item">
-                      <router-link to="/user"><i class="fas fa-user"></i> &nbsp;حساب کاربری</router-link>
+                      <router-link to="/user/dashboard"><i class="fas fa-user"></i> &nbsp;حساب کاربری</router-link>
                     </li>
                     <li @click="signOut" data-name="profile" class="drop-down__item">خروج</li>
                   </ul>
@@ -90,8 +93,9 @@
       },
       signOut() {
         this.user = undefined;
-        storage.setItem('Authorization', undefined);
-        storage.setItem('user', undefined);
+        storage.removeItem('Authorization');
+        storage.removeItem('user');
+        this.userMenuToggled=false;
       }
     },
     mounted() {
@@ -195,6 +199,7 @@
     }
 
     .drop-down__name {
+      white-space: nowrap;
       color: #fff;
     }
 

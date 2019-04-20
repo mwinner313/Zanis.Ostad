@@ -21,7 +21,10 @@ import registerPersianDateFilter from './persianDateFilter'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import './assets/fonts/web-fonts-with-css/css/fontawesome-all.css'
-
+import VueSimpleSVG from 'vue-simple-svg'
+import {SimpleSVG} from 'vue-simple-svg'
+Vue.use(VueSimpleSVG);
+Vue.component('simple-svg', SimpleSVG);
 Vue.use(VueAwesomeSwiper, /* { default global options } */)
 Vue.use(Element, {locale});
 Vue.use(MomentJalali);
@@ -41,6 +44,7 @@ Vue.use(VueCurrencyFilter,
 Vue.use(Toaster, {timeout: 1000});
 Vue.use(VueSweetalert2);
 Vue.use(BootstrapVue);
+
 Vue.component('icon', FontAwesomeIcon);
 Vue.prototype.$http = axios;
 sync(store, router);

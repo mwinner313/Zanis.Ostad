@@ -50,6 +50,8 @@ namespace Zanis.Ostad.Web.Controllers.Api
         {
             return Ok(await _mediator.Send(cmd));
         }
+        [RequestFormLimits(MultipartBodyLengthLimit = 419430400)]
+        [RequestSizeLimit(419430400)]
         [HttpPost("courses/courseItems")]
         public async Task<ActionResult<PagenatedList<CourseDto>>> AddCourseItem([FromForm]AddCourseItemByTeacherCommand cmd)
         {

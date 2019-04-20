@@ -10,5 +10,6 @@ namespace Zanis.Ostad.Core.Entities
         public string Code { get; set; }
         public bool IsActive { get; set; }
         public ICollection<Field> Fields { get; set; }
+        public string PermaLink { get; set; }
     }
 }

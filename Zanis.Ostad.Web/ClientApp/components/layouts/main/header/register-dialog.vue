@@ -18,7 +18,7 @@
 
       <b-form-group>
         <b-form-input
-          type="text"
+          type="text"user-comes-in
           v-model="form.studentNo"
           :state="!$v.form.studentNo.$invalid || !doesFormSubmitted"
           placeholder="شماره دانشجویی "

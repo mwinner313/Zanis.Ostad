@@ -22,11 +22,11 @@ module.exports = () => {
         'utils': path.resolve(__dirname, './ClientApp/utils'),
         'api': path.resolve(__dirname, './ClientApp/store/api')
       } : {
-        'components': path.resolve(__dirname, './ClientApp/components'),
-        'views': path.resolve(__dirname, './ClientApp/views'),
-        'utils': path.resolve(__dirname, './ClientApp/utils'),
-        'api': path.resolve(__dirname, './ClientApp/store/api')
-      }
+          'components': path.resolve(__dirname, './ClientApp/components'),
+          'views': path.resolve(__dirname, './ClientApp/views'),
+          'utils': path.resolve(__dirname, './ClientApp/utils'),
+          'api': path.resolve(__dirname, './ClientApp/store/api')
+        }
     },
     output: {
       path: path.join(__dirname, bundleOutputDir),
@@ -38,7 +38,7 @@ module.exports = () => {
         { test: /\.vue$/, include: /ClientApp/, use: 'vue-loader' },
         { test: /\.js$/, include: /ClientApp/, use: 'babel-loader' },
         { test: /\.css$/, use: isDevBuild ? ['style-loader', 'css-loader'] : ExtractTextPlugin.extract({ use: 'css-loader' }) },
-        { test: /\.scss$/, use:  ['scss-loader'] },
+        { test: /\.scss$/, use: ['scss-loader'] },
         { test: /\.(png|jpg|jpeg|gif|svg)$/, use: 'url-loader?limit=25000' },
         {
           test: /\.(ttf|eot|woff|woff2)$/,
@@ -63,15 +63,15 @@ module.exports = () => {
         moduleFilenameTemplate: path.relative(bundleOutputDir, '[resourcePath]') // Point sourcemap entries to the original file locations on disk
       })
     ] : [
-      // Plugins that apply in production builds only
-      new webpack.optimize.UglifyJsPlugin(),
-      extractCSS,
-      // Compress extracted CSS.
-      new OptimizeCSSPlugin({
-        cssProcessorOptions: {
-          safe: true
-        }
-      })
-    ])
+        // Plugins that apply in production builds only
+        new webpack.optimize.UglifyJsPlugin(),
+        extractCSS,
+        // Compress extracted CSS.
+        new OptimizeCSSPlugin({
+          cssProcessorOptions: {
+            safe: true
+          }
+        })
+      ])
   }]
 }

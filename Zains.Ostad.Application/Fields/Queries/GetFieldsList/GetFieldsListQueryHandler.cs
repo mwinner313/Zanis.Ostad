@@ -14,6 +14,7 @@ using Zanis.Ostad.Core.Entities.Cart;
 namespace Zains.Ostad.Application.Fields.Queries.GetFieldsList
 {
     public class GetFieldsListQueryHandler : IRequestHandler<GetFieldsListQuery, List<FieldListViewModel>>
+    ,IRequestHandler<GetFieldQuery,FieldListViewModel>
     {
         private readonly IRepository<Field, int> _fieldRepositoy;
         private readonly IMapper _mapper;
@@ -46,6 +47,12 @@ namespace Zains.Ostad.Application.Fields.Queries.GetFieldsList
             }
 
             return dbQuery.ProjectTo<FieldListViewModel>(_mapper.ConfigurationProvider).ToListAsync();
+        }
+
+        public async Task<FieldListViewModel> Handle(GetFieldQuery request, CancellationToken cancellationToken)
+        {
+            var field = _fieldRepositoy.GetQueryable().First(x => x.Id == request.FieldId);
+            return _mapper.Map<FieldListViewModel>(field);
         }
     }
 }

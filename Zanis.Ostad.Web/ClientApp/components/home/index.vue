@@ -2,7 +2,7 @@
   <div>
     <main-header></main-header>
     <main>
-      <universities></universities>
+      <Colleges></Colleges>
       <teach-as-teacher></teach-as-teacher>
       <visual-learning></visual-learning>
     </main>
@@ -11,7 +11,7 @@
 
 <script>
   import MainHeader from '../layouts/main/header/index';
-  import universities from './universities';
+  import Colleges from './colleges';
   import TeachAsTeacher from './teach-as-teacher';
   import VisualLearning from './visual-learning';
   export default {
@@ -19,7 +19,7 @@
     components: {
       TeachAsTeacher,
       VisualLearning,
-      universities,
+      Colleges,
       MainHeader,
     }
   }

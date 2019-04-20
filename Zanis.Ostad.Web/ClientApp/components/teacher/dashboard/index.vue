@@ -20,8 +20,8 @@
       </el-col>
     </el-row>
     <AddCourseDialog
-     :preSelectedCourseTitleId="selectedCourseTitleId"
-      @close="selectedCourseTitleId=undefined" 
+     :preSelectedCourseCategoryId="selectedCourseTitleId"
+      @close="selectedCourseTitleId=undefined"
       :isOpen="!!selectedCourseTitleId"></AddCourseDialog>
   </div>
 </template>
@@ -40,7 +40,7 @@
       }
     },
     mounted() {
-      this.$http.get('/api/courseTitles').then(res => {
+      this.$http.get('/api/courseCategories').then(res => {
         this.courseTitles = res.data
       });
     }

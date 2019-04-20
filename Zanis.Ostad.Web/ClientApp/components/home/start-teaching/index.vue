@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-12">
           <div id="start-teaching-banner-image">
-            <button @click="isAddingNewCourse=true" class="submit">شروع تدریس</button>
+            <button @click="showAddCourseDialog" class="submit">شروع تدریس</button>
           </div>
 
           <div class="content-box">
@@ -57,30 +57,55 @@
               لذا در راستای رفع مشکلات آموزشی دانشجویان، شرکت رایان پژوهان زانیس اقدام به تولید بسته های آموزشی در رشته
               ها مختلف دانشگاهی نموده است
             </p>
-            <button class="start-teaching-button" @click="isAddingNewCourse=true">شروع تدریس</button>
+            <button class="start-teaching-button" @click="showAddCourseDialog">شروع تدریس</button>
             <div class="clearfix"></div>
           </div>
         </div>
       </div>
     </div>
-    <AddCourseDialog @close="isAddingNewCourse=false" :isOpen="isAddingNewCourse"></AddCourseDialog>
+    <AddCourseDialog @close="isAddingNewCourse=false" :customMessageForSuccess="showSuccessAfterAddingCourse"
+                     :isOpen="isAddingNewCourse"></AddCourseDialog>
   </div>
 </template>
 
 <script>
-  import AddCourseDialog from'../../teacher/courses/add-course-dialog'
+  import AddCourseDialog from '../../teacher/courses/add-course-dialog'
+  import storage from "storage-helper";
+  import EventBus from "../../../event-bus";
+
   export default {
     name: "",
-    components:{
+    components: {
       AddCourseDialog
     },
     data() {
       return {
-        isAddingNewCourse:false,
+        isAddingNewCourse: false,
         courseCategories: [],
       };
     },
-    methods: {},
+    methods: {
+      showAddCourseDialog() {
+        let authorization = storage.getItem('Authorization');
+        if ( [undefined,'undefined',null].indexOf(authorization)  ==  -1 )
+          this.isAddingNewCourse = true;
+        else {
+          this.$root.$emit("bv::show::modal", "login-dialog");
+          EventBus.$on("user-comes-in", () => {
+            this.isAddingNewCourse = true;
+          });
+        }
+      },
+      showSuccessAfterAddingCourse() {
+        this.$swal(
+          {
+            title: "ارسال دوره با موفقیت انجام شد",
+            text: "دوره شما با موفقیت ثبت شد بعد از بررسی توسط همکاران ما دوره شما تایید و در پنل کاربری خود قادر به مشاهده وضعیت دوره ثبت شده اعم از خرید دانشجویان ویرایش حذف وافزودن دوره جدید خواهید بود نکته قابل توجه این که دوره شما توسط تدوین گر های ما تدوین و سپس بر روی سایت نمایش داده خواهد شد لذا تا تکمیل فرایند های مربوطه صبور باشید . از این که استاد زانیس را محلی برای تدریس خود انتخاب نموده اید متشکریم.",
+            type: "success",
+            confirmButtonText: "بستن"
+          })
+      }
+    },
     mounted() {
       this.$http.get("/api/CourseCategories").then(res => {
         this.courseCategories = res.data;
@@ -159,15 +184,18 @@
       text-align: justify;
     }
   }
-  .yellow{
-    color:$yellow
+
+  .yellow {
+    color: $yellow
   }
+
   #background {
     background-color: #f9f9f9 !important;
   }
 
   .accordion {
     .item {
+      margin: 10px;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       &:hover {

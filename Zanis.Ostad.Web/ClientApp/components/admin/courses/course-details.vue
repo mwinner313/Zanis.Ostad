@@ -3,12 +3,6 @@
     <div slot="title">
       <p>
         {{course.title}}
-        <a :href="course.zipFilesPath">
-          <el-button class="float-right" style="margin-left: 30px !important;" type="primary" plain>
-            <i class="fas fa-download" style="font-size:13px;"></i>
-            دانلود محتوای آپلود شده توسط استاد
-          </el-button>
-        </a>
         <el-button class="float-right" @click="editingCourseItem={courseId,order:0}" style="margin-left: 30px;"
                    type="success"
                    plain>افزودن سر فصل +

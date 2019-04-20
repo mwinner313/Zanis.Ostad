@@ -20,7 +20,53 @@ namespace Zanis.Ostad.Repository.Tests
         {
             _testOutputHelper = testOutputHelper;
         }
-
+        public string GenrateUrlSegment(string str)
+        {
+            // invalid chars           
+            str = Regex.Replace(str.ToLower(), @"[^آ-یA-Za-z0-9\s-]", "");
+            // convert multiple spaces into one space   
+            str = Regex.Replace(str, @"\s+", " ").Trim();
+            // cut and trim 
+            str = Regex.Replace(str, @"\s", "-"); // hyphens   
+            str = Regex.Replace(str, @"-+", "-");
+            return str;
+        }
+        [Fact]
+        public void CreateFieldsPermalinks()
+        {
+            var ourContext = new ApplicationDbContext();
+            var fields = ourContext.Fields.ToList();
+            fields.ForEach(x =>
+            {
+                x.PermaLink = GenrateUrlSegment(x.Name);
+                ourContext.Update(x);
+            });
+            ourContext.SaveChanges();
+        }
+        [Fact]
+        public void CreateGradePermalinks()
+        {
+            var ourContext = new ApplicationDbContext();
+            var grades = ourContext.Grades.ToList();
+            grades.ForEach(x =>
+            {
+                x.PermaLink = GenrateUrlSegment(x.Name);
+                ourContext.Update(x);
+            });
+            ourContext.SaveChanges();
+        }
+        [Fact]
+        public void CreateCollegePermalinks()
+        {
+            var ourContext = new ApplicationDbContext();
+            var colleges = ourContext.Colleges.ToList();
+            colleges.ForEach(x =>
+            {
+                x.PermaLink = GenrateUrlSegment(x.Name);
+                ourContext.Update(x);
+            });
+            ourContext.SaveChanges();
+        }
         [Fact]
         public void AddData()
         {

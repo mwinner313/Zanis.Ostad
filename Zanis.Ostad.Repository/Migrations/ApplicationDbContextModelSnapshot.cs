@@ -166,9 +166,11 @@ namespace Zanis.Ostad.Repository.Migrations
 
                     b.Property<string>("Code");
 
-                    b.Property<string>("CoverPath");
+                    b.Property<string>("IconPath");
 
                     b.Property<string>("Name");
+
+                    b.Property<string>("PermaLink");
 
                     b.HasKey("Id");
 
@@ -191,7 +193,11 @@ namespace Zanis.Ostad.Repository.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<TimeSpan>("Duration");
+
                     b.Property<bool>("HasPendingItemToApprove");
+
+                    b.Property<string>("ImagePath");
 
                     b.Property<int>("Price");
 
@@ -337,6 +343,8 @@ namespace Zanis.Ostad.Repository.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<string>("PermaLink");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CollegeId");
@@ -357,6 +365,8 @@ namespace Zanis.Ostad.Repository.Migrations
                     b.Property<bool>("IsActive");
 
                     b.Property<string>("Name");
+
+                    b.Property<string>("PermaLink");
 
                     b.HasKey("Id");
 

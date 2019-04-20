@@ -16,7 +16,11 @@ namespace Zanis.Ostad.Web.Controllers.Api
         {
             _mediator = mediator;
         }
-
+        [HttpGet("{id}")]
+        public async Task<ActionResult<List<GradeViewModel>>> Get(int id)
+        {
+            return Ok(await _mediator.Send(new GetGradeQuery(){GradeId=id}));
+        }
         [HttpGet]
         public async Task<ActionResult<List<GradeViewModel>>> Get(GetGradesQuery query)
         {

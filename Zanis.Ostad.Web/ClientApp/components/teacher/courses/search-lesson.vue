@@ -13,8 +13,8 @@
         :closable="false"
         type="info"
         center
-        show-icon>لطفا با پرکردن ورودی های زیر به نسبت انتخاب کردن درسهای مرتبط به دوره ی آموزشی خود اقدام کنید
-      </el-alert>
+        show-icon
+      >لطفا با پرکردن ورودی های زیر به نسبت انتخاب کردن درسهای مرتبط به دوره ی آموزشی خود اقدام کنید</el-alert>
     </div>
     <el-row :gutter="5" type="flex">
       <el-col>
@@ -56,23 +56,25 @@
             </el-select>
           </el-form-item>
           <el-button :disabled="canNotSearchForLessons" @click="getListData" type="success">بگرد</el-button>
-          <el-button @click="addLessonToList" type="primary" v-show="selectedLessons.length">افزودن</el-button>
         </el-form>
       </el-col>
     </el-row>
     <br>
-    <el-row :gutter="10">
-      <el-col :md="12" :lg="12">
+    <el-row :gutter="10" >
+      <el-col   v-show="lessonItems.length" :md="12" :lg="12">
         <el-card>
+          <p>
+            دروس موجود
+            <el-button
+              @click="addLessonToList"
+              type="primary"
+            class="float-right"
+            >افزودن</el-button>
+          </p>
           <el-table :data="lessonItems">
             <el-table-column>
               <template slot-scope="scope">
-                <el-checkbox
-                  name="type"
-                  :label="scope.row.id"
-                  v-model="selectedLessons"
-                  border>
-                </el-checkbox>
+                <el-checkbox name="type" :label="scope.row.id" v-model="selectedLessons" border></el-checkbox>
               </template>
             </el-table-column>
             <el-table-column label="نام درس">
@@ -91,7 +93,8 @@
       </el-col>
       <el-col :md="12" :lg="12" v-show="finalySelectedItems.length">
         <el-card>
-          <p>دروس انتخابی شما
+          <p>
+            دروس انتخابی شما
             <button @click="submit" class="xanis-btn float-right">ثبت</button>
           </p>
           <el-table :data="finalySelectedItems">
@@ -107,7 +110,7 @@
               <template slot-scope="scope">{{ scope.row.fieldName }}</template>
             </el-table-column>
 
-            <el-table-column label="">
+            <el-table-column label>
               <template slot-scope="scope">
                 <i class="fas fa-trash-alt pointer" @click="deleteItemSelected(scope.row.id)"></i>
               </template>
@@ -120,91 +123,100 @@
 </template>
 
 <script>
-  import axios from "axios";
+import axios from "axios";
 
-  export default {
-    name: "search-Lesson",
-    props: {
-      isOpen: {
-        type: Boolean
-      }
-    },
-    data() {
-      return {
-        termSearch: "",
-        selectedGradeId: "",
-        fieldId: "",
-        gradeItems: [],
-        fieldItems: [],
-        lessonItems: [],
-        selectedLessons: [],
-        finalySelectedItems: [],
-        selectedLessonDelete: [],
-        close: false
-      };
-    },
-    methods: {
-      getlessons() {
-        axios
-          .get("/api/GradeFieldLessons/with-details", {
-            params: {
-              Term: this.termSearch,
-              FieldId: this.fieldId,
-              GradeId: this.selectedGradeId
-            }
-          })
-          .then(res => {
-            console.log(res.data, 'item');
-            this.lessonItems = res.data;
-          });
-      },
-      getFieldItems(fieldSearchTearm) {
-        axios
-          .get("/api/Fields", {
-            params: {
-              GradeId: this.selectedGradeId,
-              SearchText: fieldSearchTearm
-            }
-          })
-          .then(res => {
-            this.fieldItems = res.data;
-          });
-      },
-      getGradeItems() {
-        axios.get("/api/Grades").then(res => {
-          this.gradeItems = res.data;
-        });
-      },
-      getListData() {
-        this.getlessons();
-      },
-      addLessonToList() {
-        this.finalySelectedItems.push(...this.lessonItems.filter((item) => this.selectedLessons.some((select) => item.id === select
-          && !this.finalySelectedItems.some(x => x.id === select))));
-        this.selectedLessons = [];
-      },
-      deleteItemSelected(id) {
-        this.finalySelectedItems = this.finalySelectedItems.filter(item => item.id !== id);
-      },
-      submit(){
-        this.$emit('lessonsSelected',this.finalySelectedItems.map(x=>x.id));
-        this.$emit('close')
-      }
-    },
-    computed: {
-      canNotSearchForLessons() {
-        return (!this.termSearch || !this.selectedGradeId || !this.fieldId);
-      },
-    },
-    mounted() {
-      this.getGradeItems();
+export default {
+  name: "search-Lesson",
+  props: {
+    isOpen: {
+      type: Boolean
     }
-  };
+  },
+  data() {
+    return {
+      termSearch: "",
+      selectedGradeId: "",
+      fieldId: "",
+      gradeItems: [],
+      fieldItems: [],
+      lessonItems: [],
+      selectedLessons: [],
+      finalySelectedItems: [],
+      selectedLessonDelete: [],
+      close: false
+    };
+  },
+  methods: {
+    getlessons() {
+      axios
+        .get("/api/GradeFieldLessons/with-details", {
+          params: {
+            Term: this.termSearch,
+            FieldId: this.fieldId,
+            GradeId: this.selectedGradeId
+          }
+        })
+        .then(res => {
+          console.log(res.data, "item");
+          this.lessonItems = res.data;
+        });
+    },
+    getFieldItems(fieldSearchTearm) {
+      axios
+        .get("/api/Fields", {
+          params: {
+            GradeId: this.selectedGradeId,
+            SearchText: fieldSearchTearm
+          }
+        })
+        .then(res => {
+          this.fieldItems = res.data;
+        });
+    },
+    getGradeItems() {
+      axios.get("/api/Grades").then(res => {
+        this.gradeItems = res.data;
+      });
+    },
+    getListData() {
+      this.getlessons();
+    },
+    addLessonToList() {
+      this.finalySelectedItems.push(
+        ...this.lessonItems.filter(item =>
+          this.selectedLessons.some(
+            select =>
+              item.id === select &&
+              !this.finalySelectedItems.some(x => x.id === select)
+          )
+        )
+      );
+      this.selectedLessons = [];
+    },
+    deleteItemSelected(id) {
+      this.finalySelectedItems = this.finalySelectedItems.filter(
+        item => item.id !== id
+      );
+    },
+    submit() {
+      this.$emit("lessonsSelected", this.finalySelectedItems);
+      this.$emit("close");
+    }
+  },
+  computed: {
+    canNotSearchForLessons() {
+      return !this.termSearch || !this.selectedGradeId || !this.fieldId;
+    }
+  },
+  mounted() {
+    this.getGradeItems();
+  }
+};
 </script>
 
 <style>
-  .pointer {
-    cursor: pointer;
-  }
+.pointer {
+  cursor: pointer;
+}
 </style>
 
