@@ -83,8 +83,20 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   form {
     display: none;
   }
+  
+.cart-item {
+  border-bottom: 1px solid #e8e8e8;
+  padding: 10px 10px;
+  .delete-item {
+    cursor: pointer;
+    padding-left: 7px;
+    i {
+      font-size: 12px;
+    }
+  }
+}
 </style>

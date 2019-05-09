@@ -9,7 +9,7 @@
     <el-table height="500" :data="courseData" size="large">
       <el-table-column label="عنوان">
         <template slot-scope="scope">
-          {{ scope.row.title}}
+          {{scope.row.title}}
         </template>
       </el-table-column>
 
@@ -32,7 +32,7 @@
 
       <el-table-column label="جزئیات" width="150">
         <template slot-scope="scope">
-          <el-button v-bind:disabled="scope.row.contents.length==0" @click="selectedCourseId=scope.row.id">
+          <el-button @click="selectedCourseId=scope.row.id">
             مشاهده
           </el-button>
         </template>
@@ -42,11 +42,9 @@
       <el-table-column label="عملیات">
         <template slot-scope="scope">
           <el-row type="flex">
-
             <el-button @click="changingApprovalStateItem=scope.row" class="deactive">
               تغییر وضعیت
             </el-button>
-
           </el-row>
         </template>
       </el-table-column>
@@ -63,7 +61,7 @@
       :total="meta.allCount"
     ></el-pagination>
 
-    <CourseDetails v-if="selectedCourseId" :isOpen="selectedCourseId"
+    <CourseDetails v-if="selectedCourseId" :isOpen="!!selectedCourseId"
                    :courseId="selectedCourseId" @close="selectedCourseId=undefined"></CourseDetails>
 
     <add-course @close="isAddingNewCourse=false" :isOpen="isAddingNewCourse"></add-course>

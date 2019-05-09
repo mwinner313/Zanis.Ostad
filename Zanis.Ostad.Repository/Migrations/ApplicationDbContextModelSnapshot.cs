@@ -193,11 +193,11 @@ namespace Zanis.Ostad.Repository.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<TimeSpan>("Duration");
-
                     b.Property<bool>("HasPendingItemToApprove");
 
                     b.Property<string>("ImagePath");
+
+                    b.Property<string>("PermaLink");
 
                     b.Property<int>("Price");
 
@@ -258,6 +258,8 @@ namespace Zanis.Ostad.Repository.Migrations
                     b.Property<string>("TeacherMessageForAdmin");
 
                     b.Property<string>("Title");
+
+                    b.Property<TimeSpan>("VideoDuration");
 
                     b.HasKey("Id");
 
@@ -437,6 +439,8 @@ namespace Zanis.Ostad.Repository.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedOn");
 
                     b.Property<bool>("IsSeen");
 

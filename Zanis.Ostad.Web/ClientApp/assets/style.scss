@@ -131,128 +131,6 @@ button {
 
 
 
-.product-types {
-  margin: 40px 0px;
-  display: flex;
-  flex-direction: row;
-  p.product-title {
-    white-space: nowrap;
-    margin: 0px;
-  }
-}
-
-
-
-.courses {
-  padding: 20px 15px;
-  flex-direction: column;
-  .card {
-    padding: 20px 0;
-    background-color: white;
-    box-shadow: 0 1px 6px 1px #d6d6d6;
-    border-radius: 5px;
-    .list {
-
-    }
-  }
-}
-
-.course {
-  background-color: white;
-  margin: 15px 0px 0px 15px;
-  padding: 15px;
-  border-radius: 15px;
-  box-shadow: 1px 1px 7px 1px #d8d8d8;
-  transition: all 0.1s;
-  @media only screen and (max-device-width: 768px) {
-    margin: 15px 0 0 0;
-  }
-  &:hover {
-    margin: 12px 0px 3px 15px;
-    box-shadow: 1px 1px 26px 5px #eaeaea;
-  }
-  h6 {
-    margin-bottom: 25px;
-  }
-  span {
-    display: block;
-    margin-bottom: 10px;
-  }
-  .price-cart {
-    display: flex;
-    .price {
-      color: #ef4123;
-    }
-    justify-content: space-between;
-    align-items: center;
-  }
-  .btn-buy {
-    background-color: #ef4123;
-    color: white;
-  }
-
-  .btn-show {
-    margin-left: 5px;
-
-    background-color: $purple;
-    color: white;
-    border-radius: 6px;
-    box-shadow: 1px 2px 10px 2px #bdbdbd;
-  }
-}
-
-
-
-.cart-container {
-  position: relative;
-  &:hover {
-    .cart {
-      display: block;
-    }
-  }
-  .cart {
-    &:before{
-      content: " ";
-      width: 0;
-      position: absolute;
-      height: 0;
-      top: -28px;
-      left: 25px;
-      border-style: solid;
-      border-width: 16px 24px 12px 24px;
-      border-color: transparent transparent #ffffff transparent;  }
-    display: none;
-    position: absolute;
-    z-index: 36;
-    width: 600px;
-    background-color: white;
-    left: 0;
-    border-radius: 3px;
-    padding: 15px;
-    margin-top:10px;
-  }
-}
-
-.cart-item {
-  border-bottom: 1px solid #e8e8e8;
-  padding: 10px 10px;
-  .delete-item {
-    cursor: pointer;
-    padding-left: 7px;
-    i {
-      font-size: 12px;
-    }
-  }
-}
-
-.modal-cart-container button {
-  position: fixed;
-  bottom: 13px;
-  right: 5%;
-  width: 90%;
-}
-
-
 .course-header {
   color: white;
 
@@ -359,4 +237,10 @@ button {
 .page-item:first-child .page-link {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+}
+.page-item.active .page-link {
+  z-index: 1;
+  color: rgb(100, 100, 100);
+  background-color: #efe778;
+  border-color: #efe778;
 }

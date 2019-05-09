@@ -14,7 +14,11 @@
   import Colleges from './colleges';
   import TeachAsTeacher from './teach-as-teacher';
   import VisualLearning from './visual-learning';
+
   export default {
+    mounted() {
+      window.document.title = "صفحه اصلی  | استاد زانیس"
+    },
     name: "home",
     components: {
       TeachAsTeacher,

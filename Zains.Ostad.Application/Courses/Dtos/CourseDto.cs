@@ -11,9 +11,7 @@ namespace Zains.Ostad.Application.Courses.Dtos
         public int Price { get; set; }
         public int PriceAsTomans => Price / 10;
         public string Title { get; set; }
-        public ContentType PreviewType { get; set; }
         public CourseApprovalStatus ApprovalStatus { get; set; }
-        public string PreviewFilePath { get; set; }
         public List<LessonFieldViewModel> RelatedLessonFields { get; set; }
         public List<CourseItemViewModel> Contents { get; set; }
         public bool IsOwnedByCurrentUser { get; set; }
@@ -25,9 +23,10 @@ namespace Zains.Ostad.Application.Courses.Dtos
         public string TeacherMessageForAdmin { get; set; }
         public string AdminMessageForTeacher { get; set; }
         public DateTime CreatedOn { get; set; }
-        public string LessonTitle { get; set; }
-        public string FieldName { get; set; }
         public string ImagePath { get; set; }
         public TimeSpan Duration { get; set; }
+        public int CourseCategoryId { get; set; }
+        public string CourseCategoryTitle { get; set; }
+        public string Permalink { get; set; }
     }
 }

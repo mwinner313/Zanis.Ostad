@@ -1,8 +1,7 @@
 <template>
   <div>
-    <small-header :title="message"></small-header>
     <section class="container">
-      <div class="row">
+      <div class="row" style="    margin: 8%;">
         <ul ontouchstart>
           <li v-if="res.status===statuses.success">
             <div class="flash success">

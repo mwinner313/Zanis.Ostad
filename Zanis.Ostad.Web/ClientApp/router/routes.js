@@ -1,8 +1,8 @@
 import MainLayout from '../components/layouts/main/index'
 import HomePage from '../components/home/index'
-import Lesson from '../components/home/lesson'
+import LessonExams from '../components/home/lesson-exam'
 import PaymentHandler from '../components/home/payment-handler'
-import CourseDetails from '../components/home/course-details'
+import CourseDetails from '../components/home/course-details/index.vue'
 import AdminLayout from '../components/layouts/admin'
 import AdminDashboard from '../components/admin/dashboard'
 import AdminTickets from '../components/admin/tickets'
@@ -41,9 +41,9 @@ export const routes = [
         component: StartTeaching
       },
       {
-        name: 'lesson',
-        path: "/lesson/:lessonId",
-        component: Lesson
+        name: 'lesson-exam',
+        path: "/lesson-exam/:lessonId",
+        component: LessonExams
       },
       {
         name: 'payment-handle',
@@ -52,7 +52,7 @@ export const routes = [
       },
       {
         name: 'course',
-        path: '/course/:id',
+        path: '/course/:id-:permalink?',
         component: CourseDetails
       },
       {

@@ -24,6 +24,9 @@ namespace Zains.Ostad.Application.ExamSamples.Dto
                 case ExamSampleFileType.TestAnswer:
                     title = "پاسخ تستی نمونه سوال";
                     break;
+                case ExamSampleFileType.ExamWithAnswer:
+                    title = "نمونه سوال همراه با پاسخ";
+                    break;
             }
 
             return title + " " + SemesterTitle;

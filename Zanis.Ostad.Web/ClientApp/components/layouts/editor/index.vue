@@ -55,7 +55,8 @@
           <router-link to="/editor/tickets">
             <el-menu-item index="1">
               <i class="fas fa-ticket-alt"></i>
-              <span slot="title">تیکت ها
+              <span slot="title">
+                تیکت ها
                 <el-badge v-if="unReadTicketItemCount" :value="unReadTicketItemCount"/>
               </span>
             </el-menu-item>
@@ -74,7 +75,6 @@
               <span slot="title">تدوین</span>
             </el-menu-item>
           </router-link>
-
         </el-menu>
       </el-aside>
       <el-main class="page-content">
@@ -107,9 +107,8 @@ i {
   padding: 0 24px 0 40px;
   color: white;
   cursor: pointer;
-}change_approval_status
-
-.page-content {
+}
+change_approval_status .page-content {
   background-image: url("/assets/images/mooning.png");
   background-repeat: repeat;
   margin: 0px;
@@ -125,6 +124,7 @@ i {
 import axios from "axios";
 import EventBus from "../../../event-bus";
 import logo from "../../../assets/images/ostad-glass-CMYK.png";
+import storage from "storage-helper";
 
 export default {
   data() {
@@ -143,8 +143,14 @@ export default {
     };
   },
   mounted() {
-    if (window.location.pathname === "/user")
-      this.$router.push({ name: "user-dashboard", params: {} });
+    let user = JSON.parse(storage.getItem("user"));
+    if (!user || !user.roles.some(x => x.toLowerCase() === "editor")) {
+      storage.setItem("retUrl", window.location.pathname);
+      this.$router.push({ name: "home", params: {} });
+    }
+    
+    if (window.location.pathname === "/editor")
+      this.$router.push({ name: "editor-dashboard", params: {} });
     this.loadSideBarNotificationsCount();
     EventBus.$on("userOpenedUnReadTicketItem", () => {
       this.loadUnReadTicketItemsCount();

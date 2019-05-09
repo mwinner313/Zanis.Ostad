@@ -21,6 +21,9 @@
           <Version>6.0.0</Version>
         </PackageReference>
         <PackageReference Include="Microsoft.AspNetCore.App" />
+        <PackageReference Include="Microsoft.AspNetCore.NodeServices">
+          <Version>2.2.0</Version>
+        </PackageReference>
         <PackageReference Include="Swashbuckle.AspNetCore">
           <Version>4.0.1</Version>
         </PackageReference>
@@ -55,6 +58,87 @@
       <_ContentIncludedByDefault Remove="wwwroot\Courses\10\111122\1111316\123456789\Vue-Bootstrap-with-Material-Design-master.zip" />
       <_ContentIncludedByDefault Remove="wwwroot\Courses\10\111123\1111541\123456789\PersianAdminLTE-master.zip" />
       <_ContentIncludedByDefault Remove="wwwroot\Courses\10\111123\1111541\123456789\Vue-Bootstrap-with-Material-Design-master.zip" />
+      <_ContentIncludedByDefault Remove="wwwroot\vue-server-render\vue-ssr\dotnetAdapter.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\vue-server-render\vue-ssr\renderEngine.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\09b8ff05c2b978f0f831ce132b8b1fbd.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\0ac8cb10c23880c2137438c6540c3694.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\2d4a60273e40e46fc3f2c1f8bce4fcfb.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\3603a836e3dbdbeaadfc096d88869c1d.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\3bef02c6bf031d799d81f806f4f7e930.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\3d7ea9043f6e1085924925adf21b9e04.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\666a82cb3e9f8591bef4049aea26c4c6.svg" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\72f9d738fcd72c8de5d9cec534bf1611.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\79e4a6bff55e6d8d634851319b05d591.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\83fbccd72b3c8a1197e52c791f02314d.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\8dc59ef6d5c53afb87f5e2de09777655.svg" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\9d29ecc302a55569f0042a73214574b1.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\9fbe715f41894c0aaa5efaf4904399cf.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\a2e703563d62095222c725e59b70ea40.svg" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\a6cc237a493e3128e14ebfe2d9a2d19b.svg" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\a999c7b8823b901248833dc7fe07a52f.svg" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\b941b4bf1672fb3c6c13c281ddad3703.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\c7622f7d87a54ed3ec8e21ac036c1b88.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\d5df908a8f4eb75eebaceadf4b96b11b.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\d9923fcb41caa2aed5b023e1494b1e28.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\dd047090f2406c95881c2568dc296bec.svg" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\e9d8dbb0c3e9b97ffc59c50ff5d01422.svg" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\f4988eaa99bcf556085f65d0976e7bc5.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\f4a39c6fb52340c9f944271a81901738.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\f8e9a5cdbbb52cfa549e62139b5fd171.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\balvardidastnevisfree.eot" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\balvardidastnevisfree.ttf" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\balvardidastnevisfree.woff" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\balvardidastnevisfree.woff2" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\element-icons.ttf" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\element-icons.woff" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\entezarb3-v2-0-1-p30download-com.eot" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\entezarb3-v2-0-1-p30download-com.ttf" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\entezarb3-v2-0-1-p30download-com.woff" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\entezarb3-v2-0-1-p30download-com.woff2" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\fa-brands-400.eot" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\fa-brands-400.ttf" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\fa-brands-400.woff" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\fa-brands-400.woff2" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\fa-light-300.eot" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\fa-light-300.ttf" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\fa-light-300.woff" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\fa-light-300.woff2" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\fa-regular-400.eot" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\fa-regular-400.ttf" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\fa-regular-400.woff" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\fa-regular-400.woff2" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\fa-solid-900.eot" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\fa-solid-900.ttf" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\fa-solid-900.woff" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\fa-solid-900.woff2" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\IRANSansWeb.eot" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\IRANSansWeb.ttf" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\IRANSansWeb.woff" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\IRANSansWeb.woff2" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\IRANSansWeb_Bold.eot" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\IRANSansWeb_Bold.ttf" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\IRANSansWeb_Bold.woff" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\IRANSansWeb_Bold.woff2" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\IRANSansWeb_Light.eot" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\IRANSansWeb_Light.ttf" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\IRANSansWeb_Light.woff" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\IRANSansWeb_Light.woff2" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\IRANSansWeb_Medium.eot" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\IRANSansWeb_Medium.ttf" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\IRANSansWeb_Medium.woff" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\IRANSansWeb_Medium.woff2" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\IRANSansWeb_UltraLight.eot" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\IRANSansWeb_UltraLight.ttf" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\IRANSansWeb_UltraLight.woff" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\IRANSansWeb_UltraLight.woff2" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\VideoJS.eot" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\main.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\main.js.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\site.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\vendor-manifest.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\vendor.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\vendor.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\dist\vue-ssr-server-bundle.json" />
     </ItemGroup>
 
     <Target Name="RunWebpack" AfterTargets="ComputeFilesToPublish">

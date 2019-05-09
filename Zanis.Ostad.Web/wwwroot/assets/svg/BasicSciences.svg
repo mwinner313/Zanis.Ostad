@@ -1,31 +1,15 @@
-<svg width="150" height="150" xmlns="http://www.w3.org/2000/svg">
- <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
-
- <g>
-  <title>background</title>
-  <rect fill="#fff" id="canvas_background" height="152" width="152" y="-1" x="-1"/>
- </g>
- <g>
-  <title>Layer 1</title>
-  <g stroke="null" id="svg_86">
-   <g stroke="null" transform="matrix(0.1912718309619735,0,0,0.1912718309619735,-263.7078511346951,-261.2179909981308) " id="svg_69">
-    <path stroke="null" id="svg_70" d="m1978.819253,1565.801778l0,416l-384,0c-17.672,0 -32,-14.312 -32,-32s14.328,-32 32,-32l352,0l0,-416l-352,0c-35.344,0 -64,28.656 -64,64l0,384c0,35.344 28.656,64 64,64l416,0l0,-448l-32,0z"/>
-   </g>
-   <g stroke="null" transform="matrix(0.1912718309619735,0,0,0.1912718309619735,-263.7078511346951,-261.2179909981308) " id="svg_71"/>
-   <g stroke="null" transform="matrix(0.1912718309619735,0,0,0.1912718309619735,-263.7078511346951,-261.2179909981308) " id="svg_72"/>
-   <g stroke="null" transform="matrix(0.1912718309619735,0,0,0.1912718309619735,-263.7078511346951,-261.2179909981308) " id="svg_73"/>
-   <g stroke="null" transform="matrix(0.1912718309619735,0,0,0.1912718309619735,-263.7078511346951,-261.2179909981308) " id="svg_74"/>
-   <g stroke="null" transform="matrix(0.1912718309619735,0,0,0.1912718309619735,-263.7078511346951,-261.2179909981308) " id="svg_75"/>
-   <g stroke="null" transform="matrix(0.1912718309619735,0,0,0.1912718309619735,-263.7078511346951,-261.2179909981308) " id="svg_76"/>
-   <g stroke="null" transform="matrix(0.1912718309619735,0,0,0.1912718309619735,-263.7078511346951,-261.2179909981308) " id="svg_77"/>
-   <g stroke="null" transform="matrix(0.1912718309619735,0,0,0.1912718309619735,-263.7078511346951,-261.2179909981308) " id="svg_78"/>
-   <g stroke="null" transform="matrix(0.1912718309619735,0,0,0.1912718309619735,-263.7078511346951,-261.2179909981308) " id="svg_79"/>
-   <g stroke="null" transform="matrix(0.1912718309619735,0,0,0.1912718309619735,-263.7078511346951,-261.2179909981308) " id="svg_80"/>
-   <g stroke="null" transform="matrix(0.1912718309619735,0,0,0.1912718309619735,-263.7078511346951,-261.2179909981308) " id="svg_81"/>
-   <g stroke="null" transform="matrix(0.1912718309619735,0,0,0.1912718309619735,-263.7078511346951,-261.2179909981308) " id="svg_82"/>
-   <g stroke="null" transform="matrix(0.1912718309619735,0,0,0.1912718309619735,-263.7078511346951,-261.2179909981308) " id="svg_83"/>
-   <g stroke="null" transform="matrix(0.1912718309619735,0,0,0.1912718309619735,-263.7078511346951,-261.2179909981308) " id="svg_84"/>
-   <g stroke="null" transform="matrix(0.1912718309619735,0,0,0.1912718309619735,-263.7078511346951,-261.2179909981308) " id="svg_85"/>
-  </g>
- </g>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 150 150" style="enable-background:new 0 0 150 150;" xml:space="preserve">
+<style type="text/css">
+	
+		.st0{fill-rule:evenodd;clip-rule:evenodd;fill:none;stroke:#000000;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:22.9256;}
+</style>
+<g>
+	<path class="st0" d="M121.29,53.73H48.92c-10.82,0-19.57-8.75-19.57-19.56l0,0c0-10.8,8.75-19.56,19.56-19.56h72.13"/>
+	<path class="st0" d="M29.35,33.92v81.52c0,10.81,8.75,19.56,19.56,19.56h52.83c10.81,0,19.56-8.75,19.56-19.56V14.61"/>
+	<line class="st0" x1="48.66" y1="34.59" x2="120.78" y2="34.59"/>
+	<line class="st0" x1="48.92" y1="53.73" x2="48.92" y2="106.17"/>
+</g>
 </svg>

@@ -21,5 +21,7 @@ namespace Zanis.Ostad.Core.Entities.Contents
         public ContentType ContentType { get; set; }
         public CourseItemApprovalState State { get; set; }
         public ICollection<EditAssignment> Edits { get; set; }
+        public TimeSpan VideoDuration { get; set; }
+
     }
 }

@@ -4,7 +4,7 @@
       <ul>
         <li v-for="field in fields" :key="field.key" @click="$emit('close')">
           <router-link
-            :to="`/college/${college.id}-${college.permaLink}/grade/${grade.id}-${grade.permaLink}/field/${field.id}-${field.permaLink}`"
+            :to="computedAdress(field)"
           >{{field.name}}</router-link>
         </li>
       </ul>
@@ -18,15 +18,21 @@ export default {
   props: {
     college: {
       type: Object,
-      default(){
-          return {};
+      default() {
+        return {};
+      }
+    },
+    contentType: {
+      type: String,
+      default() {
+        return undefined;
       }
     },
     grade: {
       type: Object,
-     default(){
-          return {};
-      } 
+      default() {
+        return {};
+      }
     },
     isOpen: { type: Boolean }
   },
@@ -35,12 +41,21 @@ export default {
   },
 
   methods: {
+     computedAdress(field){
+       let address=`/college/${this.college.id}-${this.college.permaLink}/grade/${this.grade.id}-${this.grade.permaLink}/field/${field.id}-${field.permaLink}`;
+       if(this.contentType)
+      return address +`?contentType=${this.contentType}`
+      return address; 
+    },
     loadFields(gradeId) {
-      this.$http.get("/api/fields", { params: { gradeId } }).then(fields => {
-        this.fields = fields.data;
-      });
+      this.$http
+        .get("/api/fields", { params: { gradeId, collegeId: this.college.id } })
+        .then(fields => {
+          this.fields = fields.data;
+        });
     }
   },
+  
   watch: {
     grade(val) {
       this.loadFields(val.id);
@@ -58,7 +73,8 @@ ul {
   flex-wrap: wrap;
   li {
     a {
-      color: rgb(58, 58, 58); transition: all 0.3s;
+      color: rgb(58, 58, 58);
+      transition: all 0.3s;
       &:hover {
         color: #ffcf40;
       }

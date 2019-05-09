@@ -13,11 +13,11 @@ namespace Zanis.Ostad.Web.Controllers.Api
 {
     [Route("api/[controller]")]
     [Authorize]
-    public class EditAssignmentController : Controller
+    public class EditAssignmentsController : Controller
     {
         private readonly IMediator _mediator;
 
-        public EditAssignmentController(IMediator mediator)
+        public EditAssignmentsController(IMediator mediator)
         {
             _mediator = mediator;
         }

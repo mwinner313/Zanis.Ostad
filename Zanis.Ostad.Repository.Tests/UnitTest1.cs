@@ -211,7 +211,8 @@ namespace Zanis.Ostad.Repository.Tests
             foreach (var semester in semesters)
             {
                 var dir = new DirectoryInfo(
-                    $@"E:\WorkAndLife\Projects\Zanis.Ostad\Zanis.Ostad.Web\wwwroot\Files\{semester.Code}\soal");
+                    $@"D:\Projects\Zanis.Ostad\Zanis.Ostad.Web\wwwroot\Files\{semester.Code}\soal");
+                if (!dir.Exists) continue;
                 foreach (var fileInfo in dir.GetFiles())
                 {
                     var matches = Regex.Matches(fileInfo.Name, "[0-9]+");
@@ -243,7 +244,47 @@ namespace Zanis.Ostad.Repository.Tests
                 dbContext.SaveChanges();
             }
         }
+        [Fact]
+        public void AddExamsWithAnswer()
+        {
+            var dbContext = new ApplicationDbContext();
+            var semesters = dbContext.Semesters.ToList();
+            foreach (var semester in semesters)
+            {
+                var dir = new DirectoryInfo(
+                    $@"D:\Projects\Zanis.Ostad\Zanis.Ostad.Web\wwwroot\Files\{semester.Code}\soalbajavab");
+                if (!dir.Exists) continue;
+                foreach (var fileInfo in dir.GetFiles())
+                {
+                    var matches = Regex.Matches(fileInfo.Name, "[0-9]+");
+                    var lessonCodes =
+                        matches.Select(x=>x.Value).Where(x=>x.Length==7).ToList();
+                    if (dbContext.ExamSampleFiles.Any(x => fileInfo.FullName.Replace("\\", "/").Contains(x.FilePath)))
+                        continue;
+                    var exam = new ExamSampleFile
+                    {
+                        Type = ExamSampleFileType.ExamWithAnswer,
+                        SemesterId = semester.Id,
+                        FilePath = $"/Files/{semester.Code}/soalbajavab/" + fileInfo.Name
+                    };
+                    if (dbContext.ExamSampleFiles.Any(x => x.FilePath == exam.FilePath))
+                        continue;
+                    dbContext.ExamSampleFiles.Add(exam);
+                    dbContext.SaveChanges();
+                    var lessons = dbContext.Lessons.Where(x => lessonCodes.Contains(x.LessonCode)).ToList();
+                    foreach (var lesson in lessons)
+                    {
+                        dbContext.LessonExamMappings.Add(new LessonExamMapping
+                        {
+                            LessonId = lesson.Id,
+                            ExamSampleFileId = exam.Id
+                        });
+                    }
+                }
 
+                dbContext.SaveChanges();
+            }
+        }
         [Fact]
         public void AddAnatomicalAnswers()
         {

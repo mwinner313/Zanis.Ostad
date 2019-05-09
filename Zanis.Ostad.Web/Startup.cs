@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.NodeServices;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -46,17 +47,14 @@ namespace Zanis.Ostad.Web
         {
             ConfigureMvc(services);
             services.AddMediatR(typeof(GetCollegeQueryHandler).Assembly);
-            services.AddAutoMapper(x =>
-            {
-                x.AddProfiles(typeof(GetCollegeQueryHandler).Assembly);
-            });
+            services.AddAutoMapper(x => { x.AddProfiles(typeof(GetCollegeQueryHandler).Assembly); });
             services.AddScoped(typeof(IRepository<,>), typeof(EfRepository<,>));
-            services.AddScoped<IUnitOfWork,SqlUnitOfWork>();
-            services.AddScoped<IWorkContext,WebWorkContext>();
-            services.AddScoped<IOrderPaymentProviderFactory,OrderPaymentProviderFactory>();
-            services.AddScoped<RefahPaymentProvider,RefahPaymentProvider>();
-            services.AddScoped<IEmailService,EmailService>();
-            services.AddScoped(sp=> new EmailSenderInfo
+            services.AddScoped<IUnitOfWork, SqlUnitOfWork>();
+            services.AddScoped<IWorkContext, WebWorkContext>();
+            services.AddScoped<IOrderPaymentProviderFactory, OrderPaymentProviderFactory>();
+            services.AddScoped<RefahPaymentProvider, RefahPaymentProvider>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped(sp => new EmailSenderInfo
             {
                 UserName = Configuration["EmailSender:UserName"],
                 From = Configuration["EmailSender:From"],
@@ -78,10 +76,7 @@ namespace Zanis.Ostad.Web
 
         private static void ConfigureIdentitySystem(IServiceCollection services)
         {
-            services.Configure<FormOptions>(x =>
-            {
-                x.MultipartBodyLengthLimit = 419430400;
-            });
+            services.Configure<FormOptions>(x => { x.MultipartBodyLengthLimit = 419430400; });
             services.AddIdentity<User, Role>().AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
             services.AddScoped<UserManager<User>, AppUserManager>();
@@ -156,8 +151,6 @@ namespace Zanis.Ostad.Web
             app.UseDeveloperExceptionPage();
             if (env.IsDevelopment())
             {
-
-
                 // Webpack initialization with hot-reload.
                 app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
                 {
@@ -168,6 +161,7 @@ namespace Zanis.Ostad.Web
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
             app.UseAuthentication();
             app.UseMiddleware<SecureZanisProtectedFilesMiddleware>();
             app.UseStaticFiles();

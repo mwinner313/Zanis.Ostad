@@ -31,6 +31,8 @@ namespace Zains.Ostad.Application.Lessons.Queries.GetLessonList
             var dbQuery = _lessonRepository.GetQueryable();
             if (request.FieldId.HasValue)
                 dbQuery = dbQuery.Where(x => x.FieldId == request.FieldId);
+            if (request.GradeId.HasValue)
+                dbQuery = dbQuery.Where(x => x.GradeId == request.GradeId);
             if (!string.IsNullOrEmpty(request.SearchText))
                 dbQuery = dbQuery.Where(x => x.Lesson.LessonName.Contains(request.SearchText));
             switch (request.ProductType)

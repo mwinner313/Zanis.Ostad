@@ -42,7 +42,10 @@
               <button class="submit" @click.prevent="onSubmit" type="submit">ورود</button>
               <p class="text-center m-3">
                 رمز خود را فراموش کرده اید؟
-                <span @click="showResetPassDialog" id="reset-pass-btn">کلیک کنید</span>
+                <span
+                  @click="showResetPassDialog"
+                  id="reset-pass-btn"
+                >کلیک کنید</span>
               </p>
             </b-form>
           </div>
@@ -58,10 +61,10 @@ import { required, minLength } from "vuelidate/lib/validators";
 import storage from "storage-helper";
 import axios from "axios";
 import EventBus from "../../../../event-bus";
-import RegisterDialog from './register-dialog';
+import RegisterDialog from "./register-dialog";
 export default {
   name: "login-dialog",
-  components : {
+  components: {
     RegisterDialog
   },
   data() {
@@ -96,6 +99,11 @@ export default {
       axios.defaults.headers.common["Authorization"] = res.data.bearerToken;
       this.$root.$emit("bv::hide::modal", "login-dialog");
       this.$toaster.success("خوش آمدید!");
+      let retUrl = storage.getItem("retUrl");
+      storage.removeItem("retUrl");
+      if (retUrl) {
+        this.$router.push({ path: retUrl });
+      }
     }
   },
   mounted() {},
@@ -121,69 +129,76 @@ export default {
   padding: 20px;
 }
 
-#login-dialog,  #reset-pass-dialog, #register-as-teacher-dialog {
-  input::placeholder{
+#login-dialog,
+#reset-pass-dialog,
+#register-as-teacher-dialog {
+  input::placeholder {
     font-size: 14px;
-
   }
-  input{
+  input {
     border-color: #d2d2d2;
   }
- .modal-body{
-   padding:0px;
- }
+  .modal-body {
+    padding: 0px;
+  }
   .modal-content {
     border-radius: 0px;
   }
-  .form-control{
-    height:60px;
+  .form-control {
+    height: 60px;
   }
-  .submit{
+  .submit {
     width: 100%;
     height: 60px;
-    background-image: linear-gradient(to right, #efe778, #edee90, #ecf4a7, #edfabd, #f1ffd3);
+    background-image: linear-gradient(
+      to right,
+      #efe778,
+      #edee90,
+      #ecf4a7,
+      #edfabd,
+      #f1ffd3
+    );
   }
-  .login-banner{
+  .login-banner {
     position: relative;
-    p{
-      margin:0 !important;
+    p {
+      margin: 0 !important;
     }
-    margin-top:40px;
-    height:90px !important;
-    text-align:center;
+    margin-top: 40px;
+    height: 90px !important;
+    text-align: center;
     width: 80%;
     margin-right: 20%;
     background-color: #d3d3d3;
-    &:before{
+    &:before {
       position: absolute;
-      content:' ';
-        right: 0;
-        bottom: 0;
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-width: 27px 27px 0 0;
-        border-color: #efe778 transparent transparent transparent;
+      content: " ";
+      right: 0;
+      bottom: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 27px 27px 0 0;
+      border-color: #efe778 transparent transparent transparent;
     }
-    &:after{
+    &:after {
       position: absolute;
-      content:' ';
-        right: 0;
-        bottom: 0;
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-width: 0 0 27px 27px;
-        border-color: transparent transparent #ffffff transparent; }
+      content: " ";
+      right: 0;
+      bottom: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 0 27px 27px;
+      border-color: transparent transparent #ffffff transparent;
+    }
   }
   #login-form {
-      margin:10%;
-      #reset-pass-btn{
-        color:blue;
-        cursor: pointer;
-      }
+    margin: 10%;
+    #reset-pass-btn {
+      color: blue;
+      cursor: pointer;
+    }
   }
-
 }
-
 </style>

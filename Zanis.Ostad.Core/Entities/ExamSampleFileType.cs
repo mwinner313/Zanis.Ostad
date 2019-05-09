@@ -4,6 +4,7 @@ namespace Zanis.Ostad.Core.Entities
     {
         Exam,
         TestAnswer,
-        AnatomicalAnswer
+        AnatomicalAnswer,
+        ExamWithAnswer
     }
 }

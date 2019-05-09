@@ -1,22 +1,29 @@
 <template>
-  <el-dialog :visible.sync="isOpen" @closed="$emit('close')" width="80%">
+  <el-dialog :visible.sync="isOpen" @closed="$emit('close')" width="60%">
     <div slot="title">
-      <p>{{courseDetail.title}}</p>
+      <p>
+        {{courseDetail.title}}
+        <el-button
+          style="margin-left: 30px;"
+          class="float-right"
+          @click="editingCourseItem={courseId}"
+          type="success"
+          plain
+        >+افزودن سر فصل</el-button>
+        <el-button
+          style="margin-left: 10px;"
+          class="float-right"
+          @click="updatingCourseId = courseId"
+          type="warning"
+          plain
+        >ویرایش</el-button>
+      </p>
       <small>
         <i class="el-icon-time"></i>
         {{ courseDetail.createdOn | moment("jYYYY/jM/jD HH:mm") }}
       </small>
 
-      <el-button
-        class="float-right"
-        @click="editingCourseItem={courseId}"
-        type="success"
-        plain
-      >+افزودن سر فصل
-      </el-button>
-      <p
-        v-show="courseDetail.adminMessageForTeacher"
-        class="message-admin-for-teacher-wrapper">
+      <p v-show="courseDetail.adminMessageForTeacher" class="message-admin-for-teacher-wrapper">
         <span>پیام مدیر</span>
         <br>
         {{courseDetail.adminMessageForTeacher}}
@@ -43,8 +50,7 @@
               plain
               size="small"
               class="float-right"
-            >ویرایش
-            </el-button>
+            >ویرایش</el-button>
 
             <el-tag v-if="item.state==5" type="success">تایید شده</el-tag>
 
@@ -75,102 +81,114 @@
         :is-open="!!editingCourseItem"
         :item="editingCourseItem"
       ></CourseItemAddEditDialog>
+      <CourseUpdateDialog
+        urlToCall="/api/TeacherAccount/courses"
+        @close="reloadIfUpdated"
+        :is-open="!!updatingCourseId"
+        :course-id="updatingCourseId"
+      ></CourseUpdateDialog>
     </el-row>
   </el-dialog>
 </template>
 
 <script>
-  import axios from "axios";
-  import CourseItemAddEditDialog from "./course-item-add-edit-dialog";
+import axios from "axios";
+import CourseItemAddEditDialog from "./course-item-add-edit-dialog";
+import CourseUpdateDialog from "./course-edit-dialog";
 
-  export default {
-    name: "",
+export default {
+  name: "",
 
-    data() {
-      return {
-        courseDetail: [],
-        editingCourseItem: undefined
-      };
-    },
-    components: {
-      CourseItemAddEditDialog
-    },
+  data() {
+    return {
+      courseDetail: [],
+      editingCourseItem: undefined,
+      updatingCourseId: undefined
+    };
+  },
+  components: {
+    CourseItemAddEditDialog,
+    CourseUpdateDialog
+  },
 
-    props: {
-      isOpen: {
-        type: Boolean
-      },
-
-      courseId: {
-        type: Number
-      }
+  props: {
+    isOpen: {
+      type: Boolean
     },
 
-    methods: {
-      getContent() {
-        this.editingCourseItem = undefined;
-        axios.get("/api/TeacherAccount/courses/" + this.courseId).then(res => {
-          this.courseDetail = res.data;
-          console.log(this.courseDetail);
-        });
-      },
-
-      previewIconCourse(contentType) {
-        switch (contentType) {
-          case 0:
-            return '<i class="far fa-file-pdf"></i>';
-
-          case 1:
-            return '<i class="far fa-file-video"></i>';
-
-          default:
-            return "";
-        }
-      }
-    },
-
-    mounted() {
-      this.getContent();
+    courseId: {
+      type: Number
     }
-  };
+  },
+
+  methods: {
+    reloadIfUpdated(reload) {
+      this.updatingCourseId = undefined;
+      if (reload) this.getContent();
+    },
+    getContent() {
+      this.editingCourseItem = undefined;
+      axios.get("/api/TeacherAccount/courses/" + this.courseId).then(res => {
+        this.courseDetail = res.data;
+      });
+    },
+
+    previewIconCourse(contentType) {
+      switch (contentType) {
+        case 0:
+          return '<i class="far fa-file-pdf"></i>';
+
+        case 1:
+          return '<i class="far fa-file-video"></i>';
+
+        default:
+          return "";
+      }
+    }
+  },
+
+  mounted() {
+    this.getContent();
+  }
+};
 </script>
 
 <style>
-  .downloadBtnCustom {
-    float: left;
-    margin: 10px 0 !important;
-  }
+.downloadBtnCustom {
+  float: left;
+  margin: 10px 0 !important;
+}
 
-  .card-item {
-    margin-bottom: 50px;
-  }
+.card-item {
+  margin-bottom: 50px;
+}
 
-  .deactive {
-    margin-right: 0;
-  }
+.deactive {
+  margin-right: 0;
+}
 
-  .customDownloadIcon {
-    margin: 0;
-    line-height: 8px;
-    padding-left: 5px;
-    color: #fff;
-    font-size: 14px;
-  }
+.customDownloadIcon {
+  margin: 0;
+  line-height: 8px;
+  padding-left: 5px;
+  color: #fff;
+  font-size: 14px;
+}
 
-  .mgl-17 {
-    margin-left: 17px;
-  }
+.mgl-17 {
+  margin-left: 17px;
+}
 
-  .white {
-    color: #fff !important;
-  }
+.white {
+  color: #fff !important;
+}
 
-  .message-admin-for-teacher-wrapper {
-    border: 1px solid #c0c0c0;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    margin-top: 15px;
-    padding: 10px;
-  }
+.message-admin-for-teacher-wrapper {
+  border: 1px solid #c0c0c0;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  margin-top: 15px;
+  padding: 10px;
+}
 </style>

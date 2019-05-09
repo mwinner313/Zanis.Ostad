@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-12">
           <div id="start-teaching-banner-image">
-            <button @click="showAddCourseDialog" class="submit">شروع تدریس</button>
+            <button @click="showAddCourseDialog" class="submit">شروع تدریــس</button>
           </div>
 
           <div class="content-box">
@@ -14,7 +14,7 @@
               آموزشی این دانشگاه که بر پایه آموزش از راه دور بنیان نهاده شده است، محدودیت زیادی در ساعات آموزش دروس در
               این دانشگاه وجود دارد و این ساعات صرف رفع اشکال و یا آموزش فشرده درس می گردد،‌ از طرفی بسیاری از دانشجویان
               این دانشگاه بدلیل مشکلات شغلی و یا دوری مسافت امکان شرکت در همین کلاس های محدود را نیز ندارند
-              لذا در راستای رفع مشکلات آموزشی دانشجویان، شرکت رایان پژوهان زانیس اقدام به تولید بسته های آموزشی در رشته
+              لذا در راستای رفع مشکلات آموزشی دانشجویان، استاد زانیس اقدام به تولید بسته های آموزشی در رشته
               ها مختلف دانشگاهی نموده است
             </p>
           </div>
@@ -28,9 +28,10 @@
                   v-b-toggle="'accordion-'+item.id"
                   variant="info"
                 >
-                 <i class="fas fa-chevron-down yellow when-opened"></i>
-                 <i class="fas fa-chevron-left yellow when-closed"></i>
-                  {{item.name}}</span>
+                  <i class="fas fa-chevron-down yellow when-opened"></i>
+                  <i class="fas fa-chevron-left yellow when-closed"></i>
+                  {{item.name}}
+                </span>
                 <b-collapse :id="'accordion-'+item.id" role="tabpanel">
                   <div class="container">
                     <div class="row">
@@ -54,7 +55,7 @@
               آموزشی این دانشگاه که بر پایه آموزش از راه دور بنیان نهاده شده است، محدودیت زیادی در ساعات آموزش دروس در
               این دانشگاه وجود دارد و این ساعات صرف رفع اشکال و یا آموزش فشرده درس می گردد،‌ از طرفی بسیاری از دانشجویان
               این دانشگاه بدلیل مشکلات شغلی و یا دوری مسافت امکان شرکت در همین کلاس های محدود را نیز ندارند
-              لذا در راستای رفع مشکلات آموزشی دانشجویان، شرکت رایان پژوهان زانیس اقدام به تولید بسته های آموزشی در رشته
+              لذا در راستای رفع مشکلات آموزشی دانشجویان، استاد زانیس اقدام به تولید بسته های آموزشی در رشته
               ها مختلف دانشگاهی نموده است
             </p>
             <button class="start-teaching-button" @click="showAddCourseDialog">شروع تدریس</button>
@@ -63,55 +64,59 @@
         </div>
       </div>
     </div>
-    <AddCourseDialog @close="isAddingNewCourse=false" :customMessageForSuccess="showSuccessAfterAddingCourse"
-                     :isOpen="isAddingNewCourse"></AddCourseDialog>
+    <AddCourseDialog
+      @close="isAddingNewCourse=false"
+      :customMessageForSuccess="showSuccessAfterAddingCourse"
+      :isOpen="isAddingNewCourse"
+    ></AddCourseDialog>
   </div>
 </template>
 
 <script>
-  import AddCourseDialog from '../../teacher/courses/add-course-dialog'
-  import storage from "storage-helper";
-  import EventBus from "../../../event-bus";
+import AddCourseDialog from "../../teacher/courses/add-course-dialog";
+import storage from "storage-helper";
+import EventBus from "../../../event-bus";
 
-  export default {
-    name: "",
-    components: {
-      AddCourseDialog
-    },
-    data() {
-      return {
-        isAddingNewCourse: false,
-        courseCategories: [],
-      };
-    },
-    methods: {
-      showAddCourseDialog() {
-        let authorization = storage.getItem('Authorization');
-        if ( [undefined,'undefined',null].indexOf(authorization)  ==  -1 )
+export default {
+  name: "",
+  components: {
+    AddCourseDialog
+  },
+  data() {
+    return {
+      isAddingNewCourse: false,
+      courseCategories: []
+    };
+  },
+  methods: {
+    showAddCourseDialog() {
+      let authorization = storage.getItem("Authorization");
+      if ([undefined, "undefined", null].indexOf(authorization) == -1)
+        this.isAddingNewCourse = true;
+      else {
+        this.$root.$emit("bv::show::modal", "login-dialog");
+        EventBus.$on("user-comes-in", () => {
           this.isAddingNewCourse = true;
-        else {
-          this.$root.$emit("bv::show::modal", "login-dialog");
-          EventBus.$on("user-comes-in", () => {
-            this.isAddingNewCourse = true;
-          });
-        }
-      },
-      showSuccessAfterAddingCourse() {
-        this.$swal(
-          {
-            title: "ارسال دوره با موفقیت انجام شد",
-            text: "دوره شما با موفقیت ثبت شد بعد از بررسی توسط همکاران ما دوره شما تایید و در پنل کاربری خود قادر به مشاهده وضعیت دوره ثبت شده اعم از خرید دانشجویان ویرایش حذف وافزودن دوره جدید خواهید بود نکته قابل توجه این که دوره شما توسط تدوین گر های ما تدوین و سپس بر روی سایت نمایش داده خواهد شد لذا تا تکمیل فرایند های مربوطه صبور باشید . از این که استاد زانیس را محلی برای تدریس خود انتخاب نموده اید متشکریم.",
-            type: "success",
-            confirmButtonText: "بستن"
-          })
+        });
       }
     },
-    mounted() {
-      this.$http.get("/api/CourseCategories").then(res => {
-        this.courseCategories = res.data;
+    showSuccessAfterAddingCourse() {
+      this.$swal({
+        title: "ارسال دوره با موفقیت انجام شد",
+        text:
+          "دوره شما با موفقیت ثبت شد بعد از بررسی توسط همکاران ما دوره شما تایید و در پنل کاربری خود قادر به مشاهده وضعیت دوره ثبت شده اعم از خرید دانشجویان ویرایش حذف وافزودن دوره جدید خواهید بود نکته قابل توجه این که دوره شما توسط تدوین گر های ما تدوین و سپس بر روی سایت نمایش داده خواهد شد لذا تا تکمیل فرایند های مربوطه صبور باشید . از این که استاد زانیس را محلی برای تدریس خود انتخاب نموده اید متشکریم.",
+        type: "success",
+        confirmButtonText: "بستن"
       });
     }
-  };
+  },
+  mounted() {
+    this.$http.get("/api/CourseCategories").then(res => {
+      this.courseCategories = res.data;
+    });
+     window.document.title = "شروع تدریس | استاد زانیس"
+  }
+};
 </script>
 
 <style scoped lang="scss">
@@ -128,23 +133,16 @@
     background-image: url("../../../assets/images/shoro-amozesh-2.jpg");
     .submit {
       transition: all 0.7s;
-      left: 173px;
-      bottom: 55px;
-      cursor: pointer;
-      font-weight: bold;
-      padding: 10px 51px;
-      color: #676767;
-      height: 60px;
-      font-size: 20px;
-      position: absolute;
-      background-image: linear-gradient(
-          to right,
-          #f0fd63,
-          #edfd82,
-          #ebfc9e,
-          #ebfbb8,
-          #edf9d0
-      );
+    right: 294px;
+    bottom: 112px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #000000;
+    height: 41px;
+    border-radius: 10px;
+    font-size: 19px;
+    position: absolute;
+    background-color: #fcfc27;
       &:hover {
         box-shadow: 0px 0px 20px $yellow;
         background-image: linear-gradient(

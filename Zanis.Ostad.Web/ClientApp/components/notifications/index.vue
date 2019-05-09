@@ -1,49 +1,30 @@
 <template>
   <el-row>
-    <el-col :md="16" :lg="16">
+    <el-col :md="24" :lg="24">
       <el-card>
-        <el-table :data="notifications.items" style="width: 100%" height="600">
-          <el-table-column label="تاریخ" width="180">
-            <template slot-scope="scope">
-              <i class="el-icon-time"></i>
-              {{ scope.row.createdOn | moment("jYYYY/jM/jD HH:mm")}}
-            </template>
-          </el-table-column>
-
-          <el-table-column label="پیام">
-            <template slot-scope="scope">{{ scope.row.text}}</template>
-          </el-table-column>
-
-          <el-table-column label="وضعیت">
-            <template slot-scope="scope">
-              <el-button @click="showItem(scope.row)">مشاهده</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-        <el-pagination
-          class="pagenation"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page.sync="query.currentPage"
-          :page-sizes="[10,15,20,30]"
-          :page-size="query.pageSize"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="meta.allCount"
-        ></el-pagination>
+        <div class="block">
+          <el-timeline>
+            <el-timeline-item
+              v-for="item in notifications.items"
+              :key="item.id"
+              :timestamp="getDate(item)"
+              placement="top"
+            >
+              <el-card>
+                <p>{{item.text}}</p>
+              </el-card>
+            </el-timeline-item>
+          </el-timeline>
+        </div>
       </el-card>
     </el-col>
-    <course-details-dialog
-      v-if="selectedCourseId"
-      :isOpen="selectedCourseId"
-      :courseId="selectedCourseId"
-      @close="selectedCourseId=undefined"
-    ></course-details-dialog>
   </el-row>
 </template>
 
 <script>
 import CourseDetailsDialog from "../teacher/courses/course-details";
 import axios from "axios";
+import persianDate from "persian-date";
 export default {
   name: "myMessage",
   data() {
@@ -69,6 +50,11 @@ export default {
         this.notifications = res.data;
         this.meta = { allCount: res.data.allCount };
       });
+    },
+    getDate(item) {
+      return new persianDate(new Date(item.createdOn)).format(
+        "YYYY/MM/DD, dddd HH:mm"
+      );
     },
     handleSizeChange(val) {
       this.query.pageSize = val;

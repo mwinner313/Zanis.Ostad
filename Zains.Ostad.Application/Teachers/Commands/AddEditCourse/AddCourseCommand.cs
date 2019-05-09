@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Zains.Ostad.Application.Courses.Dtos;
+using Zanis.Ostad.Common;
 using Zanis.Ostad.Core.Dtos;
 
 namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
@@ -14,5 +14,6 @@ namespace Zains.Ostad.Application.Teachers.Commands.AddEditCourse
         public int CourseCategoryId { get; set; }
         public string Title { get; set; }
         public List<long> LessonFieldIds { get; set; }
+        public string Permalink => Title.ToUrlSegment();
     }
 }

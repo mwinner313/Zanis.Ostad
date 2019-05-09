@@ -25,15 +25,16 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
             HasPendingItemToApprove = x.HasPendingItemToApprove,
             Description = x.Description,
             Price = x.Price,
+            Permalink = x.PermaLink,
             ImagePath = x.ImagePath,
-            Duration = x.Duration,
+            Duration = new TimeSpan(x.Contents.Sum(c => c.VideoDuration.Ticks)),
             ApprovalStatus = x.ApprovalStatus,
             CreatedOn = x.CreatedOn,
             Teacher = x.Teacher.FullName,
             AdminMessageForTeacher = x.AdminMessageForTeacher,
             TeacherMessageForAdmin = x.TeacherMessageForAdmin,
             TeacherAvatar = x.Teacher.AvatarPath,
-            Title = x.CourseCategory.Name + " - " + x.Title,
+            Title =  x.Title,
             RelatedLessonFields = x.Lessons.Select(l => new LessonFieldViewModel
             {
                 Id = l.Lesson.Id,
@@ -49,7 +50,9 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
         public static Expression<Func<Course, CourseDto>> Projection => x => new CourseDto
         {
             Id = x.Id,
+            CourseCategoryId=x.CourseCategoryId,
             TeacherId = x.TeacherId,
+             Permalink = x.PermaLink,
             HasPendingItemToApprove = x.HasPendingItemToApprove,
             Description = x.Description,
             Price = x.Price,
@@ -59,7 +62,8 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
             AdminMessageForTeacher = x.AdminMessageForTeacher,
             TeacherMessageForAdmin = x.TeacherMessageForAdmin,
             TeacherAvatar = x.Teacher.AvatarPath,
-            Title = x.CourseCategory.Name + " - " + x.Title,
+            Title =  x.Title,
+            CourseCategoryTitle=x.CourseCategory.Name ,
             RelatedLessonFields = x.Lessons.Select(l => new LessonFieldViewModel
             {
                 Id = l.Lesson.Id,

@@ -11,6 +11,6 @@ namespace Zanis.Ostad.Core.Entities.Notifications
         public string Text { get; set; }
         public User Receiver { get; set; }
         public long ReceiverId { get; set; }
-        public DateTime CreatedOn { get; }=DateTime.Now;
+        public DateTime CreatedOn { get; set; } = DateTime.Now;
     }
 }

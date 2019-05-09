@@ -50,10 +50,12 @@ export default {
 }
 
 .university-box {
-  width: 212px;
+  flex-grow:1;
+  min-width: 301px;
   margin: 5px;
   figure {
     margin: 0;
+    margin-top:20px;
   }
   background-color: white;
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);

@@ -3,9 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-6 image-container">
-          <figure>
-            <img src="../../assets/images/visual-teaching.png" alt>
-          </figure>
+          <img src="../../assets/images/ss/02.png" alt>
         </div>
         <div class="col-md-6 text-content">
           <h3>آموزش تصویری</h3>
@@ -16,7 +14,7 @@
             دانشجویان این دانشگاه بدلیل مشکلات شغلی و یا دوری مسافت امکان شرکت در همین کلاس های محدود را نیز ندارند
           </p>
           <p class="text-justify">
-            لذا در راستای رفع مشکلات آموزشی دانشجویان، شرکت رایان پژوهان زانیس اقدام به تولید
+            لذا در راستای رفع مشکلات آموزشی دانشجویان، استاد زانیس اقدام به تولید
             بسته های آموزشی در رشته ها مختلف دانشگاهی نموده است
           </p>
         </div>
@@ -36,7 +34,26 @@ export default {
 
 .visual-learning {
   padding: 36px 0 0 0;
+
+  @keyframes move {
+    0% {
+      margin-top: 0px;
+    }
+    50% {
+      margin-top: 40px;
+    }
+    100% {
+      margin-top: 0px;
+    }
+  }
   .image-container {
+    img{
+        animation: move 2.7s infinite;
+        animation-timing-function:ease-in-out	;
+    }
+    background-image: url("../../assets/images/ss/01.png");
+    background-size: cover;
+    min-height: 584px;
     display: flex;
     flex-direction: column;
     justify-content: center;

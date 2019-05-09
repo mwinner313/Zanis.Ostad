@@ -68,7 +68,9 @@
         type: Boolean
       },
       item: {
-        type: Object, default: {}
+        type: Object, default(){
+          return  {};
+        }
       }
     },
     data() {

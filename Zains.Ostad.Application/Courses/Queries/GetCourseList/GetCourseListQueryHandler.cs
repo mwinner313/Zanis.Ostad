@@ -67,9 +67,9 @@ namespace Zains.Ostad.Application.Courses.Queries.GetCourseList
                 queryable = queryable.Where(x =>
                     x.Lessons.Any(l => l.Lesson.GradeId == request.GradeId));
 
-            if (request.CourseTitleId.HasValue)
+            if (request.CourseCategoryId.HasValue)
                 queryable = queryable.Where(x =>
-                    x.CourseCategoryId == request.CourseTitleId);
+                    x.CourseCategoryId == request.CourseCategoryId);
 
             return queryable;
         }

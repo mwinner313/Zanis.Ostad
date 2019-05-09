@@ -41,6 +41,7 @@ namespace Zains.Ostad.Application.AutoMapperProfiles
                     LessonId = x.Lesson.Id,
                     Exams = x.Lesson.ExamSamples.Select(e => new ExamSampleDto
                     {
+                        Id = e.ExamSampleFileId,
                         Type = e.ExamSampleFile.Type,
                         FilePath = e.ExamSampleFile.FilePath,
                         SemesterTitle = e.ExamSampleFile.Semester.Title,

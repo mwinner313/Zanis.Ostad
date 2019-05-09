@@ -2,9 +2,9 @@ import Vue from 'vue'
 import axios from 'axios'
 import router from './router/index'
 import store from './store'
-import {sync} from 'vuex-router-sync'
+import { sync } from 'vuex-router-sync'
 import App from 'components/app-root'
-import {FontAwesomeIcon} from './icons'
+import { FontAwesomeIcon } from './icons'
 import BootstrapVue from 'bootstrap-vue'
 import VueSweetalert2 from 'vue-sweetalert2';
 import storageHelper from 'storage-helper';
@@ -22,11 +22,13 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import './assets/fonts/web-fonts-with-css/css/fontawesome-all.css'
 import VueSimpleSVG from 'vue-simple-svg'
-import {SimpleSVG} from 'vue-simple-svg'
+import { SimpleSVG } from 'vue-simple-svg'
+import constants from './contstants'
+
 Vue.use(VueSimpleSVG);
 Vue.component('simple-svg', SimpleSVG);
-Vue.use(VueAwesomeSwiper, /* { default global options } */)
-Vue.use(Element, {locale});
+Vue.use(VueAwesomeSwiper)
+Vue.use(Element, { locale });
 Vue.use(MomentJalali);
 Vue.use(VueVideoPlayer, /* {
   options: global default options,
@@ -41,10 +43,10 @@ Vue.use(VueCurrencyFilter,
     symbolPosition: 'front',
     symbolSpacing: true
   });
-Vue.use(Toaster, {timeout: 1000});
+Vue.use(Toaster, { timeout: 1000 });
 Vue.use(VueSweetalert2);
 Vue.use(BootstrapVue);
-
+Vue.prototype.$constants = constants;
 Vue.component('icon', FontAwesomeIcon);
 Vue.prototype.$http = axios;
 sync(store, router);

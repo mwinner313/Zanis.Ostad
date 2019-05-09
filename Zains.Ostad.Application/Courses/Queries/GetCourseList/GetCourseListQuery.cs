@@ -12,7 +12,7 @@ namespace Zains.Ostad.Application.Courses.Queries.GetCourseList
         public string LessonCode { get; set; }
         public string FieldCode { get; set; }
         public long? GradeId { get; set; }
-        public long? CourseTitleId { get; set; }
+        public long? CourseCategoryId { get; set; }
         public int? FieldId { get; set; }
     }
 }

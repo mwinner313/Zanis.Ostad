@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Zanis.Ostad.Common\Zanis.Ostad.Common.csproj" />
       <ProjectReference Include="..\Zanis.Ostad.Core\Zanis.Ostad.Core.csproj" />
     </ItemGroup>
 

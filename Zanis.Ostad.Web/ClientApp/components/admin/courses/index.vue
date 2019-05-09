@@ -58,23 +58,24 @@
       height="720"
       :data="courseData"
       size="large"
-      style="width: 100%">
+      style="width: 100%"
+    >
       <el-table-column width="50" label="ردیف">
         <template slot-scope="scope">{{scope.row.id}}</template>
       </el-table-column>
 
-      <el-table-column label="عنوان">
+      <el-table-column label="عنوان" width="350">
         <template slot-scope="scope">{{ scope.row.title}}</template>
       </el-table-column>
 
-      <el-table-column label="نام استاد">
+      <el-table-column label="نام استاد" width="100">
         <template slot-scope="scope">{{ scope.row.teacher}}</template>
       </el-table-column>
 
-      <el-table-column label="قیمت">
+      <el-table-column label="قیمت" width="100">
         <template slot-scope="scope">{{scope.row.priceAsTomans}} تومان</template>
       </el-table-column>
-      <el-table-column width="200">
+      <el-table-column label="وضعیت" width="200">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.approvalStatus===0">در انتظار تعیین وضعیت</el-tag>
           <el-tag v-if="scope.row.approvalStatus===5" type="success">تایید شده</el-tag>
@@ -82,14 +83,19 @@
           <el-tag v-if="scope.row.approvalStatus===15" type="warning">غیر فعال توسط مدرس</el-tag>
         </template>
       </el-table-column>
-      <el-table-column width="320" label="عملیات">
+      <el-table-column label="عملیات">
         <template slot-scope="scope">
-          <div style="display:flex">
-            <el-badge value="*" v-if="scope.row.hasPendingItemToApprove" style="margin-top: 13px;"></el-badge>
-            <el-button @click="showDetails(scope.row.id)">مشاهده</el-button>
-            <el-button @click="changingApprovalStateItem=scope.row" class="deactive">تغییر وضعیت</el-button>
-            <el-button style="margin-right:0" @click="selectedItemEditor=scope.row.id">تدوین</el-button>
-          </div>
+          <el-button type="primary" plain size="mini" @click="showDetails(scope.row.id)">مشاهده</el-button>
+          <el-button
+            type="success"
+            plain
+            size="mini"
+            @click="changingApprovalStateItem=scope.row"
+          >تغییر وضعیت</el-button>
+          <el-button type="danger" plain size="mini" @click="setEdititng(scope.row.id)">تدوین</el-button>
+          <a target="_blank" :href="`/course/${scope.row.id}-${scope.row.permalink}`">
+            <el-button type="warning" plain size="mini">مشاهده در وبسایت</el-button>
+          </a>
         </template>
       </el-table-column>
     </el-table>
@@ -103,26 +109,9 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="meta.allCount"
     ></el-pagination>
-    <approval-state-changer
-      v-if="changingApprovalStateItem"
-      :item="changingApprovalStateItem"
-      :is-open="!!changingApprovalStateItem"
-      @close="getCourses"
-    ></approval-state-changer>
-
-    <course-details
-      v-if="!!selectedCourseId"
-      :isOpen="!!selectedCourseId"
-      @close="selectedCourseId=undefined || getCourses()"
-      :courseId="selectedCourseId"
-    ></course-details>
-
-    <AssignToEditorDialog
-      v-if="selectedItemEditor"
-      :isOpen="selectedItemEditor"
-      :courseId="selectedItemEditor"
-      @close="selectedItemEditor=undefined"
-    ></AssignToEditorDialog>
+    <approval-state-changer :item="changingApprovalStateItem" @close="getCourses"></approval-state-changer>
+    <course-details @close="getCourses" :courseId="selectedCourseId"></course-details>
+    <AssignForEditDialog :courseId="courseToEditId" @close="setCourseToEditIdUndefined"></AssignForEditDialog>
   </el-card>
 </template>
 
@@ -130,33 +119,37 @@
 import axios from "axios";
 import ApprovalStateChanger from "./approval-state-changer";
 import CourseDetails from "./course-details";
-import AssignToEditorDialog from "./assinment-to-editor-dialog";
+import AssignForEditDialog from "./assign-for-edit-dialog";
 export default {
   name: "AdminListCourse",
   components: {
     ApprovalStateChanger,
     CourseDetails,
-    AssignToEditorDialog
+    AssignForEditDialog
   },
   data() {
     return {
-      query: {
-        pageSize: 10
-      },
+      isLoading: false,
+      selectedCourseId: 0,
+      courseToEditId: 0,
       grades: [],
       courseData: [],
       courseTitles: [],
-      changingApprovalStateItem: undefined,
-      selectedCourseId: undefined,
-      selectedItemEditor: undefined,
+      changingApprovalStateItem: {},
+      query: {
+        pageSize: 10
+      },
       meta: {}
     };
   },
   methods: {
+    setCourseToEditIdUndefined() {
+      this.courseToEditId = 0;
+    },
     getCourses() {
       this.isLoading = true;
-      this.changingApprovalStateItem = undefined;
-      this.selectedCourseId = undefined;
+      this.changingApprovalStateItem = {};
+      this.selectedCourseId = 0;
       axios
         .get("/api/Courses", {
           params: this.query
@@ -173,7 +166,7 @@ export default {
       });
     },
     getCourseTitles() {
-      axios.get("/api/coursetitles").then(res => {
+      axios.get("/api/courseCategories").then(res => {
         this.courseTitles = res.data;
       });
     },
@@ -189,6 +182,9 @@ export default {
     },
     showDetails(id) {
       this.selectedCourseId = id;
+    },
+    setEdititng(id) {
+      this.courseToEditId = id;
     },
     previewIconCourse(contentType) {
       switch (contentType) {
@@ -215,7 +211,9 @@ export default {
 .icon {
   float: left;
 }
-
+.el-button {
+  margin-right: 0px;
+}
 .download {
   color: #000;
   float: left;
@@ -223,9 +221,5 @@ export default {
 
 .card-item {
   margin-bottom: 50px;
-}
-
-.deactive {
-  margin-right: 0;
 }
 </style>

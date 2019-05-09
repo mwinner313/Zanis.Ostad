@@ -78,7 +78,7 @@ namespace Zanis.Ostad.Application.Tests.Orders.Commands
         }
 
         [Fact]
-        public async Task ShouldReturnsAResponseWithPaymentResultBaseOnRequestPaymentStrategy()
+        public async Task ShouldReturnAResponseWithPaymentResultBaseOnRequestPaymentStrategy()
         {
             var userId = 1;
             InitCart(userId);

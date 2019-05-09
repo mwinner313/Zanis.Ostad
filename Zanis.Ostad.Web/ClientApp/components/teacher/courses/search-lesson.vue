@@ -20,9 +20,6 @@
       <el-col>
         <el-form :inline="true" @submit.native.prevent>
           <el-form-item>
-            <el-input placeholder="نام درس" v-model="termSearch"></el-input>
-          </el-form-item>
-          <el-form-item>
             <el-select v-model="selectedGradeId" filterable placeholder="مقطع">
               <el-option
                 v-for="item in gradeItems"
@@ -55,21 +52,20 @@
               </el-option>
             </el-select>
           </el-form-item>
+          <el-form-item>
+            <el-input placeholder=" نام درس یا کد درس" v-model="termSearch"></el-input>
+          </el-form-item>
           <el-button :disabled="canNotSearchForLessons" @click="getListData" type="success">بگرد</el-button>
         </el-form>
       </el-col>
     </el-row>
     <br>
-    <el-row :gutter="10" >
-      <el-col   v-show="lessonItems.length" :md="12" :lg="12">
+    <el-row :gutter="10">
+      <el-col v-show="lessonItems.length" :md="12" :lg="12">
         <el-card>
           <p>
             دروس موجود
-            <el-button
-              @click="addLessonToList"
-              type="primary"
-            class="float-right"
-            >افزودن</el-button>
+            <el-button @click="addLessonToList" type="primary" class="float-right">افزودن</el-button>
           </p>
           <el-table :data="lessonItems">
             <el-table-column>
@@ -130,8 +126,15 @@ export default {
   props: {
     isOpen: {
       type: Boolean
+    },
+    preSelectedItems: {
+      type: Array,
+      default() {
+        return [];
+      }
     }
   },
+
   data() {
     return {
       termSearch: "",
@@ -157,7 +160,6 @@ export default {
           }
         })
         .then(res => {
-          console.log(res.data, "item");
           this.lessonItems = res.data;
         });
     },
@@ -206,6 +208,11 @@ export default {
   computed: {
     canNotSearchForLessons() {
       return !this.termSearch || !this.selectedGradeId || !this.fieldId;
+    }
+  },
+  watch: {
+    preSelectedItems(val) {
+      this.finalySelectedItems = val;
     }
   },
   mounted() {

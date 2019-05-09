@@ -55,7 +55,8 @@
           <router-link to="/teacher/tickets">
             <el-menu-item index="1">
               <i class="fas fa-ticket-alt"></i>
-              <span slot="title">تیکت ها
+              <span slot="title">
+                تیکت ها
                 <el-badge v-if="unReadTicketItemCount" :value="unReadTicketItemCount"/>
               </span>
             </el-menu-item>
@@ -95,106 +96,112 @@
 </template>
 
 <style>
-  .el-menu-vertical-demo:not(.el-menu--collapse) {
-    width: 200px;
-  }
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 200px;
+}
 
-  .el-menu-vertical-demo {
-    height: 100%;
-  }
+.el-menu-vertical-demo {
+  height: 100%;
+}
 
-  i {
-    font-size: 20px;
-    margin: 5px;
-  }
+i {
+  font-size: 20px;
+  margin: 5px;
+}
 
-  .header {
-    display: flex;
-    flex-direction: row;
-    color: white;
-    align-items: center;
-  }
+.header {
+  display: flex;
+  flex-direction: row;
+  color: white;
+  align-items: center;
+}
 
-  .menu-toggle {
-    padding: 0 24px 0 40px;
-    color: white;
-    cursor: pointer;
-  }
+.menu-toggle {
+  padding: 0 24px 0 40px;
+  color: white;
+  cursor: pointer;
+}
 
-  .page-content {
-    background-image: url("/assets/images/mooning.png");
-    background-repeat: repeat;
-    margin: 0px;
-  }
+.page-content {
+  background-image: url("/assets/images/mooning.png");
+  background-repeat: repeat;
+  margin: 0px;
+}
 
-  .user-wrapper {
-    width: 100%;
-    height: 100%;
-  }
+.user-wrapper {
+  width: 100%;
+  height: 100%;
+}
 </style>
 
 <script>
-  import axios from "axios";
-  import EventBus from "../../../event-bus";
-  import logo from "../../../assets/images/ostad-glass-CMYK.png";
+import axios from "axios";
+import EventBus from "../../../event-bus";
+import logo from "../../../assets/images/ostad-glass-CMYK.png";
+import storage from "storage-helper";
 
-  export default {
-    data() {
-      return {
-        logo: logo,
-        unReadTicketItemCount: undefined,
-        asideWidth: "200px",
-        isCollapse: false,
-        notifiData: [],
-        notifiParams: {
-          JustNewOnes: true,
-          NoPaginate: true,
-          PageSize: 0,
-          PageOffset: 0
-        }
-      };
-    },
-    mounted() {
-      if (window.location.pathname === "/user")
-        this.$router.push({name: "user-dashboard", params: {}});
-      this.loadSideBarNotificationsCount();
-      EventBus.$on("userOpenedUnReadTicketItem", () => {
-        this.loadUnReadTicketItemsCount();
-      });
-    },
-    methods: {
-      getNotifi() {
-        axios
-          .get("/api/Notification", {params: this.notifiParams})
-          .then(res => {
-            this.notifiData = res.data.items;
-            console.log(res.data.items);
-          });
-      },
-      toggleSideMenu() {
-        this.isCollapse = !this.isCollapse;
-        window.setTimeout(
-          () => (this.asideWidth = this.isCollapse ? "67px" : "203px"),
-          100
-        );
-      },
-      loadSideBarNotificationsCount() {
-        this.loadUnReadTicketItemsCount();
-      },
-      loadUnReadTicketItemsCount() {
-        axios
-          .get("/api/account/tickets", {params: {pageOffset: 0, pageSize: 1}})
-          .then(res => {
-            this.unReadTicketItemCount = res.data.metaData.unReadTicketItemCount;
-          });
+export default {
+  data() {
+    return {
+      logo: logo,
+      unReadTicketItemCount: undefined,
+      asideWidth: "200px",
+      isCollapse: false,
+      notifiData: [],
+      notifiParams: {
+        JustNewOnes: true,
+        NoPaginate: true,
+        PageSize: 0,
+        PageOffset: 0
       }
+    };
+  },
+  mounted() {
+  let user = JSON.parse(storage.getItem("user"));
+    if (!user || !user.roles.some(x => x.toLowerCase() === "teacher")){
+        storage.setItem('retUrl',window.location.pathname)
+      this.$router.push({ name: "home", params: {} });
     }
-  };
+
+    if (window.location.pathname === "/teacher")
+      this.$router.push({ name: "teacher-dashboard", params: {} });
+    this.loadSideBarNotificationsCount();
+    EventBus.$on("userOpenedUnReadTicketItem", () => {
+      this.loadUnReadTicketItemsCount();
+    });
+  },
+  methods: {
+    getNotifi() {
+      axios
+        .get("/api/Notification", { params: this.notifiParams })
+        .then(res => {
+          this.notifiData = res.data.items;
+          console.log(res.data.items);
+        });
+    },
+    toggleSideMenu() {
+      this.isCollapse = !this.isCollapse;
+      window.setTimeout(
+        () => (this.asideWidth = this.isCollapse ? "67px" : "203px"),
+        100
+      );
+    },
+    loadSideBarNotificationsCount() {
+      this.loadUnReadTicketItemsCount();
+    },
+    loadUnReadTicketItemsCount() {
+      axios
+        .get("/api/account/tickets", { params: { pageOffset: 0, pageSize: 1 } })
+        .then(res => {
+          this.unReadTicketItemCount = res.data.metaData.unReadTicketItemCount;
+        });
+    }
+  }
+};
 </script>
 
 <style scoped>
-  .small-icon {
-    font-size: 16px;
-
-  }
+.small-icon {
+  font-size: 16px;
+}
 </style>
