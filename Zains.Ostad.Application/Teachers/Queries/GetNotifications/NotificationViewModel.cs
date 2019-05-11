@@ -6,6 +6,7 @@ namespace Zains.Ostad.Application.Teachers.Queries.GetNotifications
 {
     public class NotificationViewModel
     {
+        public long Id { get; set; }
         public NotificationRelatedItemType RelatedItemType { get; set; }
         public bool IsSeen { get; set; }
         public JObject JsonExtraData { get; set; }
